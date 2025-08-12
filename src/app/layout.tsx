@@ -4,6 +4,7 @@ import "./globals.css";
 import MUIThemeProvider from "@/components/MUIThemeProvider";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import MainContent from "@/components/MainContent";
 import { Box } from "@mui/material";
 
 const geistSans = Geist({
@@ -50,16 +51,9 @@ export default function RootLayout({
             }}
           >
             <Header />
-            <Box 
-              component="main" 
-              sx={{ 
-                flexGrow: 1,
-                position: 'relative',
-                zIndex: 1
-              }}
-            >
+            <MainContent>
               {children}
-            </Box>
+            </MainContent>
             <Footer />
           </Box>
         </MUIThemeProvider>
