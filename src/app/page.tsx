@@ -1,103 +1,564 @@
-import Image from "next/image";
+'use client';
+
+import {
+  Box,
+  Container,
+  Typography,
+  Button,
+  Card,
+  CardContent,
+  CardActions,
+  CardMedia,
+  Chip,
+  Stack,
+  Paper,
+  useTheme
+} from '@mui/material';
+import {
+  Build,
+  Engineering,
+  Architecture,
+  Store,
+  ContactMail,
+  ArrowForward,
+  CheckCircle,
+  Phone,
+  Construction
+} from '@mui/icons-material';
+import Link from 'next/link';
+import Image from 'next/image';
+import { useEffect } from 'react';
+
+// Intersection Observer Hook
+const useScrollAnimations = () => {
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    // Observe all animation elements
+    const animatedElements = document.querySelectorAll(
+      '.fade-in-on-scroll, .slide-in-left-on-scroll, .slide-in-right-on-scroll, .zoom-in-on-scroll'
+    );
+
+    animatedElements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+};
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const theme = useTheme();
+  useScrollAnimations();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  const services = [
+    {
+      title: 'Công nghệ xây dựng',
+      description: 'Ứng dụng công nghệ hiện đại trong xây dựng với chất lượng cao',
+      icon: <Build sx={{ fontSize: 40 }} />,
+      href: '/services/construction-technology',
+      color: theme.palette.primary.main
+    },
+    {
+      title: 'Tư vấn & Giám sát',
+      description: 'Dịch vụ tư vấn chuyên nghiệp và giám sát chất lượng công trình',
+      icon: <Engineering sx={{ fontSize: 40 }} />,
+      href: '/services/consultation',
+      color: theme.palette.secondary.main
+    },
+    {
+      title: 'Thiết kế kiến trúc',
+      description: 'Thiết kế sáng tạo và phù hợp với nhu cầu khách hàng',
+      icon: <Architecture sx={{ fontSize: 40 }} />,
+      href: '/services',
+      color: '#4caf50'
+    },
+    {
+      title: 'Cửa hàng vật liệu',
+      description: 'Cung cấp vật liệu xây dựng chất lượng với giá cả cạnh tranh',
+      icon: <Store sx={{ fontSize: 40 }} />,
+      href: '/store',
+      color: '#ff9800'
+    }
+  ];
+
+  const projects = [
+    {
+      title: 'Thi công phần thô và hoàn thiện mặt ngoài Shophouse và Hạ Tầng Kỹ Thuật – Long An.',
+      description: 'Thi công phần thô và hoàn thiện mặt ngoài Shophouse, kết hợp xây dựng hạ tầng kỹ thuật đồng bộ, đảm bảo tiến độ và chất lượng.',
+      image: '/products/Shophouse.jpg',
+      status: 'Hoàn thành',
+      area: '25/08/2022'
+    },
+    {
+      title: 'Thi công nhà biệt thự – Long An',
+      description: 'Xây dựng biệt thự cao cấp 2 tầng với kiến trúc hiện đại, không gian sang trọng và sân vườn thoáng đãng.',
+      image: '/products/biet-thu.jpg',
+      status: 'Hoàn thành',
+      area: '27/05/2023'
+    },
+    {
+      title: 'Thi công cải tạo căn hộ chung cư – Trung Sơn',
+      description: 'Cải tạo và nâng cấp căn hộ chung cư theo phong cách hiện đại, tối ưu công năng và tăng tính thẩm mỹ.',
+      image: '/products/trung-son.jpg',
+      status: 'Hoàn thành',
+      area: '27/07/2023'
+    }
+  ];
+
+  return (
+    <Box>
+      {/* Hero Section */}
+      <Box
+        sx={{
+          color: 'white',
+          pt: { xs: 12, md: 20 },
+          pb: { xs: 2, md: 4 },
+          position: 'relative',
+          overflow: 'hidden',
+          backgroundImage: 'url(/banner/banner-home3.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+            zIndex: 1
+          }
+        }}
+      >
+        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div className="slide-in-left-on-scroll">
+              <Typography
+                variant="h1"
+                gutterBottom
+                sx={{
+                  fontSize: { xs: '2.5rem', md: '3.5rem' },
+                  fontWeight: 800,
+                  mb: 3,
+                  fontFamily: '"Poppins", "Segoe UI", sans-serif',
+                  letterSpacing: '0.05em',
+                  textTransform: 'uppercase',
+                  lineHeight: 1.2,
+                  color: 'white',
+                  textShadow: '2px 2px 8px rgba(0,0,0,0.7)',
+                }}
+              >
+                LAI PHÁT
+              </Typography>
+              <Typography
+                variant="h5"
+                gutterBottom
+                sx={{
+                  mb: 4,
+                  color: 'white',
+                  fontWeight: 700,
+                  lineHeight: 1.6,
+                  textShadow: '1px 1px 4px rgba(0,0,0,0.5)'
+                }}
+              >
+                Đối tác tin cậy trong mọi dự án xây dựng của bạn. <br />
+                Chất lượng - Uy tín - Chuyên nghiệp
+              </Typography>
+              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+                <Button
+                  variant="contained"
+                  size="large"
+                  endIcon={<ArrowForward />}
+                  component={Link}
+                  href="/contact"
+                  sx={{
+                    backgroundColor: '#e42222',
+                    color: 'white',
+                    fontWeight: 600,
+                    px: 4,
+                    py: 1.5,
+                    '&:hover': {
+                      backgroundColor: '#c41e1e',
+                      transform: 'scale(1.05)'
+                    }
+                  }}
+                >
+                  Liên hệ ngay
+                </Button>
+                <Button
+                  variant="outlined"
+                  size="large"
+                  startIcon={<Phone />}
+                  sx={{
+                    borderColor: 'white',
+                    color: 'white',
+                    fontWeight: 600,
+                    px: 4,
+                    py: 1.5,
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                      borderColor: 'white'
+                    }
+                  }}
+                >
+                  0939 927 975
+                </Button>
+              </Stack>
+            </div>
+            <div className="slide-in-right-on-scroll">
+              <Box
+                sx={{
+                  height: { xs: 300, md: 400 },
+                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                  borderRadius: 2,
+                  overflow: 'hidden',
+                  position: 'relative',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                <Image
+                  src="/banner/banner.jpg"
+                  alt="Banner"
+                  fill
+                  style={{
+                    objectFit: 'cover'
+                  }}
+                />
+              </Box>
+            </div>
+          </div>
+          
+          {/* Scroll Down Icon */}
+          <Box 
+            sx={{ 
+              display: 'flex', 
+              justifyContent: 'center', 
+              mt: 4,
+              animation: 'bounce 2s infinite'
+            }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+            <Box 
+              component="div"
+              onClick={() => window.scrollTo({ top: 800, behavior: 'smooth' })}
+              sx={{ 
+                cursor: 'pointer',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                opacity: 0.7,
+                '&:hover': { opacity: 1 }
+              }}
+            >
+              <Typography variant="body2" sx={{ mb: 1, color: 'white', textShadow: '1px 1px 2px rgba(0,0,0,0.5)' }}>
+                Cuộn xuống để xem thêm
+              </Typography>
+              <Box sx={{ 
+                width: 30, 
+                height: 30, 
+                border: '2px solid', 
+                borderColor: 'white',
+                borderRadius: '15px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'flex-start',
+                pt: 0.5
+              }}>
+                <Box sx={{ 
+                  width: 4, 
+                  height: 6, 
+                  backgroundColor: 'white',
+                  borderRadius: 2,
+                  animation: 'scroll 1.5s infinite'
+                }} />
+              </Box>
+            </Box>
+          </Box>
+        </Container>
+      </Box>
+
+      {/* Animated Divider */}
+      <Box sx={{ py: 4 }}>
+        <Container maxWidth="lg">
+          <Box 
+            sx={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              position: 'relative'
+            }}
+          >
+            <Box 
+              sx={{ 
+                flex: 1, 
+                height: '2px',
+                background: 'linear-gradient(to right, transparent, #1976d2, transparent)',
+                animation: 'shimmer 2s infinite'
+              }} 
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <Box 
+              sx={{ 
+                mx: 3,
+                p: 2,
+                borderRadius: '50%',
+                backgroundColor: 'white',
+                boxShadow: '0 4px 20px rgba(25, 118, 210, 0.3)',
+                animation: 'float 3s ease-in-out infinite'
+              }}
+            >
+              <Construction 
+                sx={{ 
+                  fontSize: 40, 
+                  color: '#1976d2',
+                  animation: 'rotate 4s linear infinite'
+                }} 
+              />
+            </Box>
+            <Box 
+              sx={{ 
+                flex: 1, 
+                height: '2px',
+                background: 'linear-gradient(to left, transparent, #1976d2, transparent)',
+                animation: 'shimmer 2s infinite reverse'
+              }} 
+            />
+          </Box>
+        </Container>
+      </Box>
+
+      {/* Services Section */}
+      <Container maxWidth="lg" sx={{ py: 10 }}>
+        <Box textAlign="center" mb={8} className="fade-in-on-scroll">
+          <Typography variant="h2" gutterBottom sx={{ fontWeight: 700 }}>
+            Dịch vụ của chúng tôi
+          </Typography>
+          <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 600, mx: 'auto' }}>
+            Cung cấp giải pháp toàn diện từ thiết kế đến thi công và bảo trì
+          </Typography>
+        </Box>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+          {services.map((service, index) => (
+            <div key={index} className={`zoom-in-on-scroll animate-delay-${index + 1}`}>
+              <Card
+                sx={{
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  textAlign: 'center',
+                  transition: 'all 0.3s ease-in-out',
+                  '&:hover': {
+                    transform: 'translateY(-8px)',
+                    boxShadow: theme.shadows[8]
+                  }
+                }}
+              >
+                <CardContent sx={{ flexGrow: 1, p: 3 }}>
+                  <Box
+                    sx={{
+                      color: service.color,
+                      mb: 2,
+                      display: 'flex',
+                      justifyContent: 'center'
+                    }}
+                  >
+                    {service.icon}
+                  </Box>
+                  <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
+                    {service.title}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                    {service.description}
+                  </Typography>
+                </CardContent>
+                <CardActions sx={{ justifyContent: 'center', pb: 3 }}>
+                  <Button
+                    component={Link}
+                    href={service.href}
+                    size="small"
+                    endIcon={<ArrowForward />}
+                    sx={{ fontWeight: 500 }}
+                  >
+                    Tìm hiểu thêm
+                  </Button>
+                </CardActions>
+              </Card>
+            </div>
+          ))}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+      </Container>
+
+      {/* Animated Divider */}
+      <Box sx={{ py: 4 }}>
+        <Container maxWidth="lg">
+          <Box 
+            sx={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              position: 'relative'
+            }}
+          >
+            <Box 
+              sx={{ 
+                flex: 1, 
+                height: '2px',
+                background: 'linear-gradient(to right, transparent, #ff9800, transparent)',
+                animation: 'shimmer 2s infinite'
+              }} 
+            />
+            <Box 
+              sx={{ 
+                mx: 3,
+                p: 2,
+                borderRadius: '50%',
+                backgroundColor: 'white',
+                boxShadow: '0 4px 20px rgba(255, 152, 0, 0.3)',
+                animation: 'float 3s ease-in-out infinite reverse'
+              }}
+            >
+              <Architecture 
+                sx={{ 
+                  fontSize: 40, 
+                  color: '#ff9800',
+                  animation: 'pulse 2s ease-in-out infinite'
+                }} 
+              />
+            </Box>
+            <Box 
+              sx={{ 
+                flex: 1, 
+                height: '2px',
+                background: 'linear-gradient(to left, transparent, #ff9800, transparent)',
+                animation: 'shimmer 2s infinite reverse'
+              }} 
+            />
+          </Box>
+        </Container>
+      </Box>
+
+      {/* Projects Section */}
+      <Box sx={{ backgroundColor: theme.palette.grey[50], py: 8 }}>
+        <Container maxWidth="lg">
+          <Box textAlign="center" mb={6} className="fade-in-on-scroll">
+            <Typography variant="h2" gutterBottom sx={{ fontWeight: 700 }}>
+              Dự án tiêu biểu
+            </Typography>
+            <Typography variant="h6" color="text.secondary">
+              Những công trình đã hoàn thành với chất lượng xuất sắc
+            </Typography>
+          </Box>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {projects.map((project, index) => (
+              <div key={index} className={`slide-in-left-on-scroll animate-delay-${index + 1}`}>
+                <Card sx={{ height: '100%' }}>
+                  <CardMedia
+                    sx={{ height: 200, position: 'relative', overflow: 'hidden' }}
+                  >
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      style={{
+                        objectFit: 'cover'
+                      }}
+                    />
+                  </CardMedia>
+                  <CardContent>
+                    <Stack direction="row" spacing={1} mb={1}>
+                      <Chip
+                        label={project.status}
+                        size="small"
+                        color={project.status === 'Hoàn thành' ? 'success' : 'warning'}
+                        icon={<CheckCircle />}
+                      />
+                      <Chip label={project.area} size="small" variant="outlined" />
+                    </Stack>
+                    <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
+                      {project.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {project.description}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </Box>
+
+      {/* CTA Section */}
+      <Container maxWidth="lg" sx={{ py: 8 }}>
+        <Paper
+          elevation={0}
+          className="zoom-in-on-scroll"
+          sx={{
+            background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
+            color: 'white',
+            p: 6,
+            textAlign: 'center',
+            borderRadius: 3
+          }}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          <Typography variant="h3" gutterBottom sx={{ fontWeight: 700, mb: 2 }}>
+            Sẵn sàng bắt đầu dự án?
+          </Typography>
+          <Typography variant="h6" sx={{ mb: 4, opacity: 0.9 }}>
+            Liên hệ với chúng tôi ngay hôm nay để được tư vấn miễn phí
+          </Typography>
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center">
+            <Button
+              variant="contained"
+              size="large"
+              component={Link}
+              href="/contact"
+              startIcon={<ContactMail />}
+              sx={{
+                backgroundColor: 'white',
+                color: theme.palette.primary.main,
+                fontWeight: 600,
+                px: 4,
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 255, 255, 0.9)'
+                }
+              }}
+            >
+              Tư vấn miễn phí
+            </Button>
+            <Button
+              variant="outlined"
+              size="large"
+              component={Link}
+              href="/services"
+              sx={{
+                borderColor: 'white',
+                color: 'white',
+                fontWeight: 600,
+                px: 4,
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 255, 255, 0.1)'
+                }
+              }}
+            >
+              Xem dịch vụ
+            </Button>
+          </Stack>
+        </Paper>
+      </Container>
+    </Box>
   );
 }
