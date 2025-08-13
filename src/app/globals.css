@@ -1,6 +1,18 @@
 @import "tailwindcss";
 /* @import "tw-animate-css"; */
 
+/* Custom Animations */
+@keyframes ripple {
+  0% {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+  }
+}
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -303,6 +315,11 @@
   animation-fill-mode: both;
 }
 
+.animate-delay-5 {
+  animation-delay: 1.0s;
+  animation-fill-mode: both;
+}
+
 /* Intersection Observer classes */
 .fade-in-on-scroll {
   opacity: 0;
@@ -344,8 +361,8 @@
 }
 
 .zoom-in-on-scroll.visible {
-  opacity: 1;
-  transform: scale(1);
+  opacity: 1 !important;
+  transform: scale(1) !important;
 }
 
 .animate-float {
@@ -399,4 +416,18 @@ html {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #002266;
+}
+
+/* Prevent scroll chaining */
+.scroll-container {
+  overscroll-behavior: contain;
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-container {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }

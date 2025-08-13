@@ -7,7 +7,6 @@ import {
   Button,
   Card,
   CardContent,
-  CardActions,
   CardMedia,
   Chip,
   Stack,
@@ -16,18 +15,19 @@ import {
 } from '@mui/material';
 import {
   Build,
-  Engineering,
   Architecture,
-  Store,
   ContactMail,
   ArrowForward,
   CheckCircle,
   Phone,
-  Construction
+  Construction,
+  Visibility,
+  Assignment,
+  Gavel
 } from '@mui/icons-material';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 // Intersection Observer Hook
 const useScrollAnimations = () => {
@@ -58,36 +58,44 @@ const useScrollAnimations = () => {
 
 export default function Home() {
   const theme = useTheme();
+  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
   useScrollAnimations();
 
   const services = [
     {
-      title: 'Công nghệ xây dựng',
-      description: 'Ứng dụng công nghệ hiện đại trong xây dựng với chất lượng cao',
-      icon: <Build sx={{ fontSize: 40 }} />,
-      href: '/services/construction-technology',
+      title: 'Dịch vụ thi công',
+      description: 'Thi công xây dựng chuyên nghiệp từ nhà ở đến công trình công nghiệp',
+      icon: <Build sx={{ fontSize: 30, color: 'white' }} />,
+      href: '/services/construction',
       color: theme.palette.primary.main
     },
     {
-      title: 'Tư vấn & Giám sát',
-      description: 'Dịch vụ tư vấn chuyên nghiệp và giám sát chất lượng công trình',
-      icon: <Engineering sx={{ fontSize: 40 }} />,
-      href: '/services/consultation',
-      color: theme.palette.secondary.main
-    },
-    {
-      title: 'Thiết kế kiến trúc',
-      description: 'Thiết kế sáng tạo và phù hợp với nhu cầu khách hàng',
-      icon: <Architecture sx={{ fontSize: 40 }} />,
-      href: '/services',
+      title: 'Tư vấn thiết kế',
+      description: 'Thiết kế kiến trúc, kết cấu và nội thất theo yêu cầu khách hàng',
+      icon: <Architecture sx={{ fontSize: 30, color: 'white' }} />,
+      href: '/services/design-consulting',
       color: '#4caf50'
     },
     {
-      title: 'Cửa hàng vật liệu',
-      description: 'Cung cấp vật liệu xây dựng chất lượng với giá cả cạnh tranh',
-      icon: <Store sx={{ fontSize: 40 }} />,
-      href: '/store',
-      color: '#ff9800'
+      title: 'Giám sát thi công',
+      description: 'Giám sát chất lượng, tiến độ và an toàn trong quá trình thi công',
+      icon: <Visibility sx={{ fontSize: 30, color: 'white' }} />,
+      href: '/services/supervision',
+      color: theme.palette.secondary.main
+    },
+    {
+      title: 'Tư vấn quản lý dự án',
+      description: 'Quản lý dự án chuyên nghiệp từ lập kế hoạch đến bàn giao',
+      icon: <Assignment sx={{ fontSize: 30, color: 'white' }} />,
+      href: '/services/project-management',
+      color: '#9c27b0'
+    },
+    {
+      title: 'Tư vấn đấu thầu',
+      description: 'Hỗ trợ lập hồ sơ mời thầu và tư vấn lựa chọn nhà thầu',
+      icon: <Gavel sx={{ fontSize: 30, color: 'white' }} />,
+      href: '/services/bidding-consulting',
+      color: '#ff5722'
     }
   ];
 
@@ -339,66 +347,252 @@ export default function Home() {
       </Box>
 
       {/* Services Section */}
-      <Container maxWidth="lg" sx={{ py: 10 }}>
-        <Box textAlign="center" mb={8} className="fade-in-on-scroll">
-          <Typography variant="h2" gutterBottom sx={{ fontWeight: 700 }}>
-            Dịch vụ của chúng tôi
-          </Typography>
-          <Typography variant="h6" color="text.secondary" sx={{ maxWidth: 600, mx: 'auto' }}>
-            Cung cấp giải pháp toàn diện từ thiết kế đến thi công và bảo trì
-          </Typography>
-        </Box>
+      <Box sx={{ color: 'black', py: 10 }}>
+        <Container maxWidth="lg">
+          {/* Main Container with Border */}
+          <Box
+            sx={{
+              border: `2px solid ${theme.palette.primary.main}`,
+              borderRadius: 4,
+              p: 6
+            }}
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              {/* Left Content */}
+              <div className="slide-in-left-on-scroll">
+                <Typography 
+                  variant="h2" 
+                  gutterBottom 
+                  sx={{ 
+                    fontWeight: 700,
+                    fontSize: { xs: '2.5rem', md: '3rem' },
+                    lineHeight: 1.2,
+                    mb: 4,
+                    color: 'black'
+                  }}
+                >
+                  Phát triển ngành xây dựng của bạn
+                </Typography>
+                <Typography 
+                  variant="body1" 
+                  sx={{ 
+                    fontSize: '1.1rem',
+                    lineHeight: 1.8,
+                    color: 'text.secondary',
+                    mb: 6,
+                    maxWidth: 500
+                  }}
+                >
+                  Từ thi công dân dụng đến công nghiệp, kiến thức chuyên sâu về ngành giúp chúng tôi xây dựng những giải pháp phù hợp với nhu cầu hiện tại và tương lai của dự án.
+                </Typography>
+                <Button
+                  variant="contained"
+                  size="large"
+                  endIcon={<ArrowForward />}
+                  component={Link}
+                  href="/services"
+                  sx={{
+                    backgroundColor: theme.palette.primary.main,
+                    color: 'white',
+                    fontWeight: 600,
+                    px: 4,
+                    py: 1.5,
+                    borderRadius: '50px',
+                    '&:hover': {
+                      backgroundColor: theme.palette.primary.dark,
+                    }
+                  }}
+                >
+                  Khám phá dịch vụ của chúng tôi
+                </Button>
+              </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-          {services.map((service, index) => (
-            <div key={index} className={`zoom-in-on-scroll animate-delay-${index + 1}`}>
-              <Card
-                sx={{
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  textAlign: 'center',
-                  transition: 'all 0.3s ease-in-out',
-                  '&:hover': {
-                    transform: 'translateY(-8px)',
-                    boxShadow: theme.shadows[8]
-                  }
-                }}
-              >
-                <CardContent sx={{ flexGrow: 1, p: 3 }}>
+              {/* Right Services Cards */}
+              <div className="slide-in-right-on-scroll" style={{ position: 'relative' }}>
+                <Box
+                  className="scroll-container"
+                  onScroll={(e) => {
+                    const target = e.target as HTMLElement;
+                    const isScrolledToBottom = 
+                      target.scrollHeight - target.scrollTop <= target.clientHeight + 10;
+                    setShowScrollIndicator(!isScrolledToBottom);
+                  }}
+                  onWheel={(e) => {
+                    const target = e.currentTarget as HTMLElement;
+                    const { deltaY } = e;
+                    const { scrollTop, scrollHeight, clientHeight } = target;
+                    
+                    // If scrolling down and at bottom, prevent default
+                    if (deltaY > 0 && scrollTop + clientHeight >= scrollHeight - 1) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      return;
+                    }
+                    
+                    // If scrolling up and at top, prevent default  
+                    if (deltaY < 0 && scrollTop <= 0) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      return;
+                    }
+                  }}
+                  sx={{
+                    height: 400,
+                    position: 'relative',
+                    overflowY: 'auto',
+                    overflowX: 'hidden',
+                    overscrollBehavior: 'contain', // Ngăn chặn scroll chain
+                    scrollBehavior: 'auto', // Tắt built-in smooth để tránh conflict
+                    // Hide scrollbar
+                    scrollbarWidth: 'none', // Firefox
+                    msOverflowStyle: 'none', // IE and Edge
+                    '&::-webkit-scrollbar': {
+                      display: 'none', // Chrome, Safari, Opera
+                    },
+                    // Fade effects
+                    '&::before': {
+                      content: '""',
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      height: '20px',
+                      background: 'linear-gradient(to bottom, white 0%, transparent 100%)',
+                      zIndex: 1,
+                      pointerEvents: 'none',
+                    },
+                    '&::after': {
+                      content: '""',
+                      position: 'absolute',
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      height: '20px',
+                      background: 'linear-gradient(to top, white 0%, transparent 100%)',
+                      zIndex: 1,
+                      pointerEvents: 'none',
+                    },
+                  }}
+                >
+                  <div className="space-y-3 pr-2">
+                    {services.map((service, index) => (
+                      <div
+                        key={index}
+                      >
+                        <Box
+                          component={Link}
+                          href={service.href}
+                          sx={{
+                            p: 3,
+                            backgroundColor: 'white',
+                            border: '1px solid #e0e0e0',
+                            borderRadius: 3,
+                            textDecoration: 'none',
+                            color: 'black',
+                            transition: 'all 0.3s ease-in-out',
+                            display: 'block',
+                            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                            position: 'relative',
+                            '&:hover': {
+                              transform: 'translateX(8px)',
+                              // borderColor: theme.palette.primary.main,
+                              zIndex: 2,
+                            }
+                          }}
+                        >
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+                            <Box
+                              sx={{
+                                p: 1.5,
+                                borderRadius: 2,
+                                backgroundColor: service.color,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                minWidth: 50,
+                                height: 50,
+                                boxShadow: `0 4px 12px ${service.color}40`
+                              }}
+                            >
+                              {service.icon}
+                            </Box>
+                            <Box sx={{ flex: 1 }}>
+                              <Typography 
+                                variant="h6" 
+                                sx={{ 
+                                  fontWeight: 700,
+                                  mb: 0.5,
+                                  color: 'black',
+                                  fontSize: '1.1rem'
+                                }}
+                              >
+                                {service.title}
+                              </Typography>
+                              <Typography 
+                                variant="body2" 
+                                sx={{ 
+                                  color: 'text.secondary',
+                                  lineHeight: 1.4,
+                                  fontSize: '0.85rem'
+                                }}
+                              >
+                                {service.description}
+                              </Typography>
+                            </Box>
+                            <ArrowForward sx={{ color: 'text.secondary', ml: 1, fontSize: 20 }} />
+                          </Box>
+                        </Box>
+                      </div>
+                    ))}
+                  </div>
+                </Box>
+
+                {/* Scroll Indicator - Mouse Effect */}
+                {showScrollIndicator && (
                   <Box
                     sx={{
-                      color: service.color,
-                      mb: 2,
+                      position: 'absolute',
+                      right: -35,
+                      top: '50%',
+                      transform: 'translateY(-50%)',
                       display: 'flex',
-                      justifyContent: 'center'
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      zIndex: 2,
+                      opacity: 0.7,
+                      '&:hover': { opacity: 1 }
                     }}
                   >
-                    {service.icon}
+                    {/* Mouse Container */}
+                    <Box 
+                      sx={{ 
+                        width: 22, 
+                        height: 35, 
+                        border: '2px solid', 
+                        borderColor: theme.palette.primary.main,
+                        borderRadius: '12px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'flex-start',
+                        pt: 0.8
+                      }}
+                    >
+                      {/* Mouse Wheel */}
+                      <Box sx={{ 
+                        width: 3, 
+                        height: 6, 
+                        backgroundColor: theme.palette.primary.main,
+                        borderRadius: 2,
+                        animation: 'scroll 1.5s infinite'
+                      }} />
+                    </Box>
                   </Box>
-                  <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
-                    {service.title}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                    {service.description}
-                  </Typography>
-                </CardContent>
-                <CardActions sx={{ justifyContent: 'center', pb: 3 }}>
-                  <Button
-                    component={Link}
-                    href={service.href}
-                    size="small"
-                    endIcon={<ArrowForward />}
-                    sx={{ fontWeight: 500 }}
-                  >
-                    Tìm hiểu thêm
-                  </Button>
-                </CardActions>
-              </Card>
+                )}
+              </div>
             </div>
-          ))}
-        </div>
-      </Container>
+          </Box>
+        </Container>
+      </Box>
 
       {/* Animated Divider */}
       <Box sx={{ py: 4 }}>

@@ -12,8 +12,13 @@ import {
   MenuItem,
   Fade,
   useTheme,
+  Divider,
 } from "@mui/material"
-import { Menu as MenuIcon, Phone } from "@mui/icons-material"
+import { 
+  Menu as MenuIcon, 
+  Phone,
+  ExpandMore,
+} from "@mui/icons-material"
 import Link from "next/link"
 import Image from "next/image"
 import { useState, useEffect } from "react"
@@ -24,7 +29,32 @@ export default function Header() {
   const pathname = usePathname()
   const isHomePage = pathname === '/'
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null)
+  const [anchorElServices, setAnchorElServices] = useState<null | HTMLElement>(null)
   const [scrolled, setScrolled] = useState(false)
+
+  // Services data as requested
+  const services = [
+    {
+      title: 'Thi công xây dựng công trình',
+      href: '/services/construction',
+    },
+    {
+      title: 'Tư vấn và thiết kế',
+      href: '/services/design-consulting',
+    },
+    {
+      title: 'Tư vấn giám sát',
+      href: '/services/supervision',
+    },
+    {
+      title: 'Tư vấn quản lý dự án',
+      href: '/services/project-management',
+    },
+    {
+      title: 'Tư vấn đấu thầu',
+      href: '/services/bidding-consulting',
+    }
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,11 +74,19 @@ export default function Header() {
     setAnchorElNav(null)
   }
 
+  const handleOpenServicesMenu = () => {
+    setAnchorElServices(document.getElementById('services-button'))
+  }
+
+  const handleCloseServicesMenu = () => {
+    setAnchorElServices(null)
+  }
+
   const navigationItems = [
     { label: "Trang chủ", href: "/" },
     { label: "Giới thiệu", href: "/about" },
-    { label: "Dịch vụ", href: "/services" },
-    { label: "Cửa hàng", href: "/store" },
+    { label: "Dịch vụ", href: "/services", hasDropdown: true },
+    { label: "Cửa hàng", href: "/#" },
     { label: "Liên lạc", href: "/contact" },
   ]
 
@@ -240,44 +278,131 @@ export default function Header() {
             {/* Desktop Navigation */}
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, justifyContent: "center" }}>
               {navigationItems.map((item) => (
-                <Button
-                  key={item.label}
-                  component={Link}
-                  href={item.href}
-                  sx={{
-                    mx: 1,
-                    px: 3,
-                    py: 1,
-                    color: "white",
-                    fontSize: "16px",
-                    fontWeight: 500,
-                    textTransform: "none",
-                    borderRadius: 2,
-                    position: "relative",
-                    overflow: "hidden",
-                    transition: "all 0.3s ease",
-                    "&:before": {
-                      content: '""',
-                      position: "absolute",
-                      top: 0,
-                      left: "-100%",
-                      width: "100%",
-                      height: "100%",
-                      background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
-                      transition: "left 0.5s ease",
-                    },
-                    "&:hover": {
-                      background: "rgba(255,255,255,0.15)",
-                      transform: "translateY(-2px)",
-                      boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
-                      "&:before": {
-                        left: "100%",
+                item.hasDropdown ? (
+                  <Box 
+                    key={item.label} 
+                    sx={{ position: 'relative' }}
+                    onMouseEnter={handleOpenServicesMenu}
+                    onMouseLeave={handleCloseServicesMenu}
+                  >
+                    <Button
+                      id="services-button"
+                      sx={{
+                        mx: 1,
+                        px: 3,
+                        py: 1,
+                        color: "white",
+                        fontSize: "18px",
+                        fontWeight: 500,
+                        textTransform: "none",
+                        borderRadius: 2,
+                        position: "relative",
+                        transition: "color 0.3s ease",
+                        background: "transparent",
+                        "&:hover": {
+                          color: "#58d0f5",
+                          background: "transparent",
+                          boxShadow: "none",
+                          transform: "none",
+                        },
+                      }}
+                      endIcon={<ExpandMore />}
+                    >
+                      {item.label}
+                    </Button>
+                    {/* Custom Dropdown */}
+                    {Boolean(anchorElServices) && (
+                      <Box
+                        sx={{
+                          position: "absolute",
+                          top: "100%",
+                          left: 0,
+                          mt: 0, // Loại bỏ margin để tạo cầu nối
+                          pt: 1, // Thêm padding top để tạo vùng hover
+                          background: "transparent", // Vùng cầu nối trong suốt
+                          zIndex: 1000,
+                        }}
+                      >
+                        {/* Dropdown content */}
+                        <Box
+                          sx={{
+                            background: "rgba(255, 255, 255, 0.95)",
+                            backdropFilter: "blur(20px)",
+                            border: "1px solid rgba(255, 255, 255, 0.3)",
+                            borderRadius: 3,
+                            minWidth: 240,
+                            boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
+                            p: 1,
+                          }}
+                        >
+                          {services.map((service, index) => (
+                            <Box
+                              key={index}
+                              component={Link}
+                              href={service.href}
+                              onClick={handleCloseServicesMenu}
+                              sx={{
+                                display: "block",
+                                textDecoration: "none",
+                                px: 3,
+                                py: 1.5,
+                                borderRadius: 1,
+                                mb: index < services.length - 1 ? 0.5 : 0,
+                                transition: "all 0.3s ease",
+                                cursor: "pointer",
+                                "&:hover": {
+                                  backgroundColor: "rgba(88, 208, 245, 0.1)",
+                                  "& .service-title": {
+                                    color: "#58d0f5",
+                                  },
+                                },
+                              }}
+                            >
+                              <Typography
+                                className="service-title"
+                                sx={{
+                                  fontWeight: 500,
+                                  fontSize: "1rem",
+                                  color: "rgba(0, 0, 0, 0.87)",
+                                  transition: "color 0.3s ease",
+                                }}
+                              >
+                                {service.title}
+                              </Typography>
+                            </Box>
+                          ))}
+                        </Box>
+                      </Box>
+                    )}
+                  </Box>
+                ) : (
+                  <Button
+                    key={item.label}
+                    component={Link}
+                    href={item.href}
+                    sx={{
+                      mx: 1,
+                      px: 3,
+                      py: 1,
+                      color: "white",
+                      fontSize: "18px",
+                      fontWeight: 500,
+                      textTransform: "none",
+                      borderRadius: 2,
+                      position: "relative",
+                      transition: "color 0.3s ease",
+                      background: "transparent",
+                      "&:hover": {
+                        color: "#58d0f5",
+                        background: "transparent",
+                        boxShadow: "none",
+                        transform: "none",
                       },
-                    },
-                  }}
-                >
-                  {item.label}
-                </Button>
+                    }}
+                  >
+                    {item.label}
+                  </Button>
+                )
               ))}
             </Box>
 
@@ -329,33 +454,96 @@ export default function Header() {
               }}
             >
               {navigationItems.map((item) => (
-                <MenuItem
-                  key={item.label}
-                  onClick={handleCloseNavMenu}
-                  sx={{
-                    color: "white",
-                    py: 1.5,
-                    px: 3,
-                    transition: "all 0.3s ease",
-                    "&:hover": {
-                      background: "rgba(255,255,255,0.1)",
-                      transform: "translateX(8px)",
-                    },
-                  }}
-                >
-                  <Typography
-                    component={Link}
-                    href={item.href}
+                item.hasDropdown ? (
+                  <Box key={item.label}>
+                    <MenuItem
+                      sx={{
+                        color: "white",
+                        py: 1.5,
+                        px: 3,
+                        transition: "all 0.3s ease",
+                        "&:hover": {
+                          background: "rgba(255,255,255,0.1)",
+                          transform: "translateX(8px)",
+                        },
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          textDecoration: "none",
+                          color: "inherit",
+                          fontWeight: 500,
+                          fontSize: "18px",
+                        }}
+                      >
+                        {item.label}
+                      </Typography>
+                    </MenuItem>
+                    {services.map((service, index) => (
+                      <MenuItem
+                        key={`${item.label}-${index}`}
+                        onClick={handleCloseNavMenu}
+                        component={Link}
+                        href={service.href}
+                        sx={{
+                          color: "rgba(255,255,255,0.8)",
+                          py: 1,
+                          px: 5,
+                          fontSize: "14px",
+                          transition: "color 0.3s ease",
+                          background: "transparent",
+                          "&:hover": {
+                            background: "transparent",
+                            color: "#58d0f5",
+                            transform: "none",
+                          },
+                        }}
+                      >
+                        <Typography
+                          sx={{
+                            textDecoration: "none",
+                            color: "inherit",
+                            fontWeight: 400,
+                            fontSize: "16px",
+                          }}
+                        >
+                          {service.title}
+                        </Typography>
+                      </MenuItem>
+                    ))}
+                    <Divider sx={{ borderColor: "rgba(255,255,255,0.1)" }} />
+                  </Box>
+                ) : (
+                  <MenuItem
+                    key={item.label}
+                    onClick={handleCloseNavMenu}
                     sx={{
-                      textDecoration: "none",
-                      color: "inherit",
-                      fontWeight: 500,
-                      fontSize: "16px",
+                      color: "white",
+                      py: 1.5,
+                      px: 3,
+                      transition: "color 0.3s ease",
+                      background: "transparent",
+                      "&:hover": {
+                        background: "transparent",
+                        color: "#58d0f5",
+                        transform: "none",
+                      },
                     }}
                   >
-                    {item.label}
-                  </Typography>
-                </MenuItem>
+                    <Typography
+                      component={Link}
+                      href={item.href}
+                      sx={{
+                        textDecoration: "none",
+                        color: "inherit",
+                        fontWeight: 500,
+                        fontSize: "18px",
+                      }}
+                    >
+                      {item.label}
+                    </Typography>
+                  </MenuItem>
+                )
               ))}
               <MenuItem sx={{ borderTop: "1px solid rgba(255,255,255,0.1)", mt: 1 }}>
                 <Button
