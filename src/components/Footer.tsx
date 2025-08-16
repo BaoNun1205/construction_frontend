@@ -20,9 +20,11 @@ import {
   LocationOn
 } from '@mui/icons-material';
 import Link from 'next/link';
+import { useTranslations } from '@/hooks/useTranslations';
 
 export default function Footer() {
-  const theme = useTheme()
+  const theme = useTheme();
+  const { t } = useTranslations();
   
   return (
     <Box
@@ -39,11 +41,10 @@ export default function Footer() {
           {/* Company Info */}
           <div className="md:col-span-1">
             <Typography variant="h6" gutterBottom sx={{ fontWeight: 700 }}>
-              Lai Phát
+              {t('footer.company')}
             </Typography>
             <Typography variant="body2" sx={{ mb: 2, opacity: 0.8 }}>
-              Đối tác tin cậy trong mọi dự án xây dựng của bạn. 
-              Chất lượng - Uy tín - Chuyên nghiệp.
+              {t('footer.description')}
             </Typography>
             <Stack direction="row" spacing={1}>
               <IconButton
@@ -76,20 +77,20 @@ export default function Footer() {
           {/* Quick Links */}
           <div>
             <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
-              Liên kết nhanh
+              {t('footer.quickLinks')}
             </Typography>
             <Stack spacing={1}>
               <MuiLink component={Link} href="/about" color="inherit" sx={{ opacity: 0.8, '&:hover': { opacity: 1 } }}>
-                Giới thiệu
+                {t('footer.about')}
               </MuiLink>
               <MuiLink component={Link} href="/services" color="inherit" sx={{ opacity: 0.8, '&:hover': { opacity: 1 } }}>
-                Dịch vụ
+                {t('footer.services')}
               </MuiLink>
               <MuiLink component={Link} href="/store" color="inherit" sx={{ opacity: 0.8, '&:hover': { opacity: 1 } }}>
-                Cửa hàng
+                {t('footer.store')}
               </MuiLink>
               <MuiLink component={Link} href="/contact" color="inherit" sx={{ opacity: 0.8, '&:hover': { opacity: 1 } }}>
-                Liên lạc
+                {t('footer.contact')}
               </MuiLink>
             </Stack>
           </div>
@@ -97,20 +98,20 @@ export default function Footer() {
           {/* Services */}
           <div>
             <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
-              Dịch vụ
+              {t('footer.servicesTitle')}
             </Typography>
             <Stack spacing={1}>
               <MuiLink component={Link} href="/services/construction-technology" color="inherit" sx={{ opacity: 0.8, '&:hover': { opacity: 1 } }}>
-                Công nghệ xây dựng
+                {t('footer.constructionTech')}
               </MuiLink>
               <MuiLink component={Link} href="/services/consultation" color="inherit" sx={{ opacity: 0.8, '&:hover': { opacity: 1 } }}>
-                Tư vấn & Giám sát
+                {t('footer.consultation')}
               </MuiLink>
               <MuiLink component={Link} href="/services/quality-control" color="inherit" sx={{ opacity: 0.8, '&:hover': { opacity: 1 } }}>
-                Kiểm soát chất lượng
+                {t('footer.qualityControl')}
               </MuiLink>
               <MuiLink href="#" color="inherit" sx={{ opacity: 0.8, '&:hover': { opacity: 1 } }}>
-                Thiết kế kiến trúc
+                {t('footer.architecture')}
               </MuiLink>
             </Stack>
           </div>
@@ -118,25 +119,25 @@ export default function Footer() {
           {/* Contact Info */}
           <div>
             <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
-              Liên hệ
+              {t('footer.contactTitle')}
             </Typography>
             <Stack spacing={2}>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <LocationOn sx={{ mr: 1, fontSize: 20 }} />
                 <Typography variant="body2" sx={{ opacity: 0.8 }}>
-                  Xã Vĩnh Lộc, TP.HCM
+                  {t('footer.address')}
                 </Typography>
               </Box>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Phone sx={{ mr: 1, fontSize: 20 }} />
                 <Typography variant="body2" sx={{ opacity: 0.8 }}>
-                  0939 927 975
+                  {t('footer.phone')}
                 </Typography>
               </Box>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Email sx={{ mr: 1, fontSize: 20 }} />
                 <Typography variant="body2" sx={{ opacity: 0.8 }}>
-                  laiphatgroup@gmail.com
+                  {t('footer.email')}
                 </Typography>
               </Box>
             </Stack>
@@ -147,14 +148,14 @@ export default function Footer() {
         
         <div className="flex flex-col md:flex-row justify-between items-center">
           <Typography variant="body2" sx={{ opacity: 0.7 }}>
-            © 2025 LaiPhat Construction. All rights reserved.
+            {t('footer.copyright')}
           </Typography>
           <Stack direction="row" spacing={3} sx={{ mt: { xs: 2, md: 0 } }}>
             <MuiLink href="#" color="inherit" sx={{ opacity: 0.7, '&:hover': { opacity: 1 } }}>
-              Chính sách bảo mật
+              {t('footer.privacy')}
             </MuiLink>
             <MuiLink href="#" color="inherit" sx={{ opacity: 0.7, '&:hover': { opacity: 1 } }}>
-              Điều khoản sử dụng
+              {t('footer.terms')}
             </MuiLink>
           </Stack>
         </div>

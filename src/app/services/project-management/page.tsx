@@ -12,6 +12,7 @@ import {
   AccountBalance,
   Groups,
 } from '@mui/icons-material';
+import { useTranslations } from '@/hooks/useTranslations';
 
 // Intersection Observer Hook
 const useScrollAnimations = () => {
@@ -42,99 +43,44 @@ const useScrollAnimations = () => {
 export default function ProjectManagementPage() {
   useScrollAnimations();
   const theme = useTheme();
+  const { t } = useTranslations();
 
   const managementServices = [
     {
       icon: <Assignment sx={{ fontSize: 60 }} />,
-      title: "Lập kế hoạch dự án",
-      description: "Xây dựng kế hoạch tổng thể chi tiết từ khởi công đến bàn giao",
-      features: [
-        "Phân tích và định nghĩa phạm vi dự án",
-        "Lập lịch trình thi công chi tiết (Gantt Chart)",
-        "Xác định mốc quan trọng và deliverables", 
-        "Đánh giá rủi ro và lập kế hoạch ứng phó"
-      ],
-      tools: [
-        "Microsoft Project",
-        "Primavera P6", 
-        "Smartsheet",
-        "Gantt Chart Tools"
-      ],
-      experience: "10+ năm kinh nghiệm",
-      projects: "200+ dự án thành công"
+      title: t('projectManagement.services.planning.title') as string,
+      description: t('projectManagement.services.planning.description') as string,
+      features: t('projectManagement.services.planning.features') as string[],
+      tools: t('projectManagement.services.planning.tools') as string[],
+      experience: t('projectManagement.services.planning.experience') as string,
+      projects: t('projectManagement.services.planning.projects') as string
     },
     {
       icon: <AccountBalance sx={{ fontSize: 60 }} />,
-      title: "Quản lý ngân sách",
-      description: "Kiểm soát chi phí và tối ưu hóa ngân sách dự án hiệu quả",
-      features: [
-        "Lập dự toán chi tiết các hạng mục",
-        "Theo dõi chi phí thực tế vs kế hoạch",
-        "Kiểm soát chi phí phát sinh",
-        "Báo cáo tài chính định kỳ"
-      ],
-      tools: [
-        "Cost Control Software",
-        "Excel Advanced",
-        "SAP Project System",
-        "Oracle Primavera"
-      ],
-      experience: "15+ năm kinh nghiệm",
-      projects: "Tiết kiệm 10-20% ngân sách"
+      title: t('projectManagement.services.budget.title') as string,
+      description: t('projectManagement.services.budget.description') as string,
+      features: t('projectManagement.services.budget.features') as string[],
+      tools: t('projectManagement.services.budget.tools') as string[],
+      experience: t('projectManagement.services.budget.experience') as string,
+      projects: t('projectManagement.services.budget.projects') as string
     },
     {
       icon: <Groups sx={{ fontSize: 60 }} />,
-      title: "Quản lý nhân lực & thiết bị", 
-      description: "Tối ưu hóa việc sử dụng nguồn nhân lực và thiết bị máy móc",
-      features: [
-        "Lập kế hoạch nhân lực theo giai đoạn",
-        "Quản lý lịch làm việc và ca trực",
-        "Điều phối thiết bị máy móc hiệu quả",
-        "Đánh giá hiệu suất và năng suất"
-      ],
-      tools: [
-        "Resource Management Tools",
-        "HR Management System",
-        "Equipment Tracking",
-        "Performance Analytics"
-      ],
-      experience: "12+ năm kinh nghiệm", 
-      projects: "Tăng 30% hiệu suất"
+      title: t('projectManagement.services.resources.title') as string,
+      description: t('projectManagement.services.resources.description') as string,
+      features: t('projectManagement.services.resources.features') as string[],
+      tools: t('projectManagement.services.resources.tools') as string[],
+      experience: t('projectManagement.services.resources.experience') as string,
+      projects: t('projectManagement.services.resources.projects') as string
     },
   ];
 
-  const managementPhases = [
-    {
-      phase: "Khởi tạo",
-      duration: "1-2 tuần",
-      activities: ["Định nghĩa mục tiêu", "Phân tích stakeholders", "Lập charter dự án"],
-      icon: "🎯"
-    },
-    {
-      phase: "Lập kế hoạch", 
-      duration: "2-3 tuần",
-      activities: ["Chi tiết scope", "Lập timeline", "Phân bổ nguồn lực"],
-      icon: "📋"
-    },
-    {
-      phase: "Thực hiện",
-      duration: "Theo dự án",
-      activities: ["Điều phối thi công", "Giám sát tiến độ", "Báo cáo định kỳ"],
-      icon: "⚡"
-    },
-    {
-      phase: "Giám sát",
-      duration: "Liên tục", 
-      activities: ["Tracking KPI", "Risk management", "Quality assurance"],
-      icon: "📊"
-    },
-    {
-      phase: "Kết thúc",
-      duration: "1-2 tuần",
-      activities: ["Nghiệm thu", "Bàn giao", "Lessons learned"],
-      icon: "✅"
-    }
-  ];
+  const managementPhases = t('projectManagement.phases.steps') as Array<{
+    phase: string;
+    duration: string;
+    activities: string[];
+    icon: string;
+  }>;
 
   return (
     <Box className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-50">
@@ -146,14 +92,14 @@ export default function ProjectManagementPage() {
               variant="h2"
               className="text-4xl font-bold text-center mb-6 text-gray-800"
             >
-              Tư Vấn Quản Lý
-              <span style={{ color: theme.palette.primary.main }}> Dự Án</span>
+              {t('projectManagement.title') as string}
+              <span style={{ color: theme.palette.primary.main }}> {t('projectManagement.titleHighlight') as string}</span>
             </Typography>
             <Typography
               variant="h6"
               className="text-center text-gray-600 max-w-4xl mx-auto mb-8 leading-relaxed"
             >
-              Dịch vụ quản lý dự án chuyên nghiệp giúp đảm bảo dự án hoàn thành đúng tiến độ, ngân sách và chất lượng cam kết
+              {t('projectManagement.subtitle') as string}
             </Typography>
           </div>
         </section>
@@ -236,7 +182,7 @@ export default function ProjectManagementPage() {
                   
                   <div className="space-y-4 mb-6 flex-grow">
                     <Typography variant="h6" className="font-semibold text-gray-800">
-                      Hoạt động chính:
+                      {t('projectManagement.mainActivities') as string}
                     </Typography>
                     {service.features.map((feature, idx) => (
                       <div key={idx} className="flex items-start text-sm text-gray-700 group-hover:text-gray-800 transition-colors duration-300">
@@ -253,7 +199,7 @@ export default function ProjectManagementPage() {
 
                   <div className="border-t border-gray-200/50 pt-4">
                     <Typography variant="subtitle2" className="font-semibold text-gray-800 mb-2">
-                      Công cụ sử dụng:
+                      {t('projectManagement.toolsUsed') as string}
                     </Typography>
                     <div className="flex flex-wrap gap-1">
                       {service.tools.map((tool, idx) => (
@@ -276,10 +222,10 @@ export default function ProjectManagementPage() {
         <section className="slide-in-right-on-scroll">
           <div className="flex flex-col items-center justify-center text-center mb-12">
             <Typography variant="h3" className="font-bold text-gray-800 mb-4">
-              5 Giai Đoạn Quản Lý Dự Án
+              {t('projectManagement.phases.title') as string}
             </Typography>
             <Typography variant="body1" className="text-gray-600 max-w-2xl mx-auto">
-              Áp dụng phương pháp quản lý dự án quốc tế PMBOK để đảm bảo hiệu quả cao nhất
+              {t('projectManagement.phases.subtitle') as string}
             </Typography>
           </div>
 
@@ -345,25 +291,25 @@ export default function ProjectManagementPage() {
             <div className="relative z-10">
               <div className="flex flex-col items-center justify-center text-center mb-12">
 								<Typography variant="h3" className="mb-6 font-bold text-white">
-									Dự Án Thành Công Cùng Chuyên Gia
+									{t('projectManagement.cta.title') as string}
 								</Typography>
 								<Typography variant="body1" className="text-white/90 max-w-2xl mx-auto leading-relaxed">
-									Với đội ngũ Project Manager được chứng nhận quốc tế, chúng tôi cam kết mang đến sự thành công cho mọi dự án
+									{t('projectManagement.cta.subtitle') as string}
 								</Typography>
 							</div>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <div className="text-center">
-                  <Typography variant="h4" className="font-bold mb-2">98%</Typography>
-                  <Typography variant="body2" className="opacity-90">Dự án hoàn thành đúng hạn</Typography>
+                  <Typography variant="h4" className="font-bold mb-2">{t('projectManagement.cta.stats.onTime') as string}</Typography>
+                  <Typography variant="body2" className="opacity-90">{t('projectManagement.cta.stats.onTimeDesc') as string}</Typography>
                 </div>
                 <div className="text-center">
-                  <Typography variant="h4" className="font-bold mb-2">15%</Typography>
-                  <Typography variant="body2" className="opacity-90">Tiết kiệm chi phí trung bình</Typography>
+                  <Typography variant="h4" className="font-bold mb-2">{t('projectManagement.cta.stats.savings') as string}</Typography>
+                  <Typography variant="body2" className="opacity-90">{t('projectManagement.cta.stats.savingsDesc') as string}</Typography>
                 </div>
                 <div className="text-center">
-                  <Typography variant="h4" className="font-bold mb-2">500+</Typography>
-                  <Typography variant="body2" className="opacity-90">Dự án đã quản lý</Typography>
+                  <Typography variant="h4" className="font-bold mb-2">{t('projectManagement.cta.stats.projects') as string}</Typography>
+                  <Typography variant="body2" className="opacity-90">{t('projectManagement.cta.stats.projectsDesc') as string}</Typography>
                 </div>
               </div>
               
@@ -375,7 +321,7 @@ export default function ProjectManagementPage() {
                     boxShadow: '0 8px 30px rgba(255,255,255,0.3)',
                   }}
                 >
-                  <span className="relative z-10 text-lg">0939 927 975</span>
+                  <span className="relative z-10 text-lg">{t('projectManagement.cta.phone') as string}</span>
                 </button>
                 
                 <button
@@ -384,7 +330,7 @@ export default function ProjectManagementPage() {
                     backdropFilter: 'blur(10px)',
                   }}
                 >
-                  <span className="relative z-10 text-lg">Tư Vấn Quản Lý Dự Án</span>
+                  <span className="relative z-10 text-lg">{t('projectManagement.cta.consultBtn') as string}</span>
                 </button>
               </div>
             </div>

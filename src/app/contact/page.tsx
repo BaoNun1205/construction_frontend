@@ -1,24 +1,28 @@
 'use client';
 
-import { useTheme } from '@mui/material';
+import { useTheme, Box, Container } from '@mui/material';
+import { useTranslations } from '@/hooks/useTranslations';
 
 export default function ContactPage() {
   const theme = useTheme();
+  const { t } = useTranslations();
+  
   return (
-    <div className="container mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold mb-8">
-        Liên Hệ <span style={{ color: theme.palette.primary.main }}>Với Chúng Tôi</span>
-      </h1>
+    <Box className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
+      <Container maxWidth="lg" className="py-16 space-y-20">
+        <h1 className="text-3xl font-bold mb-8">
+          {t('contact.title') as string} <span style={{ color: theme.palette.primary.main }}>{t('contact.titleHighlight') as string}</span>
+        </h1>
 
-      <div className="grid md:grid-cols-2 gap-12">
-        {/* Contact Form */}
-        <div>
-          <h2 className="text-2xl font-semibold mb-6">Gửi Tin Nhắn</h2>
+        <div className="grid md:grid-cols-2 gap-12">
+          {/* Contact Form */}
+          <div>
+          <h2 className="text-2xl font-semibold mb-6">{t('contact.form.title') as string}</h2>
           
           <form className="space-y-6">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                Họ và Tên
+                {t('contact.form.name') as string}
               </label>
               <input
                 type="text"
@@ -34,7 +38,7 @@ export default function ContactPage() {
 
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                Email
+                {t('contact.form.email') as string}
               </label>
               <input
                 type="email"
@@ -50,7 +54,7 @@ export default function ContactPage() {
 
             <div>
               <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                Số Điện Thoại
+                {t('contact.form.phone') as string}
               </label>
               <input
                 type="tel"
@@ -66,7 +70,7 @@ export default function ContactPage() {
 
             <div>
               <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                Tin Nhắn
+                {t('contact.form.message') as string}
               </label>
               <textarea
                 id="message"
@@ -93,14 +97,14 @@ export default function ContactPage() {
                 e.currentTarget.style.backgroundColor = theme.palette.primary.main;
               }}
             >
-              Gửi Tin Nhắn
+              {t('contact.form.submit') as string}
             </button>
           </form>
         </div>
 
         {/* Contact Information */}
         <div>
-          <h2 className="text-2xl font-semibold mb-6">Thông Tin Liên Hệ</h2>
+          <h2 className="text-2xl font-semibold mb-6">{t('contact.info.title') as string}</h2>
           
           <div className="space-y-8">
             {/* Office Address */}
@@ -109,12 +113,15 @@ export default function ContactPage() {
                 className="text-lg font-medium mb-3" 
                 style={{ color: theme.palette.primary.main }}
               >
-                Địa Chỉ Văn Phòng
+                {t('contact.info.office.title') as string}
               </h3>
               <p className="text-gray-600">
-                Xã Vĩnh Lộc<br />
-                Bình Chánh<br />
-                Thành phố Hồ Chí Minh, Việt Nam
+                {(t('contact.info.office.address') as string).split('\n').map((line, index) => (
+                  <span key={index}>
+                    {line}
+                    {index < 2 && <br />}
+                  </span>
+                ))}
               </p>
             </div>
 
@@ -124,12 +131,12 @@ export default function ContactPage() {
                 className="text-lg font-medium mb-3" 
                 style={{ color: theme.palette.primary.main }}
               >
-                Chi Tiết Liên Hệ
+                {t('contact.info.details.title') as string}
               </h3>
               <div className="space-y-2 text-gray-600">
-                <p><span className="font-medium">Điện thoại:</span> 0939 927 975</p>
-                <p><span className="font-medium">Email:</span> info@laiphat.com</p>
-                <p><span className="font-medium">Website:</span> www.laiphat.com</p>
+                <p><span className="font-medium">{t('contact.info.details.phone') as string}</span> 0939 927 975</p>
+                <p><span className="font-medium">{t('contact.info.details.email') as string}</span> info@laiphat.com</p>
+                <p><span className="font-medium">{t('contact.info.details.website') as string}</span> www.laiphat.com</p>
               </div>
             </div>
 
@@ -139,7 +146,7 @@ export default function ContactPage() {
                 className="text-lg font-medium mb-3" 
                 style={{ color: theme.palette.primary.main }}
               >
-                Bản Đồ Vị Trí
+                {t('contact.info.map.title') as string}
               </h3>
               <div className="h-64 rounded-lg overflow-hidden">
                 <iframe
@@ -161,10 +168,10 @@ export default function ContactPage() {
                 className="text-lg font-medium mb-3" 
                 style={{ color: theme.palette.primary.main }}
               >
-                Yêu Cầu Báo Giá
+                {t('contact.info.quote.title') as string}
               </h3>
               <p className="text-gray-600 mb-4">
-                Cần báo giá chi tiết? Điền vào biểu mẫu yêu cầu của chúng tôi.
+                {t('contact.info.quote.description') as string}
               </p>
               <button 
                 className="text-white px-6 py-2 rounded-md transition duration-200"
@@ -178,7 +185,7 @@ export default function ContactPage() {
                   e.currentTarget.style.backgroundColor = theme.palette.primary.main;
                 }}
               >
-                Mở Biểu Mẫu Yêu Cầu
+                {t('contact.info.quote.button') as string}
               </button>
             </div>
 
@@ -188,7 +195,7 @@ export default function ContactPage() {
                 className="text-lg font-medium mb-3" 
                 style={{ color: theme.palette.primary.main }}
               >
-                Mạng Xã Hội
+                {t('contact.info.social.title') as string}
               </h3>
               <div className="flex space-x-4">
                 <a 
@@ -222,6 +229,7 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
-    </div>
+      </Container>
+    </Box>
   );
 }

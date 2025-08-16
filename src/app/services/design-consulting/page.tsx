@@ -13,6 +13,7 @@ import {
   Home,
   Landscape,
 } from '@mui/icons-material';
+import { useTranslations } from '@/hooks/useTranslations';
 
 // Intersection Observer Hook
 const useScrollAnimations = () => {
@@ -43,59 +44,40 @@ const useScrollAnimations = () => {
 export default function DesignConsultingPage() {
   useScrollAnimations();
   const theme = useTheme();
+  const { t } = useTranslations();
 
   const designServices = [
     {
       icon: <Architecture sx={{ fontSize: 60 }} />,
-      title: "Thiết kế kiến trúc",
-      description: "Thiết kế kiến trúc chuyên nghiệp từ ý tưởng đến bản vẽ thi công hoàn chỉnh",
-      features: [
-        "Thiết kế sơ bộ & ý tưởng",
-        "Bản vẽ kiến trúc chi tiết",
-        "Phối cảnh 3D chân thực",
-        "Hồ sơ phép xây dựng"
-      ],
-      projects: "300+ thiết kế",
-      specialty: "Chuyên về kiến trúc hiện đại và truyền thống"
+      title: t('designConsulting.services.architecture.title') as string,
+      description: t('designConsulting.services.architecture.description') as string,
+      features: t('designConsulting.services.architecture.features') as string[],
+      projects: t('designConsulting.services.architecture.projects') as string,
+      specialty: t('designConsulting.services.architecture.specialty') as string
     },
     {
       icon: <Engineering sx={{ fontSize: 60 }} />,
-      title: "Thiết kế kết cấu",
-      description: "Tính toán và thiết kế kết cấu chịu lực đảm bảo an toàn và tối ưu chi phí",
-      features: [
-        "Tính toán kết cấu bê tông",
-        "Thiết kế kết cấu thép",
-        "Móng và nền công trình",
-        "Kiểm tra ổn định công trình"
-      ],
-      projects: "250+ công trình",
-      specialty: "Chuyên gia kết cấu có kinh nghiệm 15+ năm"
+      title: t('designConsulting.services.structural.title') as string,
+      description: t('designConsulting.services.structural.description') as string,
+      features: t('designConsulting.services.structural.features') as string[],
+      projects: t('designConsulting.services.structural.projects') as string,
+      specialty: t('designConsulting.services.structural.specialty') as string
     },
     {
       icon: <Home sx={{ fontSize: 60 }} />,
-      title: "Thiết kế nội thất",
-      description: "Thiết kế nội thất sang trọng, phù hợp với phong cách và ngân sách",
-      features: [
-        "Thiết kế concept nội thất",
-        "Bản vẽ chi tiết thi công",
-        "Lựa chọn vật liệu hoàn thiện",
-        "Phối màu và ánh sáng"
-      ],
-      projects: "200+ không gian",
-      specialty: "Phong cách đa dạng từ cổ điển đến hiện đại"
+      title: t('designConsulting.services.interior.title') as string,
+      description: t('designConsulting.services.interior.description') as string,
+      features: t('designConsulting.services.interior.features') as string[],
+      projects: t('designConsulting.services.interior.projects') as string,
+      specialty: t('designConsulting.services.interior.specialty') as string
     },
     {
       icon: <Landscape sx={{ fontSize: 60 }} />,
-      title: "Thiết kế cảnh quan",
-      description: "Tạo ra những không gian xanh hài hòa, thân thiện với môi trường",
-      features: [
-        "Quy hoạch không gian xanh",
-        "Thiết kế sân vườn, công viên",
-        "Hệ thống tưới tự động",
-        "Chọn cây và cấu trúc cảnh quan"
-      ],
-      projects: "150+ dự án",
-      specialty: "Cảnh quan bền vững và thân thiện môi trường"
+      title: t('designConsulting.services.landscape.title') as string,
+      description: t('designConsulting.services.landscape.description') as string,
+      features: t('designConsulting.services.landscape.features') as string[],
+      projects: t('designConsulting.services.landscape.projects') as string,
+      specialty: t('designConsulting.services.landscape.specialty') as string
     },
   ];
 
@@ -109,14 +91,14 @@ export default function DesignConsultingPage() {
               variant="h2"
               className="text-4xl font-bold text-center mb-6 text-gray-800"
             >
-              Tư Vấn Và
-              <span style={{ color: theme.palette.primary.main }}> Thiết Kế</span>
+              {t('designConsulting.title')}
+              <span style={{ color: theme.palette.primary.main }}> {t('designConsulting.titleHighlight')}</span>
             </Typography>
             <Typography
               variant="h6"
               className="text-center text-gray-600 max-w-4xl mx-auto mb-8 leading-relaxed"
             >
-              Đội ngũ kiến trúc sư và kỹ sư giàu kinh nghiệm sẽ biến ý tưởng của bạn thành hiện thực với những thiết kế độc đáo và chức năng
+              {t('designConsulting.subtitle')}
             </Typography>
           </div>
         </section>
@@ -201,7 +183,7 @@ export default function DesignConsultingPage() {
                   
                   <div className="space-y-3 flex-grow">
                     <Typography variant="h6" className="font-semibold text-gray-800 mb-4">
-                      Dịch vụ bao gồm:
+                      {t('designConsulting.servicesInclude')}
                     </Typography>
                     {service.features.map((feature, idx) => (
                       <div key={idx} className="flex items-center text-sm text-gray-700 group-hover:text-gray-800 transition-colors duration-300">
@@ -234,7 +216,7 @@ export default function DesignConsultingPage() {
                         e.currentTarget.style.transform = 'translateY(0)';
                       }}
                     >
-                      Tư vấn thiết kế miễn phí
+                      {t('designConsulting.freeConsulting')}
                     </button>
                   </div>
                 </div>
@@ -260,10 +242,10 @@ export default function DesignConsultingPage() {
             <div className="relative z-10">
               <div className="flex flex-col items-center justify-center text-center mb-12">
 								<Typography variant="h3" className="mb-6 font-bold text-white">
-									Bắt Đầu Thiết Kế Ước Mơ Của Bạn
+									{t('designConsulting.cta.title')}
 								</Typography>
 								<Typography variant="body1" className="text-white/90 max-w-2xl mx-auto leading-relaxed">
-									Hãy để chúng tôi biến ý tưởng của bạn thành những bản thiết kế hoàn hảo. Tư vấn miễn phí và báo giá cạnh tranh nhất thị trường
+									{t('designConsulting.cta.subtitle')}
 								</Typography>
 							</div>
               
@@ -284,7 +266,7 @@ export default function DesignConsultingPage() {
                   }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-cyan-50 to-blue-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <span className="relative z-10 text-lg">0939 927 975</span>
+                  <span className="relative z-10 text-lg">{t('designConsulting.cta.phone')}</span>
                 </button>
                 
                 <button
@@ -302,7 +284,7 @@ export default function DesignConsultingPage() {
                   }}
                 >
                   <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <span className="relative z-10 text-lg">Nhận Báo Giá Thiết Kế</span>
+                  <span className="relative z-10 text-lg">{t('designConsulting.cta.quoteBtn')}</span>
                 </button>
               </div>
             </div>

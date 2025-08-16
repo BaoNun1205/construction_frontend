@@ -13,6 +13,7 @@ import {
   Factory,
   Engineering,
 } from '@mui/icons-material';
+import { useTranslations } from '@/hooks/useTranslations';
 
 // Intersection Observer Hook
 const useScrollAnimations = () => {
@@ -43,55 +44,56 @@ const useScrollAnimations = () => {
 export default function ConstructionPage() {
   useScrollAnimations();
   const theme = useTheme();
+  const { t } = useTranslations();
 
   const constructionServices = [
     {
       icon: <HomeWork sx={{ fontSize: 60 }} />,
-      title: "Nhà dân dụng",
-      description: "Thi công các loại nhà ở từ nhà cấp 4 đến biệt thự cao cấp, chung cư, nhà phố thương mại",
+      title: t('construction.services.0.title'),
+      description: t('construction.services.0.description'),
       features: [
-        "Nhà ở riêng lẻ các loại",
-        "Chung cư, căn hộ cao cấp", 
-        "Biệt thự, villa nghỉ dưỡng",
-        "Nhà phố thương mại (shophouse)"
+        t('construction.services.0.features.0'),
+        t('construction.services.0.features.1'),
+        t('construction.services.0.features.2'),
+        t('construction.services.0.features.3')
       ],
-      projects: "200+ dự án hoàn thành",
+      projects: t('construction.services.0.projects'),
     },
     {
       icon: <Business sx={{ fontSize: 60 }} />,
-      title: "Công trình thương mại",
-      description: "Xây dựng các công trình phục vụ kinh doanh, thương mại và dịch vụ",
+      title: t('construction.services.1.title'),
+      description: t('construction.services.1.description'),
       features: [
-        "Trung tâm thương mại, siêu thị",
-        "Văn phòng, tòa nhà làm việc",
-        "Khách sạn, resort, nhà hàng",
-        "Showroom, cửa hàng kinh doanh"
+        t('construction.services.1.features.0'),
+        t('construction.services.1.features.1'),
+        t('construction.services.1.features.2'),
+        t('construction.services.1.features.3')
       ],
-      projects: "150+ dự án hoàn thành",
+      projects: t('construction.services.1.projects'),
     },
     {
       icon: <Factory sx={{ fontSize: 60 }} />,
-      title: "Công trình công nghiệp",
-      description: "Thi công các nhà máy, xưởng sản xuất và kho bãi quy mô lớn",
+      title: t('construction.services.2.title'),
+      description: t('construction.services.2.description'),
       features: [
-        "Nhà máy sản xuất các loại",
-        "Xưởng cơ khí, lắp ráp",
-        "Kho bãi, logistics",
-        "Công trình phụ trợ"
+        t('construction.services.2.features.0'),
+        t('construction.services.2.features.1'),
+        t('construction.services.2.features.2'),
+        t('construction.services.2.features.3')
       ],
-      projects: "100+ dự án hoàn thành",
+      projects: t('construction.services.2.projects'),
     },
     {
       icon: <Engineering sx={{ fontSize: 60 }} />,
-      title: "Hạ tầng kỹ thuật",
-      description: "Xây dựng các công trình hạ tầng đô thị và kỹ thuật chuyên ngành",
+      title: t('construction.services.3.title'),
+      description: t('construction.services.3.description'),
       features: [
-        "Đường giao thông, cầu cống",
-        "Hệ thống cấp thoát nước",
-        "Điện chiếu sáng đô thị",
-        "Công viên, cảnh quan"
+        t('construction.services.3.features.0'),
+        t('construction.services.3.features.1'),
+        t('construction.services.3.features.2'),
+        t('construction.services.3.features.3')
       ],
-      projects: "80+ dự án hoàn thành",
+      projects: t('construction.services.3.projects'),
     },
   ];
 
@@ -105,14 +107,14 @@ export default function ConstructionPage() {
 							variant="h2"
 							className="text-4xl font-bold text-center mb-6 text-gray-800"
 						>
-							Thi Công Xây Dựng
-							<span style={{ color: theme.palette.primary.main }}> Công Trình</span>
+							{t('construction.title')}
+							<span style={{ color: theme.palette.primary.main }}> {t('construction.titleHighlight')}</span>
 						</Typography>
 						<Typography
 							variant="h6"
 							className="text-center text-gray-600 max-w-4xl mx-auto mb-8 leading-relaxed"
 						>
-							Chúng tôi chuyên thi công các loại công trình từ dân dụng đến công nghiệp với chất lượng cao và tiến độ đúng cam kết
+							{t('construction.description')}
 						</Typography>
 					</div>
         </section>
@@ -194,7 +196,7 @@ export default function ConstructionPage() {
                   
                   <div className="space-y-3 flex-grow">
                     <Typography variant="h6" className="font-semibold text-gray-800 mb-3">
-                      Loại hình thi công:
+                      {t('construction.featureTitle')}
                     </Typography>
                     {service.features.map((feature, idx) => (
                       <div key={idx} className="flex items-center text-sm text-gray-700 group-hover:text-gray-800 transition-colors duration-300">
@@ -231,10 +233,10 @@ export default function ConstructionPage() {
             <div className="relative z-10">
               <div className="flex flex-col items-center justify-center text-center mb-12">
 									<Typography variant="h3" className="mb-6 font-bold text-white">
-									Sẵn Sàng Khởi Công Dự Án Của Bạn?
+									{t('construction.cta.title')}
 									</Typography>
 									<Typography variant="body1" className="text-white/90 max-w-2xl mx-auto leading-relaxed">
-									Liên hệ với chúng tôi ngay hôm nay để được tư vấn chi tiết về thi công xây dựng và báo giá miễn phí
+									{t('construction.cta.description')}
 									</Typography>
 							</div>
               
@@ -254,7 +256,7 @@ export default function ConstructionPage() {
                   }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-cyan-50 to-blue-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <span className="relative z-10 text-lg">0939 927 975</span>
+                  <span className="relative z-10 text-lg">{t('construction.cta.phone')}</span>
                 </button>
                 
                 <button
@@ -272,7 +274,7 @@ export default function ConstructionPage() {
                   }}
                 >
                   <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <span className="relative z-10 text-lg">Yêu Cầu Báo Giá</span>
+                  <span className="relative z-10 text-lg">{t('construction.cta.quoteBtn')}</span>
                 </button>
               </div>
             </div>

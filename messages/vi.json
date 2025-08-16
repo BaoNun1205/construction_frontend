@@ -1,0 +1,805 @@
+{
+  "header": {
+		"company": "LAI PHÁT",
+		"title": "Uy tín tạo niềm tin",
+		"services": {
+			"construction": "Thi công xây dựng công trình",
+			"design": "Tư vấn và thiết kế",
+			"supervision": "Tư vấn giám sát",
+			"projectManagement": "Tư vấn quản lý dự án",
+			"bidding": "Tư vấn đấu thầu"
+		}
+	},
+  "nav": {
+    "home": "Trang chủ",
+    "about": "Giới thiệu",
+    "services": "Dịch vụ",
+    "store": "Cửa hàng",
+    "contact": "Liên hệ"
+  },
+  "home": {
+    "hero": {
+      "title": "LAI PHÁT",
+      "subtitle": "Đối tác tin cậy trong mọi dự án xây dựng của bạn.",
+      "description": "Chất lượng - Uy tín - Chuyên nghiệp",
+      "contactBtn": "Liên hệ ngay",
+      "phone": "0939 927 975",
+      "scrollDown": "Cuộn xuống để xem thêm"
+    },
+    "services": {
+      "title": "Phát triển ngành xây dựng của bạn",
+      "description": "Từ thi công dân dụng đến công nghiệp, kiến thức chuyên sâu về ngành giúp chúng tôi xây dựng những giải pháp phù hợp với nhu cầu hiện tại và tương lai của dự án.",
+      "exploreBtn": "Khám phá dịch vụ của chúng tôi",
+      "constructionService": "Dịch vụ thi công",
+      "constructionDesc": "Thi công xây dựng chuyên nghiệp từ nhà ở đến công trình công nghiệp",
+      "designConsulting": "Tư vấn thiết kế", 
+      "designDesc": "Thiết kế kiến trúc, kết cấu và nội thất theo yêu cầu khách hàng",
+      "supervision": "Giám sát thi công",
+      "supervisionDesc": "Giám sát chất lượng, tiến độ và an toàn trong quá trình thi công",
+      "projectManagement": "Tư vấn quản lý dự án",
+      "projectDesc": "Quản lý dự án chuyên nghiệp từ lập kế hoạch đến bàn giao",
+      "bidding": "Tư vấn đấu thầu",
+      "biddingDesc": "Hỗ trợ tư vấn và chuẩn bị hồ sơ đấu thầu cho các dự án xây dựng"
+    },
+    "projects": {
+      "title": "Dự án tiêu biểu",
+      "subtitle": "Những công trình đã hoàn thành với chất lượng xuất sắc",
+      "viewDetail": "Xem chi tiết",
+      "completed": "Dự án hoàn thành",
+      "completedOn": "Hoàn thành"
+    },
+    "cta": {
+      "title": "Sẵn sàng bắt đầu dự án?",
+      "subtitle": "Liên hệ với chúng tôi ngay hôm nay để được tư vấn miễn phí",
+      "consultBtn": "Tư vấn miễn phí",
+      "servicesBtn": "Xem dịch vụ"
+    }
+  },
+  "about": {
+		"whyChooseUs": {
+			"title": "Vì Sao Chọn Chúng Tôi?",
+			"experience": {
+				"title": "20+ Năm Kinh Nghiệm",
+				"description": "Khẳng định uy tín và chất lượng trong xây dựng."
+			},
+			"team": {
+				"title": "Chuyên Nghiệp",
+				"description": "Kỹ sư và thợ lành nghề, giàu kinh nghiệm."
+			},
+			"quality": {
+				"title": "Chất Lượng Đảm Bảo",
+				"description": "Kiểm soát chất lượng ở mọi giai đoạn thi công."
+			},
+			"onTime": {
+				"title": "Đúng Tiến Độ",
+				"description": "Cam kết bàn giao công trình đúng hẹn."
+			}
+		},
+    "title": "Sứ Mệnh – Tầm Nhìn – Giá Trị Cốt Lõi",
+		"mission": {
+			"title": "Sứ Mệnh",
+			"description": "Mang đến các giải pháp xây dựng chất lượng cao vượt trên mong đợi, tạo ra giá trị bền vững cho khách hàng và cộng đồng, đồng thời duy trì các tiêu chuẩn an toàn và chuyên nghiệp cao nhất."
+		},
+		"vision": {
+			"title": "Tầm Nhìn",
+			"description": "Trở thành công ty xây dựng hàng đầu tại Việt Nam, được ghi nhận bởi sự đổi mới, chất lượng và các giải pháp xây dựng bền vững định hình tương lai đô thị."
+		},
+		"values": {
+			"title": "Giá Trị Cốt Lõi",
+			"description": "Chất lượng, uy tín, an toàn và sự hài lòng của khách hàng là nền tảng trong mọi hoạt động của chúng tôi. Chúng tôi tin tưởng xây dựng mối quan hệ lâu dài thông qua minh bạch và xuất sắc trong từng dự án."
+		},
+		"milestones": {
+			"title": "Hành Trình Phát Triển",
+			"2018": {
+				"year": "2018",
+				"title": "Thành Lập",
+				"description": "Lai Phat Construction chính thức được thành lập với tầm nhìn đổi mới ngành xây dựng."
+			},
+			"2020": {
+				"year": "2020",
+				"title": "Mở Rộng",
+				"description": "Mở rộng quy mô hoạt động, phát triển đội ngũ và hợp tác với nhiều đối tác uy tín."
+			},
+			"2022": {
+				"year": "2022",
+				"title": "Khẳng Định",
+				"description": "Hoàn thành nhiều dự án lớn, khẳng định uy tín và chất lượng trên thị trường xây dựng."
+			},
+			"2025": {
+				"year": "2025",
+				"title": "Phát Triển Bền Vững",
+				"description": "Tiên phong ứng dụng công nghệ xanh và giải pháp xây dựng bền vững, hướng đến tương lai lâu dài."
+			}
+		},
+    "history": {
+      "title": "Lịch Sử Hình Thành & Phát Triển",
+      "timeline": {
+        "2005": {
+          "year": "2005 - Khởi Đầu",
+          "title": "Thành lập công ty tại TP. Hồ Chí Minh với đội ngũ 20 nhân viên, chuyên về xây dựng dân dụng."
+        },
+        "2010": {
+          "year": "2010 - Mở Rộng",
+          "title": "Hoàn thành dự án khu công nghiệp đầu tiên, mở rộng sang lĩnh vực xây dựng công nghiệp."
+        },
+        "2018": {
+          "year": "2018 - Chứng Nhận", 
+          "title": "Đạt chứng nhận ISO 9001:2015 và ISO 14001:2015, khẳng định chất lượng quản lý."
+        },
+        "2023": {
+          "year": "2023 - Toàn Quốc",
+          "title": "Mở rộng hoạt động ra toàn quốc với hơn 500 nhân viên, hoàn thành 200+ dự án lớn."
+        }
+      }
+    },
+    "team": {
+      "title": "Đội Ngũ Nhân Sự Chủ Chốt",
+      "members": {
+        "ceo": {
+          "name": "Tạ Văn Lai",
+          "position": "Tổng Giám Đốc",
+          "experience": "20+ năm kinh nghiệm",
+          "specialty": "Kỹ sư xây dựng",
+          "description": "Thạc sĩ Kỹ thuật Xây dựng, chuyên gia hàng đầu trong lĩnh vực xây dựng công nghiệp."
+        },
+        "deputy": {
+          "name": "Nguyễn Văn Phát",
+          "position": "Phó Tổng Giám Đốc", 
+          "experience": "15+ năm kinh nghiệm",
+          "specialty": "Kiến trúc sư",
+          "description": "Chuyên gia thiết kế kiến trúc, đã thực hiện nhiều dự án biểu tượng tại Việt Nam."
+        },
+        "technical": {
+          "name": "Lê Minh Tuấn",
+          "position": "Giám Đốc Kỹ Thuật",
+          "experience": "18+ năm kinh nghiệm", 
+          "specialty": "Kỹ sư cầu đường",
+          "description": "Chuyên gia về hạ tầng giao thông, quản lý kỹ thuật các dự án lớn."
+        }
+      }
+    },
+    "partners": {
+      "title": "Đối Tác & Khách Hàng Tiêu Biểu",
+      "strategicPartners": {
+        "title": "Đối Tác Chiến Lược",
+        "vingroup": {
+          "name": "Tập đoàn Vingroup",
+          "description": "Đối tác phát triển bất động sản"
+        },
+        "coteccons": {
+          "name": "Coteccons", 
+          "description": "Hợp tác kỹ thuật xây dựng"
+        },
+        "hoaphat": {
+          "name": "Hòa Phát Group",
+          "description": "Cung cấp vật liệu xây dựng"
+        }
+      },
+      "clients": {
+        "title": "Khách Hàng Tiêu Biểu",
+        "hcmc": {
+          "name": "UBND TP. Hồ Chí Minh",
+          "description": "Dự án hạ tầng đô thị",
+          "type": "Công trình công cộng"
+        },
+        "samsung": {
+          "name": "Samsung Electronics",
+          "description": "Nhà máy sản xuất điện tử", 
+          "type": "Công nghiệp"
+        },
+        "saigoncoop": {
+          "name": "Saigon Co.op",
+          "description": "Hệ thống trung tâm thương mại",
+          "type": "Thương mại"
+        }
+      }
+    },
+    "testimonials": {
+      "title": "Khách Hàng Nói Gì Về Chúng Tôi",
+      "subtitle": "Những phản hồi tích cực từ khách hàng là động lực để chúng tôi không ngừng hoàn thiện"
+    }
+  },
+  "services": {
+    "title": "Dịch Vụ Xây Dựng Chuyên Nghiệp",
+    "description": "Chúng tôi cung cấp giải pháp toàn diện từ thiết kế đến thi công, đảm bảo chất lượng cao và tiến độ đúng cam kết",
+    "chips": {
+      "experience": "15+ Năm Kinh Nghiệm",
+      "projects": "500+ Dự Án Hoàn Thành",
+      "team": "Đội Ngũ Chuyên Gia"
+    },
+    "constructionTech": {
+      "title": "Công Nghệ Xây Dựng Hiện Đại",
+      "description": "Ứng dụng công nghệ tiên tiến và phương pháp thi công hiện đại để mang lại chất lượng tối ưu",
+      "civilConstruction": {
+        "title": "Xây Dựng Dân Dụng",
+        "description": "Thiết kế và thi công các công trình nhà ở, biệt thự, chung cư cao cấp"
+      },
+      "industrialConstruction": {
+        "title": "Xây Dựng Công Nghiệp",
+        "description": "Nhà máy, kho bãi, công trình công nghiệp quy mô lớn"
+      },
+      "urbanInfrastructure": {
+        "title": "Hạ Tầng Đô Thị",
+        "description": "Cầu đường, hệ thống thoát nước, công trình công cộng"
+      },
+      "landscapeDesign": {
+        "title": "Thiết Kế Cảnh Quan",
+        "description": "Quy hoạch và thiết kế không gian xanh, sân vườn"
+      }
+    },
+    "projectManagement": {
+      "title": "Quản Lý Dự Án Chuyên Nghiệp", 
+      "description": "Đội ngũ quản lý dự án giàu kinh nghiệm đảm bảo mọi công trình được thực hiện đúng tiến độ và chất lượng",
+      "management": {
+        "title": "Quản Lý Dự Án",
+        "description": "Điều phối toàn bộ quá trình từ khởi công đến bàn giao",
+        "features": {
+          "0": "Lập kế hoạch chi tiết",
+          "1": "Giám sát tiến độ",
+          "2": "Quản lý nhân sự"
+        }
+      },
+      "qualityControl": {
+        "title": "Kiểm Soát Chất Lượng",
+        "description": "Đảm bảo tiêu chuẩn chất lượng cao nhất cho mọi công trình",
+        "features": {
+          "0": "Kiểm tra vật liệu",
+          "1": "Giám sát thi công",
+          "2": "Nghiệm thu từng giai đoạn"
+        }
+      },
+      "scheduleManagement": {
+        "title": "Quản Lý Tiến Độ",
+        "description": "Tối ưu hóa thời gian thi công và đảm bảo bàn giao đúng hạn",
+        "features": {
+          "0": "Lập timeline chi tiết",
+          "1": "Theo dõi milestone",
+          "2": "Báo cáo định kỳ"
+        }
+      }
+    },
+    "consulting": {
+      "title": "Dịch Vụ Tư Vấn Chuyên Sâu",
+      "description": "Đội ngũ chuyên gia tư vấn với nhiều năm kinh nghiệm sẽ hỗ trợ bạn từ khâu lập kế hoạch đến hoàn thiện dự án",
+      "services": {
+        "0": "Tư vấn thiết kế kiến trúc",
+        "1": "Thẩm định dự án đầu tư",
+        "2": "Giám sát thi công",
+        "3": "Tư vấn pháp lý xây dựng",
+        "4": "Đánh giá tác động môi trường",
+        "5": "Tư vấn ngân sách chi phí"
+      },
+      "consultBtn": "Liên Hệ Tư Vấn Miễn Phí"
+    }
+  },
+  "construction": {
+    "title": "Thi Công Xây Dựng",
+    "titleHighlight": "Công Trình",
+    "description": "Chúng tôi chuyên thi công các loại công trình từ dân dụng đến công nghiệp với chất lượng cao và tiến độ đúng cam kết",
+    "featureTitle": "Loại hình thi công:",
+    "services": {
+      "0": {
+        "title": "Nhà dân dụng",
+        "description": "Thi công các loại nhà ở từ nhà cấp 4 đến biệt thự cao cấp, chung cư, nhà phố thương mại",
+        "features": {
+          "0": "Nhà ở riêng lẻ các loại",
+          "1": "Chung cư, căn hộ cao cấp",
+          "2": "Biệt thự, villa nghỉ dưỡng",
+          "3": "Nhà phố thương mại (shophouse)"
+        },
+        "projects": "200+ dự án hoàn thành"
+      },
+      "1": {
+        "title": "Công trình thương mại",
+        "description": "Xây dựng các công trình phục vụ kinh doanh, thương mại và dịch vụ",
+        "features": {
+          "0": "Trung tâm thương mại, siêu thị",
+          "1": "Văn phòng, tòa nhà làm việc",
+          "2": "Khách sạn, resort, nhà hàng",
+          "3": "Showroom, cửa hàng kinh doanh"
+        },
+        "projects": "150+ dự án hoàn thành"
+      },
+      "2": {
+        "title": "Công trình công nghiệp",
+        "description": "Thi công các nhà máy, xưởng sản xuất và kho bãi quy mô lớn",
+        "features": {
+          "0": "Nhà máy sản xuất các loại",
+          "1": "Xưởng cơ khí, lắp ráp",
+          "2": "Kho bãi, logistics",
+          "3": "Công trình phụ trợ"
+        },
+        "projects": "100+ dự án hoàn thành"
+      },
+      "3": {
+        "title": "Hạ tầng kỹ thuật",
+        "description": "Xây dựng các công trình hạ tầng đô thị và kỹ thuật chuyên ngành",
+        "features": {
+          "0": "Đường giao thông, cầu cống",
+          "1": "Hệ thống cấp thoát nước",
+          "2": "Điện chiếu sáng đô thị",
+          "3": "Công viên, cảnh quan"
+        },
+        "projects": "80+ dự án hoàn thành"
+      }
+    },
+    "cta": {
+      "title": "Sẵn Sàng Khởi Công Dự Án Của Bạn?",
+      "description": "Liên hệ với chúng tôi ngay hôm nay để được tư vấn chi tiết về thi công xây dựng và báo giá miễn phí",
+      "phone": "0939 927 975",
+      "quoteBtn": "Yêu Cầu Báo Giá"
+    }
+  },
+  "footer": {
+    "company": "Lai Phát",
+    "description": "Đối tác tin cậy trong mọi dự án xây dựng của bạn. Chất lượng - Uy tín - Chuyên nghiệp.",
+    "quickLinks": "Liên kết nhanh",
+    "about": "Giới thiệu",
+    "services": "Dịch vụ",
+    "store": "Cửa hàng",
+    "contact": "Liên lạc",
+    "servicesTitle": "Dịch vụ",
+    "constructionTech": "Công nghệ xây dựng",
+    "consultation": "Tư vấn & Giám sát",
+    "qualityControl": "Kiểm soát chất lượng",
+    "architecture": "Thiết kế kiến trúc",
+    "contactTitle": "Liên hệ",
+    "address": "Xã Vĩnh Lộc, TP.HCM",
+    "phone": "0939 927 975",
+    "email": "laiphatgroup@gmail.com",
+    "copyright": "© 2025 LaiPhat Construction. All rights reserved.",
+    "privacy": "Chính sách bảo mật",
+    "terms": "Điều khoản sử dụng"
+  },
+  "designConsulting": {
+    "title": "Tư Vấn Và",
+    "titleHighlight": "Thiết Kế",
+    "subtitle": "Đội ngũ kiến trúc sư và kỹ sư giàu kinh nghiệm sẽ biến ý tưởng của bạn thành hiện thực với những thiết kế độc đáo và chức năng",
+    "services": {
+      "architecture": {
+        "title": "Thiết kế kiến trúc",
+        "description": "Thiết kế kiến trúc chuyên nghiệp từ ý tưởng đến bản vẽ thi công hoàn chỉnh",
+        "features": [
+          "Thiết kế sơ bộ & ý tưởng",
+          "Bản vẽ kiến trúc chi tiết",
+          "Phối cảnh 3D chân thực",
+          "Hồ sơ phép xây dựng"
+        ],
+        "projects": "300+ thiết kế",
+        "specialty": "Chuyên về kiến trúc hiện đại và truyền thống"
+      },
+      "structural": {
+        "title": "Thiết kế kết cấu",
+        "description": "Tính toán và thiết kế kết cấu chịu lực đảm bảo an toàn và tối ưu chi phí",
+        "features": [
+          "Tính toán kết cấu bê tông",
+          "Thiết kế kết cấu thép",
+          "Móng và nền công trình",
+          "Kiểm tra ổn định công trình"
+        ],
+        "projects": "250+ công trình",
+        "specialty": "Chuyên gia kết cấu có kinh nghiệm 15+ năm"
+      },
+      "interior": {
+        "title": "Thiết kế nội thất",
+        "description": "Thiết kế nội thất sang trọng, phù hợp với phong cách và ngân sách",
+        "features": [
+          "Thiết kế concept nội thất",
+          "Bản vẽ chi tiết thi công",
+          "Lựa chọn vật liệu hoàn thiện",
+          "Phối màu và ánh sáng"
+        ],
+        "projects": "200+ không gian",
+        "specialty": "Phong cách đa dạng từ cổ điển đến hiện đại"
+      },
+      "landscape": {
+        "title": "Thiết kế cảnh quan",
+        "description": "Tạo ra những không gian xanh hài hòa, thân thiện với môi trường",
+        "features": [
+          "Quy hoạch không gian xanh",
+          "Thiết kế sân vườn, công viên",
+          "Hệ thống tưới tự động",
+          "Chọn cây và cấu trúc cảnh quan"
+        ],
+        "projects": "150+ dự án",
+        "specialty": "Cảnh quan bền vững và thân thiện môi trường"
+      }
+    },
+    "servicesInclude": "Dịch vụ bao gồm:",
+    "freeConsulting": "Tư vấn thiết kế miễn phí",
+    "cta": {
+      "title": "Bắt Đầu Thiết Kế Ước Mơ Của Bạn",
+      "subtitle": "Hãy để chúng tôi biến ý tưởng của bạn thành những bản thiết kế hoàn hảo. Tư vấn miễn phí và báo giá cạnh tranh nhất thị trường",
+      "phone": "0939 927 975",
+      "quoteBtn": "Nhận Báo Giá Thiết Kế"
+    }
+  },
+  "supervision": {
+    "title": "Tư Vấn",
+    "titleHighlight": "Giám Sát",
+    "subtitle": "Dịch vụ giám sát chuyên nghiệp đảm bảo chất lượng, tiến độ và an toàn cho mọi công trình xây dựng",
+    "services": {
+      "quality": {
+        "title": "Giám sát chất lượng",
+        "description": "Kiểm soát chặt chẽ chất lượng thi công theo đúng thiết kế và tiêu chuẩn kỹ thuật",
+        "features": [
+          "Kiểm tra chất lượng vật liệu đầu vào",
+          "Giám sát quy trình thi công từng hạng mục",
+          "Nghiệm thu ẩn, nghiệm thu từng bước",
+          "Báo cáo chất lượng định kỳ"
+        ],
+        "benefits": [
+          "Đảm bảo chất lượng công trình bền vững",
+          "Phát hiện sớm các sai sót kỹ thuật",
+          "Giảm thiểu rủi ro về chất lượng"
+        ],
+        "projects": "500+ công trình giám sát"
+      },
+      "schedule": {
+        "title": "Giám sát tiến độ",
+        "description": "Theo dõi và điều phối tiến độ thi công để đảm bảo bàn giao đúng hạn cam kết",
+        "features": [
+          "Lập kế hoạch tiến độ chi tiết",
+          "Theo dõi tiến độ hàng ngày/tuần",
+          "Phân tích nguyên nhân chậm tiến độ",
+          "Đề xuất biện pháp tăng tốc khi cần"
+        ],
+        "benefits": [
+          "Bàn giao công trình đúng hạn",
+          "Tối ưu hóa nguồn lực và chi phí",
+          "Chủ động xử lý các vấn đề phát sinh"
+        ],
+        "projects": "400+ dự án đúng tiến độ"
+      },
+      "safety": {
+        "title": "Giám sát an toàn lao động",
+        "description": "Đảm bảo tuân thủ nghiêm ngặt các quy định về an toàn lao động trên công trình",
+        "features": [
+          "Kiểm tra trang thiết bị bảo hộ",
+          "Giám sát thực hiện quy trình an toàn",
+          "Đào tạo nâng cao ý thức ATVSLĐ",
+          "Xử lý ngay các vi phạm an toàn"
+        ],
+        "benefits": [
+          "Zero tai nạn lao động nghiêm trọng",
+          "Tuân thủ 100% quy định pháp luật",
+          "Tạo môi trường làm việc an toàn"
+        ],
+        "projects": "300+ công trình an toàn"
+      }
+    },
+    "supervisionContent": "Nội dung giám sát:",
+    "benefits": "Lợi ích:",
+    "process": {
+      "title": "Quy Trình Giám Sát",
+      "subtitle": "Quy trình giám sát chuẩn quốc tế đảm bảo hiệu quả và chất lượng cao nhất",
+      "steps": [
+        {
+          "step": "01",
+          "title": "Khảo sát & Lập kế hoạch",
+          "description": "Nghiên cứu hồ sơ thiết kế, lập kế hoạch giám sát chi tiết"
+        },
+        {
+          "step": "02",
+          "title": "Triển khai giám sát",
+          "description": "Cử đội ngũ giám sát viên có kinh nghiệm tại công trình"
+        },
+        {
+          "step": "03",
+          "title": "Báo cáo định kỳ",
+          "description": "Báo cáo tiến độ, chất lượng, an toàn hàng tuần"
+        },
+        {
+          "step": "04",
+          "title": "Nghiệm thu bàn giao",
+          "description": "Tham gia nghiệm thu và bàn giao công trình"
+        }
+      ]
+    },
+    "cta": {
+      "title": "Đảm Bảo Chất Lượng Công Trình",
+      "subtitle": "Với đội ngũ giám sát viên chuyên nghiệp, chúng tôi cam kết mang đến sự yên tâm tuyệt đối cho dự án của bạn",
+      "phone": "0939 927 975",
+      "consultBtn": "Tư Vấn Dịch Vụ Giám Sát"
+    }
+  },
+  "projectManagement": {
+    "title": "Tư Vấn Quản Lý",
+    "titleHighlight": "Dự Án",
+    "subtitle": "Dịch vụ quản lý dự án chuyên nghiệp giúp đảm bảo dự án hoàn thành đúng tiến độ, ngân sách và chất lượng cam kết",
+    "services": {
+      "planning": {
+        "title": "Lập kế hoạch dự án",
+        "description": "Xây dựng kế hoạch tổng thể chi tiết từ khởi công đến bàn giao",
+        "features": [
+          "Phân tích và định nghĩa phạm vi dự án",
+          "Lập lịch trình thi công chi tiết (Gantt Chart)",
+          "Xác định mốc quan trọng và deliverables",
+          "Đánh giá rủi ro và lập kế hoạch ứng phó"
+        ],
+        "tools": [
+          "Microsoft Project",
+          "Primavera P6",
+          "Smartsheet",
+          "Gantt Chart Tools"
+        ],
+        "experience": "10+ năm kinh nghiệm",
+        "projects": "200+ dự án thành công"
+      },
+      "budget": {
+        "title": "Quản lý ngân sách",
+        "description": "Kiểm soát chi phí và tối ưu hóa ngân sách dự án hiệu quả",
+        "features": [
+          "Lập dự toán chi tiết các hạng mục",
+          "Theo dõi chi phí thực tế vs kế hoạch",
+          "Kiểm soát chi phí phát sinh",
+          "Báo cáo tài chính định kỳ"
+        ],
+        "tools": [
+          "Cost Control Software",
+          "Excel Advanced",
+          "SAP Project System",
+          "Oracle Primavera"
+        ],
+        "experience": "15+ năm kinh nghiệm",
+        "projects": "Tiết kiệm 10-20% ngân sách"
+      },
+      "resources": {
+        "title": "Quản lý nhân lực & thiết bị",
+        "description": "Tối ưu hóa việc sử dụng nguồn nhân lực và thiết bị máy móc",
+        "features": [
+          "Lập kế hoạch nhân lực theo giai đoạn",
+          "Quản lý lịch làm việc và ca trực",
+          "Điều phối thiết bị máy móc hiệu quả",
+          "Đánh giá hiệu suất và năng suất"
+        ],
+        "tools": [
+          "Resource Management Tools",
+          "HR Management System",
+          "Equipment Tracking",
+          "Performance Analytics"
+        ],
+        "experience": "12+ năm kinh nghiệm",
+        "projects": "Tăng 30% hiệu suất"
+      }
+    },
+    "mainActivities": "Hoạt động chính:",
+    "toolsUsed": "Công cụ sử dụng:",
+    "phases": {
+      "title": "5 Giai Đoạn Quản Lý Dự Án",
+      "subtitle": "Áp dụng phương pháp quản lý dự án quốc tế PMBOK để đảm bảo hiệu quả cao nhất",
+      "steps": [
+        {
+          "phase": "Khởi tạo",
+          "duration": "1-2 tuần",
+          "activities": ["Định nghĩa mục tiêu", "Phân tích stakeholders", "Lập charter dự án"],
+          "icon": "🎯"
+        },
+        {
+          "phase": "Lập kế hoạch",
+          "duration": "2-3 tuần",
+          "activities": ["Chi tiết scope", "Lập timeline", "Phân bổ nguồn lực"],
+          "icon": "📋"
+        },
+        {
+          "phase": "Thực hiện",
+          "duration": "Theo dự án",
+          "activities": ["Điều phối thi công", "Giám sát tiến độ", "Báo cáo định kỳ"],
+          "icon": "⚡"
+        },
+        {
+          "phase": "Giám sát",
+          "duration": "Liên tục",
+          "activities": ["Tracking KPI", "Risk management", "Quality assurance"],
+          "icon": "📊"
+        },
+        {
+          "phase": "Kết thúc",
+          "duration": "1-2 tuần",
+          "activities": ["Nghiệm thu", "Bàn giao", "Lessons learned"],
+          "icon": "✅"
+        }
+      ]
+    },
+    "cta": {
+      "title": "Dự Án Thành Công Cùng Chuyên Gia",
+      "subtitle": "Với đội ngũ Project Manager được chứng nhận quốc tế, chúng tôi cam kết mang đến sự thành công cho mọi dự án",
+      "stats": {
+        "onTime": "98%",
+        "onTimeDesc": "Dự án hoàn thành đúng hạn",
+        "savings": "15%",
+        "savingsDesc": "Tiết kiệm chi phí trung bình",
+        "projects": "500+",
+        "projectsDesc": "Dự án đã quản lý"
+      },
+      "phone": "0939 927 975",
+      "consultBtn": "Tư Vấn Quản Lý Dự Án"
+    }
+  },
+  "biddingConsulting": {
+    "title": "Tư Vấn",
+    "titleHighlight": "Đấu Thầu",
+    "subtitle": "Dịch vụ tư vấn đấu thầu toàn diện từ lập hồ sơ mời thầu đến lựa chọn nhà thầu phù hợp, đảm bảo minh bạch và hiệu quả",
+    "services": {
+      "documentation": {
+        "title": "Lập hồ sơ mời thầu",
+        "description": "Chuẩn bị hồ sơ mời thầu chi tiết, chuyên nghiệp theo quy định pháp luật",
+        "features": [
+          "Soạn thảo điều kiện kỹ thuật chi tiết",
+          "Lập dự toán giá gói thầu",
+          "Xây dựng tiêu chí đánh giá hồ sơ",
+          "Chuẩn bị tài liệu pháp lý đầy đủ"
+        ],
+        "documents": [
+          "Thông báo mời thầu",
+          "Hồ sơ yêu cầu (RFP)",
+          "Bản vẽ thiết kế kỹ thuật",
+          "Điều kiện hợp đồng"
+        ],
+        "experience": "12+ năm kinh nghiệm",
+        "success": "95% thành công"
+      },
+      "evaluation": {
+        "title": "Đánh giá hồ sơ dự thầu",
+        "description": "Thẩm định và đánh giá hồ sơ dự thầu một cách công bằng, minh bạch",
+        "features": [
+          "Kiểm tra tính hợp lệ hồ sơ",
+          "Đánh giá năng lực kỹ thuật",
+          "Phân tích báo giá chi tiết",
+          "Xếp hạng và so sánh nhà thầu"
+        ],
+        "criteria": [
+          "Năng lực tài chính",
+          "Kinh nghiệm dự án",
+          "Đội ngũ chuyên môn",
+          "Phương án kỹ thuật"
+        ],
+        "experience": "15+ năm kinh nghiệm",
+        "success": "100+ cuộc thầu"
+      },
+      "selection": {
+        "title": "Tư vấn lựa chọn nhà thầu",
+        "description": "Hỗ trợ chủ đầu tư lựa chọn nhà thầu phù hợp nhất cho dự án",
+        "features": [
+          "Phân tích hồ sơ năng lực",
+          "Đánh giá uy tín thị trường",
+          "So sánh phương án kỹ thuật",
+          "Thương lượng điều kiện hợp đồng"
+        ],
+        "benefits": [
+          "Tiết kiệm thời gian",
+          "Giảm rủi ro dự án",
+          "Tối ưu chi phí",
+          "Đảm bảo chất lượng"
+        ],
+        "experience": "20+ năm kinh nghiệm",
+        "success": "Tiết kiệm 15-25% chi phí"
+      }
+    },
+    "mainActivities": "Hoạt động chính:",
+    "documentsProvided": "Tài liệu cung cấp:",
+    "evaluationCriteria": "Tiêu chí đánh giá:",
+    "benefitsProvided": "Lợi ích mang lại:",
+    "process": {
+      "title": "Quy Trình Đấu Thầu",
+      "subtitle": "Áp dụng quy trình đấu thầu tiêu chuẩn quốc gia, đảm bảo tính minh bạch và hiệu quả",
+      "steps": [
+        {
+          "step": "Chuẩn bị",
+          "duration": "2-3 tuần",
+          "activities": ["Phân tích nhu cầu", "Lập kế hoạch thầu", "Chuẩn bị tài liệu"],
+          "icon": "📋"
+        },
+        {
+          "step": "Mời thầu",
+          "duration": "3-4 tuần",
+          "activities": ["Phát hành thông báo", "Tổ chức sơ tuyển", "Bán hồ sơ thầu"],
+          "icon": "📢"
+        },
+        {
+          "step": "Nhận thầu",
+          "duration": "4-6 tuần",
+          "activities": ["Thu thập hồ sơ", "Kiểm tra tính hợp lệ", "Tổ chức mở thầu"],
+          "icon": "📥"
+        },
+        {
+          "step": "Đánh giá",
+          "duration": "2-3 tuần",
+          "activities": ["Thẩm định kỹ thuật", "Đánh giá tài chính", "Xếp hạng nhà thầu"],
+          "icon": "⚖️"
+        },
+        {
+          "step": "Quyết định",
+          "duration": "1 tuần",
+          "activities": ["Phê duyệt kết quả", "Thương thảo hợp đồng", "Ký kết"],
+          "icon": "✅"
+        }
+      ]
+    },
+    "advantages": {
+      "title": "Ưu Điểm Vượt Trội",
+      "subtitle": "Cam kết mang đến dịch vụ đấu thầu chuyên nghiệp, minh bạch và hiệu quả cao",
+      "items": [
+        {
+          "title": "Tuân thủ pháp luật",
+          "description": "Đảm bảo 100% quy trình đúng luật định",
+          "icon": "⚖️",
+          "color": "#3b82f6"
+        },
+        {
+          "title": "Minh bạch công bằng",
+          "description": "Quy trình đánh giá công khai, khách quan",
+          "icon": "🏛️",
+          "color": "#10b981"
+        },
+        {
+          "title": "Tiết kiệm chi phí",
+          "description": "Lựa chọn nhà thầu tối ưu về giá và chất lượng",
+          "icon": "💰",
+          "color": "#f59e0b"
+        },
+        {
+          "title": "Giảm rủi ro",
+          "description": "Thẩm định kỹ lưỡng năng lực nhà thầu",
+          "icon": "🛡️",
+          "color": "#ef4444"
+        }
+      ]
+    },
+    "cta": {
+      "title": "Đấu Thầu Thành Công Cùng Chuyên Gia",
+      "subtitle": "Với kinh nghiệm hơn 15 năm trong lĩnh vực đấu thầu, chúng tôi cam kết mang đến giải pháp tối ưu cho mọi gói thầu",
+      "stats": {
+        "packages": "500+",
+        "packagesDesc": "Gói thầu thành công",
+        "winRate": "95%",
+        "winRateDesc": "Tỷ lệ trúng thầu",
+        "savings": "20%",
+        "savingsDesc": "Tiết kiệm chi phí trung bình"
+      },
+      "phone": "0939 927 975",
+      "consultBtn": "Tư Vấn Đấu Thầu"
+    }
+  },
+  "contact": {
+    "title": "Liên Hệ",
+    "titleHighlight": "Với Chúng Tôi",
+    "form": {
+      "title": "Gửi Tin Nhắn",
+      "name": "Họ và Tên",
+      "email": "Email",
+      "phone": "Số Điện Thoại",
+      "message": "Tin Nhắn",
+      "submit": "Gửi Tin Nhắn"
+    },
+    "info": {
+      "title": "Thông Tin Liên Hệ",
+      "office": {
+        "title": "Địa Chỉ Văn Phòng",
+        "address": "Xã Vĩnh Lộc\nBình Chánh\nThành phố Hồ Chí Minh, Việt Nam"
+      },
+      "details": {
+        "title": "Chi Tiết Liên Hệ",
+        "phone": "Điện thoại:",
+        "phoneNumber": "0939 927 975",
+        "email": "Email:",
+        "emailAddress": "info@laiphat.com",
+        "website": "Website:",
+        "websiteUrl": "www.laiphat.com"
+      },
+      "map": {
+        "title": "Bản Đồ Vị Trí"
+      },
+      "quote": {
+        "title": "Yêu Cầu Báo Giá",
+        "description": "Cần báo giá chi tiết? Điền vào biểu mẫu yêu cầu của chúng tôi.",
+        "button": "Mở Biểu Mẫu Yêu Cầu"
+      },
+      "social": {
+        "title": "Mạng Xã Hội",
+        "facebook": "Facebook",
+        "zalo": "Zalo"
+      }
+    }
+  }
+}

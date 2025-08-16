@@ -16,6 +16,7 @@ import {
   AccountBalance,
   Landscape,
 } from '@mui/icons-material';
+import { useTranslations } from '@/hooks/useTranslations';
 
 // Intersection Observer Hook
 const useScrollAnimations = () => {
@@ -45,30 +46,31 @@ const useScrollAnimations = () => {
 
 export default function ServicesPage() {
   useScrollAnimations();
+  const { t } = useTranslations();
 
   const constructionServices = [
     {
       icon: <Construction sx={{ fontSize: 50 }} />,
-      title: "Xây Dựng Dân Dụng",
-      description: "Thiết kế và thi công các công trình nhà ở, biệt thự, chung cư cao cấp",
+      title: t('services.constructionTech.civilConstruction.title'),
+      description: t('services.constructionTech.civilConstruction.description'),
       color: "#1976d2",
     },
     {
       icon: <Engineering sx={{ fontSize: 50 }} />,
-      title: "Xây Dựng Công Nghiệp", 
-      description: "Nhà máy, kho bãi, công trình công nghiệp quy mô lớn",
+      title: t('services.constructionTech.industrialConstruction.title'), 
+      description: t('services.constructionTech.industrialConstruction.description'),
       color: "#2e7d32",
     },
     {
       icon: <AccountBalance sx={{ fontSize: 50 }} />,
-      title: "Hạ Tầng Đô Thị",
-      description: "Cầu đường, hệ thống thoát nước, công trình công cộng",
+      title: t('services.constructionTech.urbanInfrastructure.title'),
+      description: t('services.constructionTech.urbanInfrastructure.description'),
       color: "#7b1fa2",
     },
     {
       icon: <Landscape sx={{ fontSize: 50 }} />,
-      title: "Thiết Kế Cảnh Quan",
-      description: "Quy hoạch và thiết kế không gian xanh, sân vườn",
+      title: t('services.constructionTech.landscapeDesign.title'),
+      description: t('services.constructionTech.landscapeDesign.description'),
       color: "#ed6c02",
     },
   ]
@@ -76,34 +78,46 @@ export default function ServicesPage() {
   const managementServices = [
     {
       icon: <ManageAccounts sx={{ fontSize: 50 }} />,
-      title: "Quản Lý Dự Án",
-      description: "Điều phối toàn bộ quá trình từ khởi công đến bàn giao",
-      features: ["Lập kế hoạch chi tiết", "Giám sát tiến độ", "Quản lý nhân sự"],
+      title: t('services.projectManagement.management.title'),
+      description: t('services.projectManagement.management.description'),
+      features: [
+        t('services.projectManagement.management.features.0'),
+        t('services.projectManagement.management.features.1'),
+        t('services.projectManagement.management.features.2')
+      ],
       color: "#3f51b5",
     },
     {
       icon: <Assessment sx={{ fontSize: 50 }} />,
-      title: "Kiểm Soát Chất Lượng",
-      description: "Đảm bảo tiêu chuẩn chất lượng cao nhất cho mọi công trình",
-      features: ["Kiểm tra vật liệu", "Giám sát thi công", "Nghiệm thu từng giai đoạn"],
+      title: t('services.projectManagement.qualityControl.title'),
+      description: t('services.projectManagement.qualityControl.description'),
+      features: [
+        t('services.projectManagement.qualityControl.features.0'),
+        t('services.projectManagement.qualityControl.features.1'),
+        t('services.projectManagement.qualityControl.features.2')
+      ],
       color: "#d32f2f",
     },
     {
       icon: <Schedule sx={{ fontSize: 50 }} />,
-      title: "Quản Lý Tiến Độ",
-      description: "Tối ưu hóa thời gian thi công và đảm bảo bàn giao đúng hạn",
-      features: ["Lập timeline chi tiết", "Theo dõi milestone", "Báo cáo định kỳ"],
+      title: t('services.projectManagement.scheduleManagement.title'),
+      description: t('services.projectManagement.scheduleManagement.description'),
+      features: [
+        t('services.projectManagement.scheduleManagement.features.0'),
+        t('services.projectManagement.scheduleManagement.features.1'),
+        t('services.projectManagement.scheduleManagement.features.2')
+      ],
       color: "#00796b",
     },
   ]
 
   const consultingServices = [
-    "Tư vấn thiết kế kiến trúc",
-    "Thẩm định dự án đầu tư",
-    "Giám sát thi công",
-    "Tư vấn pháp lý xây dựng",
-    "Đánh giá tác động môi trường",
-    "Tư vấn ngân sách chi phí",
+    t('services.consulting.services.0'),
+    t('services.consulting.services.1'),
+    t('services.consulting.services.2'),
+    t('services.consulting.services.3'),
+    t('services.consulting.services.4'),
+    t('services.consulting.services.5'),
   ]
 
   return (
@@ -116,8 +130,7 @@ export default function ServicesPage() {
             className="text-3xl font-bold text-center mb-6 text-gray-800"
             sx={{ marginBottom: '1.5rem' }}
           >
-            Dịch Vụ Xây Dựng
-            <span className="text-cyan-600"> Chuyên Nghiệp</span>
+            {t('services.title')}
           </Typography>
           <div className="flex items-center justify-center min-h-[100px]">
             <Typography
@@ -125,22 +138,22 @@ export default function ServicesPage() {
               className="text-center text-gray-600 max-w-4xl mx-auto mb-8 leading-relaxed"
               sx={{ marginBottom: '2rem' }}
             >
-              Chúng tôi cung cấp giải pháp toàn diện từ thiết kế đến thi công, đảm bảo chất lượng cao và tiến độ đúng cam kết
+              {t('services.description')}
             </Typography>
           </div>
           <div className="flex flex-wrap justify-center gap-3">
             <Chip 
-              label="15+ Năm Kinh Nghiệm" 
+              label={t('services.chips.experience')} 
               className="bg-cyan-100 text-cyan-800" 
               size="medium" 
             />
             <Chip 
-              label="500+ Dự Án Hoàn Thành" 
+              label={t('services.chips.projects')} 
               className="bg-green-100 text-green-800" 
               size="medium" 
             />
             <Chip 
-              label="Đội Ngũ Chuyên Gia" 
+              label={t('services.chips.team')} 
               className="bg-amber-100 text-amber-800" 
               size="medium" 
             />
@@ -150,10 +163,10 @@ export default function ServicesPage() {
         <section className="slide-in-left-on-scroll">
           <div className="flex flex-col items-center justify-center text-center mb-12">
             <Typography variant="h3" className="mb-6 font-bold text-gray-800">
-              Công Nghệ Xây Dựng Hiện Đại
+              {t('services.constructionTech.title')}
             </Typography>
             <Typography variant="body1" className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Ứng dụng công nghệ tiên tiến và phương pháp thi công hiện đại để mang lại chất lượng tối ưu
+              {t('services.constructionTech.description')}
             </Typography>
           </div>
 
@@ -199,10 +212,10 @@ export default function ServicesPage() {
         <section className="slide-in-right-on-scroll">
           <div className="flex flex-col items-center justify-center text-center mb-12">
             <Typography variant="h3" className="mb-6 font-bold text-gray-800">
-              Quản Lý Dự Án Chuyên Nghiệp
+              {t('services.projectManagement.title')}
             </Typography>
             <Typography variant="body1" className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Đội ngũ quản lý dự án giàu kinh nghiệm đảm bảo mọi công trình được thực hiện đúng tiến độ và chất lượng
+              {t('services.projectManagement.description')}
             </Typography>
           </div>
 
@@ -267,10 +280,10 @@ export default function ServicesPage() {
             <div className="relative z-10">
               <div className="flex flex-col items-center justify-center text-center mb-12">
               <Typography variant="h3" className="mb-6 font-bold text-gray-800">
-                Dịch Vụ Tư Vấn Chuyên Sâu
+                {t('services.consulting.title')}
               </Typography>
               <Typography variant="body1" className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                Đội ngũ chuyên gia tư vấn với nhiều năm kinh nghiệm sẽ hỗ trợ bạn từ khâu lập kế hoạch đến hoàn thiện dự án
+                {t('services.consulting.description')}
               </Typography>
             </div>
 
@@ -318,7 +331,7 @@ export default function ServicesPage() {
                   }}
                 >
                   <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <span className="relative z-10 text-lg">Liên Hệ Tư Vấn Miễn Phí</span>
+                  <span className="relative z-10 text-lg">{t('services.consulting.consultBtn')}</span>
                 </button>
               </div>
             </div>
