@@ -12,6 +12,7 @@ import {
   Timeline,
   Security,
 } from '@mui/icons-material';
+import { useTranslations } from '@/hooks/useTranslations';
 
 // Intersection Observer Hook
 const useScrollAnimations = () => {
@@ -42,83 +43,40 @@ const useScrollAnimations = () => {
 export default function SupervisionPage() {
   useScrollAnimations();
   const theme = useTheme();
+  const { t } = useTranslations();
 
   const supervisionServices = [
     {
       icon: <VerifiedUser sx={{ fontSize: 60 }} />,
-      title: "Giám sát chất lượng",
-      description: "Kiểm soát chặt chẽ chất lượng thi công theo đúng thiết kế và tiêu chuẩn kỹ thuật",
-      features: [
-        "Kiểm tra chất lượng vật liệu đầu vào",
-        "Giám sát quy trình thi công từng hạng mục", 
-        "Nghiệm thu ẩn, nghiệm thu từng bước",
-        "Báo cáo chất lượng định kỳ"
-      ],
-      benefits: [
-        "Đảm bảo chất lượng công trình bền vững",
-        "Phát hiện sớm các sai sót kỹ thuật",
-        "Giảm thiểu rủi ro về chất lượng"
-      ],
-      projects: "500+ công trình giám sát"
+      title: t('supervision.services.quality.title') as string,
+      description: t('supervision.services.quality.description') as string,
+      features: t('supervision.services.quality.features') as string[],
+      benefits: t('supervision.services.quality.benefits') as string[],
+      projects: t('supervision.services.quality.projects') as string
     },
     {
       icon: <Timeline sx={{ fontSize: 60 }} />,
-      title: "Giám sát tiến độ",
-      description: "Theo dõi và điều phối tiến độ thi công để đảm bảo bàn giao đúng hạn cam kết",
-      features: [
-        "Lập kế hoạch tiến độ chi tiết",
-        "Theo dõi tiến độ hàng ngày/tuần",
-        "Phân tích nguyên nhân chậm tiến độ",
-        "Đề xuất biện pháp tăng tốc khi cần"
-      ],
-      benefits: [
-        "Bàn giao công trình đúng hạn",
-        "Tối ưu hóa nguồn lực và chi phí",
-        "Chủ động xử lý các vấn đề phát sinh"
-      ],
-      projects: "400+ dự án đúng tiến độ"
+      title: t('supervision.services.schedule.title') as string,
+      description: t('supervision.services.schedule.description') as string,
+      features: t('supervision.services.schedule.features') as string[],
+      benefits: t('supervision.services.schedule.benefits') as string[],
+      projects: t('supervision.services.schedule.projects') as string
     },
     {
       icon: <Security sx={{ fontSize: 60 }} />,
-      title: "Giám sát an toàn lao động",
-      description: "Đảm bảo tuân thủ nghiêm ngặt các quy định về an toàn lao động trên công trình",
-      features: [
-        "Kiểm tra trang thiết bị bảo hộ",
-        "Giám sát thực hiện quy trình an toàn",
-        "Đào tạo nâng cao ý thức ATVSLĐ",
-        "Xử lý ngay các vi phạm an toàn"
-      ],
-      benefits: [
-        "Zero tai nạn lao động nghiêm trọng",
-        "Tuân thủ 100% quy định pháp luật",
-        "Tạo môi trường làm việc an toàn"
-      ],
-      projects: "300+ công trình an toàn"
+      title: t('supervision.services.safety.title') as string,
+      description: t('supervision.services.safety.description') as string,
+      features: t('supervision.services.safety.features') as string[],
+      benefits: t('supervision.services.safety.benefits') as string[],
+      projects: t('supervision.services.safety.projects') as string
     },
   ];
 
-  const supervisionProcess = [
-    {
-      step: "01",
-      title: "Khảo sát & Lập kế hoạch",
-      description: "Nghiên cứu hồ sơ thiết kế, lập kế hoạch giám sát chi tiết"
-    },
-    {
-      step: "02", 
-      title: "Triển khai giám sát",
-      description: "Cử đội ngũ giám sát viên có kinh nghiệm tại công trình"
-    },
-    {
-      step: "03",
-      title: "Báo cáo định kỳ",
-      description: "Báo cáo tiến độ, chất lượng, an toàn hàng tuần"
-    },
-    {
-      step: "04",
-      title: "Nghiệm thu bàn giao",
-      description: "Tham gia nghiệm thu và bàn giao công trình"
-    }
-  ];
+  const supervisionProcess = t('supervision.process.steps') as Array<{
+    step: string;
+    title: string;
+    description: string;
+  }>;
 
   return (
     <Box className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
@@ -130,14 +88,14 @@ export default function SupervisionPage() {
               variant="h2"
               className="text-4xl font-bold text-center mb-6 text-gray-800"
             >
-              Tư Vấn
-              <span style={{ color: theme.palette.primary.main }}> Giám Sát</span>
+              {t('supervision.title') as string}
+              <span style={{ color: theme.palette.primary.main }}> {t('supervision.titleHighlight') as string}</span>
             </Typography>
             <Typography
               variant="h6"
               className="text-center text-gray-600 max-w-4xl mx-auto mb-8 leading-relaxed"
             >
-              Dịch vụ giám sát chuyên nghiệp đảm bảo chất lượng, tiến độ và an toàn cho mọi công trình xây dựng
+              {t('supervision.subtitle') as string}
             </Typography>
           </div>
         </section>
@@ -209,7 +167,7 @@ export default function SupervisionPage() {
                   
                   <div className="space-y-4 mb-6">
                     <Typography variant="h6" className="font-semibold text-gray-800 text-center">
-                      Nội dung giám sát:
+                      {t('supervision.supervisionContent') as string}
                     </Typography>
                     {service.features.map((feature, idx) => (
                       <div key={idx} className="flex items-center text-sm text-gray-700 group-hover:text-gray-800 transition-colors duration-300">
@@ -226,7 +184,7 @@ export default function SupervisionPage() {
 
                   <div className="mt-auto">
                     <Typography variant="h6" className="font-semibold text-gray-800 mb-3 text-center">
-                      Lợi ích:
+                      {t('supervision.benefits') as string}
                     </Typography>
                     {service.benefits.map((benefit, idx) => (
                       <div key={idx} className="flex items-center text-sm text-green-700 mb-2">
@@ -245,10 +203,10 @@ export default function SupervisionPage() {
         <section className="slide-in-right-on-scroll">
           <div className="flex flex-col items-center justify-center text-center mb-12">
             <Typography variant="h3" className="font-bold text-gray-800 mb-4">
-              Quy Trình Giám Sát
+              {t('supervision.process.title') as string}
             </Typography>
             <Typography variant="body1" className="text-gray-600 max-w-2xl mx-auto">
-              Quy trình giám sát chuẩn quốc tế đảm bảo hiệu quả và chất lượng cao nhất
+              {t('supervision.process.subtitle') as string}
             </Typography>
           </div>
 
@@ -295,10 +253,10 @@ export default function SupervisionPage() {
             <div className="relative z-10">
               <div className="flex flex-col items-center justify-center text-center mb-12">
 									<Typography variant="h3" className="mb-6 font-bold text-white">
-											Đảm Bảo Chất Lượng Công Trình
+											{t('supervision.cta.title') as string}
 									</Typography>
 									<Typography variant="body1" className="text-white/90 max-w-2xl mx-auto leading-relaxed">
-											Với đội ngũ giám sát viên chuyên nghiệp, chúng tôi cam kết mang đến sự yên tâm tuyệt đối cho dự án của bạn
+											{t('supervision.cta.subtitle') as string}
 									</Typography>
 							</div>
               
@@ -310,7 +268,7 @@ export default function SupervisionPage() {
                     boxShadow: '0 8px 30px rgba(255,255,255,0.3)',
                   }}
                 >
-                  <span className="relative z-10 text-lg">0939 927 975</span>
+                  <span className="relative z-10 text-lg">{t('supervision.cta.phone') as string}</span>
                 </button>
                 
                 <button
@@ -319,7 +277,7 @@ export default function SupervisionPage() {
                     backdropFilter: 'blur(10px)',
                   }}
                 >
-                  <span className="relative z-10 text-lg">Tư Vấn Dịch Vụ Giám Sát</span>
+                  <span className="relative z-10 text-lg">{t('supervision.cta.consultBtn') as string}</span>
                 </button>
               </div>
             </div>

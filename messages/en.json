@@ -1,0 +1,805 @@
+{
+	"header": {
+		"company": "LAI PHAT",
+		"title": "Reputation builds trust",
+		"services": {
+			"construction": "Construction & Building Works",
+			"design": "Design & Consulting",
+			"supervision": "Construction Supervision",
+			"projectManagement": "Project Management Consulting",
+			"bidding": "Bidding Consulting"
+		}
+	},
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "store": "Store",
+    "contact": "Contact"
+  },
+  "home": {
+    "hero": {
+      "title": "LAI PHAT",
+      "subtitle": "Your trusted partner in all construction projects.",
+      "description": "Quality - Reputation - Professional",
+      "contactBtn": "Contact Now",
+      "phone": "0939 927 975",
+      "scrollDown": "Scroll down for more"
+    },
+    "services": {
+      "title": "Develop your construction industry",
+      "description": "From civil to industrial construction, our in-depth industry knowledge helps us build solutions that fit the current and future needs of your project.",
+      "exploreBtn": "Explore our services",
+      "constructionService": "Construction Services",
+      "constructionDesc": "Professional construction from residential to industrial projects",
+      "designConsulting": "Design Consulting", 
+      "designDesc": "Architectural, structural and interior design according to customer requirements",
+      "supervision": "Construction Supervision",
+      "supervisionDesc": "Supervising quality, progress and safety during construction",
+      "projectManagement": "Project Management Consulting",
+      "projectDesc": "Professional project management from planning to handover",
+      "bidding": "Bidding Consulting",
+      "biddingDesc": "Support consulting and preparation of bidding documents for construction projects"
+    },
+    "projects": {
+      "title": "Featured Projects",
+      "subtitle": "Completed projects with excellent quality",
+      "viewDetail": "View Details",
+      "completed": "Project Completed",
+      "completedOn": "Completed"
+    },
+    "cta": {
+      "title": "Ready to start your project?",
+      "subtitle": "Contact us today for free consultation",
+      "consultBtn": "Free Consultation",
+      "servicesBtn": "View Services"
+    }
+  },
+  "about": {
+		"whyChooseUs": {
+      "title": "Why Choose Us?",
+      "experience": {
+        "title": "20+ Years Experience",
+        "description": "Two decades of proven excellence in construction industry"
+      },
+      "team": {
+        "title": "Expert Team",
+        "description": "Skilled professionals with extensive construction expertise"
+      },
+      "quality": {
+        "title": "Quality Assurance",
+        "description": "Rigorous quality control at every stage of construction"
+      },
+      "onTime": {
+        "title": "On-Time Delivery",
+        "description": "Committed to delivering projects on schedule"
+      }
+    },
+    "title": "Mission – Vision – Core Values",
+    "mission": {
+      "title": "Our Mission",
+      "description": "To deliver high-quality construction solutions that exceed expectations, creating sustainable value for our clients and communities while maintaining the highest standards of safety and professionalism."
+    },
+    "vision": {
+      "title": "Our Vision",
+      "description": "To become the leading construction company in Vietnam, recognized for innovation, quality, and sustainable building practices that shape the future of our cities."
+    },
+    "values": {
+      "title": "Our Core Values",
+      "description": "Quality, integrity, safety, and customer satisfaction are the foundations of everything we do. We believe in building lasting relationships through transparency and excellence in every project."
+    },
+    "milestones": {
+			"title": "Our Journey",
+			"2018": {
+				"year": "2018",
+				"title": "Foundation",
+				"description": "Lai Phat Construction was officially founded with a vision to innovate the construction industry."
+			},
+			"2020": {
+				"year": "2020",
+				"title": "Expansion",
+				"description": "Expanded operations, grew our team, and established partnerships with trusted partners."
+			},
+			"2022": {
+				"year": "2022",
+				"title": "Establishment",
+				"description": "Successfully completed major projects, strengthening our reputation for quality and reliability."
+			},
+			"2025": {
+				"year": "2025",
+				"title": "Sustainable Growth",
+				"description": "Pioneering green technologies and sustainable construction solutions for long-term development."
+			}
+		},
+    "history": {
+      "title": "Company History & Development",
+      "timeline": {
+        "2005": {
+          "year": "2005 - Beginning",
+          "title": "Establishment in Ho Chi Minh City with a team of 20 employees, specializing in residential construction."
+        },
+        "2010": {
+          "year": "2010 - Expansion", 
+          "title": "Completed the first industrial park project, expanding into industrial construction."
+        },
+        "2018": {
+          "year": "2018 - Certification",
+          "title": "Achieved ISO 9001:2015 and ISO 14001:2015 certification, affirming management quality."
+        },
+        "2023": {
+          "year": "2023 - Nationwide",
+          "title": "Expanded operations nationwide with over 500 employees, completing 200+ major projects."
+        }
+      }
+    },
+    "team": {
+      "title": "Key Personnel",
+      "members": {
+        "ceo": {
+          "name": "Ta Van Lai",
+          "position": "Chief Executive Officer",
+          "experience": "20+ years experience",
+          "specialty": "Civil Engineer",
+          "description": "Master of Construction Engineering, leading expert in industrial construction."
+        },
+        "deputy": {
+          "name": "Nguyen Van Phat", 
+          "position": "Deputy CEO",
+          "experience": "15+ years experience",
+          "specialty": "Architect",
+          "description": "Design architecture expert, has implemented many iconic projects in Vietnam."
+        },
+        "technical": {
+          "name": "Le Minh Tuan",
+          "position": "Technical Director", 
+          "experience": "18+ years experience",
+          "specialty": "Bridge & Road Engineer",
+          "description": "Infrastructure expert, technical management of major projects."
+        }
+      }
+    },
+    "partners": {
+      "title": "Strategic Partners & Notable Clients",
+      "strategicPartners": {
+        "title": "Strategic Partners",
+        "vingroup": {
+          "name": "Vingroup Corporation",
+          "description": "Real estate development partner"
+        },
+        "coteccons": {
+          "name": "Coteccons",
+          "description": "Construction technical cooperation"
+        },
+        "hoaphat": {
+          "name": "Hoa Phat Group",
+          "description": "Construction materials supplier"
+        }
+      },
+      "clients": {
+        "title": "Notable Clients",
+        "hcmc": {
+          "name": "HCMC People's Committee", 
+          "description": "Urban infrastructure projects",
+          "type": "Public Works"
+        },
+        "samsung": {
+          "name": "Samsung Electronics",
+          "description": "Electronics manufacturing plant",
+          "type": "Industrial"
+        },
+        "saigoncoop": {
+          "name": "Saigon Co.op",
+          "description": "Shopping center system",
+          "type": "Commercial"
+        }
+      }
+    },
+    "testimonials": {
+      "title": "What Our Clients Say",
+      "description": "Hear from satisfied clients who have trusted us with their construction projects"
+    }
+  },
+  "services": {
+    "title": "Professional Construction Services",
+    "description": "We provide comprehensive solutions from design to construction, ensuring high quality and timely completion",
+    "chips": {
+      "experience": "15+ Years Experience",
+      "projects": "500+ Completed Projects", 
+      "team": "Expert Team"
+    },
+    "constructionTech": {
+      "title": "Modern Construction Technology",
+      "description": "Applying advanced technology and modern construction methods to deliver optimal quality",
+      "civilConstruction": {
+        "title": "Residential Construction",
+        "description": "Design and construction of residential buildings, villas, luxury apartments"
+      },
+      "industrialConstruction": {
+        "title": "Industrial Construction",
+        "description": "Factories, warehouses, large-scale industrial projects"
+      },
+      "urbanInfrastructure": {
+        "title": "Urban Infrastructure",
+        "description": "Bridges, roads, drainage systems, public buildings"
+      },
+      "landscapeDesign": {
+        "title": "Landscape Design",
+        "description": "Planning and designing green spaces, gardens"
+      }
+    },
+    "projectManagement": {
+      "title": "Professional Project Management",
+      "description": "Experienced project management team ensuring all projects are completed on time and with quality",
+      "management": {
+        "title": "Project Management",
+        "description": "Coordinating the entire process from groundbreaking to handover",
+        "features": {
+          "0": "Detailed planning",
+          "1": "Progress monitoring", 
+          "2": "Personnel management"
+        }
+      },
+      "qualityControl": {
+        "title": "Quality Control",
+        "description": "Ensuring the highest quality standards for every project",
+        "features": {
+          "0": "Material inspection",
+          "1": "Construction supervision",
+          "2": "Phase-by-phase acceptance"
+        }
+      },
+      "scheduleManagement": {
+        "title": "Schedule Management",
+        "description": "Optimizing construction time and ensuring on-time delivery",
+        "features": {
+          "0": "Detailed timeline",
+          "1": "Milestone tracking",
+          "2": "Regular reporting"
+        }
+      }
+    },
+    "consulting": {
+      "title": "In-depth Consulting Services",
+      "description": "Our consulting experts with years of experience will support you from planning to project completion",
+      "services": {
+        "0": "Architectural design consulting",
+        "1": "Investment project appraisal",
+        "2": "Construction supervision",
+        "3": "Construction legal consulting",
+        "4": "Environmental impact assessment",
+        "5": "Budget cost consulting"
+      },
+      "consultBtn": "Free Consultation"
+    }
+  },
+  "construction": {
+    "title": "Construction",
+    "titleHighlight": "Projects",
+    "description": "We specialize in constructing all types of projects from residential to industrial with high quality and on-time delivery",
+    "featureTitle": "Construction types:",
+    "services": {
+      "0": {
+        "title": "Residential Buildings",
+        "description": "Construction of all types of houses from single-storey to luxury villas, apartments, shophouses",
+        "features": {
+          "0": "Various types of private houses",
+          "1": "Luxury apartments, condos",
+          "2": "Villas, resort houses",
+          "3": "Shophouses"
+        },
+        "projects": "200+ completed projects"
+      },
+      "1": {
+        "title": "Commercial Projects",
+        "description": "Construction of buildings for business, commerce and services",
+        "features": {
+          "0": "Shopping malls, supermarkets",
+          "1": "Offices, office buildings",
+          "2": "Hotels, resorts, restaurants",
+          "3": "Showrooms, retail stores"
+        },
+        "projects": "150+ completed projects"
+      },
+      "2": {
+        "title": "Industrial Projects",
+        "description": "Construction of factories, manufacturing plants and large warehouses",
+        "features": {
+          "0": "Various types of factories",
+          "1": "Mechanical, assembly workshops",
+          "2": "Warehouses, logistics",
+          "3": "Auxiliary works"
+        },
+        "projects": "100+ completed projects"
+      },
+      "3": {
+        "title": "Infrastructure",
+        "description": "Construction of urban infrastructure and specialized engineering works",
+        "features": {
+          "0": "Roads, bridges",
+          "1": "Water supply and drainage systems",
+          "2": "Urban lighting",
+          "3": "Parks, landscapes"
+        },
+        "projects": "80+ completed projects"
+      }
+    },
+    "cta": {
+      "title": "Ready to Start Your Project?",
+      "description": "Contact us today for detailed construction consultation and free quotation",
+      "phone": "0939 927 975",
+      "quoteBtn": "Request a Quote"
+    }
+  },
+  "footer": {
+    "company": "Lai Phat",
+    "description": "Your trusted partner in all construction projects. Quality - Reputation - Professional.",
+    "quickLinks": "Quick Links",
+    "about": "About",
+    "services": "Services",
+    "store": "Store",
+    "contact": "Contact",
+    "servicesTitle": "Services",
+    "constructionTech": "Construction Technology",
+    "consultation": "Consultation & Supervision",
+    "qualityControl": "Quality Control",
+    "architecture": "Architectural Design",
+    "contactTitle": "Contact",
+    "address": "Vinh Loc Commune, Ho Chi Minh City",
+    "phone": "0939 927 975",
+    "email": "laiphatgroup@gmail.com",
+    "copyright": "© 2025 LaiPhat Construction. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use"
+  },
+  "designConsulting": {
+    "title": "Design And",
+    "titleHighlight": "Consulting",
+    "subtitle": "Our experienced team of architects and engineers will turn your ideas into reality with unique and functional designs",
+    "services": {
+      "architecture": {
+        "title": "Architectural Design",
+        "description": "Professional architectural design from concept to complete construction drawings",
+        "features": [
+          "Preliminary design & concepts",
+          "Detailed architectural drawings",
+          "Realistic 3D visualization",
+          "Construction permit documents"
+        ],
+        "projects": "300+ designs",
+        "specialty": "Specializing in modern and traditional architecture"
+      },
+      "structural": {
+        "title": "Structural Design",
+        "description": "Structural calculation and design ensuring safety and cost optimization",
+        "features": [
+          "Concrete structure calculation",
+          "Steel structure design",
+          "Foundation and ground engineering",
+          "Structural stability analysis"
+        ],
+        "projects": "250+ projects",
+        "specialty": "Structural experts with 15+ years experience"
+      },
+      "interior": {
+        "title": "Interior Design",
+        "description": "Luxurious interior design that fits your style and budget",
+        "features": [
+          "Interior concept design",
+          "Detailed construction drawings",
+          "Material selection and finishing",
+          "Color and lighting coordination"
+        ],
+        "projects": "200+ spaces",
+        "specialty": "Diverse styles from classic to modern"
+      },
+      "landscape": {
+        "title": "Landscape Design",
+        "description": "Creating harmonious green spaces that are environmentally friendly",
+        "features": [
+          "Green space planning",
+          "Garden and park design",
+          "Automatic irrigation systems",
+          "Plant and landscape structure selection"
+        ],
+        "projects": "150+ projects",
+        "specialty": "Sustainable and eco-friendly landscaping"
+      }
+    },
+    "servicesInclude": "Services include:",
+    "freeConsulting": "Free Design Consultation",
+    "cta": {
+      "title": "Start Designing Your Dream",
+      "subtitle": "Let us turn your ideas into perfect designs. Free consultation and the most competitive quotes in the market",
+      "phone": "0939 927 975",
+      "quoteBtn": "Get Design Quote"
+    }
+  },
+  "supervision": {
+    "title": "Construction",
+    "titleHighlight": "Supervision",
+    "subtitle": "Professional supervision services ensuring quality, schedule and safety for all construction projects",
+    "services": {
+      "quality": {
+        "title": "Quality Supervision",
+        "description": "Strict quality control ensuring construction follows design and technical standards",
+        "features": [
+          "Input material quality inspection",
+          "Construction process supervision by item",
+          "Hidden acceptance and step-by-step acceptance",
+          "Regular quality reports"
+        ],
+        "benefits": [
+          "Ensure sustainable construction quality",
+          "Early detection of technical errors",
+          "Minimize quality risks"
+        ],
+        "projects": "500+ supervised projects"
+      },
+      "schedule": {
+        "title": "Schedule Supervision",
+        "description": "Monitor and coordinate construction progress to ensure on-time delivery as committed",
+        "features": [
+          "Detailed schedule planning",
+          "Daily/weekly progress monitoring",
+          "Analysis of schedule delay causes",
+          "Propose acceleration measures when needed"
+        ],
+        "benefits": [
+          "On-time project delivery",
+          "Optimize resources and costs",
+          "Proactive handling of arising issues"
+        ],
+        "projects": "400+ on-schedule projects"
+      },
+      "safety": {
+        "title": "Safety Supervision",
+        "description": "Ensure strict compliance with occupational safety regulations on construction sites",
+        "features": [
+          "Check personal protective equipment",
+          "Monitor safety procedure implementation",
+          "Train to enhance safety awareness",
+          "Immediate handling of safety violations"
+        ],
+        "benefits": [
+          "Zero serious work accidents",
+          "100% legal compliance",
+          "Create safe working environment"
+        ],
+        "projects": "300+ safe construction sites"
+      }
+    },
+    "supervisionContent": "Supervision content:",
+    "benefits": "Benefits:",
+    "process": {
+      "title": "Supervision Process",
+      "subtitle": "International standard supervision process ensuring highest efficiency and quality",
+      "steps": [
+        {
+          "step": "01",
+          "title": "Survey & Planning",
+          "description": "Study design documents, create detailed supervision plan"
+        },
+        {
+          "step": "02",
+          "title": "Deploy Supervision",
+          "description": "Assign experienced supervisors to the construction site"
+        },
+        {
+          "step": "03",
+          "title": "Regular Reports",
+          "description": "Weekly reports on progress, quality, and safety"
+        },
+        {
+          "step": "04",
+          "title": "Acceptance & Handover",
+          "description": "Participate in acceptance and project handover"
+        }
+      ]
+    },
+    "cta": {
+      "title": "Ensure Construction Quality",
+      "subtitle": "With our professional supervision team, we are committed to bringing absolute peace of mind to your project",
+      "phone": "0939 927 975",
+      "consultBtn": "Supervision Service Consultation"
+    }
+  },
+  "projectManagement": {
+    "title": "Project Management",
+    "titleHighlight": "Consulting",
+    "subtitle": "Professional project management services ensuring projects are completed on time, on budget and to committed quality standards",
+    "services": {
+      "planning": {
+        "title": "Project Planning",
+        "description": "Build comprehensive detailed plans from groundbreaking to handover",
+        "features": [
+          "Analyze and define project scope",
+          "Create detailed construction schedule (Gantt Chart)",
+          "Identify key milestones and deliverables",
+          "Risk assessment and contingency planning"
+        ],
+        "tools": [
+          "Microsoft Project",
+          "Primavera P6",
+          "Smartsheet",
+          "Gantt Chart Tools"
+        ],
+        "experience": "10+ years experience",
+        "projects": "200+ successful projects"
+      },
+      "budget": {
+        "title": "Budget Management",
+        "description": "Cost control and efficient project budget optimization",
+        "features": [
+          "Detailed cost estimation by category",
+          "Track actual vs planned costs",
+          "Control change order costs",
+          "Regular financial reporting"
+        ],
+        "tools": [
+          "Cost Control Software",
+          "Excel Advanced",
+          "SAP Project System",
+          "Oracle Primavera"
+        ],
+        "experience": "15+ years experience",
+        "projects": "Save 10-20% budget"
+      },
+      "resources": {
+        "title": "Human Resources & Equipment Management",
+        "description": "Optimize the use of human resources and machinery equipment",
+        "features": [
+          "Phase-based manpower planning",
+          "Manage work schedules and shifts",
+          "Efficient equipment coordination",
+          "Performance and productivity evaluation"
+        ],
+        "tools": [
+          "Resource Management Tools",
+          "HR Management System",
+          "Equipment Tracking",
+          "Performance Analytics"
+        ],
+        "experience": "12+ years experience",
+        "projects": "30% efficiency increase"
+      }
+    },
+    "mainActivities": "Main activities:",
+    "toolsUsed": "Tools used:",
+    "phases": {
+      "title": "5 Project Management Phases",
+      "subtitle": "Apply international PMBOK project management methodology to ensure highest efficiency",
+      "steps": [
+        {
+          "phase": "Initiation",
+          "duration": "1-2 weeks",
+          "activities": ["Define objectives", "Stakeholder analysis", "Create project charter"],
+          "icon": "🎯"
+        },
+        {
+          "phase": "Planning",
+          "duration": "2-3 weeks",
+          "activities": ["Detail scope", "Create timeline", "Resource allocation"],
+          "icon": "📋"
+        },
+        {
+          "phase": "Execution",
+          "duration": "Per project",
+          "activities": ["Construction coordination", "Progress monitoring", "Regular reporting"],
+          "icon": "⚡"
+        },
+        {
+          "phase": "Monitoring",
+          "duration": "Continuous",
+          "activities": ["Tracking KPI", "Risk management", "Quality assurance"],
+          "icon": "📊"
+        },
+        {
+          "phase": "Closure",
+          "duration": "1-2 weeks",
+          "activities": ["Acceptance", "Handover", "Lessons learned"],
+          "icon": "✅"
+        }
+      ]
+    },
+    "cta": {
+      "title": "Successful Projects with Experts",
+      "subtitle": "With our internationally certified Project Managers, we are committed to bringing success to every project",
+      "stats": {
+        "onTime": "98%",
+        "onTimeDesc": "Projects completed on time",
+        "savings": "15%",
+        "savingsDesc": "Average cost savings",
+        "projects": "500+",
+        "projectsDesc": "Projects managed"
+      },
+      "phone": "0939 927 975",
+      "consultBtn": "Project Management Consultation"
+    }
+  },
+  "biddingConsulting": {
+    "title": "Bidding",
+    "titleHighlight": "Consulting",
+    "subtitle": "Comprehensive bidding consulting services from tender document preparation to contractor selection, ensuring transparency and efficiency",
+    "services": {
+      "documentation": {
+        "title": "Tender Document Preparation",
+        "description": "Prepare detailed, professional tender documents in accordance with legal regulations",
+        "features": [
+          "Draft detailed technical specifications",
+          "Prepare tender package estimates",
+          "Develop document evaluation criteria",
+          "Prepare complete legal documentation"
+        ],
+        "documents": [
+          "Invitation to Tender",
+          "Request for Proposal (RFP)",
+          "Technical design drawings",
+          "Contract conditions"
+        ],
+        "experience": "12+ years experience",
+        "success": "95% success rate"
+      },
+      "evaluation": {
+        "title": "Bid Proposal Evaluation",
+        "description": "Assess and evaluate bid proposals fairly and transparently",
+        "features": [
+          "Check document validity",
+          "Assess technical capabilities",
+          "Analyze detailed quotations",
+          "Rank and compare contractors"
+        ],
+        "criteria": [
+          "Financial capacity",
+          "Project experience",
+          "Professional team",
+          "Technical solutions"
+        ],
+        "experience": "15+ years experience",
+        "success": "100+ tenders"
+      },
+      "selection": {
+        "title": "Contractor Selection Consulting",
+        "description": "Support clients in selecting the most suitable contractor for their project",
+        "features": [
+          "Analyze capability profiles",
+          "Assess market reputation",
+          "Compare technical solutions",
+          "Negotiate contract terms"
+        ],
+        "benefits": [
+          "Save time",
+          "Reduce project risks",
+          "Optimize costs",
+          "Ensure quality"
+        ],
+        "experience": "20+ years experience",
+        "success": "Save 15-25% costs"
+      }
+    },
+    "mainActivities": "Main activities:",
+    "documentsProvided": "Documents provided:",
+    "evaluationCriteria": "Evaluation criteria:",
+    "benefitsProvided": "Benefits provided:",
+    "process": {
+      "title": "Bidding Process",
+      "subtitle": "Apply national standard bidding process, ensuring transparency and efficiency",
+      "steps": [
+        {
+          "step": "Preparation",
+          "duration": "2-3 weeks",
+          "activities": ["Needs analysis", "Tender planning", "Document preparation"],
+          "icon": "📋"
+        },
+        {
+          "step": "Invitation",
+          "duration": "3-4 weeks",
+          "activities": ["Issue notification", "Conduct prequalification", "Sell tender documents"],
+          "icon": "📢"
+        },
+        {
+          "step": "Submission",
+          "duration": "4-6 weeks",
+          "activities": ["Collect documents", "Check validity", "Organize bid opening"],
+          "icon": "📥"
+        },
+        {
+          "step": "Evaluation",
+          "duration": "2-3 weeks",
+          "activities": ["Technical assessment", "Financial evaluation", "Rank contractors"],
+          "icon": "⚖️"
+        },
+        {
+          "step": "Decision",
+          "duration": "1 week",
+          "activities": ["Approve results", "Contract negotiation", "Signing"],
+          "icon": "✅"
+        }
+      ]
+    },
+    "advantages": {
+      "title": "Outstanding Advantages",
+      "subtitle": "Committed to providing professional, transparent and highly effective bidding services",
+      "items": [
+        {
+          "title": "Legal compliance",
+          "description": "Ensure 100% process compliance with regulations",
+          "icon": "⚖️",
+          "color": "#3b82f6"
+        },
+        {
+          "title": "Transparency and fairness",
+          "description": "Open and objective evaluation process",
+          "icon": "🏛️",
+          "color": "#10b981"
+        },
+        {
+          "title": "Cost savings",
+          "description": "Select optimal contractors for price and quality",
+          "icon": "💰",
+          "color": "#f59e0b"
+        },
+        {
+          "title": "Risk reduction",
+          "description": "Thorough assessment of contractor capabilities",
+          "icon": "🛡️",
+          "color": "#ef4444"
+        }
+      ]
+    },
+    "cta": {
+      "title": "Successful Bidding with Experts",
+      "subtitle": "With over 15 years of experience in bidding, we are committed to providing optimal solutions for all tender packages",
+      "stats": {
+        "packages": "500+",
+        "packagesDesc": "Successful tender packages",
+        "winRate": "95%",
+        "winRateDesc": "Tender success rate",
+        "savings": "20%",
+        "savingsDesc": "Average cost savings"
+      },
+      "phone": "0939 927 975",
+      "consultBtn": "Bidding Consultation"
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "titleHighlight": "Us",
+    "form": {
+      "title": "Send Message",
+      "name": "Full Name",
+      "email": "Email",
+      "phone": "Phone Number",
+      "message": "Message",
+      "submit": "Send Message"
+    },
+    "info": {
+      "title": "Contact Information",
+      "office": {
+        "title": "Office Address",
+        "address": "Vinh Loc Commune\nBinh Chanh District\nHo Chi Minh City, Vietnam"
+      },
+      "details": {
+        "title": "Contact Details",
+        "phone": "Phone:",
+        "phoneNumber": "0939 927 975",
+        "email": "Email:",
+        "emailAddress": "info@laiphat.com",
+        "website": "Website:",
+        "websiteUrl": "www.laiphat.com"
+      },
+      "map": {
+        "title": "Location Map"
+      },
+      "quote": {
+        "title": "Request Quote",
+        "description": "Need a detailed quote? Fill out our request form.",
+        "button": "Open Request Form"
+      },
+      "social": {
+        "title": "Social Networks",
+        "facebook": "Facebook",
+        "zalo": "Zalo"
+      }
+    }
+  }
+}

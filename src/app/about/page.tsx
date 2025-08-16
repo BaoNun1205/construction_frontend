@@ -30,6 +30,7 @@ import {
   Architecture,
   Engineering,
 } from '@mui/icons-material';
+import { useTranslations } from '@/hooks/useTranslations';
 
 // Intersection Observer Hook
 const useScrollAnimations = () => {
@@ -60,18 +61,88 @@ const useScrollAnimations = () => {
 export default function AboutPage() {
   useScrollAnimations();
   const theme = useTheme();
+  const { t } = useTranslations();
 
   return (
     <Box className="min-h-screen bg-gradient-to-br from-cyan-50 to-amber-50">
       <Container maxWidth="lg" className="py-16 space-y-20">
-        {/* Mission, Vision, Values */}
+        {/* Why Choose Us */}
         <section className="fade-in-on-scroll">
           <Typography
             variant="h2"
             className="text-3xl font-bold text-center mb-12 text-gray-800"
             sx={{ marginBottom: '3rem' }}
           >
-            Sứ Mệnh – Tầm Nhìn – Giá Trị Cốt Lõi
+            {t('about.whyChooseUs.title')}
+          </Typography>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="zoom-in-on-scroll animate-delay-1">
+              <div className="text-center p-6 rounded-2xl bg-white/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 hover:shadow-xl hover:scale-105">
+                <EmojiEvents 
+                  className="mb-4 text-yellow-500" 
+                  sx={{ fontSize: 50 }} 
+                />
+                <Typography variant="h6" className="font-bold mb-3 text-gray-800">
+                  {t('about.whyChooseUs.experience.title')}
+                </Typography>
+                <Typography variant="body2" className="text-gray-600">
+                  {t('about.whyChooseUs.experience.description')}
+                </Typography>
+              </div>
+            </div>
+            <div className="zoom-in-on-scroll animate-delay-2">
+              <div className="text-center p-6 rounded-2xl bg-white/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 hover:shadow-xl hover:scale-105">
+                <Group 
+                  className="mb-4 text-blue-500" 
+                  sx={{ fontSize: 50 }} 
+                />
+                <Typography variant="h6" className="font-bold mb-3 text-gray-800">
+                  {t('about.whyChooseUs.team.title')}
+                </Typography>
+                <Typography variant="body2" className="text-gray-600">
+                  {t('about.whyChooseUs.team.description')}
+                </Typography>
+              </div>
+            </div>
+            <div className="zoom-in-on-scroll animate-delay-3">
+              <div className="text-center p-6 rounded-2xl bg-white/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 hover:shadow-xl hover:scale-105">
+                <VerifiedUser 
+                  className="mb-4 text-green-500" 
+                  sx={{ fontSize: 50 }} 
+                />
+                <Typography variant="h6" className="font-bold mb-3 text-gray-800">
+                  {t('about.whyChooseUs.quality.title')}
+                </Typography>
+                <Typography variant="body2" className="text-gray-600">
+                  {t('about.whyChooseUs.quality.description')}
+                </Typography>
+              </div>
+            </div>
+            <div className="zoom-in-on-scroll animate-delay-4">
+              <div className="text-center p-6 rounded-2xl bg-white/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 hover:shadow-xl hover:scale-105">
+                <Business 
+                  className="mb-4 text-purple-500" 
+                  sx={{ fontSize: 50 }} 
+                />
+                <Typography variant="h6" className="font-bold mb-3 text-gray-800">
+                  {t('about.whyChooseUs.onTime.title')}
+                </Typography>
+                <Typography variant="body2" className="text-gray-600">
+                  {t('about.whyChooseUs.onTime.description')}
+                </Typography>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Mission, Vision, Values */}
+        <section className="fade-in-on-scroll">
+          <Typography
+            variant="h3"
+            className="text-2xl font-bold text-center mb-8 text-gray-800"
+            sx={{ marginBottom: '2rem' }}
+          >
+            {t('about.title')}
           </Typography>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="zoom-in-on-scroll animate-delay-1">
@@ -122,11 +193,10 @@ export default function AboutPage() {
                       }
                     }}
                   >
-                    Sứ Mệnh
+                    {t('about.mission.title')}
                   </Typography>
                   <Typography variant="body1" className="text-gray-600 leading-relaxed transition-colors duration-300 group-hover:text-gray-700">
-                    Xây dựng những công trình chất lượng, bền vững và an toàn, mang lại giá trị lâu dài
-                    cho khách hàng và cộng đồng.
+                    {t('about.mission.description')}
                   </Typography>
                 </div>
               </div>
@@ -179,11 +249,10 @@ export default function AboutPage() {
                       }
                     }}
                   >
-                    Tầm Nhìn
+                    {t('about.vision.title')}
                   </Typography>
                   <Typography variant="body1" className="text-gray-600 leading-relaxed transition-colors duration-300 group-hover:text-gray-700">
-                    Trở thành đơn vị xây dựng hàng đầu Việt Nam, tiên phong trong ứng dụng công nghệ
-                    xanh và bền vững.
+                    {t('about.vision.description')}
                   </Typography>
                 </div>
               </div>
@@ -236,10 +305,10 @@ export default function AboutPage() {
                       }
                     }}
                   >
-                    Giá Trị
+                    {t('about.values.title')}
                   </Typography>
                   <Typography variant="body1" className="text-gray-600 leading-relaxed transition-colors duration-300 group-hover:text-gray-700">
-                    Chính trực, chuyên nghiệp, sáng tạo và luôn đặt lợi ích khách hàng lên hàng đầu.
+                    {t('about.values.description')}
                   </Typography>
                 </div>
               </div>
@@ -271,7 +340,7 @@ export default function AboutPage() {
                 variant="h2"
                 className="text-3xl font-bold text-center mb-12 text-gray-800"
               >
-                Lịch Sử Hình Thành & Phát Triển
+                {t('about.history.title')}
               </Typography>
           <Timeline position="alternate">
             <TimelineItem className="fade-in-on-scroll animate-delay-1">
@@ -285,11 +354,10 @@ export default function AboutPage() {
                   className="p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-1 cursor-pointer group"
                 >
                   <Typography variant="h6" className="font-bold text-cyan-600 mb-2 transition-all duration-300 group-hover:text-cyan-700 group-hover:scale-105">
-                    2005 - Khởi Đầu
+                    {t('about.history.timeline.2005.year')}
                   </Typography>
                   <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
-                    Thành lập công ty tại TP. Hồ Chí Minh với đội ngũ 20 nhân viên, chuyên về xây
-                    dựng dân dụng.
+                    {t('about.history.timeline.2005.title')}
                   </Typography>
                 </Paper>
               </TimelineContent>
@@ -305,11 +373,10 @@ export default function AboutPage() {
                   className="p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-1 cursor-pointer group"
                 >
                   <Typography variant="h6" className="font-bold text-amber-500 mb-2 transition-all duration-300 group-hover:text-amber-600 group-hover:scale-105">
-                    2010 - Mở Rộng
+                    {t('about.history.timeline.2010.year')}
                   </Typography>
                   <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
-                    Hoàn thành dự án khu công nghiệp đầu tiên, mở rộng sang lĩnh vực xây dựng công
-                    nghiệp.
+                    {t('about.history.timeline.2010.title')}
                   </Typography>
                 </Paper>
               </TimelineContent>
@@ -325,10 +392,10 @@ export default function AboutPage() {
                   className="p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-1 cursor-pointer group"
                 >
                   <Typography variant="h6" className="font-bold text-green-600 mb-2 transition-all duration-300 group-hover:text-green-700 group-hover:scale-105">
-                    2018 - Chứng Nhận
+                    {t('about.history.timeline.2018.year')}
                   </Typography>
                   <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
-                    Đạt chứng nhận ISO 9001:2015 và ISO 14001:2015, khẳng định chất lượng quản lý.
+                    {t('about.history.timeline.2018.title')}
                   </Typography>
                 </Paper>
               </TimelineContent>
@@ -343,11 +410,10 @@ export default function AboutPage() {
                   className="p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-1 cursor-pointer group"
                 >
                   <Typography variant="h6" className="font-bold text-purple-600 mb-2 transition-all duration-300 group-hover:text-purple-700 group-hover:scale-105">
-                    2023 - Toàn Quốc
+                    {t('about.history.timeline.2023.year')}
                   </Typography>
                   <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
-                    Mở rộng hoạt động ra toàn quốc với hơn 500 nhân viên, hoàn thành 200+ dự án
-                    lớn.
+                    {t('about.history.timeline.2023.title')}
                   </Typography>
                 </Paper>
               </TimelineContent>
@@ -364,7 +430,7 @@ export default function AboutPage() {
             className="text-3xl font-bold text-center mb-12 text-gray-800"
             sx={{ marginBottom: '3rem' }}
           >
-            Đội Ngũ Nhân Sự Chủ Chốt
+            {t('about.team.title')}
           </Typography>
           <div className="flex flex-wrap gap-6">
             <div className="flex-1 min-w-[300px] zoom-in-on-scroll">
@@ -384,25 +450,25 @@ export default function AboutPage() {
                   />
                 </Avatar>
                 <Typography variant="h5" className="font-bold mb-2 transition-colors duration-300 group-hover:text-cyan-700">
-                  Tạ Văn Lai
+                  {t('about.team.members.ceo.name')}
                 </Typography>
                 <Typography variant="subtitle1" className="text-cyan-600 mb-3 transition-colors duration-300 group-hover:text-cyan-700">
-                  Tổng Giám Đốc
+                  {t('about.team.members.ceo.position')}
                 </Typography>
                 <div className="flex flex-wrap justify-center gap-2 mb-4">
                   <Chip 
-                    label="20+ năm kinh nghiệm" 
+                    label={t('about.team.members.ceo.experience')}
                     size="small" 
                     className="bg-cyan-100 text-cyan-800 transition-all duration-300 group-hover:bg-cyan-200" 
                   />
                   <Chip 
-                    label="Kỹ sư xây dựng" 
+                    label={t('about.team.members.ceo.specialty')}
                     size="small" 
                     className="bg-gray-100 transition-all duration-300 group-hover:bg-gray-200" 
                   />
                 </div>
                 <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
-                  Thạc sĩ Kỹ thuật Xây dựng, chuyên gia hàng đầu trong lĩnh vực xây dựng công nghiệp.
+                  {t('about.team.members.ceo.description')}
                 </Typography>
               </Card>
             </div>
@@ -423,25 +489,25 @@ export default function AboutPage() {
                   />
                 </Avatar>
                 <Typography variant="h5" className="font-bold mb-2 transition-colors duration-300 group-hover:text-amber-600">
-                  Nguyễn Văn Phát
+                  {t('about.team.members.deputy.name')}
                 </Typography>
                 <Typography variant="subtitle1" className="text-amber-500 mb-3 transition-colors duration-300 group-hover:text-amber-600">
-                  Phó Tổng Giám Đốc
+                  {t('about.team.members.deputy.position')}
                 </Typography>
                 <div className="flex flex-wrap justify-center gap-2 mb-4">
                   <Chip 
-                    label="15+ năm kinh nghiệm" 
+                    label={t('about.team.members.deputy.experience')}
                     size="small" 
                     className="bg-amber-100 text-amber-800 transition-all duration-300 group-hover:bg-amber-200" 
                   />
                   <Chip 
-                    label="Kiến trúc sư" 
+                    label={t('about.team.members.deputy.specialty')}
                     size="small" 
                     className="bg-gray-100 transition-all duration-300 group-hover:bg-gray-200" 
                   />
                 </div>
                 <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
-                  Chuyên gia thiết kế kiến trúc, đã thực hiện nhiều dự án biểu tượng tại Việt Nam.
+                  {t('about.team.members.deputy.description')}
                 </Typography>
               </Card>
             </div>
@@ -462,25 +528,25 @@ export default function AboutPage() {
                   />
                 </Avatar>
                 <Typography variant="h5" className="font-bold mb-2 transition-colors duration-300 group-hover:text-green-700">
-                  Lê Minh Tuấn
+                  {t('about.team.members.technical.name')}
                 </Typography>
                 <Typography variant="subtitle1" className="text-green-600 mb-3 transition-colors duration-300 group-hover:text-green-700">
-                  Giám Đốc Kỹ Thuật
+                  {t('about.team.members.technical.position')}
                 </Typography>
                 <div className="flex flex-wrap justify-center gap-2 mb-4">
                   <Chip 
-                    label="18+ năm kinh nghiệm" 
+                    label={t('about.team.members.technical.experience')}
                     size="small" 
                     className="bg-green-100 text-green-800 transition-all duration-300 group-hover:bg-green-200" 
                   />
                   <Chip 
-                    label="Kỹ sư cầu đường" 
+                    label={t('about.team.members.technical.specialty')}
                     size="small" 
                     className="bg-gray-100 transition-all duration-300 group-hover:bg-gray-200" 
                   />
                 </div>
                 <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
-                  Chuyên gia về hạ tầng giao thông, quản lý kỹ thuật các dự án lớn.
+                  {t('about.team.members.technical.description')}
                 </Typography>
               </Card>
             </div>
@@ -494,7 +560,7 @@ export default function AboutPage() {
             className="text-3xl font-bold text-center mb-12 text-gray-800"
             sx={{ marginBottom: '3rem' }}
           >
-            Đối Tác & Khách Hàng Tiêu Biểu
+            {t('about.partners.title')}
           </Typography>
           <div className="flex flex-col lg:flex-row gap-6">
             <div className="flex-1 fade-in-on-scroll">
@@ -504,16 +570,16 @@ export default function AboutPage() {
                   className="font-bold mb-4 text-cyan-600 flex items-center transition-colors duration-300 group-hover:text-cyan-700"
                 >
                   <Handshake className="mr-2 transition-transform duration-300 group-hover:scale-110" />
-                  Đối Tác Chiến Lược
+                  {t('about.partners.strategicPartners.title')}
                 </Typography>
                 <div className="space-y-4">
                   <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg transition-all duration-300 hover:bg-gray-100 hover:scale-[1.01]">
                     <div>
                       <Typography variant="h6" className="font-semibold">
-                        Tập đoàn Vingroup
+                        {t('about.partners.strategicPartners.vingroup.name')}
                       </Typography>
                       <Typography variant="body2" className="text-gray-600">
-                        Đối tác phát triển bất động sản
+                        {t('about.partners.strategicPartners.vingroup.description')}
                       </Typography>
                     </div>
                     <Rating value={5} readOnly size="small" />
@@ -521,10 +587,10 @@ export default function AboutPage() {
                   <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg transition-all duration-300 hover:bg-gray-100 hover:scale-[1.01]">
                     <div>
                       <Typography variant="h6" className="font-semibold">
-                        Coteccons
+                        {t('about.partners.strategicPartners.coteccons.name')}
                       </Typography>
                       <Typography variant="body2" className="text-gray-600">
-                        Hợp tác kỹ thuật xây dựng
+                        {t('about.partners.strategicPartners.coteccons.description')}
                       </Typography>
                     </div>
                     <Rating value={5} readOnly size="small" />
@@ -532,10 +598,10 @@ export default function AboutPage() {
                   <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg transition-all duration-300 hover:bg-gray-100 hover:scale-[1.01]">
                     <div>
                       <Typography variant="h6" className="font-semibold">
-                        Hòa Phát Group
+                        {t('about.partners.strategicPartners.hoaphat.name')}
                       </Typography>
                       <Typography variant="body2" className="text-gray-600">
-                        Cung cấp vật liệu xây dựng
+                        {t('about.partners.strategicPartners.hoaphat.description')}
                       </Typography>
                     </div>
                     <Rating value={4} readOnly size="small" />
@@ -550,20 +616,20 @@ export default function AboutPage() {
                   className="font-bold mb-4 text-amber-500 flex items-center transition-colors duration-300 group-hover:text-amber-600"
                 >
                   <Business className="mr-2 transition-transform duration-300 group-hover:scale-110" />
-                  Khách Hàng Tiêu Biểu
+                  {t('about.partners.clients.title')}
                 </Typography>
                 <div className="space-y-4">
                   <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg transition-all duration-300 hover:bg-gray-100 hover:scale-[1.01]">
                     <div>
                       <Typography variant="h6" className="font-semibold">
-                        UBND TP. Hồ Chí Minh
+                        {t('about.partners.clients.hcmc.name')}
                       </Typography>
                       <Typography variant="body2" className="text-gray-600">
-                        Dự án hạ tầng đô thị
+                        {t('about.partners.clients.hcmc.description')}
                       </Typography>
                     </div>
                     <Chip 
-                      label="Công trình công cộng" 
+                      label={t('about.partners.clients.hcmc.type')}
                       size="small" 
                       className="bg-blue-100 text-blue-800 transition-all duration-300 hover:bg-blue-200" 
                     />
@@ -571,14 +637,14 @@ export default function AboutPage() {
                   <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg transition-all duration-300 hover:bg-gray-100 hover:scale-[1.01]">
                     <div>
                       <Typography variant="h6" className="font-semibold">
-                        Samsung Electronics
+                        {t('about.partners.clients.samsung.name')}
                       </Typography>
                       <Typography variant="body2" className="text-gray-600">
-                        Nhà máy sản xuất điện tử
+                        {t('about.partners.clients.samsung.description')}
                       </Typography>
                     </div>
                     <Chip 
-                      label="Công nghiệp" 
+                      label={t('about.partners.clients.samsung.type')}
                       size="small" 
                       className="bg-green-100 text-green-800 transition-all duration-300 hover:bg-green-200" 
                     />
@@ -586,14 +652,14 @@ export default function AboutPage() {
                   <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg transition-all duration-300 hover:bg-gray-100 hover:scale-[1.01]">
                     <div>
                       <Typography variant="h6" className="font-semibold">
-                        Saigon Co.op
+                        {t('about.partners.clients.saigoncoop.name')}
                       </Typography>
                       <Typography variant="body2" className="text-gray-600">
-                        Hệ thống trung tâm thương mại
+                        {t('about.partners.clients.saigoncoop.description')}
                       </Typography>
                     </div>
                     <Chip 
-                      label="Thương mại" 
+                      label={t('about.partners.clients.saigoncoop.type')}
                       size="small" 
                       className="bg-purple-100 text-purple-800 transition-all duration-300 hover:bg-purple-200" 
                     />

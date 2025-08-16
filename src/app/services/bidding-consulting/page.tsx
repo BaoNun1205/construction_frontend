@@ -12,6 +12,7 @@ import {
   Assessment,
   PersonSearch,
 } from '@mui/icons-material';
+import { useTranslations } from '@/hooks/useTranslations';
 
 // Intersection Observer Hook
 const useScrollAnimations = () => {
@@ -42,126 +43,51 @@ const useScrollAnimations = () => {
 export default function BiddingConsultingPage() {
   useScrollAnimations();
   const theme = useTheme();
+  const { t } = useTranslations();
 
   const biddingServices = [
     {
       icon: <Description sx={{ fontSize: 60 }} />,
-      title: "Lập hồ sơ mời thầu",
-      description: "Chuẩn bị hồ sơ mời thầu chi tiết, chuyên nghiệp theo quy định pháp luật",
-      features: [
-        "Soạn thảo điều kiện kỹ thuật chi tiết",
-        "Lập dự toán giá gói thầu",
-        "Xây dựng tiêu chí đánh giá hồ sơ",
-        "Chuẩn bị tài liệu pháp lý đầy đủ"
-      ],
-      documents: [
-        "Thông báo mời thầu",
-        "Hồ sơ yêu cầu (RFP)",
-        "Bản vẽ thiết kế kỹ thuật",
-        "Điều kiện hợp đồng"
-      ],
-      experience: "12+ năm kinh nghiệm",
-      success: "95% thành công"
+      title: t('biddingConsulting.services.documentation.title') as string,
+      description: t('biddingConsulting.services.documentation.description') as string,
+      features: t('biddingConsulting.services.documentation.features') as string[],
+      documents: t('biddingConsulting.services.documentation.documents') as string[],
+      experience: t('biddingConsulting.services.documentation.experience') as string,
+      success: t('biddingConsulting.services.documentation.success') as string
     },
     {
       icon: <Assessment sx={{ fontSize: 60 }} />,
-      title: "Đánh giá hồ sơ dự thầu",
-      description: "Thẩm định và đánh giá hồ sơ dự thầu một cách công bằng, minh bạch",
-      features: [
-        "Kiểm tra tính hợp lệ hồ sơ",
-        "Đánh giá năng lực kỹ thuật",
-        "Phân tích báo giá chi tiết",
-        "Xếp hạng và so sánh nhà thầu"
-      ],
-      criteria: [
-        "Năng lực tài chính",
-        "Kinh nghiệm dự án",
-        "Đội ngũ chuyên môn",
-        "Phương án kỹ thuật"
-      ],
-      experience: "15+ năm kinh nghiệm",
-      success: "100+ cuộc thầu"
+      title: t('biddingConsulting.services.evaluation.title') as string,
+      description: t('biddingConsulting.services.evaluation.description') as string,
+      features: t('biddingConsulting.services.evaluation.features') as string[],
+      criteria: t('biddingConsulting.services.evaluation.criteria') as string[],
+      experience: t('biddingConsulting.services.evaluation.experience') as string,
+      success: t('biddingConsulting.services.evaluation.success') as string
     },
     {
       icon: <PersonSearch sx={{ fontSize: 60 }} />,
-      title: "Tư vấn lựa chọn nhà thầu",
-      description: "Hỗ trợ chủ đầu tư lựa chọn nhà thầu phù hợp nhất cho dự án",
-      features: [
-        "Phân tích hồ sơ năng lực",
-        "Đánh giá uy tín thị trường",
-        "So sánh phương án kỹ thuật",
-        "Thương lượng điều kiện hợp đồng"
-      ],
-      benefits: [
-        "Tiết kiệm thời gian",
-        "Giảm rủi ro dự án",
-        "Tối ưu chi phí",
-        "Đảm bảo chất lượng"
-      ],
-      experience: "20+ năm kinh nghiệm",
-      success: "Tiết kiệm 15-25% chi phí"
+      title: t('biddingConsulting.services.selection.title') as string,
+      description: t('biddingConsulting.services.selection.description') as string,
+      features: t('biddingConsulting.services.selection.features') as string[],
+      benefits: t('biddingConsulting.services.selection.benefits') as string[],
+      experience: t('biddingConsulting.services.selection.experience') as string,
+      success: t('biddingConsulting.services.selection.success') as string
     },
   ];
 
-  const biddingProcess = [
-    {
-      step: "Chuẩn bị",
-      duration: "2-3 tuần",
-      activities: ["Phân tích nhu cầu", "Lập kế hoạch thầu", "Chuẩn bị tài liệu"],
-      icon: "📋"
-    },
-    {
-      step: "Mời thầu",
-      duration: "3-4 tuần", 
-      activities: ["Phát hành thông báo", "Tổ chức sơ tuyển", "Bán hồ sơ thầu"],
-      icon: "📢"
-    },
-    {
-      step: "Nhận thầu",
-      duration: "4-6 tuần",
-      activities: ["Thu thập hồ sơ", "Kiểm tra tính hợp lệ", "Tổ chức mở thầu"],
-      icon: "📥"
-    },
-    {
-      step: "Đánh giá",
-      duration: "2-3 tuần",
-      activities: ["Thẩm định kỹ thuật", "Đánh giá tài chính", "Xếp hạng nhà thầu"],
-      icon: "⚖️"
-    },
-    {
-      step: "Quyết định",
-      duration: "1 tuần",
-      activities: ["Phê duyệt kết quả", "Thương thảo hợp đồng", "Ký kết"],
-      icon: "✅"
-    }
-  ];
+  const biddingProcess = t('biddingConsulting.process.steps') as Array<{
+    step: string;
+    duration: string;
+    activities: string[];
+    icon: string;
+  }>;
 
-  const advantages = [
-    {
-      title: "Tuân thủ pháp luật",
-      description: "Đảm bảo 100% quy trình đúng luật định",
-      icon: "⚖️",
-      color: "#3b82f6"
-    },
-    {
-      title: "Minh bạch công bằng",
-      description: "Quy trình đánh giá công khai, khách quan",
-      icon: "🏛️", 
-      color: "#10b981"
-    },
-    {
-      title: "Tiết kiệm chi phí",
-      description: "Lựa chọn nhà thầu tối ưu về giá và chất lượng",
-      icon: "💰",
-      color: "#f59e0b"
-    },
-    {
-      title: "Giảm rủi ro",
-      description: "Thẩm định kỹ lưỡng năng lực nhà thầu",
-      icon: "🛡️",
-      color: "#ef4444"
-    }
-  ];
+  const advantages = t('biddingConsulting.advantages.items') as Array<{
+    title: string;
+    description: string;
+    icon: string;
+    color: string;
+  }>;
 
   return (
     <Box className="min-h-screen bg-gradient-to-br from-cyan-50 to-blue-50">
@@ -173,14 +99,14 @@ export default function BiddingConsultingPage() {
               variant="h2"
               className="text-4xl font-bold text-center mb-6 text-gray-800"
             >
-              Tư Vấn
-              <span style={{ color: theme.palette.primary.main }}> Đấu Thầu</span>
+              {t('biddingConsulting.title') as string}
+              <span style={{ color: theme.palette.primary.main }}> {t('biddingConsulting.titleHighlight') as string}</span>
             </Typography>
             <Typography
               variant="h6"
               className="text-center text-gray-600 max-w-4xl mx-auto mb-8 leading-relaxed"
             >
-              Dịch vụ tư vấn đấu thầu toàn diện từ lập hồ sơ mời thầu đến lựa chọn nhà thầu phù hợp, đảm bảo minh bạch và hiệu quả
+              {t('biddingConsulting.subtitle') as string}
             </Typography>
           </div>
         </section>
@@ -263,7 +189,7 @@ export default function BiddingConsultingPage() {
                   
                   <div className="space-y-4 mb-6 flex-grow">
                     <Typography variant="h6" className="font-semibold text-gray-800">
-                      Hoạt động chính:
+                      {t('biddingConsulting.mainActivities') as string}
                     </Typography>
                     {service.features.map((feature, idx) => (
                       <div key={idx} className="flex items-start text-sm text-gray-700 group-hover:text-gray-800 transition-colors duration-300">
@@ -280,7 +206,7 @@ export default function BiddingConsultingPage() {
 
                   <div className="border-t border-gray-200/50 pt-4">
                     <Typography variant="subtitle2" className="font-semibold text-gray-800 mb-2">
-                      {service.documents ? 'Tài liệu cung cấp:' : service.criteria ? 'Tiêu chí đánh giá:' : 'Lợi ích mang lại:'}
+                      {service.documents ? t('biddingConsulting.documentsProvided') as string : service.criteria ? t('biddingConsulting.evaluationCriteria') as string : t('biddingConsulting.benefitsProvided') as string}
                     </Typography>
                     <div className="space-y-1">
                       {(service.documents || service.criteria || service.benefits)?.map((item, idx) => (
@@ -300,10 +226,10 @@ export default function BiddingConsultingPage() {
         <section className="slide-in-right-on-scroll">
           <div className="flex flex-col items-center justify-center text-center mb-12">
             <Typography variant="h3" className="font-bold text-gray-800 mb-4">
-              Quy Trình Đấu Thầu
+              {t('biddingConsulting.process.title') as string}
             </Typography>
             <Typography variant="body1" className="text-gray-600 max-w-2xl mx-auto">
-              Áp dụng quy trình đấu thầu tiêu chuẩn quốc gia, đảm bảo tính minh bạch và hiệu quả
+              {t('biddingConsulting.process.subtitle') as string}
             </Typography>
           </div>
 
@@ -357,10 +283,10 @@ export default function BiddingConsultingPage() {
         <section className="fade-in-on-scroll">
           <div className="flex flex-col items-center justify-center text-center mb-12">
             <Typography variant="h3" className="font-bold text-gray-800 mb-4">
-              Ưu Điểm Vượt Trội
+              {t('biddingConsulting.advantages.title') as string}
             </Typography>
             <Typography variant="body1" className="text-gray-600 max-w-2xl mx-auto">
-              Cam kết mang đến dịch vụ đấu thầu chuyên nghiệp, minh bạch và hiệu quả cao
+              {t('biddingConsulting.advantages.subtitle') as string}
             </Typography>
           </div>
 
@@ -403,25 +329,25 @@ export default function BiddingConsultingPage() {
             <div className="relative z-10">
               <div className="flex flex-col items-center justify-center text-center mb-12">
 								<Typography variant="h3" className="mb-6 font-bold text-white">
-									Đấu Thầu Thành Công Cùng Chuyên Gia
+									{t('biddingConsulting.cta.title') as string}
 								</Typography>
 								<Typography variant="body1" className="text-white/90 max-w-2xl mx-auto leading-relaxed">
-									Với kinh nghiệm hơn 15 năm trong lĩnh vực đấu thầu, chúng tôi cam kết mang đến giải pháp tối ưu cho mọi gói thầu
+									{t('biddingConsulting.cta.subtitle') as string}
 								</Typography>
 							</div>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <div className="text-center">
-                  <Typography variant="h4" className="font-bold mb-2">500+</Typography>
-                  <Typography variant="body2" className="opacity-90">Gói thầu thành công</Typography>
+                  <Typography variant="h4" className="font-bold mb-2">{t('biddingConsulting.cta.stats.packages') as string}</Typography>
+                  <Typography variant="body2" className="opacity-90">{t('biddingConsulting.cta.stats.packagesDesc') as string}</Typography>
                 </div>
                 <div className="text-center">
-                  <Typography variant="h4" className="font-bold mb-2">95%</Typography>
-                  <Typography variant="body2" className="opacity-90">Tỷ lệ trúng thầu</Typography>
+                  <Typography variant="h4" className="font-bold mb-2">{t('biddingConsulting.cta.stats.winRate') as string}</Typography>
+                  <Typography variant="body2" className="opacity-90">{t('biddingConsulting.cta.stats.winRateDesc') as string}</Typography>
                 </div>
                 <div className="text-center">
-                  <Typography variant="h4" className="font-bold mb-2">20%</Typography>
-                  <Typography variant="body2" className="opacity-90">Tiết kiệm chi phí trung bình</Typography>
+                  <Typography variant="h4" className="font-bold mb-2">{t('biddingConsulting.cta.stats.savings') as string}</Typography>
+                  <Typography variant="body2" className="opacity-90">{t('biddingConsulting.cta.stats.savingsDesc') as string}</Typography>
                 </div>
               </div>
               
@@ -433,7 +359,7 @@ export default function BiddingConsultingPage() {
                     boxShadow: '0 8px 30px rgba(255,255,255,0.3)',
                   }}
                 >
-                  <span className="relative z-10 text-lg">0939 927 975</span>
+                  <span className="relative z-10 text-lg">{t('biddingConsulting.cta.phone') as string}</span>
                 </button>
                 
                 <button
@@ -442,7 +368,7 @@ export default function BiddingConsultingPage() {
                     backdropFilter: 'blur(10px)',
                   }}
                 >
-                  <span className="relative z-10 text-lg">Tư Vấn Đấu Thầu</span>
+                  <span className="relative z-10 text-lg">{t('biddingConsulting.cta.consultBtn') as string}</span>
                 </button>
               </div>
             </div>

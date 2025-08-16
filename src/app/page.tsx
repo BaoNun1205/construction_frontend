@@ -26,6 +26,7 @@ import {
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { useTranslations } from '@/hooks/useTranslations';
 
 // Intersection Observer Hook
 const useScrollAnimations = () => {
@@ -56,6 +57,7 @@ const useScrollAnimations = () => {
 
 export default function Home() {
   const theme = useTheme();
+  const { t } = useTranslations();
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
   useScrollAnimations();
 
@@ -128,36 +130,36 @@ export default function Home() {
 
   const services = [
     {
-      title: 'Dịch vụ thi công',
-      description: 'Thi công xây dựng chuyên nghiệp từ nhà ở đến công trình công nghiệp',
+      title: t('home.services.constructionService'),
+      description: t('home.services.constructionDesc'),
       icon: <Build sx={{ fontSize: 30, color: 'white' }} />,
       href: '/services/construction',
       color: theme.palette.primary.main
     },
     {
-      title: 'Tư vấn thiết kế',
-      description: 'Thiết kế kiến trúc, kết cấu và nội thất theo yêu cầu khách hàng',
+      title: t('home.services.designConsulting'),
+      description: t('home.services.designDesc'),
       icon: <Architecture sx={{ fontSize: 30, color: 'white' }} />,
       href: '/services/design-consulting',
       color: '#4caf50'
     },
     {
-      title: 'Giám sát thi công',
-      description: 'Giám sát chất lượng, tiến độ và an toàn trong quá trình thi công',
+      title: t('home.services.supervision'),
+      description: t('home.services.supervisionDesc'),
       icon: <Visibility sx={{ fontSize: 30, color: 'white' }} />,
       href: '/services/supervision',
       color: theme.palette.secondary.main
     },
     {
-      title: 'Tư vấn quản lý dự án',
-      description: 'Quản lý dự án chuyên nghiệp từ lập kế hoạch đến bàn giao',
+      title: t('home.services.projectManagement'),
+      description: t('home.services.projectDesc'),
       icon: <Assignment sx={{ fontSize: 30, color: 'white' }} />,
       href: '/services/project-management',
       color: '#9c27b0'
     },
     {
-      title: 'Tư vấn đấu thầu',
-      description: 'Hỗ trợ lập hồ sơ mời thầu và tư vấn lựa chọn nhà thầu',
+      title: t('home.services.bidding'),
+      description: t('home.services.biddingDesc'),
       icon: <Gavel sx={{ fontSize: 30, color: 'white' }} />,
       href: '/services/bidding-consulting',
       color: '#ff5722'
@@ -253,7 +255,7 @@ export default function Home() {
                   textShadow: '2px 2px 8px rgba(0,0,0,0.7)',
                 }}
               >
-                LAI PHÁT
+                {t('home.hero.title')}
               </Typography>
               <Typography
                 variant="h5"
@@ -266,8 +268,8 @@ export default function Home() {
                   textShadow: '1px 1px 4px rgba(0,0,0,0.5)'
                 }}
               >
-                Đối tác tin cậy trong mọi dự án xây dựng của bạn. <br />
-                Chất lượng - Uy tín - Chuyên nghiệp
+                {t('home.hero.subtitle')} <br />
+                {t('home.hero.description')}
               </Typography>
               <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                 <Button
@@ -288,7 +290,7 @@ export default function Home() {
                     }
                   }}
                 >
-                  Liên hệ ngay
+                  {t('home.hero.contactBtn')}
                 </Button>
                 <Button
                   variant="outlined"
@@ -306,7 +308,7 @@ export default function Home() {
                     }
                   }}
                 >
-                  0939 927 975
+                  {t('home.hero.phone')}
                 </Button>
               </Stack>
             </div>
@@ -357,7 +359,7 @@ export default function Home() {
               }}
             >
               <Typography variant="body2" sx={{ mb: 1, color: 'white', textShadow: '1px 1px 2px rgba(0,0,0,0.5)' }}>
-                Cuộn xuống để xem thêm
+                {t('home.hero.scrollDown')}
               </Typography>
               <Box sx={{ 
                 width: 30, 
@@ -457,7 +459,7 @@ export default function Home() {
                     color: 'black'
                   }}
                 >
-                  Phát triển ngành xây dựng của bạn
+                  {t('home.services.title')}
                 </Typography>
                 <Typography 
                   variant="body1" 
@@ -469,7 +471,7 @@ export default function Home() {
                     maxWidth: 500
                   }}
                 >
-                  Từ thi công dân dụng đến công nghiệp, kiến thức chuyên sâu về ngành giúp chúng tôi xây dựng những giải pháp phù hợp với nhu cầu hiện tại và tương lai của dự án.
+                  {t('home.services.description')}
                 </Typography>
                 <Button
                   variant="contained"
@@ -489,7 +491,7 @@ export default function Home() {
                     }
                   }}
                 >
-                  Khám phá dịch vụ của chúng tôi
+                  {t('home.services.exploreBtn')}
                 </Button>
               </div>
 
@@ -734,10 +736,10 @@ export default function Home() {
         <Container maxWidth="lg">
           <Box textAlign="center" mb={6} className="fade-in-on-scroll">
             <Typography variant="h2" gutterBottom sx={{ fontWeight: 700 }}>
-              Dự án tiêu biểu
+              {t('home.projects.title')}
             </Typography>
             <Typography variant="h6" color="text.secondary">
-              Những công trình đã hoàn thành với chất lượng xuất sắc
+              {t('home.projects.subtitle')}
             </Typography>
           </Box>
 
@@ -842,7 +844,7 @@ export default function Home() {
                       {/* Hover View Button */}
                       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <button className="bg-white/20 backdrop-blur-sm border-2 border-white text-white px-6 py-2 rounded-full font-semibold hover:bg-white hover:text-gray-800 transition-all duration-300">
-                          Xem chi tiết
+                          {t('home.projects.viewDetail')}
                         </button>
                       </div>
                     </div>
@@ -854,7 +856,7 @@ export default function Home() {
                         {project.description}
                       </p>
                       <p className="text-gray-500 text-xs font-medium mb-4">
-                        Hoàn thành: {project.area}
+                        {t('home.projects.completedOn')}: {project.area}
                       </p>
 
                       {/* Card Footer */}
@@ -864,7 +866,7 @@ export default function Home() {
                           style={{ color: theme.palette.primary.main }}
                         >
                           <Build sx={{ fontSize: 18 }} />
-                          <span className="text-sm font-medium">Dự án hoàn thành</span>
+                          <span className="text-sm font-medium">{t('home.projects.completed')}</span>
                         </div>
                         <button 
                           className="transition-colors duration-200"
@@ -940,10 +942,10 @@ export default function Home() {
           }}
         >
           <Typography variant="h3" gutterBottom sx={{ fontWeight: 700, mb: 2 }}>
-            Sẵn sàng bắt đầu dự án?
+            {t('home.cta.title')}
           </Typography>
           <Typography variant="h6" sx={{ mb: 4, opacity: 0.9 }}>
-            Liên hệ với chúng tôi ngay hôm nay để được tư vấn miễn phí
+            {t('home.cta.subtitle')}
           </Typography>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center">
             <Button
@@ -962,7 +964,7 @@ export default function Home() {
                 }
               }}
             >
-              Tư vấn miễn phí
+              {t('home.cta.consultBtn')}
             </Button>
             <Button
               variant="outlined"
@@ -979,7 +981,7 @@ export default function Home() {
                 }
               }}
             >
-              Xem dịch vụ
+              {t('home.cta.servicesBtn')}
             </Button>
           </Stack>
         </Paper>

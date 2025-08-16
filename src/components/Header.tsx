@@ -13,6 +13,7 @@ import {
   Fade,
   useTheme,
   Divider,
+  Tooltip,
 } from "@mui/material"
 import { 
   Menu as MenuIcon, 
@@ -23,11 +24,16 @@ import Link from "next/link"
 import Image from "next/image"
 import { useState, useEffect } from "react"
 import { usePathname } from "next/navigation"
+import { useLocale } from "@/contexts/LocaleContext"
+import { useTranslations } from "@/hooks/useTranslations"
+import ReactCountryFlag from "react-country-flag"
 
 export default function Header() {
   const theme = useTheme()
   const pathname = usePathname()
   const isHomePage = pathname === '/'
+  const { locale, setLocale } = useLocale()
+  const { t } = useTranslations()
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null)
   const [anchorElServices, setAnchorElServices] = useState<null | HTMLElement>(null)
   const [scrolled, setScrolled] = useState(false)
@@ -35,23 +41,23 @@ export default function Header() {
   // Services data as requested
   const services = [
     {
-      title: 'Thi công xây dựng công trình',
+      title: t('header.services.construction'),
       href: '/services/construction',
     },
     {
-      title: 'Tư vấn và thiết kế',
+      title: t('header.services.design'),
       href: '/services/design-consulting',
     },
     {
-      title: 'Tư vấn giám sát',
+      title: t('header.services.supervision'),
       href: '/services/supervision',
     },
     {
-      title: 'Tư vấn quản lý dự án',
+      title: t('header.services.projectManagement'),
       href: '/services/project-management',
     },
     {
-      title: 'Tư vấn đấu thầu',
+      title: t('header.services.bidding'),
       href: '/services/bidding-consulting',
     }
   ];
@@ -83,11 +89,11 @@ export default function Header() {
   }
 
   const navigationItems = [
-    { label: "Trang chủ", href: "/" },
-    { label: "Giới thiệu", href: "/about" },
-    { label: "Dịch vụ", href: "/services", hasDropdown: true },
-    { label: "Cửa hàng", href: "/store" },
-    { label: "Liên lạc", href: "/contact" },
+    { label: t("nav.home") as string, href: "/" },
+    { label: t("nav.about") as string, href: "/about" },
+    { label: t("nav.services") as string, href: "/services", hasDropdown: true },
+    { label: t("nav.store") as string, href: "/store" },
+    { label: t("nav.contact") as string, href: "/contact" },
   ]
 
   return (
@@ -171,7 +177,7 @@ export default function Header() {
                     textShadow: "2px 2px 4px rgba(0,0,0,0.3)"
                   }}
                 >
-                  LAI PHÁT
+                  {t('header.company') as string}
                 </Typography>
                 <Typography
                   variant="caption"
@@ -186,7 +192,7 @@ export default function Header() {
                     textShadow: "1px 1px 2px rgba(0,0,0,0.2)"
                   }}
                 >
-                  Uy tín tạo niềm tin
+                  {t('header.title') as string}
                 </Typography>
               </Box>
             </Box>
@@ -367,7 +373,7 @@ export default function Header() {
                                   transition: "color 0.3s ease",
                                 }}
                               >
-                                {service.title}
+                                {service.title as string}
                               </Typography>
                             </Box>
                           ))}
@@ -406,8 +412,52 @@ export default function Header() {
               ))}
             </Box>
 
-            {/* Contact Info */}
-            <Box sx={{ flexGrow: 0, display: "flex", gap: 1 }}>
+            {/* Contact Info & Language Toggle */}
+            <Box sx={{ flexGrow: 0, display: "flex", gap: 1, alignItems: "center" }}>
+              {/* Language Toggle */}
+              <Tooltip title={locale === 'vi' ? 'Switch to English' : 'Chuyển sang Tiếng Việt'}>
+                <IconButton
+                  onClick={() => setLocale(locale === 'vi' ? 'en' : 'vi')}
+                  sx={{
+                    color: "white",
+                    background: "rgba(255,255,255,0.1)",
+                    backdropFilter: "blur(10px)",
+                    border: "1px solid rgba(255,255,255,0.3)",
+                    width: 40,
+                    height: 40,
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      background: "rgba(255,255,255,0.2)",
+                      transform: "translateY(-2px) scale(1.1)",
+                      boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
+                    },
+                  }}
+                >
+                  {/* Hiển thị cờ của ngôn ngữ khác để chuyển đổi */}
+                  {locale === 'vi' ? (
+                    <ReactCountryFlag 
+                      countryCode="VN" 
+                      svg 
+                      style={{ 
+                        width: '20px', 
+                        height: '15px',
+                        borderRadius: '2px'
+                      }} 
+                    />
+                  ) : (
+                    <ReactCountryFlag 
+                      countryCode="GB" 
+                      svg 
+                      style={{ 
+                        width: '20px', 
+                        height: '15px',
+                        borderRadius: '2px'
+                      }} 
+                    />
+                  )}
+                </IconButton>
+              </Tooltip>
+
               <Button
                 startIcon={<Phone />}
                 sx={{
@@ -507,7 +557,7 @@ export default function Header() {
                             fontSize: "16px",
                           }}
                         >
-                          {service.title}
+                          {service.title as string}
                         </Typography>
                       </MenuItem>
                     ))}
