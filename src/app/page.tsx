@@ -5,25 +5,23 @@ import {
   Container,
   Typography,
   Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Chip,
   Stack,
   Paper,
-  useTheme
+  useTheme,
+  Tooltip
 } from '@mui/material';
 import {
   Build,
   Architecture,
   ContactMail,
   ArrowForward,
-  CheckCircle,
   Phone,
   Construction,
   Visibility,
   Assignment,
-  Gavel
+  Gavel,
+  ArrowBackIos,
+  ArrowForwardIos
 } from '@mui/icons-material';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -60,6 +58,73 @@ export default function Home() {
   const theme = useTheme();
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
   useScrollAnimations();
+
+  // Component for project title with fixed height and tooltip
+  const ProjectTitle = ({ title }: { title: string }) => {
+    const [isOverflowing, setIsOverflowing] = useState(false);
+    
+    useEffect(() => {
+      // Check if text would overflow beyond 2 lines
+      const tempDiv = document.createElement('div');
+      tempDiv.style.cssText = `
+        position: absolute;
+        visibility: hidden;
+        width: 256px;
+        font-size: 20px;
+        font-weight: bold;
+        line-height: 1.5;
+        font-family: inherit;
+      `;
+      tempDiv.textContent = title;
+      document.body.appendChild(tempDiv);
+      
+      const height = tempDiv.offsetHeight;
+      const lineHeight = 30; // 20px font-size * 1.5 line-height
+      const maxHeight = lineHeight * 2; // 2 lines
+      
+      setIsOverflowing(height > maxHeight);
+      document.body.removeChild(tempDiv);
+    }, [title]);
+
+    return (
+      <Tooltip 
+        title={isOverflowing ? title : ""} 
+        arrow 
+        placement="top"
+        componentsProps={{
+          tooltip: {
+            sx: {
+              backgroundColor: 'rgba(0, 0, 0, 0.9)',
+              fontSize: '14px',
+              maxWidth: '300px',
+              whiteSpace: 'normal'
+            }
+          }
+        }}
+      >
+        <h3 
+          className="text-xl font-bold text-gray-800 mb-3 transition-colors duration-300 cursor-default"
+          style={{
+            height: '60px', // Fixed height for exactly 2 lines (30px * 2)
+            lineHeight: '30px',
+            overflow: 'hidden',
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+            wordBreak: 'break-word'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.color = theme.palette.primary.main;
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.color = '#1f2937';
+          }}
+        >
+          {title}
+        </h3>
+      </Tooltip>
+    );
+  };
 
   const services = [
     {
@@ -101,11 +166,25 @@ export default function Home() {
 
   const projects = [
     {
-      title: 'Thi công phần thô và hoàn thiện mặt ngoài Shophouse và Hạ Tầng Kỹ Thuật – Long An.',
-      description: 'Thi công phần thô và hoàn thiện mặt ngoài Shophouse, kết hợp xây dựng hạ tầng kỹ thuật đồng bộ, đảm bảo tiến độ và chất lượng.',
-      image: '/products/Shophouse.jpg',
+      title: 'Thi công cải tạo căn hộ chung cư – Trung Sơn',
+      description: 'Cải tạo và nâng cấp căn hộ chung cư theo phong cách hiện đại, tối ưu công năng và tăng tính thẩm mỹ.',
+      image: '/products/trung-son.jpg',
       status: 'Hoàn thành',
-      area: '25/08/2022'
+      area: '27/07/2023'
+    },
+    {
+      title: 'Thi công cải tạo nhà phố – Q12',
+      description: 'Cải tạo và nâng cấp nhà phố tại Quận 12, thiết kế không gian hiện đại, tiện nghi và tối ưu diện tích sử dụng.',
+      image: '/products/nha-pho-q12.jpg',
+      status: 'Hoàn thành',
+      area: '12/06/2023'
+    },
+    {
+      title: 'Thi công quán Bar – Quận 3',
+      description: 'Thiết kế và thi công quán bar hiện đại tại Quận 3, với không gian sang trọng, hệ thống âm thanh và ánh sáng chuyên nghiệp.',
+      image: '/products/quan-bar-q3.jpg',
+      status: 'Hoàn thành',
+      area: '02/06/2023'
     },
     {
       title: 'Thi công nhà biệt thự – Long An',
@@ -115,11 +194,18 @@ export default function Home() {
       area: '27/05/2023'
     },
     {
-      title: 'Thi công cải tạo căn hộ chung cư – Trung Sơn',
-      description: 'Cải tạo và nâng cấp căn hộ chung cư theo phong cách hiện đại, tối ưu công năng và tăng tính thẩm mỹ.',
-      image: '/products/trung-son.jpg',
+      title: 'Thi công quán Cafe – Quận 3',
+      description: 'Thiết kế và thi công quán cafe phong cách trẻ trung, ấm cúng tại Quận 3, tạo không gian thư giãn và thu hút khách hàng.',
+      image: '/products/quan-cafe-q3.jpg',
       status: 'Hoàn thành',
-      area: '27/07/2023'
+      area: '16/02/2023'
+    },
+    {
+      title: 'Thi công phần thô và hoàn thiện mặt ngoài Shophouse và Hạ Tầng Kỹ Thuật – Long An.',
+      description: 'Thi công phần thô và hoàn thiện mặt ngoài Shophouse, kết hợp xây dựng hạ tầng kỹ thuật đồng bộ, đảm bảo tiến độ và chất lượng.',
+      image: '/products/Shophouse.jpg',
+      status: 'Hoàn thành',
+      area: '25/08/2022'
     }
   ];
 
@@ -655,42 +741,187 @@ export default function Home() {
             </Typography>
           </Box>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {projects.map((project, index) => (
-              <div key={index} className={`slide-in-left-on-scroll animate-delay-${index + 1}`}>
-                <Card sx={{ height: '100%' }}>
-                  <CardMedia
-                    sx={{ height: 200, position: 'relative', overflow: 'hidden' }}
-                  >
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      style={{
-                        objectFit: 'cover'
-                      }}
-                    />
-                  </CardMedia>
-                  <CardContent>
-                    <Stack direction="row" spacing={1} mb={1}>
-                      <Chip
-                        label={project.status}
-                        size="small"
-                        color={project.status === 'Hoàn thành' ? 'success' : 'warning'}
-                        icon={<CheckCircle />}
+          {/* Projects Carousel */}
+          <div className="relative">
+            {/* Left Arrow Button */}
+            <button
+              className="absolute -left-16 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center transition-colors duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{
+                color: '#6b7280',
+                transition: 'color 300ms'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = theme.palette.primary.main;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = '#6b7280';
+              }}
+              onClick={() => {
+                const container = document.querySelector('.projects-scroll-container') as HTMLElement;
+                if (container) {
+                  container.scrollBy({
+                    left: -320, // Scroll one card width to the left
+                    behavior: 'smooth'
+                  });
+                }
+              }}
+              id="scroll-left-btn"
+            >
+              <ArrowBackIos sx={{ fontSize: 28 }} />
+            </button>
+
+            {/* Right Arrow Button */}
+            <button
+              className="absolute -right-16 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center transition-colors duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{
+                color: '#6b7280',
+                transition: 'color 300ms'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = theme.palette.primary.main;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = '#6b7280';
+              }}
+              onClick={() => {
+                const container = document.querySelector('.projects-scroll-container') as HTMLElement;
+                if (container) {
+                  container.scrollBy({
+                    left: 320, // Scroll one card width to the right
+                    behavior: 'smooth'
+                  });
+                }
+              }}
+              id="scroll-right-btn"
+            >
+              <ArrowForwardIos sx={{ fontSize: 28 }} />
+            </button>
+
+            {/* Projects Scroll Container */}
+            <div 
+              className="projects-scroll-container flex gap-6 overflow-x-auto scrollbar-hide pb-4"
+              style={{
+                scrollSnapType: 'x mandatory',
+                scrollBehavior: 'smooth',
+                WebkitOverflowScrolling: 'touch'
+              }}
+              onScroll={(e) => {
+                const container = e.target as HTMLElement;
+                const leftBtn = document.getElementById('scroll-left-btn') as HTMLButtonElement;
+                const rightBtn = document.getElementById('scroll-right-btn') as HTMLButtonElement;
+                
+                if (leftBtn && rightBtn) {
+                  // Disable left button if at start
+                  leftBtn.disabled = container.scrollLeft <= 0;
+                  
+                  // Disable right button if at end
+                  const isAtEnd = container.scrollLeft >= container.scrollWidth - container.clientWidth - 1;
+                  rightBtn.disabled = isAtEnd;
+                }
+              }}
+            >
+              {projects.map((project, index) => (
+                <div
+                  key={index}
+                  className={`flex-shrink-0 w-80 slide-in-left-on-scroll animate-delay-${index + 1}`}
+                  style={{ scrollSnapAlign: 'start' }}
+                >
+                  {/* Custom Project Card */}
+                  <div className="group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:transition-all duration-500 h-full">
+                    {/* Card Image */}
+                    <div className="relative h-52 overflow-hidden">
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        fill
+                        className="object-cover group-hover:scale-110 transition-transform duration-700"
                       />
-                      <Chip label={project.area} size="small" variant="outlined" />
-                    </Stack>
-                    <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
-                      {project.title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {project.description}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </div>
-            ))}
+                      {/* Gradient Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                      {/* Hover View Button */}
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <button className="bg-white/20 backdrop-blur-sm border-2 border-white text-white px-6 py-2 rounded-full font-semibold hover:bg-white hover:text-gray-800 transition-all duration-300">
+                          Xem chi tiết
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Card Content */}
+                    <div className="p-6">
+                      <ProjectTitle title={project.title} />
+                      <p className="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-3">
+                        {project.description}
+                      </p>
+                      <p className="text-gray-500 text-xs font-medium mb-4">
+                        Hoàn thành: {project.area}
+                      </p>
+
+                      {/* Card Footer */}
+                      <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
+                        <div 
+                          className="flex items-center gap-2 transition-colors duration-200"
+                          style={{ color: theme.palette.primary.main }}
+                        >
+                          <Build sx={{ fontSize: 18 }} />
+                          <span className="text-sm font-medium">Dự án hoàn thành</span>
+                        </div>
+                        <button 
+                          className="transition-colors duration-200"
+                          style={{ color: theme.palette.primary.main }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.color = theme.palette.primary.dark || '#1565c0';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.color = theme.palette.primary.main;
+                          }}
+                        >
+                          <ArrowForward sx={{ fontSize: 20 }} />
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Card Glow Effect */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                      <div 
+                        className="absolute inset-0 rounded-3xl"
+                        style={{
+                          background: `linear-gradient(to right, ${theme.palette.primary.main}10, ${theme.palette.secondary.main}10, ${theme.palette.primary.light}10)`
+                        }}
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Scroll Indicators */}
+            <div className="flex justify-center mt-6 gap-2">
+              {Array.from({ length: Math.ceil(projects.length / 3) }).map((_, index) => (
+                <button
+                  key={index}
+                  className="w-3 h-3 rounded-full transition-colors duration-200"
+                  style={{
+                    backgroundColor: '#d1d5db'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = theme.palette.primary.main;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = '#d1d5db';
+                  }}
+                  onClick={() => {
+                    const container = document.querySelector('.projects-scroll-container');
+                    if (container) {
+                      container.scrollTo({
+                        left: index * (320 * 3), // 320px per card width + gap
+                        behavior: 'smooth'
+                      });
+                    }
+                  }}
+                ></button>
+              ))}
+            </div>
           </div>
         </Container>
       </Box>

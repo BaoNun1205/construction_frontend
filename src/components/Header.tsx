@@ -86,7 +86,7 @@ export default function Header() {
     { label: "Trang chủ", href: "/" },
     { label: "Giới thiệu", href: "/about" },
     { label: "Dịch vụ", href: "/services", hasDropdown: true },
-    { label: "Cửa hàng", href: "/#" },
+    { label: "Cửa hàng", href: "/store" },
     { label: "Liên lạc", href: "/contact" },
   ]
 
