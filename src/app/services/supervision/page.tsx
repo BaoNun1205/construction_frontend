@@ -14,7 +14,6 @@ import {
 } from '@mui/icons-material';
 import { useTranslations } from '@/hooks/useTranslations';
 
-// Intersection Observer Hook
 const useScrollAnimations = () => {
   useEffect(() => {
     const observerOptions = {
