@@ -10,7 +10,7 @@ const messages = {
 export function useTranslations() {
   const { locale } = useLocale();
 
-  const t = (key: string): unknown => {
+  const t = (key: string): string => {
     const keys = key.split('.');
     let value: unknown = messages[locale];
     
@@ -18,11 +18,12 @@ export function useTranslations() {
       if (value && typeof value === 'object' && k in value) {
         value = (value as Record<string, unknown>)[k];
       } else {
-        return key;
+        return key; // Return the key if not found
       }
     }
     
-    return value;
+    // Ensure we always return a string
+    return typeof value === 'string' ? value : key;
   };
 
   return { t, locale };
