@@ -59,76 +59,53 @@
 		"whyChooseUs": {
       "title": "Why Choose Us?",
       "experience": {
-        "title": "20+ Years Experience",
-        "description": "Two decades of proven excellence in construction industry"
-      },
-      "team": {
-        "title": "Expert Team",
-        "description": "Skilled professionals with extensive construction expertise"
-      },
-      "quality": {
-        "title": "Quality Assurance",
-        "description": "Rigorous quality control at every stage of construction"
-      },
-      "onTime": {
-        "title": "On-Time Delivery",
-        "description": "Committed to delivering projects on schedule"
-      }
+				"title": "Experience & Reputation",
+				"description": "Since 2020, Lai Phat has gained extensive hands-on experience through a wide range of projects including townhouses, villas, shophouses, factories, and infrastructure works, establishing a strong reputation in the construction market."
+			},
+			"solution": {
+				"title": "Comprehensive Solutions",
+				"description": "Providing end-to-end design and construction services that optimize cost and schedule, from structural works to finishing, ensuring peace of mind for clients throughout the entire process."
+			},
+			"quality": {
+				"title": "Quality & Safety",
+				"description": "Committed to using certified materials, applying modern construction techniques, and maintaining strict quality control at every stage, ensuring workplace safety and environmental responsibility."
+			},
+			"team": {
+				"title": "Professional Team",
+				"description": "A team of skilled architects, engineers, and workers with expertise, creativity, and dedication, working closely with clients to deliver sustainable projects and long-term value."
+			}
     },
     "title": "Mission – Vision – Core Values",
     "mission": {
-      "title": "Our Mission",
-      "description": "To deliver high-quality construction solutions that exceed expectations, creating sustainable value for our clients and communities while maintaining the highest standards of safety and professionalism."
-    },
-    "vision": {
-      "title": "Our Vision",
-      "description": "To become the leading construction company in Vietnam, recognized for innovation, quality, and sustainable building practices that shape the future of our cities."
-    },
-    "values": {
-      "title": "Our Core Values",
-      "description": "Quality, integrity, safety, and customer satisfaction are the foundations of everything we do. We believe in building lasting relationships through transparency and excellence in every project."
-    },
-    "milestones": {
-			"title": "Our Journey",
-			"2018": {
-				"year": "2018",
-				"title": "Foundation",
-				"description": "Lai Phat Construction was officially founded with a vision to innovate the construction industry."
-			},
-			"2020": {
-				"year": "2020",
-				"title": "Expansion",
-				"description": "Expanded operations, grew our team, and established partnerships with trusted partners."
-			},
-			"2022": {
-				"year": "2022",
-				"title": "Establishment",
-				"description": "Successfully completed major projects, strengthening our reputation for quality and reliability."
-			},
-			"2025": {
-				"year": "2025",
-				"title": "Sustainable Growth",
-				"description": "Pioneering green technologies and sustainable construction solutions for long-term development."
-			}
+			"title": "Our Mission",
+			"description": "To deliver high-quality, sustainable, and safe construction projects that create long-term value for our clients and communities."
+		},
+		"vision": {
+			"title": "Our Vision",
+			"description": "To become a leading construction company in Vietnam, pioneering modern technologies and sustainable green building solutions."
+		},
+		"values": {
+			"title": "Our Core Values",
+			"description": "Integrity, quality, innovation, and responsibility to the community are the core values guiding all of Lai Phat’s activities."
 		},
     "history": {
       "title": "Company History & Development",
       "timeline": {
-        "2005": {
-          "year": "2005 - Beginning",
-          "title": "Establishment in Ho Chi Minh City with a team of 20 employees, specializing in residential construction."
-        },
-        "2010": {
-          "year": "2010 - Expansion", 
-          "title": "Completed the first industrial park project, expanding into industrial construction."
-        },
-        "2018": {
-          "year": "2018 - Certification",
-          "title": "Achieved ISO 9001:2015 and ISO 14001:2015 certification, affirming management quality."
+        "2020": {
+          "year": "11/05/2020",
+          "title": "Beginning the construction journey with passionate and professional team"
         },
         "2023": {
-          "year": "2023 - Nationwide",
-          "title": "Expanded operations nationwide with over 500 employees, completing 200+ major projects."
+          "year": "09/03/2023",
+          "title": "Lai Phat was established with license from Ho Chi Minh City Department of Planning and Investment, inheriting and developing from Talacons predecessor"
+        },
+        "2024": {
+          "year": "06/01/2024",
+          "title": "Achieved quality certification and construction activity capacity according to national standards"
+        },
+        "2025": {
+          "year": "2025",
+          "title": "Continue strong development and affirm position in Vietnam's construction market"
         }
       }
     },
@@ -156,6 +133,44 @@
           "specialty": "Bridge & Road Engineer",
           "description": "Infrastructure expert, technical management of major projects."
         }
+      }
+    },
+    "certificates": {
+      "title": "Construction Activity Competency Certificate",
+      "description": "Official construction activity competency certificate issued by Ho Chi Minh City Department of Construction.",
+      "businessRegistration": {
+        "title": "Construction Activity Competency Certificate",
+        "badge": "Official Certificate from Department of Construction",
+        "numberLabel": "Number",
+        "number": "HCM-00078636",
+        "issueDateLabel": "Issue Date",
+        "issueDate": "First registration date: May 11, 2020",
+        "companyLabel": "Organization Name",
+        "company": "LAI PHAT CONSULTING AND CONSTRUCTION JOINT STOCK COMPANY",
+        "licenseNumberLabel": "Establishment License",
+        "licenseNumber": "0316262516",
+        "addressLabel": "Head Office Address",
+        "address": "B7/12E8 Hamlet 2A, Vinh Loc A commune, Binh Chanh district, Ho Chi Minh City",
+        "representativeLabel": "Legal Representative",
+        "representative": "Mr./Ms.: Ta Van Lai - Position: Director",
+        "phoneLabel": "Phone Number",
+        "phone": "0939927975",
+        "emailLabel": "Email",
+        "email": "laiphatgroup@gmail.com",
+        "websiteLabel": "Website",
+        "website": "https://laiphat.com",
+        "validUntilLabel": "Valid Until",
+        "validUntil": "January 06, 2034",
+        "businessScopeTitle": "Construction activity scope",
+        "businessScope": {
+          "scope1": "1. Design, design review for civil and industrial construction: Grade III;",
+          "scope2": "2. Investment project management consulting for civil construction: Grade III;",
+          "scope3": "3. Construction work for civil, industrial, and transportation (roads) projects: Grade III;",
+          "scope4": "4. Equipment installation for civil and industrial construction: Grade III;",
+          "scope5": "5. Construction supervision consulting for civil and industrial projects: Grade III."
+        },
+        "issuedBy": "Head of Construction Quality Management Department",
+        "signerName": "Nguyen Thanh Xuyen"
       }
     },
     "partners": {
