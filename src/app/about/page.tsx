@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Container,
@@ -11,6 +11,10 @@ import {
   Paper,
   Rating,
   useTheme,
+  CardMedia,
+  Modal,
+  IconButton,
+  useMediaQuery,
 } from '@mui/material';
 import {
   Timeline,
@@ -29,6 +33,8 @@ import {
   Group,
   Architecture,
   Engineering,
+  Close,
+  ZoomIn,
 } from '@mui/icons-material';
 import { useTranslations } from '@/hooks/useTranslations';
 
@@ -62,6 +68,8 @@ export default function AboutPage() {
   useScrollAnimations();
   const theme = useTheme();
   const { t } = useTranslations();
+  const [isImageHovered, setIsImageHovered] = useState(false);
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <Box className="min-h-screen bg-gradient-to-br from-cyan-50 to-amber-50">
@@ -76,60 +84,80 @@ export default function AboutPage() {
             {t('about.whyChooseUs.title')}
           </Typography>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Experience */}
             <div className="zoom-in-on-scroll animate-delay-1">
-              <div className="text-center p-6 rounded-2xl bg-white/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 hover:shadow-xl hover:scale-105">
-                <EmojiEvents 
-                  className="mb-4 text-yellow-500" 
-                  sx={{ fontSize: 50 }} 
-                />
-                <Typography variant="h6" className="font-bold mb-3 text-gray-800">
+              <div className="text-center p-6 rounded-2xl bg-white/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 hover:shadow-xl hover:scale-105 h-80 flex flex-col">
+                <div className="flex justify-center mb-4 flex-shrink-0">
+                  <EmojiEvents 
+                    className="text-yellow-500" 
+                    sx={{ fontSize: 50 }} 
+                  />
+                </div>
+                <Typography variant="h6" className="font-bold mb-3 text-gray-800 flex-shrink-0">
                   {t('about.whyChooseUs.experience.title')}
                 </Typography>
-                <Typography variant="body2" className="text-gray-600">
-                  {t('about.whyChooseUs.experience.description')}
-                </Typography>
+                <div className="flex-1 overflow-y-auto">
+                  <Typography variant="body2" className="text-gray-600">
+                    {t('about.whyChooseUs.experience.description')}
+                  </Typography>
+                </div>
               </div>
             </div>
+            {/* Solution */}
             <div className="zoom-in-on-scroll animate-delay-2">
-              <div className="text-center p-6 rounded-2xl bg-white/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 hover:shadow-xl hover:scale-105">
-                <Group 
-                  className="mb-4 text-blue-500" 
-                  sx={{ fontSize: 50 }} 
-                />
-                <Typography variant="h6" className="font-bold mb-3 text-gray-800">
-                  {t('about.whyChooseUs.team.title')}
+              <div className="text-center p-6 rounded-2xl bg-white/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 hover:shadow-xl hover:scale-105 h-80 flex flex-col">
+                <div className="flex justify-center mb-4 flex-shrink-0">
+                  <Architecture 
+                    className="text-blue-500" 
+                    sx={{ fontSize: 50 }} 
+                  />
+                </div>
+                <Typography variant="h6" className="font-bold mb-3 text-gray-800 flex-shrink-0">
+                  {t('about.whyChooseUs.solution.title')}
                 </Typography>
-                <Typography variant="body2" className="text-gray-600">
-                  {t('about.whyChooseUs.team.description')}
-                </Typography>
+                <div className="flex-1 overflow-y-auto">
+                  <Typography variant="body2" className="text-gray-600">
+                    {t('about.whyChooseUs.solution.description')}
+                  </Typography>
+                </div>
               </div>
             </div>
+            {/* Quality */}
             <div className="zoom-in-on-scroll animate-delay-3">
-              <div className="text-center p-6 rounded-2xl bg-white/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 hover:shadow-xl hover:scale-105">
-                <VerifiedUser 
-                  className="mb-4 text-green-500" 
-                  sx={{ fontSize: 50 }} 
-                />
-                <Typography variant="h6" className="font-bold mb-3 text-gray-800">
+              <div className="text-center p-6 rounded-2xl bg-white/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 hover:shadow-xl hover:scale-105 h-80 flex flex-col">
+                <div className="flex justify-center mb-4 flex-shrink-0">
+                  <VerifiedUser 
+                    className="text-green-500" 
+                    sx={{ fontSize: 50 }} 
+                  />
+                </div>
+                <Typography variant="h6" className="font-bold mb-3 text-gray-800 flex-shrink-0">
                   {t('about.whyChooseUs.quality.title')}
                 </Typography>
-                <Typography variant="body2" className="text-gray-600">
-                  {t('about.whyChooseUs.quality.description')}
-                </Typography>
+                <div className="flex-1 overflow-y-auto">
+                  <Typography variant="body2" className="text-gray-600">
+                    {t('about.whyChooseUs.quality.description')}
+                  </Typography>
+                </div>
               </div>
             </div>
+            {/* Team */}
             <div className="zoom-in-on-scroll animate-delay-4">
-              <div className="text-center p-6 rounded-2xl bg-white/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 hover:shadow-xl hover:scale-105">
-                <Business 
-                  className="mb-4 text-purple-500" 
-                  sx={{ fontSize: 50 }} 
-                />
-                <Typography variant="h6" className="font-bold mb-3 text-gray-800">
-                  {t('about.whyChooseUs.onTime.title')}
+              <div className="text-center p-6 rounded-2xl bg-white/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 hover:shadow-xl hover:scale-105 h-80 flex flex-col">
+                <div className="flex justify-center mb-4 flex-shrink-0">
+                  <Group 
+                    className="text-purple-500" 
+                    sx={{ fontSize: 50 }} 
+                  />
+                </div>
+                <Typography variant="h6" className="font-bold mb-3 text-gray-800 flex-shrink-0">
+                  {t('about.whyChooseUs.team.title')}
                 </Typography>
-                <Typography variant="body2" className="text-gray-600">
-                  {t('about.whyChooseUs.onTime.description')}
-                </Typography>
+                <div className="flex-1 overflow-y-auto">
+                  <Typography variant="body2" className="text-gray-600">
+                    {t('about.whyChooseUs.team.description')}
+                  </Typography>
+                </div>
               </div>
             </div>
           </div>
@@ -316,6 +344,200 @@ export default function AboutPage() {
           </div>
         </section>
 
+        {/* Certifications & Credentials */}
+        <section className="fade-in-on-scroll">
+          <div className="text-center mb-16">
+            <Typography
+              variant="h2"
+              className="text-3xl md:text-4xl font-bold text-gray-800 mb-6"
+            >
+              {t('about.certificates.title')}
+            </Typography>
+          </div>
+
+          <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-2'}`}>
+            <div className={`${isMobile ? 'hidden' : ''}`}>
+              <Card className="transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.02] group h-full">
+                <div className="p-8 h-full flex flex-col">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                      <VerifiedUser className="h-6 w-6 text-green-600" />
+                    </div>
+                    <div>
+                      <Typography variant="h5" className="font-bold text-gray-800">
+                        {t('about.certificates.businessRegistration.title')}
+                      </Typography>
+                      <Typography variant="body2" className="text-gray-600">
+                        Sở Kế Hoạch và Đầu Tư TP. Hồ Chí Minh
+                      </Typography>
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <div className="space-y-3 text-sm">
+                      <div className="flex justify-between">
+                        <Typography variant="body2" className="text-gray-600">
+                          {t('about.certificates.businessRegistration.numberLabel')}:
+                        </Typography>
+                        <Typography variant="body2" className="font-semibold text-gray-800">
+                          {t('about.certificates.businessRegistration.number')}
+                        </Typography>
+                      </div>
+                      <div className="flex justify-between">
+                        <Typography variant="body2" className="text-gray-600">
+                          {t('about.certificates.businessRegistration.issueDateLabel')}:
+                        </Typography>
+                        <Typography variant="body2" className="font-semibold text-gray-800">
+                          {t('about.certificates.businessRegistration.issueDate')}
+                        </Typography>
+                      </div>
+                      <div className="flex justify-between">
+                        <Typography variant="body2" className="text-gray-600">
+                          {t('about.certificates.businessRegistration.licenseNumberLabel')}:
+                        </Typography>
+                        <Typography variant="body2" className="font-semibold text-gray-800">
+                          {t('about.certificates.businessRegistration.licenseNumber')}
+                        </Typography>
+                      </div>
+                      <div className="flex justify-between">
+                        <Typography variant="body2" className="text-gray-600">
+                          {t('about.certificates.businessRegistration.phoneLabel')}:
+                        </Typography>
+                        <Typography variant="body2" className="font-semibold text-gray-800">
+                          {t('about.certificates.businessRegistration.phone')}
+                        </Typography>
+                      </div>
+                      <div className="flex justify-between">
+                        <Typography variant="body2" className="text-gray-600">
+                          {t('about.certificates.businessRegistration.emailLabel')}:
+                        </Typography>
+                        <Typography variant="body2" className="font-semibold text-gray-800">
+                          {t('about.certificates.businessRegistration.email')}
+                        </Typography>
+                      </div>
+                      <div className="flex justify-between">
+                        <Typography variant="body2" className="text-gray-600">
+                          {t('about.certificates.businessRegistration.websiteLabel')}:
+                        </Typography>
+                        <Typography variant="body2" className="font-semibold text-gray-800">
+                          {t('about.certificates.businessRegistration.website')}
+                        </Typography>
+                      </div>
+                      <div className="flex justify-between">
+                        <Typography variant="body2" className="text-gray-600">
+                          {t('about.certificates.businessRegistration.validUntilLabel')}:
+                        </Typography>
+                        <Typography variant="body2" className="font-semibold text-gray-800">
+                          {t('about.certificates.businessRegistration.validUntil')}
+                        </Typography>
+                      </div>
+                    </div>
+                    <div className="mt-6 pt-6 border-t border-gray-200">
+                      <Typography variant="h6" className="font-semibold text-gray-800 mb-3">
+                        {t('about.certificates.businessRegistration.companyLabel')}:
+                      </Typography>
+                      <Typography variant="body2" className="text-gray-800 font-semibold mb-4">
+                        {t('about.certificates.businessRegistration.company')}
+                      </Typography>
+                      <div className="mb-4">
+                        <Typography variant="body2" className="text-gray-600 font-medium mb-2">
+                          {t('about.certificates.businessRegistration.addressLabel')}:
+                        </Typography>
+                        <Typography variant="body2" className="text-gray-600">
+                          {t('about.certificates.businessRegistration.address')}
+                        </Typography>
+                      </div>
+                      <div className="mb-4">
+                        <Typography variant="body2" className="text-gray-600 font-medium mb-2">
+                          {t('about.certificates.businessRegistration.representativeLabel')}:
+                        </Typography>
+                        <Typography variant="body2" className="text-gray-600">
+                          {t('about.certificates.businessRegistration.representative')}
+                        </Typography>
+                      </div>
+                    </div>
+                    <div className="mt-4 pt-4 border-t border-gray-200">
+                      <Typography variant="h6" className="font-semibold text-gray-800 mb-3">
+                        {t('about.certificates.businessRegistration.businessScopeTitle')}:
+                      </Typography>
+                      <div className="grid grid-cols-1 gap-2">
+                        <div className="flex items-start gap-2">
+                          <div className="w-2 h-2 bg-green-600 rounded-full mt-2" />
+                          <Typography variant="body2" className="text-gray-600">
+                            {t('about.certificates.businessRegistration.businessScope.scope1')}
+                          </Typography>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <div className="w-2 h-2 bg-green-600 rounded-full mt-2" />
+                          <Typography variant="body2" className="text-gray-600">
+                            {t('about.certificates.businessRegistration.businessScope.scope2')}
+                          </Typography>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <div className="w-2 h-2 bg-green-600 rounded-full mt-2" />
+                          <Typography variant="body2" className="text-gray-600">
+                            {t('about.certificates.businessRegistration.businessScope.scope3')}
+                          </Typography>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <div className="w-2 h-2 bg-green-600 rounded-full mt-2" />
+                          <Typography variant="body2" className="text-gray-600">
+                            {t('about.certificates.businessRegistration.businessScope.scope4')}
+                          </Typography>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <div className="w-2 h-2 bg-green-600 rounded-full mt-2" />
+                          <Typography variant="body2" className="text-gray-600">
+                            {t('about.certificates.businessRegistration.businessScope.scope5')}
+                          </Typography>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            </div>
+
+            <div className={`${isMobile ? 'col-span-1' : ''}`}>
+              <Card className={`transition-all duration-500 ease-in-out hover:shadow-2xl hover:-translate-y-2 group overflow-visible h-full w-full`}>
+                <div className="p-6 h-full flex flex-col justify-center">
+                  <div className="relative flex-1 flex items-center justify-center group/image">
+                    <CardMedia
+                      component="img"
+                      image="/certificate/certificate.jpg"
+                      alt={t('about.certificates.businessRegistration.title')}
+                      className="w-full h-auto max-h-full object-contain transition-all duration-300 shadow-lg"
+                      style={{
+                        transformOrigin: 'center center'
+                      }}
+                    />
+                    
+                    {/* Zoom button overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <IconButton
+                        onClick={() => setIsImageHovered(true)}
+                        className="bg-white/90 backdrop-blur-sm shadow-lg transform scale-0 group-hover:scale-100 transition-transform duration-300 hover:bg-white"
+                        style={{
+                          backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                          backdropFilter: 'blur(4px)'
+                        }}
+                      >
+                        <ZoomIn className="text-gray-700 text-xl" />
+                      </IconButton>
+                    </div>
+                  </div>
+                  <div className="mt-4 text-center">
+                    <Chip
+                      label={t('about.certificates.businessRegistration.badge')}
+                      className="bg-green-100 text-green-800"
+                      size="small"
+                    />
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </div>
+        </section>
+
         {/* Company History */}
         <section className="slide-in-left-on-scroll">
           <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-white/90 to-gray-50/90 backdrop-blur-xl border border-white/50 p-8 md:p-12">
@@ -342,7 +564,20 @@ export default function AboutPage() {
               >
                 {t('about.history.title')}
               </Typography>
-          <Timeline position="alternate">
+          <Timeline 
+            position={isMobile ? "left" : "alternate"} 
+            sx={isMobile ? {
+              '& .MuiTimelineItem-root': {
+                '&:before': {
+                  display: 'none'
+                }
+              },
+              '& .MuiTimelineContent-root': {
+                paddingLeft: '16px',
+                paddingRight: 0
+              }
+            } : {}}
+          >
             <TimelineItem className="fade-in-on-scroll animate-delay-1">
               <TimelineSeparator>
                 <TimelineDot className="bg-cyan-600 transition-all duration-300" />
@@ -354,10 +589,10 @@ export default function AboutPage() {
                   className="p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-1 cursor-pointer group"
                 >
                   <Typography variant="h6" className="font-bold text-cyan-600 mb-2 transition-all duration-300 group-hover:text-cyan-700 group-hover:scale-105">
-                    {t('about.history.timeline.2005.year')}
+                    {t('about.history.timeline.2020.year')}
                   </Typography>
                   <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
-                    {t('about.history.timeline.2005.title')}
+                    {t('about.history.timeline.2020.title')}
                   </Typography>
                 </Paper>
               </TimelineContent>
@@ -373,10 +608,10 @@ export default function AboutPage() {
                   className="p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-1 cursor-pointer group"
                 >
                   <Typography variant="h6" className="font-bold text-amber-500 mb-2 transition-all duration-300 group-hover:text-amber-600 group-hover:scale-105">
-                    {t('about.history.timeline.2010.year')}
+                    {t('about.history.timeline.2023.year')}
                   </Typography>
                   <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
-                    {t('about.history.timeline.2010.title')}
+                    {t('about.history.timeline.2023.title')}
                   </Typography>
                 </Paper>
               </TimelineContent>
@@ -392,10 +627,10 @@ export default function AboutPage() {
                   className="p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-1 cursor-pointer group"
                 >
                   <Typography variant="h6" className="font-bold text-green-600 mb-2 transition-all duration-300 group-hover:text-green-700 group-hover:scale-105">
-                    {t('about.history.timeline.2018.year')}
+                    {t('about.history.timeline.2024.year')}
                   </Typography>
                   <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
-                    {t('about.history.timeline.2018.title')}
+                    {t('about.history.timeline.2024.title')}
                   </Typography>
                 </Paper>
               </TimelineContent>
@@ -410,10 +645,10 @@ export default function AboutPage() {
                   className="p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-1 cursor-pointer group"
                 >
                   <Typography variant="h6" className="font-bold text-purple-600 mb-2 transition-all duration-300 group-hover:text-purple-700 group-hover:scale-105">
-                    {t('about.history.timeline.2023.year')}
+                    {t('about.history.timeline.2025.year')}
                   </Typography>
                   <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
-                    {t('about.history.timeline.2023.title')}
+                    {t('about.history.timeline.2025.title')}
                   </Typography>
                 </Paper>
               </TimelineContent>
@@ -670,6 +905,44 @@ export default function AboutPage() {
           </div>
         </section>
       </Container>
+
+      {/* Image Hover Modal */}
+      <Modal
+        open={isImageHovered}
+        onClose={() => setIsImageHovered(false)}
+        className="flex items-center justify-center p-4"
+        style={{ zIndex: 1300 }}
+        BackdropProps={{
+          style: { backgroundColor: 'rgba(0, 0, 0, 0.75)' }
+        }}
+      >
+        <Box 
+          className="relative max-w-[90vw] max-h-[90vh] bg-transparent outline-none"
+        >
+          {/* Close Button */}
+          <IconButton
+            onClick={() => setIsImageHovered(false)}
+            className="absolute top-2 right-2 z-10 bg-white/80 hover:bg-white/90"
+            style={{ 
+              position: 'absolute',
+              top: 8,
+              right: 8,
+              zIndex: 10,
+              backgroundColor: 'rgba(255, 255, 255, 0.8)',
+              backdropFilter: 'blur(4px)'
+            }}
+          >
+            <Close />
+          </IconButton>
+          
+          <CardMedia
+            component="img"
+            image="/certificate/certificate.jpg"
+            alt={t('about.certificates.businessRegistration.title')}
+            className="w-full h-full object-contain rounded-lg shadow-2xl max-w-[90vw] max-h-[90vh]"
+          />
+        </Box>
+      </Modal>
     </Box>
   );
 }

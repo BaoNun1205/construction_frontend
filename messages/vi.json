@@ -59,79 +59,56 @@
 		"whyChooseUs": {
 			"title": "Vì Sao Chọn Chúng Tôi?",
 			"experience": {
-				"title": "20+ Năm Kinh Nghiệm",
-				"description": "Khẳng định uy tín và chất lượng trong xây dựng."
+				"title": "Kinh Nghiệm & Uy Tín",
+				"description": "Từ năm 2020 đến nay, Lai Phát đã tích lũy nhiều kinh nghiệm thực tế qua hàng loạt công trình nhà phố, biệt thự, shophouse, nhà xưởng và hạ tầng kỹ thuật, khẳng định uy tín trên thị trường xây dựng."
 			},
-			"team": {
-				"title": "Chuyên Nghiệp",
-				"description": "Kỹ sư và thợ lành nghề, giàu kinh nghiệm."
+			"solution": {
+				"title": "Giải Pháp Toàn Diện",
+				"description": "Cung cấp dịch vụ thiết kế & thi công trọn gói, tối ưu chi phí và tiến độ, từ phần thô đến hoàn thiện, giúp khách hàng an tâm trong suốt quá trình xây dựng."
 			},
 			"quality": {
-				"title": "Chất Lượng Đảm Bảo",
-				"description": "Kiểm soát chất lượng ở mọi giai đoạn thi công."
+				"title": "Chất Lượng & An Toàn",
+				"description": "Cam kết sử dụng vật liệu đạt chuẩn, kỹ thuật thi công hiện đại và kiểm soát chất lượng nghiêm ngặt ở mọi giai đoạn, đảm bảo an toàn lao động và thân thiện với môi trường."
 			},
-			"onTime": {
-				"title": "Đúng Tiến Độ",
-				"description": "Cam kết bàn giao công trình đúng hẹn."
+			"team": {
+				"title": "Đội Ngũ Chuyên Nghiệp",
+				"description": "Quy tụ kiến trúc sư, kỹ sư và công nhân lành nghề, giàu kinh nghiệm và sáng tạo, tận tâm đồng hành cùng khách hàng để mang lại công trình bền vững và giá trị lâu dài."
 			}
 		},
-    "title": "Sứ Mệnh – Tầm Nhìn – Giá Trị Cốt Lõi",
+		"title": "Sứ mệnh - Tầm nhìn - Giá trị cốt lõi",
 		"mission": {
 			"title": "Sứ Mệnh",
-			"description": "Mang đến các giải pháp xây dựng chất lượng cao vượt trên mong đợi, tạo ra giá trị bền vững cho khách hàng và cộng đồng, đồng thời duy trì các tiêu chuẩn an toàn và chuyên nghiệp cao nhất."
+			"description": "Mang đến những công trình chất lượng, bền vững và an toàn, tạo ra giá trị lâu dài cho khách hàng và cộng đồng."
 		},
 		"vision": {
 			"title": "Tầm Nhìn",
-			"description": "Trở thành công ty xây dựng hàng đầu tại Việt Nam, được ghi nhận bởi sự đổi mới, chất lượng và các giải pháp xây dựng bền vững định hình tương lai đô thị."
+			"description": "Trở thành doanh nghiệp xây dựng hàng đầu Việt Nam, tiên phong ứng dụng công nghệ hiện đại và giải pháp xây dựng xanh bền vững."
 		},
 		"values": {
 			"title": "Giá Trị Cốt Lõi",
-			"description": "Chất lượng, uy tín, an toàn và sự hài lòng của khách hàng là nền tảng trong mọi hoạt động của chúng tôi. Chúng tôi tin tưởng xây dựng mối quan hệ lâu dài thông qua minh bạch và xuất sắc trong từng dự án."
+			"description": "Uy tín, chất lượng, sáng tạo và trách nhiệm với cộng đồng là những giá trị cốt lõi định hướng mọi hoạt động của Lai Phát."
 		},
-		"milestones": {
-			"title": "Hành Trình Phát Triển",
-			"2018": {
-				"year": "2018",
-				"title": "Thành Lập",
-				"description": "Lai Phat Construction chính thức được thành lập với tầm nhìn đổi mới ngành xây dựng."
-			},
-			"2020": {
-				"year": "2020",
-				"title": "Mở Rộng",
-				"description": "Mở rộng quy mô hoạt động, phát triển đội ngũ và hợp tác với nhiều đối tác uy tín."
-			},
-			"2022": {
-				"year": "2022",
-				"title": "Khẳng Định",
-				"description": "Hoàn thành nhiều dự án lớn, khẳng định uy tín và chất lượng trên thị trường xây dựng."
-			},
-			"2025": {
-				"year": "2025",
-				"title": "Phát Triển Bền Vững",
-				"description": "Tiên phong ứng dụng công nghệ xanh và giải pháp xây dựng bền vững, hướng đến tương lai lâu dài."
+		"history": {
+			"title": "Lịch Sử Hình Thành Và Phát Triển",
+			"timeline": {
+				"2020": {
+					"year": "11/05/2020",
+					"title": "Khởi đầu hành trình xây dựng với đội ngũ nhiệt huyết và chuyên nghiệp"
+				},
+				"2023": {
+					"year": "09/03/2023", 
+					"title": "Lai Phát được thành lập do Sở Kế hoạch và Đầu tư TP. Hồ Chí Minh cấp giấy phép, kế thừa và phát triển từ tiền phong Talacons"
+				},
+				"2024": {
+					"year": "06/01/2024",
+					"title": "Đạt được chứng nhận chất lượng và năng lực hoạt động xây dựng theo tiêu chuẩn nhà nước"
+				},
+				"2025": {
+					"year": "2025",
+					"title": "Tiếp tục phát triển mạnh mẽ và khẳng định vị thế trên thị trường xây dựng Việt Nam"
+				}
 			}
 		},
-    "history": {
-      "title": "Lịch Sử Hình Thành & Phát Triển",
-      "timeline": {
-        "2005": {
-          "year": "2005 - Khởi Đầu",
-          "title": "Thành lập công ty tại TP. Hồ Chí Minh với đội ngũ 20 nhân viên, chuyên về xây dựng dân dụng."
-        },
-        "2010": {
-          "year": "2010 - Mở Rộng",
-          "title": "Hoàn thành dự án khu công nghiệp đầu tiên, mở rộng sang lĩnh vực xây dựng công nghiệp."
-        },
-        "2018": {
-          "year": "2018 - Chứng Nhận", 
-          "title": "Đạt chứng nhận ISO 9001:2015 và ISO 14001:2015, khẳng định chất lượng quản lý."
-        },
-        "2023": {
-          "year": "2023 - Toàn Quốc",
-          "title": "Mở rộng hoạt động ra toàn quốc với hơn 500 nhân viên, hoàn thành 200+ dự án lớn."
-        }
-      }
-    },
     "team": {
       "title": "Đội Ngũ Nhân Sự Chủ Chốt",
       "members": {
@@ -156,6 +133,44 @@
           "specialty": "Kỹ sư cầu đường",
           "description": "Chuyên gia về hạ tầng giao thông, quản lý kỹ thuật các dự án lớn."
         }
+      }
+    },
+    "certificates": {
+      "title": "Chứng Chỉ Năng Lực Hoạt Động Xây Dựng",
+      "description": "Chứng chỉ năng lực hoạt động xây dựng chính thức do Sở Xây Dựng TP. Hồ Chí Minh cấp.",
+      "businessRegistration": {
+        "title": "Chứng Chỉ Năng Lực Hoạt Động Xây Dựng",
+        "badge": "Chứng Chỉ Chính Thức Của Sở Xây Dựng",
+        "numberLabel": "Số",
+        "number": "HCM-00078636",
+        "issueDateLabel": "Ngày Cấp",
+        "issueDate": "Đăng ký cấp lần đầu ngày 11/5/2020",
+        "companyLabel": "Tên Tổ Chức", 
+        "company": "CÔNG TY CỔ PHẦN TƯ VẤN VÀ XÂY DỰNG LAI PHÁT",
+        "licenseNumberLabel": "Giấy phép thành lập",
+        "licenseNumber": "0316262516",
+        "addressLabel": "Địa Chỉ Trụ Sở Chính",
+        "address": "B7/12E8 Ấp 2A, xã Vĩnh Lộc A, huyện Bình Chánh, Thành phố Hồ Chí Minh",
+        "representativeLabel": "Người Đại Diện Theo Pháp Luật",
+        "representative": "Ông/Bà: Tạ Văn Lai - Chức vụ: Giám đốc",
+        "phoneLabel": "Số Điện Thoại",
+        "phone": "0939927975",
+        "emailLabel": "Email",
+        "email": "laiphatgroup@gmail.com",
+        "websiteLabel": "Website",
+        "website": "https://laiphat.com",
+        "validUntilLabel": "Có Giá Trị Đến Hết Ngày",
+        "validUntil": "06/01/2034",
+        "businessScopeTitle": "Phạm vi hoạt động xây dựng",
+        "businessScope": {
+          "scope1": "1. Thiết kế, thẩm tra thiết kế xây dựng công trình dân dụng, nhà công nghiệp: Hạng III;",
+          "scope2": "2. Tư vấn quản lý dự án đầu tư xây dựng công trình dân dụng: Hạng III;",
+          "scope3": "3. Thi công công tác xây dựng công trình dân dụng, nhà công nghiệp, giao thông (đường bộ): Hạng III;",
+          "scope4": "4. Thi công lắp đặt thiết bị vào công trình dân dụng, nhà công nghiệp: Hạng III;",
+          "scope5": "5. Tư vấn giám sát công tác xây dựng công trình dân dụng, công nghiệp: Hạng III."
+        },
+        "issuedBy": "Trưởng Phòng Quản Lý Chất Lượng Công Trình Xây Dựng",
+        "signerName": "Nguyễn Thanh Xuyên"
       }
     },
     "partners": {
