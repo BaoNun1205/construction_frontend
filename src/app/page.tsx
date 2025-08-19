@@ -57,7 +57,9 @@ const useScrollAnimations = () => {
 
 export default function Home() {
   const theme = useTheme();
-  const { t } = useTranslations();
+  const { t: tRaw } = useTranslations();
+  // Type-safe wrapper for translation function
+  const t = (key: string): string => tRaw(key) as string;
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
   useScrollAnimations();
 

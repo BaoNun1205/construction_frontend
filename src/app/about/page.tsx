@@ -67,7 +67,9 @@ const useScrollAnimations = () => {
 export default function AboutPage() {
   useScrollAnimations();
   const theme = useTheme();
-  const { t } = useTranslations();
+  const { t: tRaw } = useTranslations();
+  // Type-safe wrapper for translation function
+  const t = (key: string): string => tRaw(key) as string;
   const [isImageHovered, setIsImageHovered] = useState(false);
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -677,45 +679,6 @@ export default function AboutPage() {
                     margin: '0 auto 16px',
                     transition: 'all 0.3s ease-in-out'
                   }}
-                  className="bg-cyan-600 group-hover:scale-110 group-hover:shadow-lg"
-                >
-                  <Engineering 
-                    sx={{ fontSize: 50 }} 
-                    className="transition-transform duration-300 group-hover:rotate-6"
-                  />
-                </Avatar>
-                <Typography variant="h5" className="font-bold mb-2 transition-colors duration-300 group-hover:text-cyan-700">
-                  {t('about.team.members.ceo.name')}
-                </Typography>
-                <Typography variant="subtitle1" className="text-cyan-600 mb-3 transition-colors duration-300 group-hover:text-cyan-700">
-                  {t('about.team.members.ceo.position')}
-                </Typography>
-                <div className="flex flex-wrap justify-center gap-2 mb-4">
-                  <Chip 
-                    label={t('about.team.members.ceo.experience')}
-                    size="small" 
-                    className="bg-cyan-100 text-cyan-800 transition-all duration-300 group-hover:bg-cyan-200" 
-                  />
-                  <Chip 
-                    label={t('about.team.members.ceo.specialty')}
-                    size="small" 
-                    className="bg-gray-100 transition-all duration-300 group-hover:bg-gray-200" 
-                  />
-                </div>
-                <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
-                  {t('about.team.members.ceo.description')}
-                </Typography>
-              </Card>
-            </div>
-            <div className="flex-1 min-w-[300px] zoom-in-on-scroll">
-              <Card className="text-center p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-2 cursor-pointer group">
-                <Avatar
-                  sx={{ 
-                    width: 100, 
-                    height: 100, 
-                    margin: '0 auto 16px',
-                    transition: 'all 0.3s ease-in-out'
-                  }}
                   className="bg-amber-500 group-hover:scale-110 group-hover:shadow-lg"
                 >
                   <Architecture 
@@ -755,7 +718,50 @@ export default function AboutPage() {
                     margin: '0 auto 16px',
                     transition: 'all 0.3s ease-in-out'
                   }}
+                  className="bg-cyan-600 group-hover:scale-110 group-hover:shadow-lg"
+                  src="/persons/ChiefExecutiveOfficer.jpg"
+                  alt={t('about.team.members.ceo.name')}
+                >
+                  <Engineering 
+                    sx={{ fontSize: 50 }} 
+                    className="transition-transform duration-300 group-hover:rotate-6"
+                  />
+                </Avatar>
+                <Typography variant="h5" className="font-bold mb-2 transition-colors duration-300 group-hover:text-cyan-700">
+                  {t('about.team.members.ceo.name')}
+                </Typography>
+                <Typography variant="subtitle1" className="text-cyan-600 mb-3 transition-colors duration-300 group-hover:text-cyan-700">
+                  {t('about.team.members.ceo.position')}
+                </Typography>
+                <div className="flex flex-wrap justify-center gap-2 mb-4">
+                  <Chip 
+                    label={t('about.team.members.ceo.experience')}
+                    size="small" 
+                    className="bg-cyan-100 text-cyan-800 transition-all duration-300 group-hover:bg-cyan-200" 
+                  />
+                  <Chip 
+                    label={t('about.team.members.ceo.specialty')}
+                    size="small" 
+                    className="bg-gray-100 transition-all duration-300 group-hover:bg-gray-200" 
+                  />
+                </div>
+                <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
+                  {t('about.team.members.ceo.description')}
+                </Typography>
+              </Card>
+            </div>
+            <div className="flex-1 min-w-[300px] zoom-in-on-scroll">
+              <Card className="text-center p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-2 cursor-pointer group">
+                <Avatar
+                  sx={{ 
+                    width: 100, 
+                    height: 100, 
+                    margin: '0 auto 16px',
+                    transition: 'all 0.3s ease-in-out'
+                  }}
                   className="bg-green-600 group-hover:scale-110 group-hover:shadow-lg"
+                  src="/persons/Technician.jpg"
+                  alt={t('about.team.members.technical.name')}
                 >
                   <Group 
                     sx={{ fontSize: 50 }} 
