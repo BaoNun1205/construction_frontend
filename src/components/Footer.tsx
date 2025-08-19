@@ -24,7 +24,9 @@ import { useTranslations } from '@/hooks/useTranslations';
 
 export default function Footer() {
   const theme = useTheme();
-  const { t } = useTranslations();
+  const { t: tRaw } = useTranslations();
+  // Type-safe wrapper for translation function
+  const t = (key: string): string => tRaw(key) as string;
   
   return (
     <Box
