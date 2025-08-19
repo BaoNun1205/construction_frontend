@@ -115,7 +115,7 @@
         "ceo": {
           "name": "Tạ Văn Lai",
           "position": "Tổng Giám Đốc",
-          "experience": "20+ năm kinh nghiệm",
+          "experience": "10+ năm kinh nghiệm",
           "specialty": "Kỹ sư xây dựng",
           "description": "Thạc sĩ Kỹ thuật Xây dựng, chuyên gia hàng đầu trong lĩnh vực xây dựng công nghiệp."
         },
@@ -127,11 +127,11 @@
           "description": "Chuyên gia thiết kế kiến trúc, đã thực hiện nhiều dự án biểu tượng tại Việt Nam."
         },
         "technical": {
-          "name": "Lê Minh Tuấn",
-          "position": "Giám Đốc Kỹ Thuật",
-          "experience": "18+ năm kinh nghiệm", 
-          "specialty": "Kỹ sư cầu đường",
-          "description": "Chuyên gia về hạ tầng giao thông, quản lý kỹ thuật các dự án lớn."
+          "name": "Lê Nguyễn Bảo",
+          "position": "Kỹ Thuật Viên",
+          "experience": "1+ năm kinh nghiệm", 
+          "specialty": "Kỹ sư phần mềm",
+          "description": "Chuyên về phát triển phần mềm quản lý dự án xây dựng, đã tham gia nhiều dự án lớn."
         }
       }
     },

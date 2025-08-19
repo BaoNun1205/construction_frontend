@@ -36,6 +36,7 @@ export default function Header() {
   const { t } = useTranslations()
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null)
   const [anchorElServices, setAnchorElServices] = useState<null | HTMLElement>(null)
+  const [anchorElProjects, setAnchorElProjects] = useState<null | HTMLElement>(null)
   const [scrolled, setScrolled] = useState(false)
 
   // Services data as requested
@@ -59,6 +60,22 @@ export default function Header() {
     {
       title: t('header.services.bidding'),
       href: '/services/bidding-consulting',
+    }
+  ];
+
+  // Projects data
+  const projects = [
+    {
+      title: 'Mẫu Thiết Kế',
+      href: '/projects/design-templates',
+    },
+    {
+      title: 'Đang Triển Khai',
+      href: '/projects/in-progress',
+    },
+    {
+      title: 'Đã Hoàn Thành',
+      href: '/projects/completed',
     }
   ];
 
@@ -88,10 +105,19 @@ export default function Header() {
     setAnchorElServices(null)
   }
 
+  const handleOpenProjectsMenu = () => {
+    setAnchorElProjects(document.getElementById('projects-button'))
+  }
+
+  const handleCloseProjectsMenu = () => {
+    setAnchorElProjects(null)
+  }
+
   const navigationItems = [
     { label: t("nav.home") as string, href: "/" },
     { label: t("nav.about") as string, href: "/about" },
     { label: t("nav.services") as string, href: "/services", hasDropdown: true },
+    { label: "Dự án" as string, href: "/project", hasDropdown: true },
     { label: t("nav.store") as string, href: "/store" },
     { label: t("nav.contact") as string, href: "/contact" },
   ]
@@ -288,11 +314,11 @@ export default function Header() {
                   <Box 
                     key={item.label} 
                     sx={{ position: 'relative' }}
-                    onMouseEnter={handleOpenServicesMenu}
-                    onMouseLeave={handleCloseServicesMenu}
+                    onMouseEnter={item.label === 'Dự án' ? handleOpenProjectsMenu : handleOpenServicesMenu}
+                    onMouseLeave={item.label === 'Dự án' ? handleCloseProjectsMenu : handleCloseServicesMenu}
                   >
                     <Button
-                      id="services-button"
+                      id={item.label === 'Dự án' ? "projects-button" : "services-button"}
                       sx={{
                         mx: 1,
                         px: 3,
@@ -317,7 +343,7 @@ export default function Header() {
                       {item.label}
                     </Button>
                     {/* Custom Dropdown */}
-                    {Boolean(anchorElServices) && (
+                    {Boolean(item.label === 'Dự án' ? anchorElProjects : anchorElServices) && (
                       <Box
                         sx={{
                           position: "absolute",
@@ -341,31 +367,31 @@ export default function Header() {
                             p: 1,
                           }}
                         >
-                          {services.map((service, index) => (
+                          {(item.label === 'Dự án' ? projects : services).map((dropdownItem, index) => (
                             <Box
                               key={index}
                               component={Link}
-                              href={service.href}
-                              onClick={handleCloseServicesMenu}
+                              href={dropdownItem.href}
+                              onClick={item.label === 'Dự án' ? handleCloseProjectsMenu : handleCloseServicesMenu}
                               sx={{
                                 display: "block",
                                 textDecoration: "none",
                                 px: 3,
                                 py: 1.5,
                                 borderRadius: 1,
-                                mb: index < services.length - 1 ? 0.5 : 0,
+                                mb: index < (item.label === 'Dự án' ? projects : services).length - 1 ? 0.5 : 0,
                                 transition: "all 0.3s ease",
                                 cursor: "pointer",
                                 "&:hover": {
                                   backgroundColor: "rgba(88, 208, 245, 0.1)",
-                                  "& .service-title": {
+                                  "& .dropdown-title": {
                                     color: "#58d0f5",
                                   },
                                 },
                               }}
                             >
                               <Typography
-                                className="service-title"
+                                className="dropdown-title"
                                 sx={{
                                   fontWeight: 500,
                                   fontSize: "1rem",
@@ -373,7 +399,7 @@ export default function Header() {
                                   transition: "color 0.3s ease",
                                 }}
                               >
-                                {service.title as string}
+                                {dropdownItem.title as string}
                               </Typography>
                             </Box>
                           ))}
@@ -529,12 +555,12 @@ export default function Header() {
                         {item.label}
                       </Typography>
                     </MenuItem>
-                    {services.map((service, index) => (
+                    {(item.label === 'Dự án' ? projects : services).map((dropdownItem, index) => (
                       <MenuItem
                         key={`${item.label}-${index}`}
                         onClick={handleCloseNavMenu}
                         component={Link}
-                        href={service.href}
+                        href={dropdownItem.href}
                         sx={{
                           color: "rgba(255,255,255,0.8)",
                           py: 1,
@@ -557,7 +583,7 @@ export default function Header() {
                             fontSize: "16px",
                           }}
                         >
-                          {service.title as string}
+                          {dropdownItem.title as string}
                         </Typography>
                       </MenuItem>
                     ))}

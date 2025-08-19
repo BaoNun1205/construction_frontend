@@ -46,7 +46,9 @@ const useScrollAnimations = () => {
 
 export default function ServicesPage() {
   useScrollAnimations();
-  const { t } = useTranslations();
+  const { t: tRaw } = useTranslations();
+  // Type-safe wrapper for translation function
+  const t = (key: string): string => tRaw(key) as string;
 
   const constructionServices = [
     {

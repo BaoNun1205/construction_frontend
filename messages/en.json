@@ -115,7 +115,7 @@
         "ceo": {
           "name": "Ta Van Lai",
           "position": "Chief Executive Officer",
-          "experience": "20+ years experience",
+          "experience": "10+ years experience",
           "specialty": "Civil Engineer",
           "description": "Master of Construction Engineering, leading expert in industrial construction."
         },
@@ -127,11 +127,11 @@
           "description": "Design architecture expert, has implemented many iconic projects in Vietnam."
         },
         "technical": {
-          "name": "Le Minh Tuan",
-          "position": "Technical Director", 
-          "experience": "18+ years experience",
-          "specialty": "Bridge & Road Engineer",
-          "description": "Infrastructure expert, technical management of major projects."
+          "name": "Le Nguyen Bao",
+          "position": "Technician",
+          "experience": "1+ years",
+          "specialty": "Software Engineer",
+          "description": "Experienced in construction project management software development."
         }
       }
     },
