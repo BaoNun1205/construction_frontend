@@ -21,7 +21,10 @@ import {
   Assignment,
   Gavel,
   ArrowBackIos,
-  ArrowForwardIos
+  ArrowForwardIos,
+  EmojiEvents,
+  VerifiedUser,
+  Group
 } from '@mui/icons-material';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -223,7 +226,7 @@ export default function Home() {
           pb: { xs: 2, md: 4 },
           position: 'relative',
           overflow: 'hidden',
-          backgroundImage: 'url(/banner/banner-home3.png)',
+          backgroundImage: 'url(/banner/banner_home3.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -234,7 +237,7 @@ export default function Home() {
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+            backgroundColor: 'rgba(10, 24, 61, 0.75)',
             zIndex: 1
           }
         }}
@@ -925,6 +928,96 @@ export default function Home() {
                   }}
                 ></button>
               ))}
+            </div>
+          </div>
+        </Container>
+      </Box>
+
+      <Box sx={{ py: 8 }}>
+        <Container maxWidth="lg">
+          <Typography
+            variant="h2"
+            className="text-3xl font-bold text-center mb-12 text-gray-800"
+            sx={{ marginBottom: '3rem' }}
+          >
+            {t('home.whyChooseUs.title')}
+          </Typography>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Experience */}
+            <div className="zoom-in-on-scroll animate-delay-1">
+              <div className="text-center p-6 rounded-2xl bg-white/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 hover:shadow-xl hover:scale-105 h-80 flex flex-col">
+                <div className="flex justify-center mb-4 flex-shrink-0">
+                  <EmojiEvents
+                    className="text-yellow-500" 
+                    sx={{ fontSize: 50 }} 
+                  />
+                </div>
+                <Typography variant="h6" className="font-bold mb-3 text-gray-800 flex-shrink-0">
+                  {t('home.whyChooseUs.experience.title')}
+                </Typography>
+                <div className="flex-1 overflow-y-auto">
+                  <Typography variant="body2" className="text-gray-600">
+                    {t('home.whyChooseUs.experience.description')}
+                  </Typography>
+                </div>
+              </div>
+            </div>
+            {/* Solution */}
+            <div className="zoom-in-on-scroll animate-delay-2">
+              <div className="text-center p-6 rounded-2xl bg-white/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 hover:shadow-xl hover:scale-105 h-80 flex flex-col">
+                <div className="flex justify-center mb-4 flex-shrink-0">
+                  <Architecture 
+                    className="text-blue-500" 
+                    sx={{ fontSize: 50 }} 
+                  />
+                </div>
+                <Typography variant="h6" className="font-bold mb-3 text-gray-800 flex-shrink-0">
+                  {t('home.whyChooseUs.solution.title')}
+                </Typography>
+                <div className="flex-1 overflow-y-auto">
+                  <Typography variant="body2" className="text-gray-600">
+                    {t('home.whyChooseUs.solution.description')}
+                  </Typography>
+                </div>
+              </div>
+            </div>
+            {/* Quality */}
+            <div className="zoom-in-on-scroll animate-delay-3">
+              <div className="text-center p-6 rounded-2xl bg-white/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 hover:shadow-xl hover:scale-105 h-80 flex flex-col">
+                <div className="flex justify-center mb-4 flex-shrink-0">
+                  <VerifiedUser
+                    className="text-green-500" 
+                    sx={{ fontSize: 50 }} 
+                  />
+                </div>
+                <Typography variant="h6" className="font-bold mb-3 text-gray-800 flex-shrink-0">
+                  {t('home.whyChooseUs.quality.title')}
+                </Typography>
+                <div className="flex-1 overflow-y-auto">
+                  <Typography variant="body2" className="text-gray-600">
+                    {t('home.whyChooseUs.quality.description')}
+                  </Typography>
+                </div>
+              </div>
+            </div>
+            {/* Team */}
+            <div className="zoom-in-on-scroll animate-delay-4">
+              <div className="text-center p-6 rounded-2xl bg-white/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 hover:shadow-xl hover:scale-105 h-80 flex flex-col">
+                <div className="flex justify-center mb-4 flex-shrink-0">
+                  <Group
+                    className="text-purple-500" 
+                    sx={{ fontSize: 50 }} 
+                  />
+                </div>
+                <Typography variant="h6" className="font-bold mb-3 text-gray-800 flex-shrink-0">
+                  {t('home.whyChooseUs.team.title')}
+                </Typography>
+                <div className="flex-1 overflow-y-auto">
+                  <Typography variant="body2" className="text-gray-600">
+                    {t('home.whyChooseUs.team.description')}
+                  </Typography>
+                </div>
+              </div>
             </div>
           </div>
         </Container>

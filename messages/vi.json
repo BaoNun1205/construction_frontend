@@ -53,10 +53,8 @@
       "subtitle": "Liên hệ với chúng tôi ngay hôm nay để được tư vấn miễn phí",
       "consultBtn": "Tư vấn miễn phí",
       "servicesBtn": "Xem dịch vụ"
-    }
-  },
-  "about": {
-		"whyChooseUs": {
+    },
+    "whyChooseUs": {
 			"title": "Vì Sao Chọn Chúng Tôi?",
 			"experience": {
 				"title": "Kinh Nghiệm & Uy Tín",
@@ -74,7 +72,9 @@
 				"title": "Đội Ngũ Chuyên Nghiệp",
 				"description": "Quy tụ kiến trúc sư, kỹ sư và công nhân lành nghề, giàu kinh nghiệm và sáng tạo, tận tâm đồng hành cùng khách hàng để mang lại công trình bền vững và giá trị lâu dài."
 			}
-		},
+		}
+  },
+  "about": {
 		"title": "Sứ mệnh - Tầm nhìn - Giá trị cốt lõi",
 		"mission": {
 			"title": "Sứ Mệnh",

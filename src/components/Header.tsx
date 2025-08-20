@@ -31,7 +31,7 @@ import ReactCountryFlag from "react-country-flag"
 export default function Header() {
   const theme = useTheme()
   const pathname = usePathname()
-  const isHomePage = pathname === '/'
+  const isHomePage = pathname === '/' || pathname === '/services/design-consulting'
   const { locale, setLocale } = useLocale()
   const { t } = useTranslations()
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null)
@@ -130,12 +130,13 @@ export default function Header() {
         background: (scrolled || !isHomePage)
           ? theme.palette.primary.main
           : "rgba(0,0,0,0)",
-        backdropFilter: scrolled ? "none" : "none",
-        borderBottom: scrolled ? "none" : "none",
+        borderBottom: scrolled
+          ? `6px solid ${theme.palette.secondary.light}`
+          : "none",
         boxShadow: (scrolled || !isHomePage) ? `0 8px 32px ${theme.palette.primary.main}30` : "none",
         borderRadius: 0,
         top: 0,
-        transition: "all 0.3s ease-in-out",
+        // transition: "all 0.3s ease-in-out",
         zIndex: 1100,
       }}
     >
@@ -349,9 +350,9 @@ export default function Header() {
                           position: "absolute",
                           top: "100%",
                           left: 0,
-                          mt: 0, // Loại bỏ margin để tạo cầu nối
-                          pt: 1, // Thêm padding top để tạo vùng hover
-                          background: "transparent", // Vùng cầu nối trong suốt
+                          mt: 0,
+                          pt: 1,
+                          background: "transparent", 
                           zIndex: 1000,
                         }}
                       >
@@ -383,9 +384,9 @@ export default function Header() {
                                 transition: "all 0.3s ease",
                                 cursor: "pointer",
                                 "&:hover": {
-                                  backgroundColor: "rgba(88, 208, 245, 0.1)",
+                                  backgroundColor: "rgba(0, 17, 55, 0.1)",
                                   "& .dropdown-title": {
-                                    color: "#58d0f5",
+                                    color: theme.palette.secondary.main,
                                   },
                                 },
                               }}
@@ -425,7 +426,7 @@ export default function Header() {
                       transition: "color 0.3s ease",
                       background: "transparent",
                       "&:hover": {
-                        color: "#58d0f5",
+                        color: theme.palette.secondary.light,
                         background: "transparent",
                         boxShadow: "none",
                         transform: "none",

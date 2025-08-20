@@ -16,6 +16,8 @@ import {
   CheckCircle as CheckCircleIcon,
   ArrowForward as ArrowForwardIcon,
 } from "@mui/icons-material"
+import { Box, Button, Container, Stack, Typography } from "@mui/material"
+import { useTranslations } from "@/hooks/useTranslations"
 
 // Intersection Observer Hook for animations
 const useScrollAnimations = () => {
@@ -44,7 +46,9 @@ const useScrollAnimations = () => {
 export default function DesignConsultingPage() {
   useScrollAnimations()
   const theme = useTheme()
-
+  const { t: tRaw } = useTranslations();
+  // Type-safe wrapper for translation function
+  const t = (key: string): string => tRaw(key) as string;
 
   const [activeAITool, setActiveAITool] = useState<number | null>(null)
   const aiToolsRef = useRef<HTMLElement>(null)
@@ -245,76 +249,134 @@ export default function DesignConsultingPage() {
   return (
     <div className="min-h-screen" style={{ backgroundColor: theme.palette.background.default }}>
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div 
-          className="absolute inset-0"
-          style={{
-            background: `linear-gradient(135deg, ${theme.palette.background.default} 0%, ${theme.palette.primary.main}10 50%, ${theme.palette.primary.main}15 100%)`
-          }}
-        >
-          <div 
-            className="absolute top-20 left-10 w-72 h-72 rounded-full blur-3xl"
-            style={{ backgroundColor: `${theme.palette.primary.main}15` }}
-          ></div>
-          <div 
-            className="absolute bottom-20 right-10 w-96 h-96 rounded-full blur-3xl"
-            style={{ backgroundColor: `${theme.palette.primary.main}20` }}
-          ></div>
-        </div>
-
-        <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
-          <div className="fade-in-up">
-            <h1 
-              className="text-5xl md:text-7xl font-bold mb-8 leading-tight"
-              style={{ color: theme.palette.primary.main }}
+      <Box
+        sx={{
+          color: 'white',
+          pt: { xs: 16, md: 20 },
+          pb: { xs: 6, md: 12 },
+          position: 'relative',
+          overflow: 'hidden',
+          backgroundImage: 'url(/banner/banner_home.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(10, 24, 61, 0.75)',
+            zIndex: 1
+          }
+        }}
+      >
+        <Box sx={{ px: 6 }}>
+        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: { xs: 'center', md: 'flex-start' },
+              justifyContent: 'center',
+              height: '100%',
+              textAlign: { xs: 'center', md: 'left' }
+            }}
+          >
+            <Typography
+              variant="h2"
+              gutterBottom
+              sx={{
+                fontSize: { xs: '2.5rem', md: '3.5rem' },
+                fontWeight: 800,
+                mb: 3,
+                fontFamily: '"Poppins", "Segoe UI", sans-serif',
+                letterSpacing: '0.05em',
+                textTransform: 'uppercase',
+                lineHeight: 1.2,
+                color: 'white',
+                textShadow: '2px 2px 8px rgba(0,0,0,0.7)',
+              }}
             >
-              Tư Vấn Thiết Kế
-              <br />
-              Kiến Trúc
-            </h1>
-            <p 
-              className="text-xl md:text-2xl max-w-4xl mx-auto leading-relaxed mb-12"
-              style={{ color: theme.palette.text.secondary }}
+              Tư Vấn Và Thiết Kế
+            </Typography>
+            <Typography
+              variant="h5"
+              sx={{
+                mb: 4,
+                color: 'white',
+                fontWeight: 700,
+                lineHeight: 1.6,
+                textShadow: '1px 1px 4px rgba(0,0,0,0.5)',
+                width: '75%',
+                textAlign: { xs: 'center', md: 'left' },
+              }}
             >
-              Chúng tôi cung cấp dịch vụ tư vấn thiết kế kiến trúc chuyên nghiệp, từ ý tưởng ban đầu đến hồ sơ hoàn
-              thiện, đảm bảo chất lượng và tiến độ.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <button
-                className="text-lg px-8 py-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
-                style={{
-                  backgroundColor: theme.palette.primary.main,
-                  color: theme.palette.primary.contrastText,
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = theme.palette.primary.dark;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = theme.palette.primary.main;
+              Đội ngũ kiến trúc sư và kỹ sư giàu kinh nghiệm sẽ biến ý tưởng của bạn thành hiện thực với những thiết kế độc đáo và chức năng
+            </Typography>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center" sx={{ mt: 4 }}>
+              <Button
+                variant="contained"
+                size="large"
+                endIcon={<ArrowForwardIcon />}
+                sx={{
+                  backgroundColor: 'white',
+                  color: 'black',
+                  fontWeight: 600,
+                  px: 4,
+                  py: 1.5,
+                  boxShadow: 2,
+                  '&:hover': {
+                    backgroundColor: theme.palette.secondary.main,
+                    color: 'white',
+                  }
                 }}
               >
                 Bắt đầu tư vấn
-                <ArrowForwardIcon className="ml-2 w-5 h-5" />
-              </button>
-              <button
-                className="text-lg px-8 py-6 rounded-lg border-2 transition-all duration-300 bg-transparent"
-                style={{
-                  borderColor: theme.palette.primary.main,
-                  color: theme.palette.primary.main,
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = `${theme.palette.primary.main}10`;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'transparent';
+              </Button>
+              <Button
+                variant="contained"
+                size="large"
+                sx={{
+                  backgroundColor: 'white',
+                  color: 'black',
+                  fontWeight: 600,
+                  px: 4,
+                  py: 1.5,
+                  boxShadow: 2,
+                  '&:hover': {
+                    backgroundColor: theme.palette.secondary.main,
+                    color: 'white',
+                  }
                 }}
               >
                 Xem portfolio
-              </button>
-            </div>
-          </div>
+              </Button>
+            </Stack>
+          </Box>
+        </Container>
+
+        </Box>
+      </Box>
+      {/* Header Section */}
+      {/* <section>
+        <div className="flex flex-col items-center justify-center text-center mb-16">
+          <Typography
+            variant="h2"
+            className="text-4xl font-bold text-center mb-6 text-gray-800"
+          >
+            {t('designConsulting.title')}
+            <span style={{ color: theme.palette.primary.main }}> {t('designConsulting.titleHighlight')}</span>
+          </Typography>
+          <Typography
+            variant="h6"
+            className="text-center text-gray-600 max-w-4xl mx-auto mb-8 leading-relaxed"
+          >
+            {t('designConsulting.subtitle')}
+          </Typography>
         </div>
-      </section>
+      </section> */}
 
       {/* Main Sections */}
       <section className="py-24 px-6">
@@ -446,7 +508,7 @@ export default function DesignConsultingPage() {
                     className="text-lg"
                     style={{ color: theme.palette.text.secondary }}
                   >
-                    Mỗi bước trong quy trình được tối ưu hóa để mang lại kết quả tốt nhất
+                    Mỗi bước trong quy trình đều được tối ưu hóa để mang lại kết quả tốt nhất
                   </p>
                 </div>
                 <a
