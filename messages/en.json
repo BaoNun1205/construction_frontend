@@ -53,10 +53,8 @@
       "subtitle": "Contact us today for free consultation",
       "consultBtn": "Free Consultation",
       "servicesBtn": "View Services"
-    }
-  },
-  "about": {
-		"whyChooseUs": {
+    },
+    "whyChooseUs": {
       "title": "Why Choose Us?",
       "experience": {
 				"title": "Experience & Reputation",
@@ -74,7 +72,9 @@
 				"title": "Professional Team",
 				"description": "A team of skilled architects, engineers, and workers with expertise, creativity, and dedication, working closely with clients to deliver sustainable projects and long-term value."
 			}
-    },
+    }
+  },
+  "about": {
     "title": "Mission – Vision – Core Values",
     "mission": {
 			"title": "Our Mission",

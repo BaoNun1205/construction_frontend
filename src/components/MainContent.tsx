@@ -10,7 +10,7 @@ interface MainContentProps {
 
 export default function MainContent({ children }: MainContentProps) {
   const pathname = usePathname()
-  const isHomePage = pathname === '/'
+  const isHomePage = pathname === '/' || pathname === '/services/design-consulting'
 
   return (
     <Box 
