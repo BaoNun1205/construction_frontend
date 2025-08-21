@@ -185,6 +185,7 @@ export default function DesignConsultingPage() {
       title: "AI - KIẾN TRÚC",
       description: "Trung tâm công nghệ AI",
       details: ["Hệ thống AI chính", "Quản lý toàn bộ quy trình"],
+      image: "/design-consulting/ai.jpg",
       isCenter: true,
     },
     {
@@ -199,6 +200,7 @@ export default function DesignConsultingPage() {
         "ĐỘT PHÁ khối lượng concept",
         "CHINH PHỤC khách hàng"
       ],
+      image: "/design-consulting/superiority.jpg",
     },
     {
       id: "applications",
@@ -210,6 +212,7 @@ export default function DesignConsultingPage() {
         "Thỏa mãn đam mê, luyện tay nghề kiến trúc",
         "Tạo sản phẩm mẫu (quảng bá, truyền thông)"
       ],
+      image: "/design-consulting/application.jpg",
     },
     {
       id: "conditions",
@@ -220,6 +223,7 @@ export default function DesignConsultingPage() {
         'Sẵn sàng "tốc ký" những nội dung quan trọng',
         '"Tư duy mở" & Khả năng cảm nhận'
       ],
+      image: "/design-consulting/condition.jpg",
     },
     {
       id: "operations",
@@ -231,10 +235,11 @@ export default function DesignConsultingPage() {
         "Chạy ứng dụng / nhận sản phẩm",
         "Chuẩn bị model, promt, lora"
       ],
+      image: "/design-consulting/process.jpg",
     },
     {
       id: "thinking",
-      title: "NGHĨ KHÁC LÀM KHÁC",
+      title: "Nghĩ khác làm khác",
       description: "Triết lý và phương pháp làm việc đột phá",
       details: [
         "Xác định mục tiêu: học để ứng dụng.  Loại bỏ những mục tiêu lan man",
@@ -243,6 +248,7 @@ export default function DesignConsultingPage() {
         "Tư duy ngược: làm rồi học (Tư duy truyền thống: học rồi làm)",
         "Trên đời không ai có thể tự mình làm mọi việc. Tìm cộng sự khi cần (Team work is dream work)"
       ],
+      image: "/design-consulting/thinking.jpg",
     },
   ]
 
@@ -267,7 +273,7 @@ export default function DesignConsultingPage() {
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: 'rgba(10, 24, 61, 0.75)',
+            backgroundColor: 'rgba(10, 24, 61, 0.5)',
             zIndex: 1
           }
         }}
@@ -275,6 +281,7 @@ export default function DesignConsultingPage() {
         <Box sx={{ px: 6 }}>
         <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
           <Box
+            className="fade-in-up"
             sx={{
               display: 'flex',
               flexDirection: 'column',
@@ -468,13 +475,13 @@ export default function DesignConsultingPage() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20 fade-in-up">
             <h2 
-              className="text-4xl md:text-5xl font-bold mb-6"
+              className="text-4xl md:text-5xl font-bold mb-6 fade-in-up"
               style={{ color: theme.palette.primary.main }}
             >
               Quy Trình Thiết Kế Kiến Trúc
             </h2>
             <h2 
-              className="text-4xl md:text-5xl font-bold mb-6"
+              className="text-4xl md:text-5xl font-bold mb-6 fade-in-up"
               style={{ color: theme.palette.secondary.light }}
             >
               Nhanh, Chuẩn, Đẹp
@@ -521,9 +528,19 @@ export default function DesignConsultingPage() {
                     color: theme.palette.secondary.main,
                     textDecoration: 'none'
                   }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.backgroundColor = theme.palette.secondary.main;
+                    e.currentTarget.style.color = 'white';
+                    e.currentTarget.style.borderColor = theme.palette.secondary.dark;
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.backgroundColor = `${theme.palette.secondary.dark}20`;
+                    e.currentTarget.style.color = theme.palette.secondary.main;
+                    e.currentTarget.style.borderColor = theme.palette.secondary.main;
+                  }}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4" /></svg>
-                  Tải xuống
+                  Tải xuống sơ đồ chi tiết
                 </a>
               </div>
 
@@ -537,7 +554,7 @@ export default function DesignConsultingPage() {
                         setTimeout(() => scrollToAITools(), 300)
                       }
                     }}
-                    className={`p-6 rounded-xl bg-white/50 backdrop-blur-sm border border-white/20 hover:bg-white/70 transition-all duration-300 ${
+                    className={`group p-6 rounded-xl bg-white/50 backdrop-blur-sm border border-white/20 hover:bg-white/70 transition-all duration-300 ${
                       index === 3 ? 'cursor-pointer hover:scale-105' : ''
                     }`}
                     style={{
@@ -546,7 +563,7 @@ export default function DesignConsultingPage() {
                   >
                     <div className="flex items-center gap-4 mb-4">
                       <div
-                        className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-white"
+                        className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
                         style={{ 
                           backgroundColor: index === 3 ? theme.palette.secondary.light : theme.palette.primary.main 
                         }}
@@ -580,7 +597,7 @@ export default function DesignConsultingPage() {
                             height={20}
                             style={{ display: 'inline-block' }}
                           />
-                          Sử dụng AI
+                          Tăng tốc bằng AI
                         </div>
                       )}
                     </div>
@@ -592,12 +609,12 @@ export default function DesignConsultingPage() {
                       {step.title}
                     </h4>
                     
-                    {/* <p
+                    <p
                       className="text-xs mb-3 leading-relaxed"
                       style={{ color: theme.palette.text.secondary }}
                     >
                       {step.description}
-                    </p> */}
+                    </p>
 
                     {step.details && (
                       <div className="space-y-2">
@@ -658,345 +675,428 @@ export default function DesignConsultingPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-            {/* Left side - Circular AI Tools */}
-            <div className="lg:col-span-2 relative flex items-center justify-center min-h-[750px]">
-              {/* Central Hub - Dynamic Content Display */}
-              <div 
-                className="relative z-20 w-96 h-96 rounded-full shadow-2xl flex flex-col items-center justify-center p-8 transition-all duration-700"
-                style={{
-                  background: `radial-gradient(circle at center, ${theme.palette.background.paper} 0%, ${theme.palette.primary.main}10 50%, ${theme.palette.primary.main}15 100%)`,
-                  border: `3px solid ${theme.palette.primary.main}`,
-                  boxShadow: `0 0 40px ${theme.palette.primary.main}40, inset 0 0 30px ${theme.palette.primary.main}10`
-                }}
-              >
-                <div className="text-center min-h-[300px] flex flex-col justify-center">
-                  {activeAITool !== null && aiTools.filter(tool => !tool.isCenter)[activeAITool] ? (
-                    // Display selected AI Tool content in center circle
-                    <div key={`center-ai-tool-${activeAITool}`} className="transition-opacity duration-300">
-                      <div
-                        className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg mb-3 mx-auto"
-                        style={{ backgroundColor: theme.palette.primary.main }}
-                      >
-                        {activeAITool + 1}
-                      </div>
-                      <h3
-                        className="text-2xl font-bold mb-3 leading-tight"
-                        style={{ color: theme.palette.primary.main }}
-                      >
-                        {aiTools.filter(tool => !tool.isCenter)[activeAITool].title}
-                      </h3>
-                      <p 
-                        className="text-sm leading-relaxed px-2"
-                        style={{ color: theme.palette.text.secondary }}
-                      >
-                        {aiTools.filter(tool => !tool.isCenter)[activeAITool].description}
-                      </p>
-                    </div>
-                  ) : (
-                    // Default content when no tool is selected
-                    <div key="default-center-content" className="transition-opacity duration-300">
-                      <h3
-                        className="text-3xl font-bold mb-3"
-                        style={{ color: theme.palette.primary.main }}
-                      >
-                        Bước 4
-                      </h3>
-                      <h4
-                        className="text-lg font-semibold mb-4"
-                        style={{ color: theme.palette.text.primary }}
-                      >
-                        Lấy chương đối concept<br/>&apos;View mẫu&apos; 3D
-                      </h4>
-                      <p 
-                        className="text-sm leading-relaxed"
-                        style={{ color: theme.palette.text.secondary }}
-                      >
-                        Phát triển ý tưởng để hình thành bản thiết kế hoàn thiện sử dụng công nghệ AI
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Surrounding AI Tools - Circular Arrangement */}
-              {aiTools.filter(tool => !tool.isCenter).map((tool, index) => {
-                const angle = (index * 360) / aiTools.filter(tool => !tool.isCenter).length - 90
-                const radius = 320
-                const x = Math.cos((angle * Math.PI) / 180) * radius
-                const y = Math.sin((angle * Math.PI) / 180) * radius
-
-                const isActive = activeAITool !== null && index === activeAITool
-
-                return (
-                  <button
-                    key={tool.id}
-                    onClick={() => {
-                      console.log('Clicked tool:', index, tool.title)
-                      setActiveAITool(index)
-                    }}
-                    className="absolute w-20 h-20 rounded-full border-3 transition-all duration-500 hover:scale-110 flex items-center justify-center"
-                    style={{
-                      transform: `translate(${x}px, ${y}px)`,
-                      zIndex: 30,
-                      backgroundColor: isActive 
-                        ? theme.palette.primary.main 
-                        : theme.palette.background.paper,
-                      color: isActive 
-                        ? 'white'
-                        : theme.palette.primary.main,
-                      borderColor: isActive 
-                        ? theme.palette.primary.main
-                        : theme.palette.primary.main,
-                      borderWidth: '3px',
-                      boxShadow: isActive 
-                        ? `0 8px 25px ${theme.palette.primary.main}50, 0 0 15px ${theme.palette.primary.main}30` 
-                        : `0 4px 15px rgba(0,0,0,0.1)`,
-                      fontSize: '14px',
-                      fontWeight: 'bold'
-                    }}
-                  >
-                    {index + 1}
-                  </button>
-                )
-              })}
-
-              {/* Connecting Circle */}
-              <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 1 }}>
-                <circle
-                  cx="50%"
-                  cy="50%"
-                  r="320"
-                  fill="none"
-                  stroke={theme.palette.divider}
-                  strokeWidth="2"
-                  strokeDasharray="10,5"
-                  className="opacity-40"
-                />
-                
-                <circle
-                  cx="50%"
-                  cy="50%"
-                  r="320"
-                  fill="none"
-                  stroke={theme.palette.primary.main}
-                  strokeWidth="4"
-                  strokeDasharray={activeAITool !== null ? `${(activeAITool + 1) * (2010 / aiTools.filter(tool => !tool.isCenter).length)}, 2010` : '0, 2010'}
-                  strokeLinecap="round"
-                  className="transition-all duration-700"
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+            {/* Left side - AI Tools List */}
+            <div className="flex flex-col justify-between slide-in-left min-h-[600px] h-[600px]" id="ai-tools-list">
+              {aiTools.filter(tool => !tool.isCenter).map((tool, index) => (
+                <div
+                  key={tool.id}
+                  onClick={() => setActiveAITool(index)}
+                  className={`p-6 rounded-xl cursor-pointer transition-all duration-300 border-2 flex-1 ${
+                    activeAITool === index 
+                      ? 'shadow-lg transform scale-105' 
+                      : 'hover:shadow-md hover:transform hover:scale-102'
+                  }`}
                   style={{
-                    transform: "rotate(-90deg)",
-                    transformOrigin: "50% 50%",
-                    filter: `drop-shadow(0 0 8px ${theme.palette.primary.main}40)`
+                    backgroundColor: activeAITool === index 
+                      ? `${theme.palette.primary.main}10` 
+                      : theme.palette.background.paper,
+                    borderColor: activeAITool === index 
+                      ? theme.palette.primary.main 
+                      : theme.palette.divider,
+                    marginBottom: index < aiTools.filter(tool => !tool.isCenter).length - 1 ? '16px' : '0'
                   }}
-                />
-                
-                <circle
-                  cx="50%"
-                  cy="50%"
-                  r="200"
-                  fill="none"
-                  stroke={`${theme.palette.primary.main}20`}
-                  strokeWidth="1"
-                  strokeDasharray="5,5"
-                  className="opacity-60 animate-pulse"
-                />
-              </svg>
-
-              {/* Glow effect */}
-              <div 
-                className="absolute inset-0 rounded-full opacity-20 animate-pulse"
-                style={{
-                  background: `radial-gradient(circle at center, ${theme.palette.primary.main}30 0%, transparent 70%)`,
-                  filter: 'blur(20px)',
-                  zIndex: 0
-                }}
-              ></div>
-            </div>
-
-            {/* Right side - Content Display Panel */}
-            <div className="lg:col-span-1 mt-12">
-              <div
-                className="rounded-2xl p-8 min-h-[500px] shadow-lg border"
-                style={{
-                  backgroundColor: theme.palette.background.paper,
-                  borderColor: theme.palette.divider
-                }}
-              >
-                {activeAITool !== null && aiTools.filter(tool => !tool.isCenter)[activeAITool] ? (
-                  <div key={`ai-tool-${activeAITool}`} className="transition-opacity duration-300">
+                >
+                  <div className="flex items-center gap-4">
                     <div
-                      className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg mb-4 mx-auto"
+                      className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-white text-lg"
                       style={{ backgroundColor: theme.palette.primary.main }}
                     >
-                      {activeAITool + 1}
+                      {index + 1}
                     </div>
-                    
-                    <h3
-                      className="text-2xl font-bold mb-4 text-center"
-                      style={{ color: theme.palette.primary.main }}
-                    >
-                      {aiTools.filter(tool => !tool.isCenter)[activeAITool].title}
-                    </h3>
-                    
-                    <p 
-                      className="text-base mb-6 text-center"
-                      style={{ color: theme.palette.text.secondary }}
-                    >
-                      {aiTools.filter(tool => !tool.isCenter)[activeAITool].description}
-                    </p>
-
-                    <div className="space-y-3">
-                      {aiTools.filter(tool => !tool.isCenter)[activeAITool].details?.map((detail, index) => (
-                        <div key={index} className="flex items-start gap-3">
-                          <div
-                            className="w-2 h-2 rounded-full mt-2 flex-shrink-0"
-                            style={{ backgroundColor: theme.palette.primary.main }}
-                          ></div>
-                          <span
-                            className="text-sm leading-relaxed"
-                            style={{ color: theme.palette.text.secondary }}
-                          >
-                            {detail}
-                          </span>
-                        </div>
-                      ))}
+                    <div className="flex-1">
+                      <h3
+                        className="text-xl font-bold mb-1"
+                        style={{ 
+                          color: activeAITool === index 
+                            ? theme.palette.primary.main 
+                            : theme.palette.text.primary 
+                        }}
+                      >
+                        {tool.title}
+                      </h3>
+                      <p
+                        className="text-sm"
+                        style={{ color: theme.palette.text.secondary }}
+                      >
+                        {tool.description}
+                      </p>
                     </div>
-                  </div>
-                ) : (
-                  <div key="default-content" className="transition-opacity duration-300 text-center">
-                    <div className="mb-4 flex items-center justify-center">
-                      <Image
-                        src="https://cdn.fchat.vn/assets/img/chat.9a86eb64.svg"
-                        alt="AI Technology"
-                        width={64}
-                        height={64}
-                        style={{ filter: 'drop-shadow(0 2px 8px #003A6A40)' }}
+                    <div className="text-2xl">
+                      <ArrowForwardIcon 
+                        className={`transition-transform duration-300 ${
+                          activeAITool === index ? 'rotate-90' : ''
+                        }`}
+                        style={{ 
+                          color: activeAITool === index 
+                            ? theme.palette.primary.main 
+                            : theme.palette.text.secondary 
+                        }}
                       />
                     </div>
-                    <h3
-                      className="text-2xl font-bold mb-4"
-                      style={{ color: theme.palette.primary.main }}
-                    >
-                      Công Nghệ AI
-                    </h3>
-                    <p 
-                      className="text-base leading-relaxed"
-                      style={{ color: theme.palette.text.secondary }}
-                    >
-                      Click vào các nút số để xem chi tiết từng công nghệ AI được sử dụng trong bước 4 của quy trình thiết kế.
-                    </p>
                   </div>
-                )}
-              </div>
+                </div>
+              ))}
+            </div>
 
-              {/* Navigation Controls - Moved here */}
-              <div className="flex items-center justify-center gap-4 mt-6">
-                <button
-                  className="rounded-full border px-4 py-3 transition-all duration-300 hover:scale-105"
-                  style={{
-                    borderColor: theme.palette.divider,
-                    color: theme.palette.text.primary,
-                    backgroundColor: theme.palette.background.paper
-                  }}
-                  onClick={() => {
-                    if (activeAITool === null) {
-                      setActiveAITool(aiTools.filter(tool => !tool.isCenter).length - 1)
-                    } else if (activeAITool > 0) {
-                      setActiveAITool(activeAITool - 1)
-                    } else {
-                      setActiveAITool(null)
-                    }
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = theme.palette.primary.main;
-                    e.currentTarget.style.color = theme.palette.primary.main;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = theme.palette.divider;
-                    e.currentTarget.style.color = theme.palette.text.primary;
-                  }}
-                >
-                  ← Trước
-                </button>
+            {/* Navigation Controls - Centered between two sections */}
+            <div className="lg:hidden flex items-center justify-center gap-4 py-6">
+              <button
+                className="rounded-full border px-6 py-3 transition-all duration-300 hover:scale-105 font-medium"
+                style={{
+                  borderColor: theme.palette.divider,
+                  color: theme.palette.text.primary,
+                  backgroundColor: theme.palette.background.paper
+                }}
+                onClick={() => {
+                  if (activeAITool === null || activeAITool === 0) {
+                    setActiveAITool(aiTools.filter(tool => !tool.isCenter).length - 1)
+                  } else {
+                    setActiveAITool(activeAITool - 1)
+                  }
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = theme.palette.primary.main;
+                  e.currentTarget.style.color = theme.palette.primary.main;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = theme.palette.divider;
+                  e.currentTarget.style.color = theme.palette.text.primary;
+                }}
+              >
+                ← Trước
+              </button>
 
-                {/* Dot indicators */}
-                <div className="flex gap-2">
+              {/* Progress Indicators */}
+              <div className="flex gap-2">
+                {aiTools.filter(tool => !tool.isCenter).map((_, index) => (
                   <button
-                    onClick={() => setActiveAITool(null)}
-                    className="w-3 h-3 rounded-full transition-all duration-300"
+                    key={index}
+                    onClick={() => setActiveAITool(index)}
+                    className="transition-all duration-300"
                     style={{
-                      backgroundColor: activeAITool === null ? theme.palette.primary.main : theme.palette.divider,
-                      width: activeAITool === null ? '32px' : '12px'
+                      width: activeAITool === index ? '32px' : '12px',
+                      height: '12px',
+                      borderRadius: '6px',
+                      backgroundColor: activeAITool === index 
+                        ? theme.palette.primary.main 
+                        : theme.palette.divider
                     }}
                   />
-                  
-                  {aiTools.filter(tool => !tool.isCenter).map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setActiveAITool(index)}
-                      className="w-3 h-3 rounded-full transition-all duration-300"
-                      style={{
-                        backgroundColor: activeAITool === index ? theme.palette.primary.main : theme.palette.divider,
-                        width: activeAITool === index ? '32px' : '12px'
-                      }}
-                    />
-                  ))}
-                </div>
+                ))}
+              </div>
 
-                <button
-                  className="rounded-full border px-4 py-3 transition-all duration-300 hover:scale-105"
-                  style={{
-                    borderColor: theme.palette.divider,
-                    color: theme.palette.text.primary,
-                    backgroundColor: theme.palette.background.paper
-                  }}
-                  onClick={() => {
-                    if (activeAITool === null) {
-                      setActiveAITool(0)
-                    } else if (activeAITool < aiTools.filter(tool => !tool.isCenter).length - 1) {
-                      setActiveAITool(activeAITool + 1)
-                    } else {
-                      setActiveAITool(null)
-                    }
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = theme.palette.primary.main;
-                    e.currentTarget.style.color = theme.palette.primary.main;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = theme.palette.divider;
-                    e.currentTarget.style.color = theme.palette.text.primary;
+              <button
+                className="rounded-full border px-6 py-3 transition-all duration-300 hover:scale-105 font-medium"
+                style={{
+                  borderColor: theme.palette.divider,
+                  color: theme.palette.text.primary,
+                  backgroundColor: theme.palette.background.paper
+                }}
+                onClick={() => {
+                  if (activeAITool === null || activeAITool === aiTools.filter(tool => !tool.isCenter).length - 1) {
+                    setActiveAITool(0)
+                  } else {
+                    setActiveAITool(activeAITool + 1)
+                  }
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = theme.palette.primary.main;
+                  e.currentTarget.style.color = theme.palette.primary.main;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = theme.palette.divider;
+                  e.currentTarget.style.color = theme.palette.text.primary;
+                }}
+              >
+                Tiếp →
+              </button>
+            </div>
+
+            {/* Right side - Content Display */}
+            <div className="lg:sticky lg:top-8 slide-in-right min-h-[600px]">
+              <Box
+                sx={{
+                  borderRadius: '1rem',
+                  boxShadow: 3,
+                  border: 1,
+                  borderColor: 'divider',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  height: '600px',
+                  backgroundColor: 'background.paper',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  backgroundImage: activeAITool !== null && aiTools.filter(tool => !tool.isCenter)[activeAITool] 
+                    ? `url(${aiTools.filter(tool => !tool.isCenter)[activeAITool].image})`
+                    : 'url(/design-consulting/ai.jpg)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  transition: 'background-image 0.3s ease-in-out',
+                  '&::before': {
+                    content: '""',
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: 'rgba(10, 24, 61, 0.85)',
+                    zIndex: 1
+                  }
+                }}
+              >
+                <Box 
+                  sx={{
+                    position: 'relative',
+                    zIndex: 10,
+                    p: 3,
+                    flex: 1,
+                    overflow: 'hidden',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '100%'
                   }}
                 >
-                  Tiếp →
-                </button>
-              </div>
+                  {activeAITool !== null && aiTools.filter(tool => !tool.isCenter)[activeAITool] ? (
+                    <div key={`ai-tool-${activeAITool}`} className="transition-opacity duration-300 flex flex-col h-full">
+                      {/* Header - Fixed */}
+                      <div className="text-center mb-4 flex-shrink-0">
+                        <Box
+                          sx={{
+                            width: 56,
+                            height: 56,
+                            borderRadius: '50%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            color: 'white',
+                            fontWeight: 'bold',
+                            fontSize: '1.25rem',
+                            mb: 1.5,
+                            mx: 'auto',
+                            backgroundColor: 'secondary.light'
+                          }}
+                        >
+                          {activeAITool + 1}
+                        </Box>
+                        
+                        <Typography
+                          variant="h4"
+                          sx={{
+                            fontWeight: 'bold',
+                            mb: 1.5,
+                            color: 'white'
+                          }}
+                        >
+                          {aiTools.filter(tool => !tool.isCenter)[activeAITool].title}
+                        </Typography>
+                        
+                        <Typography 
+                          variant="body1"
+                          sx={{ color: 'white' }}
+                        >
+                          {aiTools.filter(tool => !tool.isCenter)[activeAITool].description}
+                        </Typography>
+                      </div>
 
-              {/* Progress Information */}
-              <div className="text-center mt-4">
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <div
-                    className="w-2 h-2 rounded-full animate-pulse"
-                    style={{ backgroundColor: theme.palette.primary.main }}
-                  ></div>
-                  <span className="text-sm font-medium text-gray-600">
-                    {activeAITool === null ? 'AI Technology Hub' : `AI Tool ${activeAITool + 1}/5`}
-                  </span>
-                </div>
-                {activeAITool !== null && (
-                  <div className="w-48 mx-auto bg-gray-200 rounded-full h-2">
-                    <div
-                      className="h-2 rounded-full transition-all duration-500"
-                      style={{
-                        backgroundColor: theme.palette.primary.main,
-                        width: `${((activeAITool + 1) / aiTools.filter(tool => !tool.isCenter).length) * 100}%`
+                      {/* Chi tiết title - Fixed */}
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          fontWeight: 'semibold',
+                          mb: 1.5,
+                          color: 'white',
+                          flexShrink: 0
+                        }}
+                      >
+                        Chi tiết:
+                      </Typography>
+
+                      {/* Content - Scrollable */}
+                      <Box 
+                        sx={{
+                          flex: 1,
+                          overflowY: 'auto',
+                          pr: 1,
+                          scrollbarWidth: 'none',
+                          msOverflowStyle: 'none',
+                          '&::-webkit-scrollbar': {
+                            display: 'none'
+                          }
+                        }}
+                      >
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                          {aiTools.filter(tool => !tool.isCenter)[activeAITool].details?.map((detail, index) => (
+                            <Box 
+                              key={index} 
+                              sx={{
+                                display: 'flex',
+                                alignItems: 'flex-start',
+                                gap: 1.5,
+                                p: 1.5,
+                                borderRadius: 1
+                              }}
+                            >
+                              <Box
+                                sx={{
+                                  width: 8,
+                                  height: 8,
+                                  borderRadius: '50%',
+                                  mt: 1,
+                                  flexShrink: 0,
+                                  backgroundColor: 'secondary.light'
+                                }}
+                              />
+                              <Typography
+                                variant="body2"
+                                sx={{
+                                  lineHeight: 1.6,
+                                  color: 'white'
+                                }}
+                              >
+                                {detail}
+                              </Typography>
+                            </Box>
+                          ))}
+                        </Box>
+                      </Box>
+                    </div>
+                  ) : (
+                    <Box 
+                      key="default-content" 
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        textAlign: 'center',
+                        height: '100%'
                       }}
-                    ></div>
-                  </div>
-                )}
-              </div>
+                    >
+                      <Box sx={{ mb: 1 }}>
+                        <Image
+                          src="/design-consulting/chatgpt.png"
+                          alt="AI Technology"
+                          width={80}
+                          height={80}
+                          style={{ filter: 'drop-shadow(0 4px 12px rgba(0,58,106,0.3))' }}
+                        />
+                      </Box>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          fontWeight: 'bold',
+                          mb: 3,
+                          color: 'white',
+                        }}
+                      >
+                        Công Nghệ AI
+                      </Typography>
+                      <Typography 
+                        variant="body1"
+                        sx={{
+                          lineHeight: 1.6,
+                          maxWidth: '400px',
+                          mx: 'auto',
+                          color: 'white',
+                        }}
+                      >
+                        Chọn một mục bên trái để xem chi tiết từng công nghệ AI được sử dụng trong bước 4 của quy trình thiết kế.
+                      </Typography>
+                    </Box>
+                  )}
+                </Box>
+              </Box>
             </div>
+          </div>
+
+          {/* Navigation Controls - Responsive */}
+          <div className="flex items-center fade-in-up justify-center gap-4 mt-6">
+            <button
+              className="rounded-full border px-4 md:px-6 py-2 md:py-3 transition-all duration-300 hover:scale-105 font-medium text-sm md:text-base"
+              style={{
+                borderColor: theme.palette.divider,
+                color: theme.palette.text.primary,
+                backgroundColor: theme.palette.background.paper
+              }}
+              onClick={() => {
+                if (activeAITool === null || activeAITool === 0) {
+                  setActiveAITool(aiTools.filter(tool => !tool.isCenter).length - 1)
+                } else {
+                  setActiveAITool(activeAITool - 1)
+                }
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = theme.palette.primary.main;
+                e.currentTarget.style.color = theme.palette.primary.main;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = theme.palette.divider;
+                e.currentTarget.style.color = theme.palette.text.primary;
+              }}
+            >
+              <span className="hidden sm:inline">← Trước</span>
+              <span className="sm:hidden">←</span>
+            </button>
+
+            {/* Progress Indicators */}
+            <div className="flex gap-1 md:gap-2">
+              {aiTools.filter(tool => !tool.isCenter).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setActiveAITool(index)}
+                  className="transition-all duration-300"
+                  style={{
+                    width: activeAITool === index ? '24px' : '8px',
+                    height: '8px',
+                    borderRadius: '4px',
+                    backgroundColor: activeAITool === index 
+                      ? theme.palette.primary.main 
+                      : theme.palette.divider
+                  }}
+                />
+              ))}
+            </div>
+
+            <button
+              className="rounded-full border px-4 md:px-6 py-2 md:py-3 transition-all duration-300 hover:scale-105 font-medium text-sm md:text-base"
+              style={{
+                borderColor: theme.palette.divider,
+                color: theme.palette.text.primary,
+                backgroundColor: theme.palette.background.paper
+              }}
+              onClick={() => {
+                if (activeAITool === null || activeAITool === aiTools.filter(tool => !tool.isCenter).length - 1) {
+                  setActiveAITool(0)
+                } else {
+                  setActiveAITool(activeAITool + 1)
+                }
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = theme.palette.primary.main;
+                e.currentTarget.style.color = theme.palette.primary.main;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = theme.palette.divider;
+                e.currentTarget.style.color = theme.palette.text.primary;
+              }}
+            >
+              <span className="hidden sm:inline">Tiếp →</span>
+              <span className="sm:hidden">→</span>
+            </button>
+          </div>
+
+          {/* Progress Information */}
+          <div className="text-center fade-in-up mt-4">
+            <span 
+              className="text-sm font-medium"
+              style={{ color: theme.palette.text.secondary }}
+            >
+              {activeAITool === null 
+                ? 'Chọn một mục để xem chi tiết' 
+                : `${activeAITool + 1} / ${aiTools.filter(tool => !tool.isCenter).length}`
+              }
+            </span>
           </div>
         </div>
       </section>

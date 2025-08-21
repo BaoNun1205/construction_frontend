@@ -31,13 +31,15 @@ import ReactCountryFlag from "react-country-flag"
 export default function Header() {
   const theme = useTheme()
   const pathname = usePathname()
-  const isHomePage = pathname === '/' || pathname === '/services/design-consulting'
+  const homePagePaths = ['/', '/services/design-consulting', '/about']
+  const isHomePage = homePagePaths.includes(pathname)
   const { locale, setLocale } = useLocale()
   const { t } = useTranslations()
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null)
   const [anchorElServices, setAnchorElServices] = useState<null | HTMLElement>(null)
   const [anchorElProjects, setAnchorElProjects] = useState<null | HTMLElement>(null)
   const [scrolled, setScrolled] = useState(false)
+  const [isReady, setIsReady] = useState(false)
 
   // Services data as requested
   const services = [
@@ -84,6 +86,10 @@ export default function Header() {
       const isScrolled = window.scrollY > 20
       setScrolled(isScrolled)
     }
+
+    // Check scroll position on mount and set component as ready
+    handleScroll()
+    setIsReady(true)
 
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
@@ -136,6 +142,7 @@ export default function Header() {
         boxShadow: (scrolled || !isHomePage) ? `0 8px 32px ${theme.palette.primary.main}30` : "none",
         borderRadius: 0,
         top: 0,
+        transform: isReady ? 'translateY(0)' : 'translateY(-100%)',
         // transition: "all 0.3s ease-in-out",
         zIndex: 1100,
       }}
