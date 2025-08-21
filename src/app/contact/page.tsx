@@ -180,7 +180,7 @@ export default function ContactPage() {
                 </h3>
                 <div className="h-64 rounded-lg overflow-hidden scale-in">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125405.84815998306!2d106.36831!3d10.8411654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752bee0b0ef9e5%3A0x5b4da59e47aa97a8!2zVsSpbmggTOG7mWMsIELDrG5oIENoYW5oLCBUaMOgbmggcGjhu5EgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1703123456789!5m2!1svi!2s"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.930734343721!2d106.59657268382686!3d10.816612761834651!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752b000c32be51%3A0x9a1fd70ab25f4d6a!2zVHLhuqFtIFRodSBwaMOtIE5nw6MgdMawIEfDsiBNw6J5!5e0!3m2!1svi!2s!4v1755701915303!5m2!1svi!2s"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}

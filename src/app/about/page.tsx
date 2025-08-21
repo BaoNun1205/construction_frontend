@@ -75,6 +75,145 @@ export default function AboutPage() {
 
   return (
     <Box className="min-h-screen bg-gradient-to-br from-cyan-50 to-amber-50">
+      {/* Business Information Section */}
+      <section>
+        <Box
+          sx={{
+            color: 'white',
+            pt: { xs: 12, md: 20 },
+            pb: { xs: 8, md: 12 },
+            position: 'relative',
+            overflow: 'hidden',
+            backgroundImage: 'url(/banner/banner_home4.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            '&::before': {
+              content: '""',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: 'rgba(10, 24, 61, 0.95)',
+              zIndex: 1,
+              borderRadius: '24px'
+            }
+          }}
+        >
+          <Container maxWidth="lg">
+            <div className="relative z-10 text-white fade-in-on-scroll">
+              <Typography
+                variant="h2"
+                className="text-3xl md:text-4xl font-bold text-center mb-12"
+                sx={{ color: 'white', marginBottom: '3rem' }}
+              >
+                Thông tin công ty
+              </Typography>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {/* Lĩnh vực hoạt động */}
+                <div className="bg-white/10 rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300">
+                  <div className="flex items-center mb-4">
+                    <Architecture className="mr-3 text-cyan-400" sx={{ fontSize: 40 }} />
+                    <Typography variant="h5" className="font-bold text-white">
+                      Lĩnh vực hoạt động
+                    </Typography>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <Typography variant="h6" className="font-semibold text-cyan-300 mb-2">
+                        Thiết kế:
+                      </Typography>
+                      <Typography variant="body2" className="text-white leading-relaxed">
+                        Nhà phố, nhà xưởng, tiểu cảnh sân vườn...
+                      </Typography>
+                    </div>
+                    
+                    <div>
+                      <Typography variant="h6" className="font-semibold text-cyan-300 mb-2">
+                        Thi công:
+                      </Typography>
+                      <ul className="text-white text-sm space-y-1">
+                        <li>• Kết cấu BTCT, kết cấu thép</li>
+                        <li>• Hoàn thiện xây tô, ốp lát, chống thấm, sơn nước, trần thạch cao</li>
+                        <li>• Hệ thống M&E</li>
+                        <li>• Nội thất</li>
+                        <li>• Hạ tầng kỹ thuật</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Định hướng & mục tiêu */}
+                <div className="bg-white/10 rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300">
+                  <div className="flex items-center mb-4">
+                    <EmojiEvents className="mr-3 text-amber-400" sx={{ fontSize: 40 }} />
+                    <Typography variant="h5" className="font-bold text-white">
+                      Định hướng & Mục tiêu
+                    </Typography>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <div className="flex items-start">
+                      <div className="w-2 h-2 bg-amber-400 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                      <Typography variant="body2" className="text-white leading-relaxed">
+                        Triển khai giải pháp thiết kế & thi công trọn gói cho nhiều loại công trình (nhà phố, nhà xưởng, cải tạo, sửa chữa, hạ tầng kỹ thuật).
+                      </Typography>
+                    </div>
+                    
+                    <div className="flex items-start">
+                      <div className="w-2 h-2 bg-amber-400 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                      <Typography variant="body2" className="text-white leading-relaxed">
+                        Không ngừng học hỏi, sáng tạo, phát triển nguồn nhân lực và kỹ thuật thi công.
+                      </Typography>
+                    </div>
+                    
+                    <div className="flex items-start">
+                      <div className="w-2 h-2 bg-amber-400 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                      <Typography variant="body2" className="text-white leading-relaxed">
+                        Nâng cao chất lượng, giá cả, dịch vụ, an toàn lao động, bảo vệ môi trường.
+                      </Typography>
+                    </div>
+                    
+                    <div className="mt-4 p-3 bg-amber-500/20 rounded-lg border border-amber-400/30">
+                      <Typography variant="body2" className="text-amber-200 font-semibold">
+                        Mục tiêu: Trở thành công ty uy tín, cạnh tranh trong nước và mở rộng ra thị trường quốc tế.
+                      </Typography>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Cam kết */}
+                <div className="bg-white/10 rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 md:col-span-2 lg:col-span-1">
+                  <div className="flex items-center mb-4">
+                    <Handshake className="mr-3 text-green-400" sx={{ fontSize: 40 }} />
+                    <Typography variant="h5" className="font-bold text-white">
+                      Cam kết
+                    </Typography>
+                  </div>
+                  
+                  <div className="text-center">
+                    <div className="mb-4">
+                      <VerifiedUser className="text-green-400 mb-2" sx={{ fontSize: 60 }} />
+                    </div>
+                    <Typography variant="body1" className="text-white leading-relaxed font-medium">
+                      Đặt niềm tin và sự tín nhiệm của khách hàng làm trọng tâm.
+                    </Typography>
+                    
+                    <div className="mt-4 p-3 bg-green-500/20 rounded-lg border border-green-400/30">
+                      <Typography variant="body2" className="text-green-200 font-semibold">
+                        Chất lượng • Uy tín • Chuyên nghiệp
+                      </Typography>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Container>
+        </Box>
+      </section>
       <Container maxWidth="lg" className="py-16 space-y-20">
         {/* Mission, Vision, Values */}
         <section className="fade-in-on-scroll">
@@ -258,8 +397,8 @@ export default function AboutPage() {
         </section>
 
         {/* Certifications & Credentials */}
-        <section className="fade-in-on-scroll">
-          <div className="text-center mb-16">
+        <section>
+          <div className="text-center mb-16 fade-in-on-scroll">
             <Typography
               variant="h2"
               className="text-3xl md:text-4xl font-bold text-gray-800 mb-6"
@@ -269,7 +408,7 @@ export default function AboutPage() {
           </div>
 
           <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-2'}`}>
-            <div className={`${isMobile ? 'hidden' : ''}`}>
+            <div className={`${isMobile ? 'hidden' : ''} slide-in-left-on-scroll`}>
               <Card className="transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.02] group h-full">
                 <div className="p-8 h-full flex flex-col">
                   <div className="flex items-center gap-4 mb-6">
@@ -410,7 +549,7 @@ export default function AboutPage() {
               </Card>
             </div>
 
-            <div className={`${isMobile ? 'col-span-1' : ''}`}>
+            <div className={`${isMobile ? 'col-span-1' : ''} slide-in-right-on-scroll`}>
               <Card className={`transition-all duration-500 ease-in-out hover:shadow-2xl hover:-translate-y-2 group overflow-visible h-full w-full`}>
                 <div className="p-6 h-full flex flex-col justify-center">
                   <div className="relative flex-1 flex items-center justify-center group/image">
