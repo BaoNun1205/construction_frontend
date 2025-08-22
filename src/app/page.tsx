@@ -849,7 +849,7 @@ export default function Home() {
                       {/* Hover View Button */}
                       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <Link
-                          href="/project/detail"
+                          href="/projects/detail"
                           className="bg-white/20 backdrop-blur-sm border-2 border-white text-white px-6 py-2 rounded-full font-semibold hover:bg-white hover:text-gray-800 transition-all duration-300"
                         >
                           {t('home.projects.viewDetail')}
