@@ -13,47 +13,51 @@ import {
   People,
   EmojiEvents,
   PlayArrow,
+  Schedule,
 } from "@mui/icons-material"
 import { Typography } from "@mui/material"
 
-export default function FertilizerPlantDetailPage() {
+export default function ThaiBinhDuongFactoryDetailPage() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
   const [visibleElements, setVisibleElements] = useState<Set<string>>(new Set())
 
   const projectData = {
-    name: "Thi công phần móng + hạ tầng mái che Nhà Máy Đạm – Cà Mau",
-    workingAreas: ["Móng + Hạ Tầng Thoát nước mưa, nước thải"],
-    startDate: "15/04/2024",
-    endDate: "11/2024",
-    duration: "7 tháng",
-    status: "Hoàn thành",
+    name: "Nhà máy Thái Bình Dương – KCN Xuyên Á, Mỹ Hạnh Bắc, Đức Hòa, Long An",
+    workingAreas: [
+      "Thi công nhà xưởng, hạ tầng, công trình phụ trợ",
+      "Thi công bể tổng cốt thép (móng, dầm, sàn, cột, tường, cầu thang)",
+      "Thi công xây tô, chống thấm, hoàn thiện kiến trúc",
+      "Thi công hệ thống điện, nước, PCCC",
+      "Thi công nhà xưởng, văn phòng, hạ tầng kỹ thuật",
+      "Phối cảnh tổng thể, các hạng mục kiến trúc"
+    ],
+    startDate: "25/07/2025",
+    endDate: "Chưa cập nhật",
+    duration: "Đang triển khai",
+    status: "Đang triển khai",
     description:
-      "Dự án thi công phần móng và hạ tầng mái che cho Nhà Máy Đạm tại Cà Mau. Công trình bao gồm thi công lắp sàn dao móng dưới nước, cốt pha, cốt thép, bê tông móng + đâm móng và hoàn thiện hệ thống hạ tầng thoát nước mưa, nước thải đảm bảo tiêu chuẩn kỹ thuật cao.",
+      "Dự án thi công nhà máy Thái Bình Dương tại KCN Xuyên Á, Mỹ Hạnh Bắc, Đức Hòa, Long An. Công trình bao gồm thi công toàn bộ hạ tầng, nhà xưởng sản xuất, văn phòng và các hệ thống kỹ thuật hiện đại đảm bảo tiêu chuẩn công nghiệp.",
     images: [
-      "/products/nha-may-dam-ca-mau.jpg",
-      "/products/nha-may-dam-ca-mau2.jpg",
-      "/products/nha-may-dam-ca-mau3.jpg",
-      "/products/nha-may-dam-ca-mau4.jpg",
-      "/products/nha-may-dam-ca-mau5.jpg",
-      "/products/nha-may-dam-ca-mau6.jpg",
-      "/products/nha-may-dam-ca-mau7.mp4",
-      "/products/nha-may-dam-ca-mau8.mp4"
+      "/products/thai-binh-duong-factory.jpg",
+      "/products/thai-binh-duong-factory2.jpg",
+      "/products/thai-binh-duong-factory3.jpg",
+      "/products/thai-binh-duong-factory4.jpg",
+      "/products/thai-binh-duong-factory5.jpg",
     ],
     workDetails: [
-      "Thi công lắp sàn dao móng dưới nước với công nghệ chuyên dụng, đảm bảo độ ổn định.",
-      "Thi công cốt pha, cốt thép theo bản vẽ thiết kế với độ chính xác cao.",
-      "Bê tông móng + đâm móng đảm bảo sức chịu tải theo yêu cầu kỹ thuật.",
-      "Thi công hệ thống hạ tầng thoát nước mưa hiện đại, công suất lớn.",
-      "Hoàn thiện hệ thống thoát nước thải đạt tiêu chuẩn môi trường.",
-      "Thi công đồ sika đầu cốt thép chống ăn mòn và oxy hóa.",
-      "Kiểm tra chất lượng và nghiệm thu hoàn thiện phần thô và phần hoàn thiện.",
+      "Thi công bể tổng cốt thép (móng, dầm, sàn, cột, tường, cầu thang) đảm bảo độ bền và chịu lực cao.",
+      "Thi công xây tô, chống thấm, hoàn thiện kiến trúc theo tiêu chuẩn nhà máy hiện đại.",
+      "Thi công hệ thống điện, nước, PCCC đảm bảo an toàn và tuân thủ quy định PCCC công nghiệp.",
+      "Thi công nhà xưởng sản xuất với không gian rộng rãi, thông thoáng.",
+      "Thi công văn phòng, hạ tầng kỹ thuật phục vụ hoạt động sản xuất.",
+      "Phối cảnh tổng thể và hoàn thiện các hạng mục kiến trúc theo thiết kế."
     ],
     details: {
       contractor: "Công ty Cổ Phần Tư Vấn và Xây Dựng Lai Phát",
-      totalArea: "8,000 m²",
-      foundationType: "Móng cọc khoan nhồi",
+      totalArea: "15,000 m²",
+      location: "KCN Xuyên Á, Mỹ Hạnh Bắc, Đức Hòa, Long An",
       projectType: "Nhà máy công nghiệp",
-      location: "Cà Mau",
+      scale: "Quy mô lớn",
     },
   }
 
@@ -78,8 +82,8 @@ export default function FertilizerPlantDetailPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-green-50 via-background to-teal-50 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/products/nha-may-dam-ca-mau.jpg')] bg-cover bg-center opacity-5"></div>
+      <div className="relative bg-gradient-to-br from-orange-50 via-background to-amber-50 overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/products/nha-may-thai-binh-duong.jpg')] bg-cover bg-center opacity-5"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
           <div
             id="hero"
@@ -87,9 +91,9 @@ export default function FertilizerPlantDetailPage() {
             className={`transition-all duration-1000 ${visibleElements.has("hero") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
           >
             <div className="text-center mb-12">
-              <div className="inline-flex items-center px-4 py-2 bg-green-100 rounded-full mb-6">
-                <CheckCircle className="w-5 h-5 text-green-600 mr-2" />
-                <Typography variant="body2" className="text-green-700 font-semibold">
+              <div className="inline-flex items-center px-4 py-2 bg-orange-100 rounded-full mb-6">
+                <Schedule className="w-5 h-5 text-orange-600 mr-2" />
+                <Typography variant="body2" className="text-orange-700 font-semibold">
                   {projectData.status}
                 </Typography>
               </div>
@@ -118,8 +122,8 @@ export default function FertilizerPlantDetailPage() {
                 className={`bg-white/80 backdrop-blur-sm border border-gray-200 rounded-3xl p-8 transition-all duration-700 delay-200 hover:shadow-xl hover:scale-[1.02] ${visibleElements.has("hero") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
               >
                 <div className="flex items-center mb-6">
-                  <div className="p-4 bg-green-100 rounded-2xl mr-4">
-                    <LocationOn className="w-7 h-7 text-green-600" />
+                  <div className="p-4 bg-orange-100 rounded-2xl mr-4">
+                    <LocationOn className="w-7 h-7 text-orange-600" />
                   </div>
                   <Typography variant="h3" className="font-serif text-xl font-bold text-gray-900">
                     Phạm vi thi công
@@ -129,9 +133,9 @@ export default function FertilizerPlantDetailPage() {
                   {projectData.workingAreas.map((area, index) => (
                     <div
                       key={index}
-                      className="flex items-center p-4 bg-gray-50 rounded-xl border border-gray-100 hover:bg-green-50 hover:border-green-200 transition-all duration-300 group"
+                      className="flex items-center p-4 bg-gray-50 rounded-xl border border-gray-100 hover:bg-orange-50 hover:border-orange-200 transition-all duration-300 group"
                     >
-                      <div className="w-3 h-3 bg-green-500 rounded-full mr-3 group-hover:bg-green-600 transition-colors"></div>
+                      <div className="w-3 h-3 bg-orange-500 rounded-full mr-3 group-hover:bg-orange-600 transition-colors"></div>
                       <Typography variant="body2" className="text-gray-700 font-medium text-sm leading-tight">
                         {area}
                       </Typography>
@@ -147,17 +151,17 @@ export default function FertilizerPlantDetailPage() {
                 {/* Time Section */}
                 <div className="mb-8">
                   <div className="flex items-center mb-4">
-                    <div className="p-4 bg-teal-100 rounded-2xl mr-4">
-                      <CalendarToday className="w-7 h-7 text-teal-600" />
+                    <div className="p-4 bg-amber-100 rounded-2xl mr-4">
+                      <CalendarToday className="w-7 h-7 text-amber-600" />
                     </div>
                     <Typography variant="h3" className="font-serif text-xl font-bold text-gray-900">
                       Thời gian thực hiện
                     </Typography>
                   </div>
-                  <div className="bg-gradient-to-r from-teal-50 to-green-50 rounded-2xl p-6 border border-teal-100">
+                  <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-100">
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center">
-                        <div className="w-3 h-3 bg-teal-500 rounded-full mr-3"></div>
+                        <div className="w-3 h-3 bg-amber-500 rounded-full mr-3"></div>
                         <Typography variant="body2" className="text-gray-600 font-medium">
                           Bắt đầu
                         </Typography>
@@ -168,7 +172,7 @@ export default function FertilizerPlantDetailPage() {
                     </div>
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center">
-                        <div className="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+                        <div className="w-3 h-3 bg-orange-500 rounded-full mr-3"></div>
                         <Typography variant="body2" className="text-gray-600 font-medium">
                           Kết thúc
                         </Typography>
@@ -185,7 +189,7 @@ export default function FertilizerPlantDetailPage() {
                             Thời gian
                           </Typography>
                         </div>
-                        <Typography variant="body1" className="text-green-600 font-bold text-lg">
+                        <Typography variant="body1" className="text-orange-600 font-bold text-lg">
                           {projectData.duration}
                         </Typography>
                       </div>
@@ -196,21 +200,21 @@ export default function FertilizerPlantDetailPage() {
                 {/* Contractor Section */}
                 <div>
                   <div className="flex items-center mb-4">
-                    <div className="p-4 bg-purple-100 rounded-2xl mr-4">
-                      <People className="w-7 h-7 text-purple-600" />
+                    <div className="p-4 bg-blue-100 rounded-2xl mr-4">
+                      <People className="w-7 h-7 text-blue-600" />
                     </div>
                     <Typography variant="h3" className="font-serif text-xl font-bold text-gray-900">
                       Nhà thầu
                     </Typography>
                   </div>
-                  <div className="bg-purple-50 rounded-2xl p-6 border border-purple-100">
+                  <div className="bg-blue-50 rounded-2xl p-6 border border-blue-100">
                     <Typography variant="body1" className="text-gray-800 font-semibold text-lg">
                       {projectData.details.contractor}
                     </Typography>
                     <div className="flex items-center mt-3 text-gray-600">
                       <EmojiEvents className="w-4 h-4 mr-2" />
                       <Typography variant="body2" className="text-sm">
-                        Chuyên gia về công trình công nghiệp và móng đặc biệt
+                        Chuyên gia về công trình công nghiệp
                       </Typography>
                     </div>
                   </div>
@@ -229,9 +233,9 @@ export default function FertilizerPlantDetailPage() {
           className={`mb-16 transition-all duration-1000 delay-500 ${visibleElements.has("gallery") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
           <div className="text-center mb-12">
-            <div className="inline-flex items-center px-4 py-2 bg-green-100 rounded-full mb-4">
-              <CameraAlt className="w-5 h-5 text-green-600 mr-2" />
-              <Typography variant="body2" className="text-green-700 font-semibold">
+            <div className="inline-flex items-center px-4 py-2 bg-orange-100 rounded-full mb-4">
+              <CameraAlt className="w-5 h-5 text-orange-600 mr-2" />
+              <Typography variant="body2" className="text-orange-700 font-semibold">
                 Gallery
               </Typography>
             </div>
@@ -240,19 +244,19 @@ export default function FertilizerPlantDetailPage() {
               className="font-serif text-3xl lg:text-4xl font-bold text-foreground"
               sx={{ mb: 1 }}
             >
-              Hình ảnh và Video dự án
+              Hình ảnh dự án
             </Typography>
             <Typography
               variant="body1"
               className="text-muted-foreground text-lg"
             >
-              Khám phá quá trình thi công móng và hạ tầng nhà máy công nghiệp ({projectData.images.filter(item => !item.match(/\.(mp4|webm|mov)$/i)).length} ảnh, {projectData.images.filter(item => item.match(/\.(mp4|webm|mov)$/i)).length} video)
+              Theo dõi quá trình thi công nhà máy công nghiệp hiện đại
             </Typography>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {projectData.images.map((image, index) => {
-              const isVideo = image.match(/\.(mp4|webm|mov)$/i)
+              const isVideo = image.endsWith('.mp4') || image.endsWith('.webm') || image.endsWith('.mov')
               
               return (
                 <div
@@ -289,7 +293,7 @@ export default function FertilizerPlantDetailPage() {
                   {isVideo && (
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-lg group-hover:bg-white group-hover:scale-110 transition-all duration-300">
-                        <PlayArrow className="w-8 h-8 text-green-600 ml-1" />
+                        <PlayArrow className="w-8 h-8 text-orange-600 ml-1" />
                       </div>
                     </div>
                   )}
@@ -329,8 +333,8 @@ export default function FertilizerPlantDetailPage() {
                     key={index}
                     className="flex items-start p-6 bg-muted/30 rounded-2xl border border-border hover:shadow-md transition-all duration-300 group"
                   >
-                    <div className="p-2 bg-green-100 rounded-xl mr-4 group-hover:bg-green-200 transition-colors duration-300">
-                      <CheckCircle className="w-5 h-5 text-green-600" />
+                    <div className="p-2 bg-orange-100 rounded-xl mr-4 group-hover:bg-orange-200 transition-colors duration-300">
+                      <CheckCircle className="w-5 h-5 text-orange-600" />
                     </div>
                     <Typography variant="body1" className="text-muted-foreground leading-relaxed flex-1">
                       {detail}
@@ -348,7 +352,7 @@ export default function FertilizerPlantDetailPage() {
           data-animate
           className={`mt-16 text-center transition-all duration-1000 delay-700 ${visibleElements.has("cta") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
-          <div className="bg-gradient-to-r from-green-50 via-teal-50 to-green-50 rounded-3xl p-12 border border-gray-200">
+          <div className="bg-gradient-to-r from-orange-50 via-amber-50 to-orange-50 rounded-3xl p-12 border border-gray-200">
             <div className="flex flex-col items-center justify-center text-center">
               <Typography
                 variant="h3"
@@ -362,10 +366,10 @@ export default function FertilizerPlantDetailPage() {
                 className="text-muted-foreground text-lg max-w-2xl mx-auto"
                 sx={{ mb: 2 }}
               >
-                Liên hệ với chúng tôi để được tư vấn chi tiết về thi công công trình công nghiệp và nhận báo giá tốt nhất
+                Liên hệ với chúng tôi để được tư vấn chi tiết về thi công nhà máy công nghiệp và nhận báo giá tốt nhất
               </Typography>
             </div>
-            <button className="inline-flex items-center px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-serif font-semibold rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+            <button className="inline-flex items-center px-8 py-4 bg-orange-600 hover:bg-orange-700 text-white font-serif font-semibold rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
               <Typography variant="body1" className="font-semibold">
                 Yêu cầu thêm thông tin
               </Typography>
@@ -386,7 +390,7 @@ export default function FertilizerPlantDetailPage() {
               <Close className="w-6 h-6" />
             </button>
             <div className="relative w-full h-[70vh]">
-              {selectedImage.match(/\.(mp4|webm|mov)$/i) ? (
+              {selectedImage.endsWith('.mp4') || selectedImage.endsWith('.webm') || selectedImage.endsWith('.mov') ? (
                 <video
                   src={selectedImage}
                   className="w-full h-full object-contain rounded-2xl"

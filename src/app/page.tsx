@@ -173,6 +173,14 @@ export default function Home() {
 
   const projects = [
     {
+      title: 'Nhà máy Thái Bình Dương – KCN Xuyên Á, Mỹ Hạnh Bắc, Đức Hòa, Long An',
+      description: 'Thi công nhà xưởng, hạ tầng, công trình phụ trợ. Bể tổng cốt thép, hệ thống điện nước PCCC, hoàn thiện kiến trúc.',
+      image: '/products/thai-binh-duong-factory.jpg',
+      status: 'Đang triển khai',
+      area: '06/2025 - Theo ngày phát hành hồ sơ',
+      url: '/projects/thai-binh-duong-factory'
+    },
+    {
       title: 'Thi công trọn gói Hạ tầng kỹ thuật – Hauhua Bình Phước',
       description: 'Hoàn thiện hệ thống tưới thoát nước mưa và hoàn thiện hạng mục nền đường bê tông, đảm bảo hạ tầng đồng bộ và bền vững.',
       image: '/products/hauhua-binh-phuoc.jpg',
