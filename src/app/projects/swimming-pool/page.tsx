@@ -46,7 +46,7 @@ export default function SwimmingPoolDetailPage() {
       "Kiểm tra hệ thống và bàn giao kỹ thuật vận hành cho gia chủ.",
     ],
     details: {
-      contractor: "Công ty TNHH Xây Dựng Lai Phát",
+      contractor: "Công ty Cổ Phần Tư Vấn và Xây Dựng Lai Phát",
       totalArea: "60 m²",
       depth: "1.2m - 1.8m",
       poolType: "Bể bơi gia đình",

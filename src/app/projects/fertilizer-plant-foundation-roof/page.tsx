@@ -46,7 +46,7 @@ export default function FertilizerPlantDetailPage() {
       "Kiểm tra chất lượng và nghiệm thu hoàn thiện phần thô và phần hoàn thiện.",
     ],
     details: {
-      contractor: "Công ty TNHH Xây Dựng Lai Phát",
+      contractor: "Công ty Cổ Phần Tư Vấn và Xây Dựng Lai Phát",
       totalArea: "8,000 m²",
       foundationType: "Móng cọc khoan nhồi",
       projectType: "Nhà máy công nghiệp",
