@@ -23,8 +23,8 @@ export default function ShophouseDetailPage() {
     name: "Dự án Shophouse – Tân Trụ, Long An",
     workingAreas: ["Phần móng", "Phần thân", "Hoàn thiện ngoài nhà", "Hạ tầng kỹ thuật - sân vườn"],
     startDate: "05/01/2022",
-    endDate: "Hoàn thành",
-    duration: "Đã hoàn thành",
+    endDate: "10/02/2022",
+    duration: "36 ngày",
     status: "Hoàn thành",
     description:
       "Thi công 10 căn shophouse liền kề phần móng, phần thân, phần hoàn thiện ngoài nhà, phần hạ tầng kỹ thuật - sân vườn. Dự án tạo thành một khu phức hợp thương mại hiện đại và tiện nghi tại Long An.",
@@ -167,7 +167,7 @@ export default function ShophouseDetailPage() {
                       <div className="flex items-center">
                         <div className="w-3 h-3 bg-orange-500 rounded-full mr-3"></div>
                         <Typography variant="body2" className="text-gray-600 font-medium">
-                          Trạng thái
+                          Kết thúc
                         </Typography>
                       </div>
                       <Typography variant="body1" className="text-gray-900 font-bold text-lg">
@@ -177,9 +177,9 @@ export default function ShophouseDetailPage() {
                     <div className="border-t border-gray-200 pt-3 mt-3">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
-                          <CheckCircle className="w-4 h-4 text-gray-500 mr-2" />
+                          <AccessTime className="w-4 h-4 text-gray-500 mr-2" />
                           <Typography variant="body2" className="text-gray-600 font-medium">
-                            Tình trạng
+                            Thời gian
                           </Typography>
                         </div>
                         <Typography variant="body1" className="text-orange-600 font-bold text-lg">

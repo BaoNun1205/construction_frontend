@@ -201,7 +201,7 @@ export default function Home() {
       description: 'Thi công lắp sàn dao móng dưới nước, cốt pha, cốt thép, bê tông móng + đâm móng và hệ thống hạ tầng thoát nước mưa, nước thải.',
       image: '/products/nha-may-dam-ca-mau.jpg',
       status: 'Hoàn thành',
-      area: '15/04/2024',
+      area: '15/04/2024 - 11/2024',
       url: '/projects/fertilizer-plant-foundation-roof'
     },
     {

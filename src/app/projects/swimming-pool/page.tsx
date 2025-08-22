@@ -12,6 +12,7 @@ import {
   AccessTime,
   People,
   EmojiEvents,
+  PlayArrow,
 } from "@mui/icons-material"
 import { Typography } from "@mui/material"
 
@@ -23,18 +24,18 @@ export default function SwimmingPoolDetailPage() {
     name: "Thi công trọn gói bể bơi gia đình – Phước Kiến – Nhà Bè",
     workingAreas: ["Bê tông + cốt thép + cốt pha"],
     startDate: "25/12/2024",
-    endDate: "Hoàn thành",
-    duration: "Đã hoàn thành",
+    endDate: "15/01/2025",
+    duration: "21 ngày",
     status: "Hoàn thành",
     description:
       "Thi công trọn gói bể bơi gia đình cao cấp tại Phước Kiến, Nhà Bè. Dự án bao gồm hoàn thiện phần thô và phần hoàn thiện với hệ thống lọc nước hiện đại, đảm bảo chất lượng nước sạch và an toàn cho gia đình.",
     images: [
       "/products/be-boi-gia-dinh.jpg",
       "/products/be-boi-gia-dinh2.jpg",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
-      "/placeholder.svg?height=400&width=600",
+      "/products/be-boi-gia-dinh3.jpg",
+      "/products/be-boi-gia-dinh4.jpg",
+      "/products/be-boi-gia-dinh5.jpg",
+      "/products/be-boi-gia-dinh6.mp4",
     ],
     workDetails: [
       "Bê tông bịt đầy đảm bảo độ kín và chống thấm tuyệt đối.",
@@ -167,7 +168,7 @@ export default function SwimmingPoolDetailPage() {
                       <div className="flex items-center">
                         <div className="w-3 h-3 bg-blue-500 rounded-full mr-3"></div>
                         <Typography variant="body2" className="text-gray-600 font-medium">
-                          Trạng thái
+                          Kết thúc
                         </Typography>
                       </div>
                       <Typography variant="body1" className="text-gray-900 font-bold text-lg">
@@ -177,9 +178,9 @@ export default function SwimmingPoolDetailPage() {
                     <div className="border-t border-gray-200 pt-3 mt-3">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
-                          <CheckCircle className="w-4 h-4 text-gray-500 mr-2" />
+                          <AccessTime className="w-4 h-4 text-gray-500 mr-2" />
                           <Typography variant="body2" className="text-gray-600 font-medium">
-                            Tình trạng
+                            Thời gian
                           </Typography>
                         </div>
                         <Typography variant="body1" className="text-blue-600 font-bold text-lg">
@@ -248,30 +249,59 @@ export default function SwimmingPoolDetailPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projectData.images.map((image, index) => (
-              <div
-                key={index}
-                className="group relative overflow-hidden rounded-2xl bg-muted cursor-pointer transform transition-all duration-500 hover:scale-105 hover:shadow-2xl"
-                onClick={() => setSelectedImage(image)}
-              >
-                <div className="relative w-full h-64">
-                  <Image
-                    src={image || "/placeholder.svg"}
-                    alt={`Hình ảnh dự án ${index + 1}`}
-                    fill
-                    className="object-cover rounded-2xl transition-transform duration-700 group-hover:scale-110"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="absolute bottom-4 left-4 text-white">
-                    <Typography variant="body2" className="font-semibold">
-                      Hình ảnh {index + 1}
-                    </Typography>
+            {projectData.images.map((image, index) => {
+              const isVideo = image.endsWith('.mp4') || image.endsWith('.webm') || image.endsWith('.mov')
+              
+              return (
+                <div
+                  key={index}
+                  className="group relative overflow-hidden rounded-2xl bg-muted cursor-pointer transform transition-all duration-500 hover:scale-105 hover:shadow-2xl"
+                  onClick={() => setSelectedImage(image)}
+                >
+                  <div className="relative w-full h-64">
+                    {isVideo ? (
+                      <video
+                        src={image}
+                        className="w-full h-full object-cover rounded-2xl transition-transform duration-700 group-hover:scale-110"
+                        muted
+                        loop
+                        playsInline
+                        preload="metadata"
+                        onLoadedData={(e) => {
+                          const video = e.target as HTMLVideoElement
+                          video.currentTime = 1 // Set to 1 second to show a frame
+                        }}
+                      />
+                    ) : (
+                      <Image
+                        src={image || "/placeholder.svg"}
+                        alt={`Hình ảnh dự án ${index + 1}`}
+                        fill
+                        className="object-cover rounded-2xl transition-transform duration-700 group-hover:scale-110"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
+                    )}
+                  </div>
+                  
+                  {/* Video play button overlay */}
+                  {isVideo && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-lg group-hover:bg-white group-hover:scale-110 transition-all duration-300">
+                        <PlayArrow className="w-8 h-8 text-blue-600 ml-1" />
+                      </div>
+                    </div>
+                  )}
+                  
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute bottom-4 left-4 text-white">
+                      <Typography variant="body2" className="font-semibold">
+                        {isVideo ? `Video ${index + 1}` : `Hình ảnh ${index + 1}`}
+                      </Typography>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </section>
 
@@ -343,7 +373,7 @@ export default function SwimmingPoolDetailPage() {
         </section>
       </div>
 
-      {/* Image Modal */}
+      {/* Image/Video Modal */}
       {selectedImage && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
           <div className="relative max-w-6xl max-h-[90vh] w-full">
@@ -354,13 +384,24 @@ export default function SwimmingPoolDetailPage() {
               <Close className="w-6 h-6" />
             </button>
             <div className="relative w-full h-[70vh]">
-              <Image
-                src={selectedImage || "/placeholder.svg"}
-                alt="Hình ảnh dự án phóng to"
-                fill
-                className="object-contain rounded-2xl"
-                sizes="100vw"
-              />
+              {selectedImage.endsWith('.mp4') || selectedImage.endsWith('.webm') || selectedImage.endsWith('.mov') ? (
+                <video
+                  src={selectedImage}
+                  className="w-full h-full object-contain rounded-2xl"
+                  controls
+                  autoPlay
+                  loop
+                  muted
+                />
+              ) : (
+                <Image
+                  src={selectedImage || "/placeholder.svg"}
+                  alt="Hình ảnh dự án phóng to"
+                  fill
+                  className="object-contain rounded-2xl"
+                  sizes="100vw"
+                />
+              )}
             </div>
           </div>
         </div>
