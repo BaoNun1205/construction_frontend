@@ -23,8 +23,8 @@ export default function InfrastructureHauhuaDetailPage() {
     name: "Thi công trọn gói Hạ tầng kỹ thuật – Hauhua Bình Phước",
     workingAreas: ["Hệ thống tưới thoát nước mưa", "Hạng mục nền đường bê tông"],
     startDate: "10/04/2025",
-    endDate: "Hoàn thành",
-    duration: "Đã hoàn thành",
+    endDate: "30/06/2025",
+    duration: "81 ngày",
     status: "Hoàn thành",
     description:
       "Dự án hạ tầng kỹ thuật tại Hauhua Bình Phước bao gồm hoàn thiện hệ thống tưới thoát nước mưa và hoàn thiện hạng mục nền đường bê tông. Đây là dự án trọng điểm nhằm nâng cấp hạ tầng giao thông và hệ thống thoát nước cho khu vực.",
@@ -167,7 +167,7 @@ export default function InfrastructureHauhuaDetailPage() {
                       <div className="flex items-center">
                         <div className="w-3 h-3 bg-orange-500 rounded-full mr-3"></div>
                         <Typography variant="body2" className="text-gray-600 font-medium">
-                          Trạng thái
+                          Kết thúc
                         </Typography>
                       </div>
                       <Typography variant="body1" className="text-gray-900 font-bold text-lg">
@@ -177,12 +177,12 @@ export default function InfrastructureHauhuaDetailPage() {
                     <div className="border-t border-gray-200 pt-3 mt-3">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
-                          <CheckCircle className="w-4 h-4 text-gray-500 mr-2" />
+                          <AccessTime className="w-4 h-4 text-gray-500 mr-2" />
                           <Typography variant="body2" className="text-gray-600 font-medium">
-                            Tình trạng
+                            Thời gian
                           </Typography>
                         </div>
-                        <Typography variant="body1" className="text-green-600 font-bold text-lg">
+                        <Typography variant="body1" className="text-orange-600 font-bold text-lg">
                           {projectData.duration}
                         </Typography>
                       </div>

@@ -23,8 +23,8 @@ export default function FertilizerPlantDetailPage() {
     name: "Thi công phần móng + hạ tầng mái che Nhà Máy Đạm – Cà Mau",
     workingAreas: ["Móng + Hạ Tầng Thoát nước mưa, nước thải"],
     startDate: "15/04/2024",
-    endDate: "Hoàn thành",
-    duration: "Đã hoàn thành",
+    endDate: "11/2024",
+    duration: "7 tháng",
     status: "Hoàn thành",
     description:
       "Dự án thi công phần móng và hạ tầng mái che cho Nhà Máy Đạm tại Cà Mau. Công trình bao gồm thi công lắp sàn dao móng dưới nước, cốt pha, cốt thép, bê tông móng + đâm móng và hoàn thiện hệ thống hạ tầng thoát nước mưa, nước thải đảm bảo tiêu chuẩn kỹ thuật cao.",
@@ -167,7 +167,7 @@ export default function FertilizerPlantDetailPage() {
                       <div className="flex items-center">
                         <div className="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
                         <Typography variant="body2" className="text-gray-600 font-medium">
-                          Trạng thái
+                          Kết thúc
                         </Typography>
                       </div>
                       <Typography variant="body1" className="text-gray-900 font-bold text-lg">
@@ -177,9 +177,9 @@ export default function FertilizerPlantDetailPage() {
                     <div className="border-t border-gray-200 pt-3 mt-3">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
-                          <CheckCircle className="w-4 h-4 text-gray-500 mr-2" />
+                          <AccessTime className="w-4 h-4 text-gray-500 mr-2" />
                           <Typography variant="body2" className="text-gray-600 font-medium">
-                            Tình trạng
+                            Thời gian
                           </Typography>
                         </div>
                         <Typography variant="body1" className="text-green-600 font-bold text-lg">
