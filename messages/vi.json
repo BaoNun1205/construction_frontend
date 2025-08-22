@@ -27,7 +27,7 @@
       "scrollDown": "Cuộn xuống để xem thêm"
     },
     "services": {
-      "title": "Phát triển ngành xây dựng của bạn",
+      "title": "Phát triển ngành xây dựng Lai Phát",
       "description": "Từ thi công dân dụng đến công nghiệp, kiến thức chuyên sâu về ngành giúp chúng tôi xây dựng những giải pháp phù hợp với nhu cầu hiện tại và tương lai của dự án.",
       "exploreBtn": "Khám phá dịch vụ của chúng tôi",
       "constructionService": "Dịch vụ thi công",
@@ -117,7 +117,7 @@
           "position": "Tổng Giám Đốc",
           "experience": "10+ năm kinh nghiệm",
           "specialty": "Kỹ sư xây dựng",
-          "description": "Thạc sĩ Kỹ thuật Xây dựng, chuyên gia hàng đầu trong lĩnh vực xây dựng công nghiệp."
+          "description": "Kỹ thuật Xây dựng, chuyên gia hàng đầu trong lĩnh vực xây dựng công nghiệp."
         },
         "deputy": {
           "name": "Nguyễn Văn Phát",
@@ -302,7 +302,7 @@
           "2": "Biệt thự, villa nghỉ dưỡng",
           "3": "Nhà phố thương mại (shophouse)"
         },
-        "projects": "200+ dự án hoàn thành"
+        "projects": "5+ dự án hoàn thành"
       },
       "1": {
         "title": "Công trình thương mại",
@@ -313,7 +313,7 @@
           "2": "Khách sạn, resort, nhà hàng",
           "3": "Showroom, cửa hàng kinh doanh"
         },
-        "projects": "150+ dự án hoàn thành"
+        "projects": "5+ dự án hoàn thành"
       },
       "2": {
         "title": "Công trình công nghiệp",
@@ -324,7 +324,7 @@
           "2": "Kho bãi, logistics",
           "3": "Công trình phụ trợ"
         },
-        "projects": "100+ dự án hoàn thành"
+        "projects": "5+ dự án hoàn thành"
       },
       "3": {
         "title": "Hạ tầng kỹ thuật",
@@ -335,7 +335,7 @@
           "2": "Điện chiếu sáng đô thị",
           "3": "Công viên, cảnh quan"
         },
-        "projects": "80+ dự án hoàn thành"
+        "projects": "5+ dự án hoàn thành"
       }
     },
     "cta": {

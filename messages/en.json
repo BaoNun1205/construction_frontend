@@ -27,7 +27,7 @@
       "scrollDown": "Scroll down for more"
     },
     "services": {
-      "title": "Develop your construction industry",
+      "title": "Lai Phat Construction Development",
       "description": "From civil to industrial construction, our in-depth industry knowledge helps us build solutions that fit the current and future needs of your project.",
       "exploreBtn": "Explore our services",
       "constructionService": "Construction Services",
@@ -302,7 +302,7 @@
           "2": "Villas, resort houses",
           "3": "Shophouses"
         },
-        "projects": "200+ completed projects"
+        "projects": "5+ completed projects"
       },
       "1": {
         "title": "Commercial Projects",
@@ -313,7 +313,7 @@
           "2": "Hotels, resorts, restaurants",
           "3": "Showrooms, retail stores"
         },
-        "projects": "150+ completed projects"
+        "projects": "5+ completed projects"
       },
       "2": {
         "title": "Industrial Projects",
@@ -324,7 +324,7 @@
           "2": "Warehouses, logistics",
           "3": "Auxiliary works"
         },
-        "projects": "100+ completed projects"
+        "projects": "5+ completed projects"
       },
       "3": {
         "title": "Infrastructure",
@@ -335,7 +335,7 @@
           "2": "Urban lighting",
           "3": "Parks, landscapes"
         },
-        "projects": "80+ completed projects"
+        "projects": "5+ completed projects"
       }
     },
     "cta": {
