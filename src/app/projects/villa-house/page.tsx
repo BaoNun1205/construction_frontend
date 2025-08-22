@@ -47,7 +47,7 @@ export default function VillaHouseDetailPage() {
       "Kiểm tra và bàn giao công trình đảm bảo chất lượng cao nhất.",
     ],
     details: {
-      contractor: "Công ty TNHH Xây Dựng Lai Phát",
+      contractor: "Công ty Cổ Phần Tư Vấn và Xây Dựng Lai Phát",
       totalArea: "300 m²",
       floors: "2 tầng + sân vườn",
       style: "Biệt thự hiện đại",

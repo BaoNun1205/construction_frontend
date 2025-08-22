@@ -46,7 +46,7 @@ export default function InfrastructureHauhuaDetailPage() {
       "Kiểm tra chất lượng và nghiệm thu từng hạng mục theo tiêu chuẩn ngành.",
     ],
     details: {
-      contractor: "Công ty TNHH Xây Dựng Lai Phát",
+      contractor: "Công ty Cổ Phần Tư Vấn và Xây Dựng Lai Phát",
       totalArea: "5,000 m²",
       roadLength: "2.5 km",
       projectType: "Hạ tầng kỹ thuật",

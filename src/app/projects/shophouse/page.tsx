@@ -46,7 +46,7 @@ export default function ShophouseDetailPage() {
       "Kiểm tra và bàn giao từng căn shophouse theo đúng thiết kế ban đầu.",
     ],
     details: {
-      contractor: "Công ty TNHH Xây Dựng Lai Phát",
+      contractor: "Công ty Cổ Phần Tư Vấn và Xây Dựng Lai Phát",
       totalArea: "1,200 m²",
       shopCount: "10 căn",
       buildingType: "Shophouse thương mại",
