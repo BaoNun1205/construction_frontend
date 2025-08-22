@@ -176,92 +176,105 @@ export default function Home() {
       title: 'Thi công trọn gói Hạ tầng kỹ thuật – Hauhua Bình Phước',
       description: 'Hoàn thiện hệ thống tưới thoát nước mưa và hoàn thiện hạng mục nền đường bê tông, đảm bảo hạ tầng đồng bộ và bền vững.',
       image: '/products/hauhua-binh-phuoc.jpg',
-      status: 'Đang triển khai',
-      area: '10/04/2025 - 30/06/2025'
+      status: 'Hoàn thành',
+      area: '10/04/2025 - 30/06/2025',
+      url: '/projects/infrastructure-hauhua'
     },
     {
       title: 'Thi công trọn gói bể bơi gia đình – Phước Kiến, Nhà Bè',
       description: 'Hoàn thiện phần thô và phần hoàn thiện bể bơi gia đình cao cấp với hệ thống lọc nước hiện đại.',
       image: '/products/be-boi-gia-dinh.jpg',
-      status: 'Đang triển khai',
-      area: '25/12/2024 - 15/01/2025'
+      status: 'Hoàn thành',
+      area: '25/12/2024 - 15/01/2025',
+      url: '/projects/swimming-pool'
     },
     {
       title: 'Thi công trọn gói nhà vườn – Long An',
       description: 'Hoàn thiện phần thô và phần hoàn thiện nhà vườn với thiết kế hài hòa cùng thiên nhiên.',
       image: '/products/nha-vuon-long-an.jpg',
-      status: 'Đang triển khai',
-      area: '15/11/2024 - 30/12/2024'
+      status: 'Hoàn thành',
+      area: '15/11/2024 - 30/12/2024',
+      url: '/projects/detail2'
     },
     {
-      title: 'Thi công phần móng + hạ tầng mái che Nhà Máy Dạm – Cà Mau',
+      title: 'Thi công phần móng + hạ tầng mái che Nhà Máy Đạm – Cà Mau',
       description: 'Thi công lắp sàn dao móng dưới nước, cốt pha, cốt thép, bê tông móng + đâm móng và hệ thống hạ tầng thoát nước mưa, nước thải.',
       image: '/products/nha-may-dam-ca-mau.jpg',
       status: 'Hoàn thành',
-      area: '15/04/2024'
+      area: '15/04/2024',
+      url: '/projects/fertilizer-plant-foundation-roof'
     },
     {
       title: 'Công hợp (Sông Chùa) – Bình Chánh',
       description: 'Bê tông bịt đầy, bê tông + cốt thép + cốt pha (Đầy + tường + nắp cống), thi công hoàn thiện.',
       image: '/products/cong-hop-song-chua.jpg',
       status: 'Hoàn thành',
-      area: '12/02/2024'
+      area: '12/02/2024',
+      url: '/projects/detail2'
     },
     {
       title: 'Nhà biệt thự – Long An',
       description: 'Bê tông cốt thép phần móng, đâm sàn, thi công xây tô các tầng, thi công sân vườn hàng rào và ốp lát hoàn thiện.',
       image: '/products/biet-thu-long-an.jpg',
       status: 'Hoàn thành',
-      area: '05/04/2023 - 09/2023'
+      area: '05/04/2023 - 09/2023',
+      url: '/projects/villa-house'
     },
     {
       title: 'Sửa chữa, cải tạo căn hộ chung cư – Hoàng Pháp, Trung Sơn',
       description: 'Thi công phá dỡ kết cấu nền, tường, vách hiện hữu. Thi công xây tô, chống thấm các vị trí phòng. Vệ sinh, chống thấm sàn mái, ban công, sê nô. Bơm keo áp lực vị trí có ống các khu vệ sinh, sàn mái, ban công.',
       image: '/products/trung-son.jpg',
       status: 'Hoàn thành',
-      area: '10/06/2023 - 25/06/2023'
+      area: '10/06/2023 - 25/06/2023',
+      url: '/projects/detail2'
     },
     {
       title: 'Sửa chữa cải tạo nhà phố – Q12',
       description: 'Thi công phá dỡ kết cấu nền, tường, vách hiện hữu. Thi công xây tô, chống thấm các vị trí phòng. Thi công ốp lát. Thi công hệ thống điện. Thi công sơn nước trong và ngoài nhà.',
       image: '/products/nha-pho-q12.jpg',
       status: 'Hoàn thành',
-      area: '16/03/2023 - 30/04/2023'
+      area: '16/03/2023 - 30/04/2023',
+      url: '/projects/detail2'
     },
     {
       title: 'Sửa chữa cải tao Quán Cfe – 282 Pasteur – Q3',
       description: 'Thi công xây tô, ốp lát nền tường. Thi công hệ thống điện. Thi công sơn nước. Thi công nội thất: Quầy pha chế, tủ, bàn ghế. Thi công ốp Alu, mặt tiền.',
       image: '/products/quan-cafe-q3.jpg',
       status: 'Hoàn thành',
-      area: '05/02/2023 - 25/03/2023'
+      area: '05/02/2023 - 25/03/2023',
+      url: '/projects/detail2'
     },
     {
       title: 'Dự án Shophouse – Tân Trụ, Long An',
       description: 'Thi công 10 căn liền kề phần móng, phần thân, phần hoàn thiện ngoài nhà, phần hạ tầng kỹ thuật - sân vườn.',
       image: '/products/shophouse-tan-tru.jpg',
       status: 'Hoàn thành',
-      area: '05/01/2022 - 10/02/2022'
+      area: '05/01/2022 - 10/02/2022',
+      url: '/projects/shophouse'
     },
     {
       title: 'Bơm keo áp lực đường nứt – Đường BTCT khu dự án Vũng Tàu',
       description: 'Xử lý nứt tường bao ngoài nhà bằng keo chống thấm. Thi công cao bồ lớp sơn cũ và bả bột lán sơn hoàn thiện.',
       image: '/products/bom-keo-vung-tau.jpg',
       status: 'Hoàn thành',
-      area: '01/09/2021 - 15/09/2021'
+      area: '01/09/2021 - 15/09/2021',
+      url: '/projects/detail2'
     },
     {
       title: 'Khách sạn Mỹ Lệ – Bình Phước',
       description: 'Tường bao ngoài nhà, sàn thượng, ban công, mái, khu WC, các tầng, vệ sinh, chống thấm sàn mái, ban công, sê nô. Bơm keo áp lực vị trí có ống các khu vệ sinh, sàn mái, ban công.',
       image: '/products/khach-san-my-le.jpg',
       status: 'Hoàn thành',
-      area: '05/01/2022 - 10/02/2022'
+      area: '05/01/2022 - 10/02/2022',
+      url: '/projects/detail2'
     },
     {
       title: 'Sửa chữa, cải tạo nhà ở văn phòng 198 Võ Văn Kiệt – Q1',
       description: 'Thi công phá dỡ, đàm sàn, kết cấu nền, tường, mái, lắn can. Thi công kết cấu bê tông cốt thép phần móng, thang máy, cầu thang bộ, cốt sàn mái. Thi công xây tô, ốp lát hoàn thiện trong và ngoài nhà. Thi công hệ thống điện nước, sơn nước.',
       image: '/products/vo-van-kiet-q1.jpg',
       status: 'Hoàn thành',
-      area: '01/06/2021 - 20/08/2021'
+      area: '01/06/2021 - 20/08/2021',
+      url: '/projects/detail2'
     }
   ];
 
@@ -898,7 +911,7 @@ export default function Home() {
                       {/* Hover View Button */}
                       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <Link
-                          href="/projects/detail"
+                          href={project.url}
                           className="bg-white/20 backdrop-blur-sm border-2 border-white text-white px-6 py-2 rounded-full font-semibold hover:bg-white hover:text-gray-800 transition-all duration-300"
                         >
                           {t('home.projects.viewDetail')}
