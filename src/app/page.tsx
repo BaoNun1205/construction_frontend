@@ -173,46 +173,95 @@ export default function Home() {
 
   const projects = [
     {
-      title: 'Thi công cải tạo căn hộ chung cư – Trung Sơn',
-      description: 'Cải tạo và nâng cấp căn hộ chung cư theo phong cách hiện đại, tối ưu công năng và tăng tính thẩm mỹ.',
+      title: 'Thi công trọn gói Hạ tầng kỹ thuật – Hauhua Bình Phước',
+      description: 'Hoàn thiện hệ thống tưới thoát nước mưa và hoàn thiện hạng mục nền đường bê tông, đảm bảo hạ tầng đồng bộ và bền vững.',
+      image: '/products/hauhua-binh-phuoc.jpg',
+      status: 'Đang triển khai',
+      area: '10/04/2025 - 30/06/2025'
+    },
+    {
+      title: 'Thi công trọn gói bể bơi gia đình – Phước Kiến, Nhà Bè',
+      description: 'Hoàn thiện phần thô và phần hoàn thiện bể bơi gia đình cao cấp với hệ thống lọc nước hiện đại.',
+      image: '/products/be-boi-gia-dinh.jpg',
+      status: 'Đang triển khai',
+      area: '25/12/2024 - 15/01/2025'
+    },
+    {
+      title: 'Thi công trọn gói nhà vườn – Long An',
+      description: 'Hoàn thiện phần thô và phần hoàn thiện nhà vườn với thiết kế hài hòa cùng thiên nhiên.',
+      image: '/products/nha-vuon-long-an.jpg',
+      status: 'Đang triển khai',
+      area: '15/11/2024 - 30/12/2024'
+    },
+    {
+      title: 'Thi công phần móng + hạ tầng mái che Nhà Máy Dạm – Cà Mau',
+      description: 'Thi công lắp sàn dao móng dưới nước, cốt pha, cốt thép, bê tông móng + đâm móng và hệ thống hạ tầng thoát nước mưa, nước thải.',
+      image: '/products/nha-may-dam-ca-mau.jpg',
+      status: 'Hoàn thành',
+      area: '15/04/2024'
+    },
+    {
+      title: 'Công hợp (Sông Chùa) – Bình Chánh',
+      description: 'Bê tông bịt đầy, bê tông + cốt thép + cốt pha (Đầy + tường + nắp cống), thi công hoàn thiện.',
+      image: '/products/cong-hop-song-chua.jpg',
+      status: 'Hoàn thành',
+      area: '12/02/2024'
+    },
+    {
+      title: 'Nhà biệt thự – Long An',
+      description: 'Bê tông cốt thép phần móng, đâm sàn, thi công xây tô các tầng, thi công sân vườn hàng rào và ốp lát hoàn thiện.',
+      image: '/products/biet-thu-long-an.jpg',
+      status: 'Hoàn thành',
+      area: '05/04/2023 - 09/2023'
+    },
+    {
+      title: 'Sửa chữa, cải tạo căn hộ chung cư – Hoàng Pháp, Trung Sơn',
+      description: 'Thi công phá dỡ kết cấu nền, tường, vách hiện hữu. Thi công xây tô, chống thấm các vị trí phòng. Vệ sinh, chống thấm sàn mái, ban công, sê nô. Bơm keo áp lực vị trí có ống các khu vệ sinh, sàn mái, ban công.',
       image: '/products/trung-son.jpg',
       status: 'Hoàn thành',
-      area: '27/07/2023'
+      area: '10/06/2023 - 25/06/2023'
     },
     {
-      title: 'Thi công cải tạo nhà phố – Q12',
-      description: 'Cải tạo và nâng cấp nhà phố tại Quận 12, thiết kế không gian hiện đại, tiện nghi và tối ưu diện tích sử dụng.',
+      title: 'Sửa chữa cải tạo nhà phố – Q12',
+      description: 'Thi công phá dỡ kết cấu nền, tường, vách hiện hữu. Thi công xây tô, chống thấm các vị trí phòng. Thi công ốp lát. Thi công hệ thống điện. Thi công sơn nước trong và ngoài nhà.',
       image: '/products/nha-pho-q12.jpg',
       status: 'Hoàn thành',
-      area: '12/06/2023'
+      area: '16/03/2023 - 30/04/2023'
     },
     {
-      title: 'Thi công quán Bar – Quận 3',
-      description: 'Thiết kế và thi công quán bar hiện đại tại Quận 3, với không gian sang trọng, hệ thống âm thanh và ánh sáng chuyên nghiệp.',
-      image: '/products/quan-bar-q3.jpg',
-      status: 'Hoàn thành',
-      area: '02/06/2023'
-    },
-    {
-      title: 'Thi công nhà biệt thự – Long An',
-      description: 'Xây dựng biệt thự cao cấp 2 tầng với kiến trúc hiện đại, không gian sang trọng và sân vườn thoáng đãng.',
-      image: '/products/biet-thu.jpg',
-      status: 'Hoàn thành',
-      area: '27/05/2023'
-    },
-    {
-      title: 'Thi công quán Cafe – Quận 3',
-      description: 'Thiết kế và thi công quán cafe phong cách trẻ trung, ấm cúng tại Quận 3, tạo không gian thư giãn và thu hút khách hàng.',
+      title: 'Sửa chữa cải tao Quán Cfe – 282 Pasteur – Q3',
+      description: 'Thi công xây tô, ốp lát nền tường. Thi công hệ thống điện. Thi công sơn nước. Thi công nội thất: Quầy pha chế, tủ, bàn ghế. Thi công ốp Alu, mặt tiền.',
       image: '/products/quan-cafe-q3.jpg',
       status: 'Hoàn thành',
-      area: '16/02/2023'
+      area: '05/02/2023 - 25/03/2023'
     },
     {
-      title: 'Thi công phần thô và hoàn thiện mặt ngoài Shophouse và Hạ Tầng Kỹ Thuật – Long An.',
-      description: 'Thi công phần thô và hoàn thiện mặt ngoài Shophouse, kết hợp xây dựng hạ tầng kỹ thuật đồng bộ, đảm bảo tiến độ và chất lượng.',
-      image: '/products/Shophouse.jpg',
+      title: 'Dự án Shophouse – Tân Trụ, Long An',
+      description: 'Thi công 10 căn liền kề phần móng, phần thân, phần hoàn thiện ngoài nhà, phần hạ tầng kỹ thuật - sân vườn.',
+      image: '/products/shophouse-tan-tru.jpg',
       status: 'Hoàn thành',
-      area: '25/08/2022'
+      area: '05/01/2022 - 10/02/2022'
+    },
+    {
+      title: 'Bơm keo áp lực đường nứt – Đường BTCT khu dự án Vũng Tàu',
+      description: 'Xử lý nứt tường bao ngoài nhà bằng keo chống thấm. Thi công cao bồ lớp sơn cũ và bả bột lán sơn hoàn thiện.',
+      image: '/products/bom-keo-vung-tau.jpg',
+      status: 'Hoàn thành',
+      area: '01/09/2021 - 15/09/2021'
+    },
+    {
+      title: 'Khách sạn Mỹ Lệ – Bình Phước',
+      description: 'Tường bao ngoài nhà, sàn thượng, ban công, mái, khu WC, các tầng, vệ sinh, chống thấm sàn mái, ban công, sê nô. Bơm keo áp lực vị trí có ống các khu vệ sinh, sàn mái, ban công.',
+      image: '/products/khach-san-my-le.jpg',
+      status: 'Hoàn thành',
+      area: '05/01/2022 - 10/02/2022'
+    },
+    {
+      title: 'Sửa chữa, cải tạo nhà ở văn phòng 198 Võ Văn Kiệt – Q1',
+      description: 'Thi công phá dỡ, đàm sàn, kết cấu nền, tường, mái, lắn can. Thi công kết cấu bê tông cốt thép phần móng, thang máy, cầu thang bộ, cốt sàn mái. Thi công xây tô, ốp lát hoàn thiện trong và ngoài nhà. Thi công hệ thống điện nước, sơn nước.',
+      image: '/products/vo-van-kiet-q1.jpg',
+      status: 'Hoàn thành',
+      area: '01/06/2021 - 20/08/2021'
     }
   ];
 
