@@ -20,8 +20,9 @@ import {
 } from "@mui/icons-material"
 import { Typography, CircularProgress, Alert, Box } from "@mui/material"
 
-export default function ProjectDetailPage({ params }: { params: { slug: string } }) {
-  const { slug } = params
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function ProjectDetailPage(props: any) {
+  const { slug } = props.params as { slug: string }
   const { data: rawProject, isLoading, isError, error } = useProjectBySlug(slug)
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
   const [visibleElements, setVisibleElements] = useState<Set<string>>(new Set())
