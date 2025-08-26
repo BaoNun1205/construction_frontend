@@ -46,7 +46,9 @@
       "subtitle": "Completed projects with excellent quality",
       "viewDetail": "View Details",
       "completed": "Project Completed",
-      "completedOn": "Completed"
+      "completedOn": "Completed",
+      "inProgress": "In Progress",
+      "startedOn": "Started"
     },
     "cta": {
       "title": "Ready to start your project?",

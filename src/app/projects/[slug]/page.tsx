@@ -1,5 +1,8 @@
 "use client"
 
+import React from "react"
+import { useProjectBySlug } from '@/hooks/useProjects'
+import { ProjectHelpers } from '@/utils/projectHelpers'
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import {
@@ -13,47 +16,21 @@ import {
   People,
   EmojiEvents,
   PlayArrow,
+  Schedule,
 } from "@mui/icons-material"
-import { Typography } from "@mui/material"
+import { Typography, CircularProgress, Alert, Box } from "@mui/material"
 
-export default function SwimmingPoolDetailPage() {
+interface ProjectDetailPageProps {
+  params: { slug: string }
+}
+
+export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
+  const { slug } = params
+  const { data: rawProject, isLoading, isError, error } = useProjectBySlug(slug)
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
   const [visibleElements, setVisibleElements] = useState<Set<string>>(new Set())
 
-  const projectData = {
-    name: "Thi công trọn gói bể bơi gia đình – Phước Kiến – Nhà Bè",
-    workingAreas: ["Bê tông + cốt thép + cốt pha"],
-    startDate: "25/12/2024",
-    endDate: "15/01/2025",
-    duration: "21 ngày",
-    status: "Hoàn thành",
-    description:
-      "Thi công trọn gói bể bơi gia đình cao cấp tại Phước Kiến, Nhà Bè. Dự án bao gồm hoàn thiện phần thô và phần hoàn thiện với hệ thống lọc nước hiện đại, đảm bảo chất lượng nước sạch và an toàn cho gia đình.",
-    images: [
-      "/products/be-boi-gia-dinh.jpg",
-      "/products/be-boi-gia-dinh2.jpg",
-      "/products/be-boi-gia-dinh3.jpg",
-      "/products/be-boi-gia-dinh4.jpg",
-      "/products/be-boi-gia-dinh5.jpg",
-      "/products/be-boi-gia-dinh6.mp4",
-    ],
-    workDetails: [
-      "Bê tông bịt đầy đảm bảo độ kín và chống thấm tuyệt đối.",
-      "Bê tông + cốt thép + cốt pha (Đậy + tường + nắp cống) theo tiêu chuẩn kỹ thuật.",
-      "Hoàn thiện phần thô với độ bền cao, chịu được áp lực nước lâu dài.",
-      "Hoàn thiện phần hoàn thiện với vật liệu chống thấm chuyên dụng.",
-      "Lắp đặt hệ thống lọc nước hiện đại, tự động vận hành.",
-      "Ốp lát gạch mosaic cao cấp chống trượt và đẹp mắt.",
-      "Kiểm tra hệ thống và bàn giao kỹ thuật vận hành cho gia chủ.",
-    ],
-    details: {
-      contractor: "Công ty Cổ Phần Tư Vấn và Xây Dựng Lai Phát",
-      totalArea: "60 m²",
-      depth: "1.2m - 1.8m",
-      poolType: "Bể bơi gia đình",
-      location: "Phước Kiến, Nhà Bè",
-    },
-  }
+  const project = rawProject ? ProjectHelpers.transformForDetailPage(rawProject) : null
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -71,13 +48,48 @@ export default function SwimmingPoolDetailPage() {
     elements.forEach((el) => observer.observe(el))
 
     return () => observer.disconnect()
-  }, [])
+  }, [project])
+
+  if (isLoading) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+        <CircularProgress size={60} />
+        <Typography variant="h6" sx={{ ml: 2 }}>
+          Đang tải chi tiết dự án...
+        </Typography>
+      </Box>
+    )
+  }
+
+  if (isError) {
+    return (
+      <Box sx={{ p: 4 }}>
+        <Alert severity="error">
+          Lỗi khi tải chi tiết dự án: {error?.message}
+        </Alert>
+      </Box>
+    )
+  }
+
+  if (!project) {
+    return (
+      <Box sx={{ p: 4 }}>
+        <Alert severity="info">
+          Không tìm thấy dự án.
+        </Alert>
+      </Box>
+    )
+  }
+
+  const isCompleted = project.statusRaw === 'completed'
+  const statusColor = isCompleted ? 'green' : 'orange'
+  const duration = project.duration
 
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-blue-50 via-background to-cyan-50 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/products/be-boi-gia-dinh.jpg')] bg-cover bg-center opacity-5"></div>
+      <div className={`relative bg-gradient-to-br from-${statusColor}-50 via-background to-${statusColor === 'green' ? 'teal' : 'amber'}-50 overflow-hidden`}>
+        <div className="absolute inset-0 bg-cover bg-center opacity-5" style={{ backgroundImage: `url(${project.mainImage})` }}></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
           <div
             id="hero"
@@ -85,10 +97,14 @@ export default function SwimmingPoolDetailPage() {
             className={`transition-all duration-1000 ${visibleElements.has("hero") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
           >
             <div className="text-center mb-12">
-              <div className="inline-flex items-center px-4 py-2 bg-green-100 rounded-full mb-6">
-                <CheckCircle className="w-5 h-5 text-green-600 mr-2" />
-                <Typography variant="body2" className="text-green-700 font-semibold">
-                  {projectData.status}
+              <div className={`inline-flex items-center px-4 py-2 bg-${statusColor}-100 rounded-full mb-4`}>
+                {isCompleted ? (
+                  <CheckCircle className={`w-5 h-5 text-${statusColor}-600 mr-2`} />
+                ) : (
+                  <Schedule className={`w-5 h-5 text-${statusColor}-600 mr-2`} />
+                )}
+                <Typography variant="body2" className={`text-${statusColor}-700 font-semibold`}>
+                  {project.status}
                 </Typography>
               </div>
 
@@ -98,14 +114,14 @@ export default function SwimmingPoolDetailPage() {
                   className="text-6xl font-bold text-center text-gray-800"
                   sx={{ mb: 2 }}
                 >
-                  {projectData.name}
+                  {project.title}
                 </Typography>
                 <Typography
                   variant="h6"
                   className="text-center text-gray-600 max-w-4xl mx-auto leading-relaxed"
                   sx={{ mb: 2 }}
                 >
-                  {projectData.description}
+                  {project.description}
                 </Typography>
               </div>
             </div>
@@ -116,20 +132,20 @@ export default function SwimmingPoolDetailPage() {
                 className={`bg-white/80 backdrop-blur-sm border border-gray-200 rounded-3xl p-8 transition-all duration-700 delay-200 hover:shadow-xl hover:scale-[1.02] ${visibleElements.has("hero") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
               >
                 <div className="flex items-center mb-6">
-                  <div className="p-4 bg-blue-100 rounded-2xl mr-4">
-                    <LocationOn className="w-7 h-7 text-blue-600" />
+                  <div className={`p-4 bg-${statusColor}-100 rounded-2xl mr-4`}>
+                    <LocationOn className={`w-7 h-7 text-${statusColor}-600`} />
                   </div>
                   <Typography variant="h3" className="font-serif text-xl font-bold text-gray-900">
                     Phạm vi thi công
                   </Typography>
                 </div>
                 <div className="grid grid-cols-1 gap-3">
-                  {projectData.workingAreas.map((area, index) => (
+                  {project.workingScope.map((area, index) => (
                     <div
                       key={index}
-                      className="flex items-center p-4 bg-gray-50 rounded-xl border border-gray-100 hover:bg-blue-50 hover:border-blue-200 transition-all duration-300 group"
+                      className={`flex items-center p-4 bg-gray-50 rounded-xl border border-gray-100 hover:bg-${statusColor}-50 hover:border-${statusColor}-200 transition-all duration-300 group`}
                     >
-                      <div className="w-3 h-3 bg-blue-500 rounded-full mr-3 group-hover:bg-blue-600 transition-colors"></div>
+                      <div className={`w-3 h-3 bg-${statusColor}-500 rounded-full mr-3 group-hover:bg-${statusColor}-600 transition-colors`}></div>
                       <Typography variant="body2" className="text-gray-700 font-medium text-sm leading-tight">
                         {area}
                       </Typography>
@@ -145,46 +161,60 @@ export default function SwimmingPoolDetailPage() {
                 {/* Time Section */}
                 <div className="mb-8">
                   <div className="flex items-center mb-4">
-                    <div className="p-4 bg-cyan-100 rounded-2xl mr-4">
-                      <CalendarToday className="w-7 h-7 text-cyan-600" />
+                    <div className={`p-4 bg-${statusColor === 'green' ? 'teal' : 'amber'}-100 rounded-2xl mr-4`}>
+                      <CalendarToday className={`w-7 h-7 text-${statusColor === 'green' ? 'teal' : 'amber'}-600`} />
                     </div>
                     <Typography variant="h3" className="font-serif text-xl font-bold text-gray-900">
                       Thời gian thực hiện
                     </Typography>
                   </div>
-                  <div className="bg-gradient-to-r from-cyan-50 to-blue-50 rounded-2xl p-6 border border-cyan-100">
+                  <div className={`bg-gradient-to-r from-${statusColor === 'green' ? 'teal' : 'amber'}-50 to-${statusColor}-50 rounded-2xl p-6 border border-${statusColor === 'green' ? 'teal' : 'amber'}-100`}>
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center">
-                        <div className="w-3 h-3 bg-cyan-500 rounded-full mr-3"></div>
+                        <div className={`w-3 h-3 bg-${statusColor === 'green' ? 'teal' : 'amber'}-500 rounded-full mr-3`}></div>
                         <Typography variant="body2" className="text-gray-600 font-medium">
                           Bắt đầu
                         </Typography>
                       </div>
                       <Typography variant="body1" className="text-gray-900 font-bold text-lg">
-                        {projectData.startDate}
+                        {project.startDate}
                       </Typography>
                     </div>
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="flex items-center">
-                        <div className="w-3 h-3 bg-blue-500 rounded-full mr-3"></div>
-                        <Typography variant="body2" className="text-gray-600 font-medium">
-                          Kết thúc
+                    {project.endDate ? (
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center">
+                          <div className={`w-3 h-3 bg-${statusColor}-500 rounded-full mr-3`}></div>
+                          <Typography variant="body2" className="text-gray-600 font-medium">
+                            Kết thúc
+                          </Typography>
+                        </div>
+                        <Typography variant="body1" className="text-gray-900 font-bold text-lg">
+                          {project.endDate}
                         </Typography>
                       </div>
-                      <Typography variant="body1" className="text-gray-900 font-bold text-lg">
-                        {projectData.endDate}
-                      </Typography>
-                    </div>
+                    ) : (
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center">
+                          <div className={`w-3 h-3 bg-orange-500 rounded-full mr-3`}></div>
+                          <Typography variant="body2" className="text-gray-600 font-medium">
+                            Trạng thái
+                          </Typography>
+                        </div>
+                        <Typography variant="body1" className="text-orange-600 font-bold text-lg">
+                          Đang triển khai
+                        </Typography>
+                      </div>
+                    )}
                     <div className="border-t border-gray-200 pt-3 mt-3">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
                           <AccessTime className="w-4 h-4 text-gray-500 mr-2" />
                           <Typography variant="body2" className="text-gray-600 font-medium">
-                            Thời gian
+                            {project.endDate ? 'Thời gian thực hiện' : 'Thời gian đã triển khai'}
                           </Typography>
                         </div>
-                        <Typography variant="body1" className="text-blue-600 font-bold text-lg">
-                          {projectData.duration}
+                        <Typography variant="body1" className={`text-${statusColor}-600 font-bold text-lg`}>
+                          {duration}
                         </Typography>
                       </div>
                     </div>
@@ -194,21 +224,21 @@ export default function SwimmingPoolDetailPage() {
                 {/* Contractor Section */}
                 <div>
                   <div className="flex items-center mb-4">
-                    <div className="p-4 bg-orange-100 rounded-2xl mr-4">
-                      <People className="w-7 h-7 text-orange-600" />
+                    <div className="p-4 bg-purple-100 rounded-2xl mr-4">
+                      <People className="w-7 h-7 text-purple-600" />
                     </div>
                     <Typography variant="h3" className="font-serif text-xl font-bold text-gray-900">
                       Nhà thầu
                     </Typography>
                   </div>
-                  <div className="bg-orange-50 rounded-2xl p-6 border border-orange-100">
+                  <div className="bg-purple-50 rounded-2xl p-6 border border-purple-100">
                     <Typography variant="body1" className="text-gray-800 font-semibold text-lg">
-                      {projectData.details.contractor}
+                      Công ty Cổ Phần Tư Vấn và Xây Dựng Lai Phát
                     </Typography>
                     <div className="flex items-center mt-3 text-gray-600">
                       <EmojiEvents className="w-4 h-4 mr-2" />
                       <Typography variant="body2" className="text-sm">
-                        Chuyên gia về hồ bơi và công trình thủy lợi
+                        Chuyên gia về xây dựng và thi công công trình
                       </Typography>
                     </div>
                   </div>
@@ -227,10 +257,10 @@ export default function SwimmingPoolDetailPage() {
           className={`mb-16 transition-all duration-1000 delay-500 ${visibleElements.has("gallery") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
           <div className="text-center mb-12">
-            <div className="inline-flex items-center px-4 py-2 bg-blue-100 rounded-full mb-4">
-              <CameraAlt className="w-5 h-5 text-blue-600 mr-2" />
-              <Typography variant="body2" className="text-blue-700 font-semibold">
-                Gallery
+            <div className={`inline-flex items-center px-4 py-2 bg-${statusColor}-100 rounded-full mb-4`}>
+              <CameraAlt className={`w-5 h-5 text-${statusColor}-600 mr-2`} />
+              <Typography variant="body2" className={`text-${statusColor}-700 font-semibold`}>
+                Bộ sưu tập
               </Typography>
             </div>
             <Typography
@@ -238,20 +268,19 @@ export default function SwimmingPoolDetailPage() {
               className="font-serif text-3xl lg:text-4xl font-bold text-foreground"
               sx={{ mb: 1 }}
             >
-              Hình ảnh dự án
+              Hình ảnh và Video dự án
             </Typography>
             <Typography
               variant="body1"
               className="text-muted-foreground text-lg"
             >
-              Theo dõi quá trình thi công bể bơi gia đình hiện đại
+              Theo dõi quá trình thực hiện dự án ({project.mediaCounts.images} ảnh, {project.mediaCounts.videos} video)
             </Typography>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projectData.images.map((image, index) => {
-              const isVideo = image.endsWith('.mp4') || image.endsWith('.webm') || image.endsWith('.mov')
-              
+            {project.media.map((image, index) => {
+              const isVideo = image.match(/\.(mp4|webm|mov)$/i)
               return (
                 <div
                   key={index}
@@ -269,7 +298,7 @@ export default function SwimmingPoolDetailPage() {
                         preload="metadata"
                         onLoadedData={(e) => {
                           const video = e.target as HTMLVideoElement
-                          video.currentTime = 1 // Set to 1 second to show a frame
+                          video.currentTime = 1
                         }}
                       />
                     ) : (
@@ -282,16 +311,13 @@ export default function SwimmingPoolDetailPage() {
                       />
                     )}
                   </div>
-                  
-                  {/* Video play button overlay */}
                   {isVideo && (
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-lg group-hover:bg-white group-hover:scale-110 transition-all duration-300">
-                        <PlayArrow className="w-8 h-8 text-blue-600 ml-1" />
+                      <div className={`w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-lg group-hover:bg-white group-hover:scale-110 transition-all duration-300`}>
+                        <PlayArrow className={`w-8 h-8 text-${statusColor}-600 ml-1`} />
                       </div>
                     </div>
                   )}
-                  
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="absolute bottom-4 left-4 text-white">
                       <Typography variant="body2" className="font-semibold">
@@ -320,15 +346,14 @@ export default function SwimmingPoolDetailPage() {
               >
                 Chi tiết công việc thực hiện
               </Typography>
-
               <div className="grid gap-4">
-                {projectData.workDetails.map((detail, index) => (
+                {project.details.map((detail, index) => (
                   <div
                     key={index}
                     className="flex items-start p-6 bg-muted/30 rounded-2xl border border-border hover:shadow-md transition-all duration-300 group"
                   >
-                    <div className="p-2 bg-blue-100 rounded-xl mr-4 group-hover:bg-blue-200 transition-colors duration-300">
-                      <CheckCircle className="w-5 h-5 text-blue-600" />
+                    <div className={`p-2 bg-${statusColor}-100 rounded-xl mr-4 group-hover:bg-${statusColor}-200 transition-colors duration-300`}>
+                      <CheckCircle className={`w-5 h-5 text-${statusColor}-600`} />
                     </div>
                     <Typography variant="body1" className="text-muted-foreground leading-relaxed flex-1">
                       {detail}
@@ -346,7 +371,7 @@ export default function SwimmingPoolDetailPage() {
           data-animate
           className={`mt-16 text-center transition-all duration-1000 delay-700 ${visibleElements.has("cta") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
-          <div className="bg-gradient-to-r from-blue-50 via-cyan-50 to-blue-50 rounded-3xl p-12 border border-gray-200">
+          <div className={`bg-gradient-to-r from-${statusColor}-50 via-${statusColor === 'green' ? 'teal' : 'amber'}-50 to-${statusColor}-50 rounded-3xl p-12 border border-gray-200`}>
             <div className="flex flex-col items-center justify-center text-center">
               <Typography
                 variant="h3"
@@ -360,10 +385,10 @@ export default function SwimmingPoolDetailPage() {
                 className="text-muted-foreground text-lg max-w-2xl mx-auto"
                 sx={{ mb: 2 }}
               >
-                Liên hệ với chúng tôi để được tư vấn chi tiết về thi công bể bơi gia đình và nhận báo giá tốt nhất
+                Liên hệ với chúng tôi để được tư vấn chi tiết và nhận báo giá tốt nhất
               </Typography>
             </div>
-            <button className="inline-flex items-center px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-serif font-semibold rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+            <button className={`inline-flex items-center px-8 py-4 bg-${statusColor}-600 hover:bg-${statusColor}-700 text-white font-serif font-semibold rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300`}>
               <Typography variant="body1" className="font-semibold">
                 Yêu cầu thêm thông tin
               </Typography>
@@ -384,7 +409,7 @@ export default function SwimmingPoolDetailPage() {
               <Close className="w-6 h-6" />
             </button>
             <div className="relative w-full h-[70vh]">
-              {selectedImage.endsWith('.mp4') || selectedImage.endsWith('.webm') || selectedImage.endsWith('.mov') ? (
+              {selectedImage.match(/\.(mp4|webm|mov)$/i) ? (
                 <video
                   src={selectedImage}
                   className="w-full h-full object-contain rounded-2xl"

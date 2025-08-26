@@ -46,7 +46,9 @@
       "subtitle": "Những công trình đã hoàn thành với chất lượng xuất sắc",
       "viewDetail": "Xem chi tiết",
       "completed": "Dự án hoàn thành",
-      "completedOn": "Hoàn thành"
+      "completedOn": "Hoàn thành",
+      "inProgress": "Đang triển khai",
+      "startedOn": "Bắt đầu"
     },
     "cta": {
       "title": "Sẵn sàng bắt đầu dự án?",
