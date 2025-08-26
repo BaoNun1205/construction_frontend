@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MainContent from "@/components/MainContent";
 import { LocaleProvider } from "@/contexts/LocaleContext";
+import QueryProvider from "@/providers/QueryProvider";
 import { Box } from "@mui/material";
 
 const geistSans = Geist({
@@ -43,23 +44,25 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <LocaleProvider>
-          <MUIThemeProvider>
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                minHeight: '100vh',
-              }}
-            >
-              <Header />
-              <MainContent>
-                {children}
-              </MainContent>
-              <Footer />
-            </Box>
-          </MUIThemeProvider>
-        </LocaleProvider>
+        <QueryProvider>
+          <LocaleProvider>
+            <MUIThemeProvider>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  minHeight: '100vh',
+                }}
+              >
+                <Header />
+                <MainContent>
+                  {children}
+                </MainContent>
+                <Footer />
+              </Box>
+            </MUIThemeProvider>
+          </LocaleProvider>
+        </QueryProvider>
       </body>
     </html>
   );
