@@ -20,11 +20,7 @@ import {
 } from "@mui/icons-material"
 import { Typography, CircularProgress, Alert, Box } from "@mui/material"
 
-interface ProjectDetailPageProps {
-  params: { slug: string }
-}
-
-export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
+export default function ProjectDetailPage({ params }: { params: { slug: string } }) {
   const { slug } = params
   const { data: rawProject, isLoading, isError, error } = useProjectBySlug(slug)
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
