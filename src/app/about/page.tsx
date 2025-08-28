@@ -96,8 +96,7 @@ export default function AboutPage() {
               right: 0,
               bottom: 0,
               backgroundColor: 'rgba(10, 24, 61, 0.95)',
-              zIndex: 1,
-              borderRadius: '24px'
+              zIndex: 1
             }
           }}
         >
@@ -616,96 +615,114 @@ export default function AboutPage() {
               >
                 {t('about.history.title')}
               </Typography>
-          <Timeline 
-            position={isMobile ? "left" : "alternate"} 
-            sx={isMobile ? {
-              '& .MuiTimelineItem-root': {
-                '&:before': {
-                  display: 'none'
-                }
-              },
-              '& .MuiTimelineContent-root': {
-                paddingLeft: '16px',
-                paddingRight: 0
-              }
-            } : {}}
-          >
-            <TimelineItem className="fade-in-on-scroll animate-delay-1">
-              <TimelineSeparator>
-                <TimelineDot className="bg-cyan-600 transition-all duration-300" />
-                <TimelineConnector />
-              </TimelineSeparator>
-              <TimelineContent>
-                <Paper
-                  elevation={3}
-                  className="p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-1 cursor-pointer group"
+              <Box className="mt-12">
+                <Timeline 
+                  position={isMobile ? "left" : "alternate"} 
+                  sx={isMobile ? {
+                    '& .MuiTimelineItem-root': {
+                      '&:before': {
+                        display: 'none'
+                      }
+                    },
+                    '& .MuiTimelineContent-root': {
+                      paddingLeft: '16px',
+                      paddingRight: 0
+                    }
+                  } : {}}
                 >
-                  <Typography variant="h6" className="font-bold text-cyan-600 mb-2 transition-all duration-300 group-hover:text-cyan-700 group-hover:scale-105">
-                    {t('about.history.timeline.2020.year')}
-                  </Typography>
-                  <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
-                    {t('about.history.timeline.2020.title')}
-                  </Typography>
-                </Paper>
-              </TimelineContent>
-            </TimelineItem>
-            <TimelineItem className="fade-in-on-scroll animate-delay-2">
-              <TimelineSeparator>
-                <TimelineDot className="bg-amber-500 transition-all duration-300" />
-                <TimelineConnector />
-              </TimelineSeparator>
-              <TimelineContent>
-                <Paper
-                  elevation={3}
-                  className="p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-1 cursor-pointer group"
-                >
-                  <Typography variant="h6" className="font-bold text-amber-500 mb-2 transition-all duration-300 group-hover:text-amber-600 group-hover:scale-105">
-                    {t('about.history.timeline.2023.year')}
-                  </Typography>
-                  <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
-                    {t('about.history.timeline.2023.title')}
-                  </Typography>
-                </Paper>
-              </TimelineContent>
-            </TimelineItem>
-            <TimelineItem className="fade-in-on-scroll animate-delay-3">
-              <TimelineSeparator>
-                <TimelineDot className="bg-green-600 transition-all duration-300" />
-                <TimelineConnector />
-              </TimelineSeparator>
-              <TimelineContent>
-                <Paper
-                  elevation={3}
-                  className="p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-1 cursor-pointer group"
-                >
-                  <Typography variant="h6" className="font-bold text-green-600 mb-2 transition-all duration-300 group-hover:text-green-700 group-hover:scale-105">
-                    {t('about.history.timeline.2024.year')}
-                  </Typography>
-                  <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
-                    {t('about.history.timeline.2024.title')}
-                  </Typography>
-                </Paper>
-              </TimelineContent>
-            </TimelineItem>
-            <TimelineItem className="fade-in-on-scroll animate-delay-4">
-              <TimelineSeparator>
-                <TimelineDot className="bg-purple-600 transition-all duration-300" />
-              </TimelineSeparator>
-              <TimelineContent>
-                <Paper
-                  elevation={3}
-                  className="p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-1 cursor-pointer group"
-                >
-                  <Typography variant="h6" className="font-bold text-purple-600 mb-2 transition-all duration-300 group-hover:text-purple-700 group-hover:scale-105">
-                    {t('about.history.timeline.2025.year')}
-                  </Typography>
-                  <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
-                    {t('about.history.timeline.2025.title')}
-                  </Typography>
-                </Paper>
-              </TimelineContent>
-            </TimelineItem>
-          </Timeline>
+                  <TimelineItem className="fade-in-on-scroll animate-delay-1">
+                    <TimelineSeparator>
+                      <TimelineDot className="bg-cyan-600 transition-all duration-300" />
+                      <TimelineConnector />
+                    </TimelineSeparator>
+                    <TimelineContent>
+                      <Paper
+                        elevation={3}
+                        className="p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-1 cursor-pointer group"
+                      >
+                        <Typography
+                          variant="h6"
+                          className="font-bold mb-2 transition-all duration-300 group-hover:text-green-700 group-hover:scale-105"
+                          sx={{ color: 'secondary.main' }}
+                        >
+                          {t('about.history.timeline.2020.year')}
+                        </Typography>
+                        <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
+                          {t('about.history.timeline.2020.title')}
+                        </Typography>
+                      </Paper>
+                    </TimelineContent>
+                  </TimelineItem>
+                  <TimelineItem className="fade-in-on-scroll animate-delay-2">
+                    <TimelineSeparator>
+                      <TimelineDot className="bg-amber-500 transition-all duration-300" />
+                      <TimelineConnector />
+                    </TimelineSeparator>
+                    <TimelineContent>
+                      <Paper
+                        elevation={3}
+                        className="p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-1 cursor-pointer group"
+                      >
+                        <Typography
+                          variant="h6"
+                          className="font-bold mb-2 transition-all duration-300 group-hover:text-green-700 group-hover:scale-105"
+                          sx={{ color: 'secondary.main' }}
+                        >
+                          {t('about.history.timeline.2023.year')}
+                        </Typography>
+                        <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
+                          {t('about.history.timeline.2023.title')}
+                        </Typography>
+                      </Paper>
+                    </TimelineContent>
+                  </TimelineItem>
+                  <TimelineItem className="fade-in-on-scroll animate-delay-3">
+                    <TimelineSeparator>
+                      <TimelineDot className="bg-green-600 transition-all duration-300" />
+                      <TimelineConnector />
+                    </TimelineSeparator>
+                    <TimelineContent>
+                      <Paper
+                        elevation={3}
+                        className="p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-1 cursor-pointer group"
+                      >
+                        <Typography
+                          variant="h6"
+                          className="font-bold mb-2 transition-all duration-300 group-hover:text-green-700 group-hover:scale-105"
+                          sx={{ color: 'secondary.main' }}
+                        >
+                          {t('about.history.timeline.2024.year')}
+                        </Typography>
+                        <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
+                          {t('about.history.timeline.2024.title')}
+                        </Typography>
+                      </Paper>
+                    </TimelineContent>
+                  </TimelineItem>
+                  <TimelineItem className="fade-in-on-scroll animate-delay-4">
+                    <TimelineSeparator>
+                      <TimelineDot className="bg-purple-600 transition-all duration-300" />
+                    </TimelineSeparator>
+                    <TimelineContent>
+                      <Paper
+                        elevation={3}
+                        className="p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-1 cursor-pointer group"
+                      >
+                        <Typography
+                          variant="h6"
+                          className="font-bold mb-2 transition-all duration-300 group-hover:text-green-700 group-hover:scale-105"
+                          sx={{ color: 'secondary.main' }}
+                        >
+                          {t('about.history.timeline.2025.year')}
+                        </Typography>
+                        <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
+                          {t('about.history.timeline.2025.title')}
+                        </Typography>
+                      </Paper>
+                    </TimelineContent>
+                  </TimelineItem>
+                </Timeline>
+              </Box>
             </div>
           </div>
         </section>

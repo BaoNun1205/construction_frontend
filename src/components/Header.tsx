@@ -31,7 +31,7 @@ import ReactCountryFlag from "react-country-flag"
 export default function Header() {
   const theme = useTheme()
   const pathname = usePathname()
-  const homePagePaths = ['/', '/services/design-consulting', '/about']
+  const homePagePaths = ['/', '/services/design-consulting', '/about', '/projects']
   const isHomePage = homePagePaths.includes(pathname)
   const { locale, setLocale } = useLocale()
   const { t } = useTranslations()
@@ -68,16 +68,12 @@ export default function Header() {
   // Projects data
   const projects = [
     {
+      title: 'Dự án thực tế',
+      href: '/projects',
+    },
+        {
       title: 'Mẫu Thiết Kế',
       href: '/projects/design-templates',
-    },
-    {
-      title: 'Đang Triển Khai',
-      href: '/projects/in-progress',
-    },
-    {
-      title: 'Đã Hoàn Thành',
-      href: '/projects/completed',
     }
   ];
 
