@@ -293,7 +293,7 @@ export default function ProjectsPage() {
           pb: { xs: 8, md: 8 },
           position: 'relative',
           overflow: 'hidden',
-          backgroundImage: 'url(/banner/banner_home4.jpg)',
+          backgroundImage: 'url(/banner/banner_home5.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
