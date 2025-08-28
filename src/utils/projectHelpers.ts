@@ -85,6 +85,8 @@ export class ProjectHelpers {
       statusRaw: project.status,
       duration: this.formatDateRange(project.startDate, project.endDate),
       url: `/projects/${project.slug}`,
+      category: project.category.name,
+      categorySlug: project.category.slug,
     }
   }
 
