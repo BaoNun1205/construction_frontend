@@ -68,7 +68,7 @@ export default function Header() {
   // Projects data
   const projects = [
     {
-      title: 'Dự án thực tế',
+      title: 'Dự án thi công',
       href: '/projects',
     },
         {
