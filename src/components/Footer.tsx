@@ -21,6 +21,7 @@ import {
 } from '@mui/icons-material';
 import Link from 'next/link';
 import { useTranslations } from '@/hooks/useTranslations';
+import { CONTACT } from '@/constants/contact';
 
 export default function Footer() {
   const theme = useTheme();
@@ -133,13 +134,13 @@ export default function Footer() {
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Phone sx={{ mr: 1, fontSize: 20 }} />
                 <Typography variant="body2" sx={{ opacity: 0.8 }}>
-                  {t('footer.phone')}
+                  {CONTACT.PHONE}
                 </Typography>
               </Box>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Email sx={{ mr: 1, fontSize: 20 }} />
                 <Typography variant="body2" sx={{ opacity: 0.8 }}>
-                  {t('footer.email')}
+                  {CONTACT.EMAIL}
                 </Typography>
               </Box>
             </Stack>

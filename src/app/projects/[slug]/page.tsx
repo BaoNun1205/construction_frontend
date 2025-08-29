@@ -83,7 +83,7 @@ export default function ProjectDetailPage(props: any) {
   const duration = project.duration
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       {/* Hero Section */}
       <div className={`relative bg-gradient-to-br from-${statusColor}-50 via-background to-${statusColor === 'green' ? 'teal' : 'amber'}-50 overflow-hidden`}>
         <div className="absolute inset-0 bg-cover bg-center opacity-5" style={{ backgroundImage: `url(${project.mainImage})` }}></div>

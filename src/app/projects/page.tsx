@@ -16,6 +16,7 @@ import {
   Assignment,
 } from "@mui/icons-material"
 import { Typography, CircularProgress, Alert, Box, Pagination, useTheme, Container } from "@mui/material"
+import useScrollAnimations from "@/hooks/useScrollAnimations"
 
 interface MultiSelectProps {
   label: string
@@ -134,31 +135,6 @@ function MultiSelect({ label, options, selectedValues, onChange, placeholder, ic
   )
 }
 
-const useScrollAnimations = (projects: unknown[]) => {
-  useEffect(() => {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px',
-    }
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible')
-        }
-      })
-    }, observerOptions)
-
-    const animatedElements = document.querySelectorAll(
-      '.fade-in-on-scroll, .slide-in-left-on-scroll, .slide-in-right-on-scroll, .zoom-in-on-scroll, [data-animate]'
-    )
-
-    animatedElements.forEach((el) => observer.observe(el))
-
-    return () => observer.disconnect()
-  }, [projects])
-}
-
 const ProjectTitle = ({ title }: { title: string }) => {
   return (
     <h3
@@ -187,7 +163,7 @@ export default function ProjectsPage() {
   const projectsPerPage = 6
 
   const allProjects = (data || []).map(project => ProjectHelpers.transformForHomePage(project))
-  useScrollAnimations(allProjects) // Truyền allProjects vào hook
+  useScrollAnimations(undefined, undefined, undefined, allProjects)
 
   const t = (key: string): string => {
     const translations: Record<string, string> = {
@@ -284,7 +260,7 @@ export default function ProjectsPage() {
   }
 
   return (
-    <Box className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-50">
+    <Box className="min-h-screen">
       {/* Hero Section */}
       <Box
         sx={{
@@ -310,7 +286,7 @@ export default function ProjectsPage() {
         }}
       >
         <Container maxWidth="lg">
-          <div className="relative z-10 text-white fade-in-on-scroll">
+          <div className="relative z-10 text-white fade-in-up">
             <Typography
               variant="h6"
               className="text-3xl md:text-4xl font-bold text-center mb-12"
@@ -327,7 +303,7 @@ export default function ProjectsPage() {
             </Typography>
           </div>
 
-          <section className="relative pt-12 md:pt-16 z-[100]" data-section="filter-section">
+          <section className="relative pt-12 md:pt-16 z-[100] fade-in-on" data-section="filter-section">
             <div className="relative p-6 bg-white/10 rounded-2xl border border-white/20 hover:bg-white/15 transition-all duration-300">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                 <div className="w-full">
@@ -397,7 +373,7 @@ export default function ProjectsPage() {
 
         {/* Projects Grid */}
         <section className="pb-16">
-          <div className="my-6">
+          <div className="my-6 slide-in-left">
             <Typography variant="body2" className="text-gray-600">
               Hiển thị {currentProjects.length} trong tổng số {filteredProjects.length} dự án
             </Typography>
@@ -414,7 +390,7 @@ export default function ProjectsPage() {
               </div>
             ) : (
               <>
-                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-8 mb-12">
+                <div className="slide-in-right grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-8 mb-12">
                   {currentProjects.map((project, index) => (
                     <div
                       key={project.id}
@@ -427,7 +403,7 @@ export default function ProjectsPage() {
                       <div className="md:hidden">
                         <Link href={project.url} className="block">
                           <div className="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 h-full cursor-pointer">
-                            <div className="relative h-24 overflow-hidden">
+                            <div className="relative h-32 overflow-hidden">
                               <Image
                                 src={project.image}
                                 alt={project.title}
@@ -437,13 +413,13 @@ export default function ProjectsPage() {
                               />
                             </div>
                             <div className="p-2">
-                              <h3 className="text-xs font-bold text-gray-900 leading-[1.2] mb-1 line-clamp-2 min-h-[1.8rem] transition-colors duration-300 group-hover:text-cyan-600">
+                              <h3 className="text-sm font-bold text-gray-900 leading-[1.2] mb-2 line-clamp-2 min-h-[2rem] transition-colors duration-300 group-hover:text-cyan-600">
                                 {project.title}
                               </h3>
-                              <p className="text-gray-600 text-[10px] leading-tight line-clamp-2 mb-1">
+                              <p className="text-gray-600 text-xs leading-tight line-clamp-3 mb-2">
                                 {project.description}
                               </p>
-                              <p className="text-gray-500 text-[9px] leading-tight mb-1">
+                              <p className="text-gray-500 text-xs leading-tight mb-1">
                                 {project.statusRaw === 'completed' ? t('home.projects.completedOn') : t('home.projects.startedOn')}: {project.duration}
                               </p>
                               <div className="pt-1 border-t border-gray-100 flex items-center justify-between">
@@ -452,7 +428,7 @@ export default function ProjectsPage() {
                                   style={{ color: theme.palette.primary.main }}
                                 >
                                   <Build sx={{ fontSize: 10 }} />
-                                  <span className="text-[9px] font-medium">
+                                  <span className="text-xs font-medium">
                                     {project.statusRaw === 'completed' ? t('home.projects.completed') : t('home.projects.inProgress')}
                                   </span>
                                 </div>

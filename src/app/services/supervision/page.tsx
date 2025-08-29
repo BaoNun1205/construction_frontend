@@ -13,31 +13,9 @@ import {
   Security,
 } from '@mui/icons-material';
 import { useTranslations } from '@/hooks/useTranslations';
-
-const useScrollAnimations = () => {
-  useEffect(() => {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px',
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, observerOptions);
-
-    const animatedElements = document.querySelectorAll(
-      '.fade-in-on-scroll, .slide-in-left-on-scroll, .slide-in-right-on-scroll, .zoom-in-on-scroll'
-    );
-
-    animatedElements.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, []);
-};
+import { CONTACT } from '@/constants/contact';
+import useScrollAnimations from '@/hooks/useScrollAnimations';
+import CallToAction from '@/components/ui/CallToAction';
 
 export default function SupervisionPage() {
   useScrollAnimations();
@@ -81,7 +59,7 @@ export default function SupervisionPage() {
     <Box className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
       <Container maxWidth="lg" className="py-16 space-y-20">
         {/* Header Section */}
-        <section className="fade-in-on-scroll">
+        <section className="fade-in-up">
           <div className="flex flex-col items-center justify-center text-center mb-16">
             <Typography
               variant="h2"
@@ -100,12 +78,12 @@ export default function SupervisionPage() {
         </section>
 
         {/* Services Grid */}
-        <section className="slide-in-left-on-scroll">
+        <section className="slide-in-left">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {supervisionServices.map((service, index) => (
               <div
                 key={index}
-                className="group relative p-8 rounded-3xl bg-gradient-to-br from-white/90 to-gray-50/90 backdrop-blur-lg border border-gray-200/50 transition-all duration-700 cursor-pointer zoom-in-on-scroll overflow-hidden h-full"
+                className="group relative p-8 rounded-3xl bg-gradient-to-br from-white/90 to-gray-50/90 backdrop-blur-lg border border-gray-200/50 transition-all duration-700 cursor-pointer scale-in overflow-hidden h-full"
                 style={{
                   boxShadow: '0 10px 40px rgba(0,0,0,0.08)',
                 }}
@@ -199,7 +177,7 @@ export default function SupervisionPage() {
         </section>
 
         {/* Process Section */}
-        <section className="slide-in-right-on-scroll">
+        <section className="slide-in-right">
           <div className="flex flex-col items-center justify-center text-center mb-12">
             <Typography variant="h3" className="font-bold text-gray-800 mb-4">
               {t('supervision.process.title') as string}
@@ -235,54 +213,8 @@ export default function SupervisionPage() {
             ))}
           </div>
         </section>
-
-        {/* Call to Action */}
-        <section className="text-center fade-in-on-scroll">
-          <div 
-            className="relative rounded-3xl text-white p-8 md:p-12 overflow-hidden"
-            style={{
-              background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, #dc2626 50%, #7c3aed 100%)`,
-              boxShadow: `0 20px 60px ${theme.palette.primary.main}30`,
-            }}
-          >
-            {/* Background decorative elements */}
-            <div className="absolute top-0 left-0 w-32 h-32 bg-white/10 rounded-full -translate-x-16 -translate-y-16"></div>
-            <div className="absolute bottom-0 right-0 w-40 h-40 bg-white/10 rounded-full translate-x-20 translate-y-20"></div>
-            
-            <div className="relative z-10">
-              <div className="flex flex-col items-center justify-center text-center mb-12">
-									<Typography variant="h3" className="mb-6 font-bold text-white">
-											{t('supervision.cta.title') as string}
-									</Typography>
-									<Typography variant="body1" className="text-white/90 max-w-2xl mx-auto leading-relaxed">
-											{t('supervision.cta.subtitle') as string}
-									</Typography>
-							</div>
-              
-              <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                <button
-                  className="relative px-8 py-4 bg-white font-bold rounded-2xl overflow-hidden group transition-all duration-300 hover:scale-105"
-                  style={{
-                    color: theme.palette.primary.main,
-                    boxShadow: '0 8px 30px rgba(255,255,255,0.3)',
-                  }}
-                >
-                  <span className="relative z-10 text-lg">{t('supervision.cta.phone') as string}</span>
-                </button>
-                
-                <button
-                  className="relative px-8 py-4 border-2 border-white text-white font-bold rounded-2xl overflow-hidden group transition-all duration-300 hover:scale-105"
-                  style={{
-                    backdropFilter: 'blur(10px)',
-                  }}
-                >
-                  <span className="relative z-10 text-lg">{t('supervision.cta.consultBtn') as string}</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
       </Container>
+      <CallToAction />
     </Box>
   )
 }

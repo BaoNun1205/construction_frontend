@@ -4,7 +4,7 @@
 		"title": "Uy tín tạo niềm tin",
 		"services": {
 			"construction": "Thi công xây dựng công trình",
-			"design": "Tư vấn và thiết kế",
+			"design": "Tư vấn thiết kế",
 			"supervision": "Tư vấn giám sát",
 			"projectManagement": "Tư vấn quản lý dự án",
 			"bidding": "Tư vấn đấu thầu"
@@ -23,7 +23,6 @@
       "subtitle": "Đối tác tin cậy trong mọi dự án xây dựng của bạn.",
       "description": "Chất lượng - Uy tín - Chuyên nghiệp",
       "contactBtn": "Liên hệ ngay",
-      "phone": "0939 927 975",
       "scrollDown": "Cuộn xuống để xem thêm"
     },
     "services": {
@@ -97,6 +96,14 @@
 					"year": "11/05/2020",
 					"title": "Khởi đầu hành trình xây dựng với đội ngũ nhiệt huyết và chuyên nghiệp"
 				},
+				"2021": {
+					"year": "2021",
+					"title": "Mở rộng đội ngũ, hoàn thiện quy trình quản lý và thực hiện những dự án đầu tiên"
+				},
+				"2022": {
+					"year": "2022",
+					"title": "Tích lũy kinh nghiệm, xây dựng uy tín với đối tác và chuẩn bị nền tảng pháp lý"
+				},
 				"2023": {
 					"year": "09/03/2023", 
 					"title": "Lai Phát được thành lập do Sở Kế hoạch và Đầu tư TP. Hồ Chí Minh cấp giấy phép, kế thừa và phát triển từ tiền phong Talacons"
@@ -156,7 +163,6 @@
         "representativeLabel": "Người Đại Diện Theo Pháp Luật",
         "representative": "Ông/Bà: Tạ Văn Lai - Chức vụ: Giám đốc",
         "phoneLabel": "Số Điện Thoại",
-        "phone": "0939927975",
         "emailLabel": "Email",
         "email": "laiphatgroup@gmail.com",
         "websiteLabel": "Website",
@@ -343,7 +349,6 @@
     "cta": {
       "title": "Sẵn Sàng Khởi Công Dự Án Của Bạn?",
       "description": "Liên hệ với chúng tôi ngay hôm nay để được tư vấn chi tiết về thi công xây dựng và báo giá miễn phí",
-      "phone": "0939 927 975",
       "quoteBtn": "Yêu Cầu Báo Giá"
     }
   },
@@ -362,8 +367,6 @@
     "architecture": "Thiết kế kiến trúc",
     "contactTitle": "Liên hệ",
     "address": "Xã Vĩnh Lộc, TP.HCM",
-    "phone": "0939 927 975",
-    "email": "laiphatgroup@gmail.com",
     "copyright": "© 2025 LaiPhat Construction. All rights reserved.",
     "privacy": "Chính sách bảo mật",
     "terms": "Điều khoản sử dụng"
@@ -427,7 +430,6 @@
     "cta": {
       "title": "Bắt Đầu Thiết Kế Ước Mơ Của Bạn",
       "subtitle": "Hãy để chúng tôi biến ý tưởng của bạn thành những bản thiết kế hoàn hảo. Tư vấn miễn phí và báo giá cạnh tranh nhất thị trường",
-      "phone": "0939 927 975",
       "quoteBtn": "Nhận Báo Giá Thiết Kế"
     }
   },
@@ -516,7 +518,6 @@
     "cta": {
       "title": "Đảm Bảo Chất Lượng Công Trình",
       "subtitle": "Với đội ngũ giám sát viên chuyên nghiệp, chúng tôi cam kết mang đến sự yên tâm tuyệt đối cho dự án của bạn",
-      "phone": "0939 927 975",
       "consultBtn": "Tư Vấn Dịch Vụ Giám Sát"
     }
   },
@@ -629,7 +630,6 @@
         "projects": "500+",
         "projectsDesc": "Dự án đã quản lý"
       },
-      "phone": "0939 927 975",
       "consultBtn": "Tư Vấn Quản Lý Dự Án"
     }
   },
@@ -774,7 +774,6 @@
         "savings": "20%",
         "savingsDesc": "Tiết kiệm chi phí trung bình"
       },
-      "phone": "0939 927 975",
       "consultBtn": "Tư Vấn Đấu Thầu"
     }
   },
@@ -798,11 +797,8 @@
       "details": {
         "title": "Chi Tiết Liên Hệ",
         "phone": "Điện thoại:",
-        "phoneNumber": "0939 927 975",
         "email": "Email:",
-        "emailAddress": "laiphatgroup@gmail.com",
-        "website": "Website:",
-        "websiteUrl": "https://laiphat.com/"
+        "website": "Website:"
       },
       "map": {
         "title": "Bản Đồ Vị Trí"

@@ -32,34 +32,8 @@ import { useEffect, useState } from 'react';
 import { useTranslations } from '@/hooks/useTranslations';
 import { useProjects } from '@/hooks/useProjects';
 import ProjectHelpers from '@/utils/projectHelpers';
-
-// Intersection Observer Hook
-const useScrollAnimations = (deps: unknown[] = []) => {
-  useEffect(() => {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, observerOptions);
-
-    // Observe all animation elements
-    const animatedElements = document.querySelectorAll(
-      '.fade-in-on-scroll, .slide-in-left-on-scroll, .slide-in-right-on-scroll, .zoom-in-on-scroll'
-    );
-
-    animatedElements.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, deps);
-};
+import { CONTACT } from '@/constants/contact';
+import useScrollAnimations from '@/hooks/useScrollAnimations';
 
 export default function Home() {
   const theme = useTheme();
@@ -71,7 +45,7 @@ export default function Home() {
   const { data, isLoading, error } = useProjects()
   const projects = (data || []).map(project => ProjectHelpers.transformForHomePage(project));
 
-  useScrollAnimations([projects]);
+  useScrollAnimations(undefined, undefined, undefined, [projects]);
 
   // Component for project title with fixed height and tooltip
   const ProjectTitle = ({ title }: { title: string }) => {
@@ -178,121 +152,6 @@ export default function Home() {
     }
   ];
 
-  // const projects = [
-  //   {
-  //     title: 'Nhà máy Thái Bình Dương – KCN Xuyên Á, Mỹ Hạnh Bắc, Đức Hòa, Long An',
-  //     description: 'Thi công nhà xưởng, hạ tầng, công trình phụ trợ. Bể tổng cốt thép, hệ thống điện nước PCCC, hoàn thiện kiến trúc.',
-  //     image: '/products/thai-binh-duong-factory.jpg',
-  //     status: 'Đang triển khai',
-  //     duration: '06/2025 - Theo ngày phát hành hồ sơ',
-  //     url: '/projects/thai-binh-duong-factory'
-  //   },
-  //   {
-  //     title: 'Thi công trọn gói Hạ tầng kỹ thuật – Hauhua Bình Phước',
-  //     description: 'Hoàn thiện hệ thống tưới thoát nước mưa và hoàn thiện hạng mục nền đường bê tông, đảm bảo hạ tầng đồng bộ và bền vững.',
-  //     image: '/products/hauhua-binh-phuoc.jpg',
-  //     status: 'Hoàn thành',
-  //     duration: '10/04/2025 - 30/06/2025',
-  //     url: '/projects/infrastructure-hauhua'
-  //   },
-  //   {
-  //     title: 'Thi công trọn gói bể bơi gia đình – Phước Kiến, Nhà Bè',
-  //     description: 'Hoàn thiện phần thô và phần hoàn thiện bể bơi gia đình cao cấp với hệ thống lọc nước hiện đại.',
-  //     image: '/products/be-boi-gia-dinh.jpg',
-  //     status: 'Hoàn thành',
-  //     duration: '25/12/2024 - 15/01/2025',
-  //     url: '/projects/swimming-pool'
-  //   },
-  //   {
-  //     title: 'Thi công trọn gói nhà vườn – Long An',
-  //     description: 'Hoàn thiện phần thô và phần hoàn thiện nhà vườn với thiết kế hài hòa cùng thiên nhiên.',
-  //     image: '/products/nha-vuon-long-an.jpg',
-  //     status: 'Hoàn thành',
-  //     duration: '15/11/2024 - 30/12/2024',
-  //     url: '/projects/detail2'
-  //   },
-  //   {
-  //     title: 'Thi công phần móng + hạ tầng mái che Nhà Máy Đạm – Cà Mau',
-  //     description: 'Thi công lắp sàn dao móng dưới nước, cốt pha, cốt thép, bê tông móng + đâm móng và hệ thống hạ tầng thoát nước mưa, nước thải.',
-  //     image: '/products/nha-may-dam-ca-mau.jpg',
-  //     status: 'Hoàn thành',
-  //     duration: '15/04/2024 - 11/2024',
-  //     url: '/projects/fertilizer-plant-foundation-roof'
-  //   },
-  //   {
-  //     title: 'Công hợp (Sông Chùa) – Bình Chánh',
-  //     description: 'Bê tông bịt đầy, bê tông + cốt thép + cốt pha (Đầy + tường + nắp cống), thi công hoàn thiện.',
-  //     image: '/products/cong-hop-song-chua.jpg',
-  //     status: 'Hoàn thành',
-  //     duration: '12/02/2024',
-  //     url: '/projects/detail2'
-  //   },
-  //   {
-  //     title: 'Nhà biệt thự – Long An',
-  //     description: 'Bê tông cốt thép phần móng, đâm sàn, thi công xây tô các tầng, thi công sân vườn hàng rào và ốp lát hoàn thiện.',
-  //     image: '/products/biet-thu-long-an.jpg',
-  //     status: 'Hoàn thành',
-  //     duration: '05/04/2023 - 09/2023',
-  //     url: '/projects/villa-house'
-  //   },
-  //   {
-  //     title: 'Sửa chữa, cải tạo căn hộ chung cư – Hoàng Pháp, Trung Sơn',
-  //     description: 'Thi công phá dỡ kết cấu nền, tường, vách hiện hữu. Thi công xây tô, chống thấm các vị trí phòng. Vệ sinh, chống thấm sàn mái, ban công, sê nô. Bơm keo áp lực vị trí có ống các khu vệ sinh, sàn mái, ban công.',
-  //     image: '/products/trung-son.jpg',
-  //     status: 'Hoàn thành',
-  //     duration: '10/06/2023 - 25/06/2023',
-  //     url: '/projects/detail2'
-  //   },
-  //   {
-  //     title: 'Sửa chữa cải tạo nhà phố – Q12',
-  //     description: 'Thi công phá dỡ kết cấu nền, tường, vách hiện hữu. Thi công xây tô, chống thấm các vị trí phòng. Thi công ốp lát. Thi công hệ thống điện. Thi công sơn nước trong và ngoài nhà.',
-  //     image: '/products/nha-pho-q12.jpg',
-  //     status: 'Hoàn thành',
-  //     duration: '16/03/2023 - 30/04/2023',
-  //     url: '/projects/detail2'
-  //   },
-  //   {
-  //     title: 'Sửa chữa cải tao Quán Cfe – 282 Pasteur – Q3',
-  //     description: 'Thi công xây tô, ốp lát nền tường. Thi công hệ thống điện. Thi công sơn nước. Thi công nội thất: Quầy pha chế, tủ, bàn ghế. Thi công ốp Alu, mặt tiền.',
-  //     image: '/products/quan-cafe-q3.jpg',
-  //     status: 'Hoàn thành',
-  //     duration: '05/02/2023 - 25/03/2023',
-  //     url: '/projects/detail2'
-  //   },
-  //   {
-  //     title: 'Dự án Shophouse – Tân Trụ, Long An',
-  //     description: 'Thi công 10 căn liền kề phần móng, phần thân, phần hoàn thiện ngoài nhà, phần hạ tầng kỹ thuật - sân vườn.',
-  //     image: '/products/shophouse-tan-tru.jpg',
-  //     status: 'Hoàn thành',
-  //     duration: '05/01/2022 - 10/02/2022',
-  //     url: '/projects/shophouse'
-  //   },
-  //   {
-  //     title: 'Bơm keo áp lực đường nứt – Đường BTCT khu dự án Vũng Tàu',
-  //     description: 'Xử lý nứt tường bao ngoài nhà bằng keo chống thấm. Thi công cao bồ lớp sơn cũ và bả bột lán sơn hoàn thiện.',
-  //     image: '/products/bom-keo-vung-tau.jpg',
-  //     status: 'Hoàn thành',
-  //     duration: '01/09/2021 - 15/09/2021',
-  //     url: '/projects/detail2'
-  //   },
-  //   {
-  //     title: 'Khách sạn Mỹ Lệ – Bình Phước',
-  //     description: 'Tường bao ngoài nhà, sàn thượng, ban công, mái, khu WC, các tầng, vệ sinh, chống thấm sàn mái, ban công, sê nô. Bơm keo áp lực vị trí có ống các khu vệ sinh, sàn mái, ban công.',
-  //     image: '/products/khach-san-my-le.jpg',
-  //     status: 'Hoàn thành',
-  //     duration: '05/01/2022 - 10/02/2022',
-  //     url: '/projects/detail2'
-  //   },
-  //   {
-  //     title: 'Sửa chữa, cải tạo nhà ở văn phòng 198 Võ Văn Kiệt – Q1',
-  //     description: 'Thi công phá dỡ, đàm sàn, kết cấu nền, tường, mái, lắn can. Thi công kết cấu bê tông cốt thép phần móng, thang máy, cầu thang bộ, cốt sàn mái. Thi công xây tô, ốp lát hoàn thiện trong và ngoài nhà. Thi công hệ thống điện nước, sơn nước.',
-  //     image: '/products/vo-van-kiet-q1.jpg',
-  //     status: 'Hoàn thành',
-  //     duration: '01/06/2021 - 20/08/2021',
-  //     url: '/projects/detail2'
-  //   }
-  // ];
-
   return (
     <Box>
       {/* Hero Section */}
@@ -321,7 +180,7 @@ export default function Home() {
       >
         <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div className="slide-in-left-on-scroll">
+            <div className="slide-in-left">
               <Typography
                 variant="h1"
                 gutterBottom
@@ -390,11 +249,11 @@ export default function Home() {
                     }
                   }}
                 >
-                  {t('home.hero.phone')}
+                  {CONTACT.PHONE}
                 </Button>
               </Stack>
             </div>
-            <div className="slide-in-right-on-scroll">
+            <div className="slide-in-right">
               <Box
                 sx={{
                   height: { xs: 300, md: 400 },
@@ -529,7 +388,7 @@ export default function Home() {
           >
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               {/* Left Content */}
-              <div className="slide-in-left-on-scroll">
+              <div className="slide-in-left">
                 <Typography 
                   variant="h2" 
                   gutterBottom 
@@ -578,7 +437,7 @@ export default function Home() {
               </div>
 
               {/* Right Services Cards */}
-              <div className="slide-in-right-on-scroll" style={{ position: 'relative' }}>
+              <div className="slide-in-right" style={{ position: 'relative' }}>
                 <Box
                   className="scroll-container"
                   onScroll={(e) => {
@@ -618,30 +477,7 @@ export default function Home() {
                     msOverflowStyle: 'none', // IE and Edge
                     '&::-webkit-scrollbar': {
                       display: 'none', // Chrome, Safari, Opera
-                    },
-                    // Fade effects
-                    '&::before': {
-                      content: '""',
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      height: '20px',
-                      background: 'linear-gradient(to bottom, white 0%, transparent 100%)',
-                      zIndex: 1,
-                      pointerEvents: 'none',
-                    },
-                    '&::after': {
-                      content: '""',
-                      position: 'absolute',
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      height: '20px',
-                      background: 'linear-gradient(to top, white 0%, transparent 100%)',
-                      zIndex: 1,
-                      pointerEvents: 'none',
-                    },
+                    }
                   }}
                 >
                   <div className="space-y-3 pr-2">
@@ -665,7 +501,7 @@ export default function Home() {
                             position: 'relative',
                             '&:hover': {
                               transform: 'translateX(8px)',
-                              // borderColor: theme.palette.primary.main,
+                              borderColor: theme.palette.primary.main,
                               zIndex: 2,
                             }
                           }}
@@ -703,7 +539,8 @@ export default function Home() {
                                 sx={{ 
                                   color: 'text.secondary',
                                   lineHeight: 1.4,
-                                  fontSize: '0.85rem'
+                                  fontSize: '0.85rem',
+                                  display: { xs: 'none', md: 'block' }
                                 }}
                               >
                                 {service.description}
@@ -816,7 +653,7 @@ export default function Home() {
       {/* Projects Section */}
       <Box sx={{ backgroundColor: theme.palette.grey[50], py: 8 }}>
         <Container maxWidth="lg">
-          <Box textAlign="center" mb={6} className="fade-in-on-scroll">
+          <Box textAlign="center" mb={6} className="fade-in-up">
             <Typography variant="h2" gutterBottom sx={{ fontWeight: 700 }}>
               {t('home.projects.title')}
             </Typography>
@@ -827,9 +664,9 @@ export default function Home() {
 
           {/* Projects Carousel */}
           <div className="relative">
-            {/* Left Arrow Button */}
+            {/* Left Arrow Button - Hidden on mobile/tablet */}
             <button
-              className="absolute -left-16 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center transition-colors duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="absolute -left-16 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center transition-colors duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed hidden lg:flex"
               style={{
                 color: '#6b7280',
                 transition: 'color 300ms'
@@ -854,9 +691,9 @@ export default function Home() {
               <ArrowBackIos sx={{ fontSize: 28 }} />
             </button>
 
-            {/* Right Arrow Button */}
+            {/* Right Arrow Button - Hidden on mobile/tablet */}
             <button
-              className="absolute -right-16 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center transition-colors duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="absolute -right-16 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center transition-colors duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed hidden lg:flex"
               style={{
                 color: '#6b7280',
                 transition: 'color 300ms'
@@ -913,7 +750,7 @@ export default function Home() {
               {projects.map((project, index) => (
                 <div
                   key={index}
-                  className={`flex-shrink-0 w-80 slide-in-left-on-scroll animate-delay-${index + 1}`}
+                  className={`flex-shrink-0 w-80 slide-in-left animate-delay-${index + 1}`}
                   style={{ scrollSnapAlign: 'start' }}
                 >
                   {/* Custom Project Card */}
@@ -1033,7 +870,7 @@ export default function Home() {
           </Typography>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Experience */}
-            <div className="zoom-in-on-scroll animate-delay-1">
+            <div className="scale-in animate-delay-1">
               <div className="text-center p-6 rounded-2xl bg-white/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 hover:shadow-xl hover:scale-105 h-80 flex flex-col">
                 <div className="flex justify-center mb-4 flex-shrink-0">
                   <EmojiEvents
@@ -1052,7 +889,7 @@ export default function Home() {
               </div>
             </div>
             {/* Solution */}
-            <div className="zoom-in-on-scroll animate-delay-2">
+            <div className="scale-in animate-delay-2">
               <div className="text-center p-6 rounded-2xl bg-white/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 hover:shadow-xl hover:scale-105 h-80 flex flex-col">
                 <div className="flex justify-center mb-4 flex-shrink-0">
                   <Architecture 
@@ -1071,7 +908,7 @@ export default function Home() {
               </div>
             </div>
             {/* Quality */}
-            <div className="zoom-in-on-scroll animate-delay-3">
+            <div className="scale-in animate-delay-3">
               <div className="text-center p-6 rounded-2xl bg-white/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 hover:shadow-xl hover:scale-105 h-80 flex flex-col">
                 <div className="flex justify-center mb-4 flex-shrink-0">
                   <VerifiedUser
@@ -1090,7 +927,7 @@ export default function Home() {
               </div>
             </div>
             {/* Team */}
-            <div className="zoom-in-on-scroll animate-delay-4">
+            <div className="scale-in animate-delay-4">
               <div className="text-center p-6 rounded-2xl bg-white/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 hover:shadow-xl hover:scale-105 h-80 flex flex-col">
                 <div className="flex justify-center mb-4 flex-shrink-0">
                   <Group
@@ -1116,7 +953,7 @@ export default function Home() {
       <Container maxWidth="lg" sx={{ py: 8 }}>
         <Paper
           elevation={0}
-          className="zoom-in-on-scroll"
+          className="scale-in"
           sx={{
             background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
             color: 'white',

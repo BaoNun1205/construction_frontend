@@ -8,7 +8,6 @@ import {
   Card,
   Avatar,
   Chip,
-  Paper,
   Rating,
   useTheme,
   CardMedia,
@@ -16,14 +15,7 @@ import {
   IconButton,
   useMediaQuery,
 } from '@mui/material';
-import {
-  Timeline,
-  TimelineItem,
-  TimelineSeparator,
-  TimelineConnector,
-  TimelineContent,
-  TimelineDot,
-} from '@mui/lab';
+
 import {
   Business,
   Visibility,
@@ -37,32 +29,8 @@ import {
   ZoomIn,
 } from '@mui/icons-material';
 import { useTranslations } from '@/hooks/useTranslations';
-
-// Intersection Observer Hook
-const useScrollAnimations = () => {
-  useEffect(() => {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px',
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, observerOptions);
-
-    const animatedElements = document.querySelectorAll(
-      '.fade-in-on-scroll, .slide-in-left-on-scroll, .slide-in-right-on-scroll, .zoom-in-on-scroll'
-    );
-
-    animatedElements.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, []);
-};
+import { CONTACT } from '@/constants/contact';
+import useScrollAnimations from '@/hooks/useScrollAnimations';
 
 export default function AboutPage() {
   useScrollAnimations();
@@ -74,7 +42,7 @@ export default function AboutPage() {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
-    <Box className="min-h-screen bg-gradient-to-br from-cyan-50 to-amber-50">
+    <Box className="min-h-screen">
       {/* Business Information Section */}
       <section>
         <Box
@@ -101,7 +69,7 @@ export default function AboutPage() {
           }}
         >
           <Container maxWidth="lg">
-            <div className="relative z-10 text-white fade-in-on-scroll">
+            <div className="relative z-10 text-white fade-in-up">
               <Typography
                 variant="h2"
                 className="text-3xl md:text-4xl font-bold text-center mb-12"
@@ -215,7 +183,7 @@ export default function AboutPage() {
       </section>
       <Container maxWidth="lg" className="py-16 space-y-20">
         {/* Mission, Vision, Values */}
-        <section className="fade-in-on-scroll">
+        <section className="fade-in-up">
           <Typography
             variant="h3"
             className="text-2xl font-bold text-center mb-8 text-gray-800"
@@ -224,7 +192,7 @@ export default function AboutPage() {
             {t('about.title')}
           </Typography>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="zoom-in-on-scroll animate-delay-1">
+            <div className="scale-in animate-delay-1">
               <div 
                 className="h-full text-center p-8 rounded-3xl bg-gradient-to-br from-white/80 to-gray-50/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 cursor-pointer group overflow-hidden relative"
                 style={{
@@ -280,7 +248,7 @@ export default function AboutPage() {
                 </div>
               </div>
             </div>
-            <div className="zoom-in-on-scroll animate-delay-2">
+            <div className="scale-in animate-delay-2">
               <div 
                 className="h-full text-center p-8 rounded-3xl bg-gradient-to-br from-white/80 to-gray-50/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 cursor-pointer group overflow-hidden relative"
                 style={{
@@ -336,7 +304,7 @@ export default function AboutPage() {
                 </div>
               </div>
             </div>
-            <div className="zoom-in-on-scroll animate-delay-3">
+            <div className="scale-in animate-delay-3">
               <div 
                 className="h-full text-center p-8 rounded-3xl bg-gradient-to-br from-white/80 to-gray-50/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 cursor-pointer group overflow-hidden relative"
                 style={{
@@ -397,7 +365,7 @@ export default function AboutPage() {
 
         {/* Certifications & Credentials */}
         <section>
-          <div className="text-center mb-16 fade-in-on-scroll">
+          <div className="text-center mb-16 fade-in-up">
             <Typography
               variant="h2"
               className="text-3xl md:text-4xl font-bold text-gray-800 mb-6"
@@ -407,7 +375,7 @@ export default function AboutPage() {
           </div>
 
           <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-2'}`}>
-            <div className={`${isMobile ? 'hidden' : ''} slide-in-left-on-scroll`}>
+            <div className={`${isMobile ? 'hidden' : ''} slide-in-left`}>
               <Card className="transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.02] group h-full">
                 <div className="p-8 h-full flex flex-col">
                   <div className="flex items-center gap-4 mb-6">
@@ -454,7 +422,7 @@ export default function AboutPage() {
                           {t('about.certificates.businessRegistration.phoneLabel')}:
                         </Typography>
                         <Typography variant="body2" className="font-semibold text-gray-800">
-                          {t('about.certificates.businessRegistration.phone')}
+                          {CONTACT.PHONE}
                         </Typography>
                       </div>
                       <div className="flex justify-between">
@@ -462,7 +430,7 @@ export default function AboutPage() {
                           {t('about.certificates.businessRegistration.emailLabel')}:
                         </Typography>
                         <Typography variant="body2" className="font-semibold text-gray-800">
-                          {t('about.certificates.businessRegistration.email')}
+                          {CONTACT.EMAIL}
                         </Typography>
                       </div>
                       <div className="flex justify-between">
@@ -470,7 +438,7 @@ export default function AboutPage() {
                           {t('about.certificates.businessRegistration.websiteLabel')}:
                         </Typography>
                         <Typography variant="body2" className="font-semibold text-gray-800">
-                          {t('about.certificates.businessRegistration.website')}
+                          {CONTACT.WEBSITE}
                         </Typography>
                       </div>
                       <div className="flex justify-between">
@@ -548,7 +516,7 @@ export default function AboutPage() {
               </Card>
             </div>
 
-            <div className={`${isMobile ? 'col-span-1' : ''} slide-in-right-on-scroll`}>
+            <div className={`${isMobile ? 'col-span-1' : ''} slide-in-right`}>
               <Card className={`transition-all duration-500 ease-in-out hover:shadow-2xl hover:-translate-y-2 group overflow-visible h-full w-full`}>
                 <div className="p-6 h-full flex flex-col justify-center">
                   <div className="relative flex-1 flex items-center justify-center group/image">
@@ -590,145 +558,215 @@ export default function AboutPage() {
         </section>
 
         {/* Company History */}
-        <section className="slide-in-left-on-scroll">
-          <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-white/90 to-gray-50/90 backdrop-blur-xl border border-white/50 p-8 md:p-12">
-            {/* Background pattern */}
-            <div className="absolute inset-0 opacity-5">
-              <div 
-                className="absolute top-0 left-0 w-32 h-32 rounded-full -translate-x-16 -translate-y-16"
-                style={{
-                  background: `linear-gradient(to bottom right, ${theme.palette.primary.main}, ${theme.palette.primary.main})`
-                }}
-              ></div>
-              <div 
-                className="absolute bottom-0 right-0 w-40 h-40 rounded-full translate-x-20 translate-y-20"
-                style={{
-                  background: `linear-gradient(to bottom right, ${theme.palette.primary.main}, ${theme.palette.primary.main})`
-                }}
-              ></div>
-            </div>
-            
-            <div className="relative z-10">
-              <Typography
-                variant="h2"
-                className="text-3xl font-bold text-center mb-12 text-gray-800"
+        <section className="slide-in-left ">
+          <Typography
+            variant="h2"
+            className="fade-in-on text-3xl font-bold text-center mb-20 text-gray-800 relative z-30"
+          >
+            {t('about.history.title')}
+          </Typography>
+
+          {/* box chứa timeline */}
+          <div className="mt-16 md:px-28 lg:py-14 overflow-visible">
+            {/* Desktop horizontal timeline */}
+            <div className="hidden lg:block relative mt-6">
+              {/* Main horizontal line */}
+              <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-cyan-400 transform -translate-y-0.5"></div>
+
+              {/* Timeline items */}
+              <div
+                className="flex justify-between items-center relative"
+                style={{ paddingTop: "160px", paddingBottom: "160px" }} // tăng khoảng cách trên/dưới
               >
-                {t('about.history.title')}
-              </Typography>
-              <Box className="mt-12">
-                <Timeline 
-                  position={isMobile ? "left" : "alternate"} 
-                  sx={isMobile ? {
-                    '& .MuiTimelineItem-root': {
-                      '&:before': {
-                        display: 'none'
-                      }
-                    },
-                    '& .MuiTimelineContent-root': {
-                      paddingLeft: '16px',
-                      paddingRight: 0
-                    }
-                  } : {}}
-                >
-                  <TimelineItem className="fade-in-on-scroll animate-delay-1">
-                    <TimelineSeparator>
-                      <TimelineDot className="bg-cyan-600 transition-all duration-300" />
-                      <TimelineConnector />
-                    </TimelineSeparator>
-                    <TimelineContent>
-                      <Paper
-                        elevation={3}
-                        className="p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-1 cursor-pointer group"
+                {[
+                  {
+                    year: "2020",
+                    position: "bottom",
+                    title: "Khởi đầu hành trình xây dựng với đội ngũ nhiệt huyết và chuyên nghiệp",
+                    color: "teal",
+                  },
+                  {
+                    year: "2021",
+                    position: "top",
+                    title: "Mở rộng đội ngũ, hoàn thiện quy trình quản lý và thực hiện những dự án đầu tiên",
+                    color: "blue",
+                  },
+                  {
+                    year: "2022",
+                    position: "bottom",
+                    title: "Tích lũy kinh nghiệm, xây dựng uy tín với đối tác và chuẩn bị nền tảng pháp lý",
+                    color: "teal",
+                  },
+                  {
+                    year: "2023",
+                    position: "top",
+                    title: "Lai Phát được thành lập do Sở Kế hoạch và Đầu tư TP. Hồ Chí Minh cấp giấy phép, kế thừa và phát triển từ tiền phong Talacons",
+                    color: "blue",
+                  },
+                  {
+                    year: "2024",
+                    position: "bottom",
+                    title: "Đạt được chứng nhận chất lượng và năng lực hoạt động xây dựng theo tiêu chuẩn nhà nước",
+                    color: "teal",
+                  },
+                  {
+                    year: "2025",
+                    position: "top",
+                    title: "Tiếp tục phát triển mạnh mẽ và khẳng định vị thế trên thị trường xây dựng Việt Nam",
+                    color: "blue",
+                  },
+                ].map((item, index) => (
+                  <div key={index} className="flex flex-col items-center relative 
+                  slide-in-left">
+                    {/* Top content */}
+                    {item.position === "top" && (
+                      <div
+                        className="absolute bottom-6 w-56 text-center z-20 fade-in-on"
+                        style={{ transitionDelay: `${(index + 1) * 500}ms` }}
                       >
-                        <Typography
-                          variant="h6"
-                          className="font-bold mb-2 transition-all duration-300 group-hover:text-green-700 group-hover:scale-105"
-                          sx={{ color: 'secondary.main' }}
-                        >
-                          {t('about.history.timeline.2020.year')}
-                        </Typography>
-                        <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
-                          {t('about.history.timeline.2020.title')}
-                        </Typography>
-                      </Paper>
-                    </TimelineContent>
-                  </TimelineItem>
-                  <TimelineItem className="fade-in-on-scroll animate-delay-2">
-                    <TimelineSeparator>
-                      <TimelineDot className="bg-amber-500 transition-all duration-300" />
-                      <TimelineConnector />
-                    </TimelineSeparator>
-                    <TimelineContent>
-                      <Paper
-                        elevation={3}
-                        className="p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-1 cursor-pointer group"
+                        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-4">
+                          <p className="text-sm text-gray-700 leading-relaxed">{item.title}</p>
+                        </div>
+
+                        {/* connector with small circle at start */}
+                          <div className="relative mx-auto" style={{ width: 2 }}>
+                            <div
+                              className={`absolute -top-2 left-1/2 transform -translate-x-1/2 w-3 h-3 rounded-full ${
+                                item.color === "teal" ? "bg-cyan-400" : "bg-blue-500"
+                              }`}
+                            />
+                            <div className={`w-0.5 h-12 mx-auto ${item.color === "teal" ? "bg-cyan-400" : "bg-blue-500"}`}></div>
+                          </div>
+                      </div>
+                    )}
+
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+                      <div
+                        className={`w-6 h-6 rounded-full border-4 bg-white flex items-center justify-center ${
+                          item.color === "teal" ? "border-cyan-400" : "border-blue-500"
+                        }`}
                       >
-                        <Typography
-                          variant="h6"
-                          className="font-bold mb-2 transition-all duration-300 group-hover:text-green-700 group-hover:scale-105"
-                          sx={{ color: 'secondary.main' }}
-                        >
-                          {t('about.history.timeline.2023.year')}
-                        </Typography>
-                        <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
-                          {t('about.history.timeline.2023.title')}
-                        </Typography>
-                      </Paper>
-                    </TimelineContent>
-                  </TimelineItem>
-                  <TimelineItem className="fade-in-on-scroll animate-delay-3">
-                    <TimelineSeparator>
-                      <TimelineDot className="bg-green-600 transition-all duration-300" />
-                      <TimelineConnector />
-                    </TimelineSeparator>
-                    <TimelineContent>
-                      <Paper
-                        elevation={3}
-                        className="p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-1 cursor-pointer group"
+                        <div
+                          className={`w-2 h-2 rounded-full ${item.color === "teal" ? "bg-cyan-400" : "bg-blue-500"}`}
+                        ></div>
+                      </div>
+                      <div
+                        className={`absolute left-1/2 transform -translate-x-1/2 px-2 ${
+                          ["2020", "2022", "2024"].includes(item.year) ? "-top-12" : "-bottom-12"
+                        }`}
                       >
-                        <Typography
-                          variant="h6"
-                          className="font-bold mb-2 transition-all duration-300 group-hover:text-green-700 group-hover:scale-105"
-                          sx={{ color: 'secondary.main' }}
-                        >
-                          {t('about.history.timeline.2024.year')}
-                        </Typography>
-                        <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
-                          {t('about.history.timeline.2024.title')}
-                        </Typography>
-                      </Paper>
-                    </TimelineContent>
-                  </TimelineItem>
-                  <TimelineItem className="fade-in-on-scroll animate-delay-4">
-                    <TimelineSeparator>
-                      <TimelineDot className="bg-purple-600 transition-all duration-300" />
-                    </TimelineSeparator>
-                    <TimelineContent>
-                      <Paper
-                        elevation={3}
-                        className="p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-1 cursor-pointer group"
+                        <div className="font-bold text-2xl text-gray-800">{item.year}</div>
+                      </div>
+                    </div>
+
+                    {/* Bottom content */}
+                    {item.position === "bottom" && (
+                      <div
+                        className="absolute top-6 w-56 text-center z-20 fade-in-up"
+                        style={{ transitionDelay: `${(index + 1) * 500}ms` }}
                       >
-                        <Typography
-                          variant="h6"
-                          className="font-bold mb-2 transition-all duration-300 group-hover:text-green-700 group-hover:scale-105"
-                          sx={{ color: 'secondary.main' }}
-                        >
-                          {t('about.history.timeline.2025.year')}
-                        </Typography>
-                        <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
-                          {t('about.history.timeline.2025.title')}
-                        </Typography>
-                      </Paper>
-                    </TimelineContent>
-                  </TimelineItem>
-                </Timeline>
-              </Box>
+                        {/* connector with small circle at start */}
+                        <div className="relative mx-auto" style={{ width: 2 }}>
+                          <div
+                            className={`absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-3 h-3 rounded-full ${
+                              item.color === "teal" ? "bg-cyan-400" : "bg-blue-500"
+                            }`}
+                          />
+                          <div
+                            className={`w-0.5 h-12 mx-auto mb-4 ${item.color === "teal" ? "bg-cyan-400" : "bg-blue-500"}`}
+                          ></div>
+                        </div>
+
+                        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                          <p className="text-sm text-gray-700 leading-relaxed">{item.title}</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Mobile vertical timeline */}
+            <div className="lg:hidden relative mt-6">
+              <div className="absolute left-16 top-0 bottom-0 w-0.5 bg-cyan-400 transform translate-x-3"></div>
+
+              {/* Timeline items */}
+              <div className="space-y-8">
+                {[
+                  {
+                    year: "2020",
+                    title: "Khởi đầu hành trình xây dựng với đội ngũ nhiệt huyết và chuyên nghiệp",
+                    color: "teal",
+                  },
+                  {
+                    year: "2021",
+                    title: "Mở rộng đội ngũ, hoàn thiện quy trình quản lý và thực hiện những dự án đầu tiên",
+                    color: "blue",
+                  },
+                  {
+                    year: "2022",
+                    title: "Tích lũy kinh nghiệm, xây dựng uy tín với đối tác và chuẩn bị nền tảng pháp lý",
+                    color: "teal",
+                  },
+                  {
+                    year: "2023",
+                    title: "Lai Phát được thành lập do Sở Kế hoạch và Đầu tư TP. Hồ Chí Minh cấp giấy phép, kế thừa và phát triển từ tiền phong Talacons",
+                    color: "blue",
+                  },
+                  {
+                    year: "2024",
+                    title: "Đạt được chứng nhận chất lượng và năng lực hoạt động xây dựng theo tiêu chuẩn nhà nước",
+                    color: "teal",
+                  },
+                  {
+                    year: "2025",
+                    title: "Tiếp tục phát triển mạnh mẽ và khẳng định vị thế trên thị trường xây dựng Việt Nam",
+                    color: "blue",
+                  },
+                ].map((item, index) => (
+                  <div key={index} className="flex items-center relative">
+                    {/* Year */}
+                    <div
+                      className="w-12 text-right mr-4 slide-in-left"
+                      style={{ transitionDelay: `${index * 500}ms` }}
+                    >
+                      <div className="font-bold text-xl text-gray-800">{item.year}</div>
+                    </div>
+
+                    <div className="relative z-10">
+                      <div
+                        className={`w-6 h-6 rounded-full border-4 bg-white flex items-center justify-center ${
+                          item.color === "teal" ? "border-cyan-400" : "border-blue-500"
+                        }`}
+                      >
+                        <div
+                          className={`w-2 h-2 rounded-full ${item.color === "teal" ? "bg-cyan-400" : "bg-blue-500"}`}
+                        ></div>
+                      </div>
+                    </div>
+
+                    {/* Horizontal connecting line */}
+                    <div className={`w-6 h-0.5 ${item.color === "teal" ? "bg-cyan-400" : "bg-blue-500"}`}></div>
+
+                    {/* Content box */}
+                    <div
+                      className="flex-1 ml-2 slide-in-right"
+                      style={{ transitionDelay: `${index * 500}ms` }}
+                    >
+                      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 max-w-md">
+                        <p className="text-sm text-gray-700 leading-relaxed">{item.title}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
         {/* Key Personnel */}
-        <section className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl p-8 fade-in-on-scroll">
+        <section className="py-8 fade-in-up">
           <Typography
             variant="h2"
             className="text-3xl font-bold text-center mb-12 text-gray-800"
@@ -737,7 +775,7 @@ export default function AboutPage() {
             {t('about.team.title')}
           </Typography>
           <div className="flex flex-wrap gap-6">
-            <div className="flex-1 min-w-[300px] zoom-in-on-scroll">
+            <div className="flex-1 min-w-[300px] scale-in">
               <Card className="text-center p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-2 cursor-pointer group">
                 <Avatar
                   sx={{ 
@@ -776,7 +814,7 @@ export default function AboutPage() {
                 </Typography>
               </Card>
             </div>
-            <div className="flex-1 min-w-[300px] zoom-in-on-scroll">
+            <div className="flex-1 min-w-[300px] scale-in">
               <Card className="text-center p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-2 cursor-pointer group">
                 <Avatar
                   sx={{ 
@@ -817,7 +855,7 @@ export default function AboutPage() {
                 </Typography>
               </Card>
             </div>
-            <div className="flex-1 min-w-[300px] zoom-in-on-scroll">
+            <div className="flex-1 min-w-[300px] scale-in">
               <Card className="text-center p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-2 cursor-pointer group">
                 <Avatar
                   sx={{ 
@@ -862,7 +900,7 @@ export default function AboutPage() {
         </section>
 
         {/* Partners & Clients */}
-        <section className="fade-in-on-scroll">
+        <section className="fade-in-up">
           <Typography
             variant="h2"
             className="text-3xl font-bold text-center mb-12 text-gray-800"
@@ -871,7 +909,7 @@ export default function AboutPage() {
             {t('about.partners.title')}
           </Typography>
           <div className="flex flex-col lg:flex-row gap-6">
-            <div className="flex-1 fade-in-on-scroll">
+            <div className="flex-1 fade-in-up">
               <Card className="p-6 h-full transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.02] hover:-translate-y-1 group">
                 <Typography
                   variant="h5"
@@ -917,7 +955,7 @@ export default function AboutPage() {
                 </div>
               </Card>
             </div>
-            <div className="flex-1 fade-in-on-scroll">
+            <div className="flex-1 fade-in-up">
               <Card className="p-6 h-full transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.02] hover:-translate-y-1 group">
                 <Typography
                   variant="h5"

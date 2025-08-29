@@ -14,32 +14,8 @@ import {
   Engineering,
 } from '@mui/icons-material';
 import { useTranslations } from '@/hooks/useTranslations';
-
-// Intersection Observer Hook
-const useScrollAnimations = () => {
-  useEffect(() => {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px',
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, observerOptions);
-
-    const animatedElements = document.querySelectorAll(
-      '.fade-in-on-scroll, .slide-in-left-on-scroll, .slide-in-right-on-scroll, .zoom-in-on-scroll'
-    );
-
-    animatedElements.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, []);
-};
+import CallToAction from '@/components/ui/CallToAction';
+import useScrollAnimations from '@/hooks/useScrollAnimations';
 
 export default function ConstructionPage() {
   useScrollAnimations();
@@ -100,10 +76,10 @@ export default function ConstructionPage() {
   ];
 
   return (
-    <Box className="min-h-screen bg-gradient-to-br from-cyan-50 to-amber-50">
+    <Box className="min-h-screen">
       <Container maxWidth="lg" className="py-16 space-y-20">
         {/* Header Section */}
-        <section className="fade-in-on-scroll">
+        <section className="fade-in-up">
 					<div className="flex flex-col items-center justify-center text-center mb-16">
 						<Typography
 							variant="h2"
@@ -122,12 +98,12 @@ export default function ConstructionPage() {
         </section>
 
         {/* Services Grid */}
-        <section className="slide-in-left-on-scroll">
+        <section className="slide-in-left">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {constructionServices.map((service, index) => (
               <div
                 key={index}
-                className="group relative p-8 rounded-3xl bg-gradient-to-br from-white/80 to-gray-50/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-700 cursor-pointer zoom-in-on-scroll overflow-hidden"
+                className="group relative p-8 rounded-3xl bg-gradient-to-br from-white/80 to-gray-50/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-700 cursor-pointer scale-in overflow-hidden"
                 style={{
                   boxShadow: '0 10px 40px rgba(0,0,0,0.08)',
                 }}
@@ -217,72 +193,8 @@ export default function ConstructionPage() {
             ))}
           </div>
         </section>
-
-        {/* Call to Action */}
-        <section className="text-center fade-in-on-scroll">
-          <div 
-            className="relative rounded-3xl text-white p-8 md:p-12 overflow-hidden"
-            style={{
-              background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.main} 50%, #8b5cf6 100%)`,
-              boxShadow: `0 20px 60px ${theme.palette.primary.main}30`,
-            }}
-          >
-            {/* Background decorative elements */}
-            <div className="absolute top-0 left-0 w-32 h-32 bg-white/10 rounded-full -translate-x-16 -translate-y-16"></div>
-            <div className="absolute bottom-0 right-0 w-40 h-40 bg-white/10 rounded-full translate-x-20 translate-y-20"></div>
-            <div className="absolute top-1/2 left-1/2 w-24 h-24 bg-white/5 rounded-full -translate-x-12 -translate-y-12 animate-pulse"></div>
-            
-            <div className="relative z-10">
-              <div className="flex flex-col items-center justify-center text-center mb-12">
-									<Typography variant="h3" className="mb-6 font-bold text-white">
-									{t('construction.cta.title')}
-									</Typography>
-									<Typography variant="body1" className="text-white/90 max-w-2xl mx-auto leading-relaxed">
-									{t('construction.cta.description')}
-									</Typography>
-							</div>
-              
-              <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                <button
-                  className="relative px-8 py-4 bg-white text-cyan-600 font-bold rounded-2xl overflow-hidden group transition-all duration-300 hover:scale-105"
-                  style={{
-                    boxShadow: '0 8px 30px rgba(255,255,255,0.3)',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-3px) scale(1.05)';
-                    e.currentTarget.style.boxShadow = '0 15px 50px rgba(255,255,255,0.4)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                    e.currentTarget.style.boxShadow = '0 8px 30px rgba(255,255,255,0.3)';
-                  }}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-50 to-blue-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <span className="relative z-10 text-lg">{t('construction.cta.phone')}</span>
-                </button>
-                
-                <button
-                  className="relative px-8 py-4 border-2 border-white text-white font-bold rounded-2xl overflow-hidden group transition-all duration-300 hover:scale-105"
-                  style={{
-                    backdropFilter: 'blur(10px)',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-3px) scale(1.05)';
-                    e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.1)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                    e.currentTarget.style.backgroundColor = 'transparent';
-                  }}
-                >
-                  <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <span className="relative z-10 text-lg">{t('construction.cta.quoteBtn')}</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
       </Container>
+      <CallToAction />
     </Box>
   )
 }
