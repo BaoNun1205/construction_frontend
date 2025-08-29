@@ -2,31 +2,8 @@
 
 import { useTheme, Box, Container } from '@mui/material';
 import { useTranslations } from '@/hooks/useTranslations';
-import { useEffect } from 'react';
-
-// Intersection Observer Hook for animations
-const useScrollAnimations = () => {
-  useEffect(() => {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: "0px 0px -50px 0px",
-    }
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible")
-        }
-      })
-    }, observerOptions)
-
-    const animatedElements = document.querySelectorAll(".fade-in-up, .slide-in-left, .slide-in-right, .scale-in")
-
-    animatedElements.forEach((el) => observer.observe(el))
-
-    return () => observer.disconnect()
-  }, [])
-}
+import { CONTACT } from '@/constants/contact';
+import useScrollAnimations from '@/hooks/useScrollAnimations';
 
 export default function ContactPage() {
   useScrollAnimations()
@@ -34,9 +11,9 @@ export default function ContactPage() {
   const { t } = useTranslations();
   
   return (
-    <Box className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
+    <Box className="min-h-screen">
       <Container maxWidth="lg" className="py-16 space-y-20">
-        <div className="fade-in-up">
+        <div className="fade-in-on">
           <h1 className="text-3xl font-bold mb-8">
             {t('contact.title') as string} <span style={{ color: theme.palette.primary.main }}>{t('contact.titleHighlight') as string}</span>
           </h1>
@@ -138,7 +115,7 @@ export default function ContactPage() {
             
             <div className="space-y-8">
               {/* Office Address */}
-              <div className="fade-in-up" style={{ animationDelay: '0.1s' }}>
+              <div className="fade-in-on" style={{ animationDelay: '0.1s' }}>
                 <h3 
                   className="text-lg font-medium mb-3" 
                   style={{ color: theme.palette.primary.main }}
@@ -156,7 +133,7 @@ export default function ContactPage() {
               </div>
 
               {/* Contact Details */}
-              <div className="fade-in-up" style={{ animationDelay: '0.2s' }}>
+              <div className="fade-in-on" style={{ animationDelay: '0.2s' }}>
                 <h3 
                   className="text-lg font-medium mb-3" 
                   style={{ color: theme.palette.primary.main }}
@@ -164,14 +141,14 @@ export default function ContactPage() {
                   {t('contact.info.details.title') as string}
                 </h3>
                 <div className="space-y-2 text-gray-600">
-                  <p><span className="font-medium">{t('contact.info.details.phone') as string}</span> 0939 927 975</p>
-                  <p><span className="font-medium">{t('contact.info.details.email') as string}</span> info@laiphat.com</p>
-                  <p><span className="font-medium">{t('contact.info.details.website') as string}</span> www.laiphat.com</p>
+                  <p><span className="font-medium">{t('contact.info.details.phone') as string}</span> {CONTACT.PHONE}</p>
+                  <p><span className="font-medium">{t('contact.info.details.email') as string}</span> {CONTACT.EMAIL}</p>
+                  <p><span className="font-medium">{t('contact.info.details.website') as string}</span> {CONTACT.WEBSITE}</p>
                 </div>
               </div>
 
               {/* Google Maps */}
-              <div className="fade-in-up" style={{ animationDelay: '0.3s' }}>
+              <div className="fade-in-on" style={{ animationDelay: '0.3s' }}>
                 <h3 
                   className="text-lg font-medium mb-3" 
                   style={{ color: theme.palette.primary.main }}
@@ -180,7 +157,7 @@ export default function ContactPage() {
                 </h3>
                 <div className="h-64 rounded-lg overflow-hidden scale-in">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.930734343721!2d106.59657268382686!3d10.816612761834651!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752b000c32be51%3A0x9a1fd70ab25f4d6a!2zVHLhuqFtIFRodSBwaMOtIE5nw6MgdMawIEfDsiBNw6J5!5e0!3m2!1svi!2s!4v1755701915303!5m2!1svi!2s"
+                    src={CONTACT.MAP}
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
@@ -193,7 +170,7 @@ export default function ContactPage() {
               </div>
 
               {/* Request Form */}
-              <div className="fade-in-up" style={{ animationDelay: '0.4s' }}>
+              <div className="fade-in-on" style={{ animationDelay: '0.4s' }}>
                 <h3 
                   className="text-lg font-medium mb-3" 
                   style={{ color: theme.palette.primary.main }}
@@ -220,7 +197,7 @@ export default function ContactPage() {
               </div>
 
               {/* Social Network */}
-              <div className="fade-in-up" style={{ animationDelay: '0.5s' }}>
+              <div className="fade-in-on" style={{ animationDelay: '0.5s' }}>
                 <h3 
                   className="text-lg font-medium mb-3" 
                   style={{ color: theme.palette.primary.main }}

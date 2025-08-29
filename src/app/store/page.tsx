@@ -22,32 +22,8 @@ import {
   Star,
   CheckCircle,
 } from '@mui/icons-material';
-
-// Intersection Observer Hook
-const useScrollAnimations = () => {
-  useEffect(() => {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px',
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, observerOptions);
-
-    const animatedElements = document.querySelectorAll(
-      '.fade-in-on-scroll, .slide-in-left-on-scroll, .slide-in-right-on-scroll, .zoom-in-on-scroll'
-    );
-
-    animatedElements.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, []);
-};
+import { CONTACT } from '@/constants/contact';
+import useScrollAnimations from '@/hooks/useScrollAnimations';
 
 export default function StorePage() {
   useScrollAnimations();
@@ -94,7 +70,7 @@ export default function StorePage() {
       icon: <Phone sx={{ fontSize: 60 }} />,
       title: "Liên Hệ & Đặt Hàng",
       items: [
-        "Hotline: 0939 927 975",
+        `Hotline: ${CONTACT.PHONE}`,
         "Hỗ trợ khách hàng 24/7",
         "Địa chỉ cửa hàng",
         "Giờ làm việc: 7:00 - 18:00"
@@ -143,7 +119,7 @@ export default function StorePage() {
     <Box className="min-h-screen bg-gradient-to-br from-orange-50 to-yellow-50">
       <Container maxWidth="lg" className="py-16 space-y-20">
         {/* Header Section */}
-        <section className="fade-in-on-scroll">
+        <section className="fade-in-up">
           <div className="flex flex-col items-center justify-center text-center mb-12">
             <Typography variant="h3" className="mb-6 font-bold text-gray-800">
               Cửa Hàng
@@ -157,7 +133,7 @@ export default function StorePage() {
         </section>
 
         {/* Store Categories */}
-        <section className="slide-in-left-on-scroll">
+        <section className="slide-in-left">
           <Typography 
             variant="h4" 
             className="text-center font-bold text-gray-800"
@@ -169,7 +145,7 @@ export default function StorePage() {
             {storeCategories.map((category, index) => (
               <div
                 key={index}
-                className="group relative p-8 rounded-3xl backdrop-blur-lg border border-gray-200/50 transition-all duration-700 cursor-pointer zoom-in-on-scroll overflow-hidden"
+                className="group relative p-8 rounded-3xl backdrop-blur-lg border border-gray-200/50 transition-all duration-700 cursor-pointer scale-in overflow-hidden"
                 style={{
                   backgroundColor: category.bgColor,
                   boxShadow: '0 10px 40px rgba(0,0,0,0.08)',
@@ -228,7 +204,7 @@ export default function StorePage() {
         </section>
 
         {/* Featured Products */}
-        <section className="slide-in-right-on-scroll">
+        <section className="slide-in-right">
           <Typography 
             variant="h4" 
             className="text-center font-bold text-gray-800"
@@ -331,7 +307,7 @@ export default function StorePage() {
         </section>
 
         {/* Store Information */}
-        <section className="fade-in-on-scroll">
+        <section className="fade-in-up">
           <Typography 
             variant="h4" 
             className="text-center font-bold text-gray-800"

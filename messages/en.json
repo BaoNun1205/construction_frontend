@@ -4,7 +4,7 @@
 		"title": "Reputation builds trust",
 		"services": {
 			"construction": "Construction & Building Works",
-			"design": "Design & Consulting",
+			"design": "Design Consulting",
 			"supervision": "Construction Supervision",
 			"projectManagement": "Project Management Consulting",
 			"bidding": "Bidding Consulting"
@@ -23,7 +23,6 @@
       "subtitle": "Your trusted partner in all construction projects.",
       "description": "Quality - Reputation - Professional",
       "contactBtn": "Contact Now",
-      "phone": "0939 927 975",
       "scrollDown": "Scroll down for more"
     },
     "services": {
@@ -156,11 +155,8 @@
         "representativeLabel": "Legal Representative",
         "representative": "Mr./Ms.: Ta Van Lai - Position: Director",
         "phoneLabel": "Phone Number",
-        "phone": "0939927975",
         "emailLabel": "Email",
-        "email": "laiphatgroup@gmail.com",
         "websiteLabel": "Website",
-        "website": "https://laiphat.com",
         "validUntilLabel": "Valid Until",
         "validUntil": "January 06, 2034",
         "businessScopeTitle": "Construction activity scope",
@@ -343,7 +339,6 @@
     "cta": {
       "title": "Ready to Start Your Project?",
       "description": "Contact us today for detailed construction consultation and free quotation",
-      "phone": "0939 927 975",
       "quoteBtn": "Request a Quote"
     }
   },
@@ -362,8 +357,6 @@
     "architecture": "Architectural Design",
     "contactTitle": "Contact",
     "address": "Vinh Loc Commune, Ho Chi Minh City",
-    "phone": "0939 927 975",
-    "email": "laiphatgroup@gmail.com",
     "copyright": "© 2025 LaiPhat Construction. All rights reserved.",
     "privacy": "Privacy Policy",
     "terms": "Terms of Use"
@@ -427,7 +420,6 @@
     "cta": {
       "title": "Start Designing Your Dream",
       "subtitle": "Let us turn your ideas into perfect designs. Free consultation and the most competitive quotes in the market",
-      "phone": "0939 927 975",
       "quoteBtn": "Get Design Quote"
     }
   },
@@ -516,7 +508,6 @@
     "cta": {
       "title": "Ensure Construction Quality",
       "subtitle": "With our professional supervision team, we are committed to bringing absolute peace of mind to your project",
-      "phone": "0939 927 975",
       "consultBtn": "Supervision Service Consultation"
     }
   },
@@ -629,7 +620,6 @@
         "projects": "500+",
         "projectsDesc": "Projects managed"
       },
-      "phone": "0939 927 975",
       "consultBtn": "Project Management Consultation"
     }
   },
@@ -774,7 +764,6 @@
         "savings": "20%",
         "savingsDesc": "Average cost savings"
       },
-      "phone": "0939 927 975",
       "consultBtn": "Bidding Consultation"
     }
   },
@@ -798,11 +787,8 @@
       "details": {
         "title": "Contact Details",
         "phone": "Phone:",
-        "phoneNumber": "0939 927 975",
         "email": "Email:",
-        "emailAddress": "laiphatgroup@gmail.com",
-        "website": "Website:",
-        "websiteUrl": "https://laiphat.com/"
+        "website": "Website:"
       },
       "map": {
         "title": "Location Map"

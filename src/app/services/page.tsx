@@ -17,32 +17,7 @@ import {
   Landscape,
 } from '@mui/icons-material';
 import { useTranslations } from '@/hooks/useTranslations';
-
-// Intersection Observer Hook
-const useScrollAnimations = () => {
-  useEffect(() => {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px',
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, observerOptions);
-
-    const animatedElements = document.querySelectorAll(
-      '.fade-in-on-scroll, .slide-in-left-on-scroll, .slide-in-right-on-scroll, .zoom-in-on-scroll'
-    );
-
-    animatedElements.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, []);
-};
+import useScrollAnimations from '@/hooks/useScrollAnimations';
 
 export default function ServicesPage() {
   useScrollAnimations();
@@ -123,10 +98,10 @@ export default function ServicesPage() {
   ]
 
   return (
-    <Box className="min-h-screen bg-gradient-to-br from-cyan-50 to-amber-50">
+    <Box className="min-h-screen">
       <Container maxWidth="lg" className="py-16 space-y-20">
         {/* Header Section */}
-        <section className="fade-in-on-scroll">
+        <section className="fade-in-up">
           <Typography
             variant="h2"
             className="text-3xl font-bold text-center mb-6 text-gray-800"
@@ -162,7 +137,7 @@ export default function ServicesPage() {
           </div>
         </section>
         {/* Construction Technology Section */}
-        <section className="slide-in-left-on-scroll">
+        <section className="slide-in-left">
           <div className="flex flex-col items-center justify-center text-center mb-12">
             <Typography variant="h3" className="mb-6 font-bold text-gray-800">
               {t('services.constructionTech.title')}
@@ -176,7 +151,7 @@ export default function ServicesPage() {
             {constructionServices.map((service, index) => (
               <div
                 key={index}
-                className="group relative p-6 rounded-2xl bg-white/70 backdrop-blur-md border border-white/20 hover:bg-white/90 transition-all duration-500 cursor-pointer fade-in-on-scroll"
+                className="group relative p-6 rounded-2xl bg-white/70 backdrop-blur-md border border-white/20 hover:bg-white/90 transition-all duration-500 cursor-pointer fade-in-up"
                 style={{
                   background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.2) 100%)',
                   backdropFilter: 'blur(10px)',
@@ -211,7 +186,7 @@ export default function ServicesPage() {
         </section>
 
         {/* Project Management Section */}
-        <section className="slide-in-right-on-scroll">
+        <section className="slide-in-right">
           <div className="flex flex-col items-center justify-center text-center mb-12">
             <Typography variant="h3" className="mb-6 font-bold text-gray-800">
               {t('services.projectManagement.title')}
@@ -225,7 +200,7 @@ export default function ServicesPage() {
             {managementServices.map((service, index) => (
               <div
                 key={index}
-                className="group relative p-8 rounded-3xl bg-gradient-to-br from-white/80 to-gray-50/80 backdrop-blur-lg border border-gray-200/50 hover:border-cyan-300/50 transition-all duration-700 cursor-pointer zoom-in-on-scroll overflow-hidden"
+                className="group relative p-8 rounded-3xl bg-gradient-to-br from-white/80 to-gray-50/80 backdrop-blur-lg border border-gray-200/50 hover:border-cyan-300/50 transition-all duration-700 cursor-pointer scale-in overflow-hidden"
                 style={{
                   boxShadow: '0 10px 40px rgba(0,0,0,0.08)',
                 }}
@@ -271,7 +246,7 @@ export default function ServicesPage() {
         </section>
 
         {/* Consultation Services Section */}
-        <section className="zoom-in-on-scroll">
+        <section className="scale-in">
           <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-white/90 to-gray-50/90 backdrop-blur-xl border border-white/50 p-8 md:p-12">
             {/* Background pattern */}
             <div className="absolute inset-0 opacity-5">

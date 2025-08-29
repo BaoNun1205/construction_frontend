@@ -27,6 +27,7 @@ import { usePathname } from "next/navigation"
 import { useLocale } from "@/contexts/LocaleContext"
 import { useTranslations } from "@/hooks/useTranslations"
 import ReactCountryFlag from "react-country-flag"
+import { CONTACT } from "@/constants/contact"
 
 export default function Header() {
   const theme = useTheme()
@@ -120,8 +121,7 @@ export default function Header() {
     { label: t("nav.about") as string, href: "/about" },
     { label: t("nav.services") as string, href: "/services", hasDropdown: true },
     { label: "Dự án" as string, href: "/project", hasDropdown: true },
-    { label: t("nav.store") as string, href: "/store" },
-    { label: t("nav.contact") as string, href: "/contact" },
+    { label: t("nav.store") as string, href: "/store" }
   ]
 
   return (
@@ -444,11 +444,69 @@ export default function Header() {
 
             {/* Contact Info & Language Toggle */}
             <Box sx={{ flexGrow: 0, display: "flex", gap: 1, alignItems: "center" }}>
-              {/* Language Toggle */}
-              <Tooltip title={locale === 'vi' ? 'Switch to English' : 'Chuyển sang Tiếng Việt'}>
+              {/* Contact Button for Desktop */}
+              <Button
+                component={Link}
+                href="/contact"
+                startIcon={<Phone />}
+                sx={{
+                  display: { xs: "none", md: "flex" },
+                  color: "white",
+                  background: "rgba(255,255,255,0.1)",
+                  backdropFilter: "blur(10px)",
+                  border: "1px solid rgba(255,255,255,0.3)",
+                  borderRadius: 2,
+                  px: 2,
+                  py: 1,
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  textTransform: "none",
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    background: "rgba(255,255,255,0.2)",
+                    transform: "translateY(-2px)",
+                    boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
+                  },
+                }}
+              >
+                Liên hệ
+              </Button>
+
+              {/* Contact Button for Mobile/Tablet */}
+              <Button
+                component={Link}
+                href="/contact"
+                startIcon={<Phone />}
+                sx={{
+                  display: { xs: "flex", md: "none" },
+                  color: "white",
+                  background: "rgba(255,255,255,0.1)",
+                  backdropFilter: "blur(10px)",
+                  border: "1px solid rgba(255,255,255,0.3)",
+                  borderRadius: 2,
+                  px: 2,
+                  py: 1,
+                  fontSize: "14px",
+                  fontWeight: 600,
+                  textTransform: "none",
+                  transition: "all 0.3s ease",
+                  minWidth: "auto",
+                  "&:hover": {
+                    background: "rgba(255,255,255,0.2)",
+                    transform: "translateY(-2px)",
+                    boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
+                  },
+                }}
+              >
+                Liên hệ
+              </Button>
+
+              {/* Language Toggle - Desktop */}
+              {/* <Tooltip title={locale === 'vi' ? 'Switch to English' : 'Chuyển sang Tiếng Việt'}>
                 <IconButton
                   onClick={() => setLocale(locale === 'vi' ? 'en' : 'vi')}
                   sx={{
+                    display: { xs: "none", md: "flex" },
                     color: "white",
                     background: "rgba(255,255,255,0.1)",
                     backdropFilter: "blur(10px)",
@@ -463,7 +521,6 @@ export default function Header() {
                     },
                   }}
                 >
-                  {/* Hiển thị cờ của ngôn ngữ khác để chuyển đổi */}
                   {locale === 'vi' ? (
                     <ReactCountryFlag 
                       countryCode="VN" 
@@ -486,32 +543,7 @@ export default function Header() {
                     />
                   )}
                 </IconButton>
-              </Tooltip>
-
-              <Button
-                startIcon={<Phone />}
-                sx={{
-                  display: { xs: "none", sm: "flex" },
-                  color: "white",
-                  background: "rgba(255,255,255,0.1)",
-                  backdropFilter: "blur(10px)",
-                  border: "1px solid rgba(255,255,255,0.3)",
-                  borderRadius: 2,
-                  px: 2,
-                  py: 1,
-                  fontSize: "14px",
-                  fontWeight: 600,
-                  textTransform: "none",
-                  transition: "all 0.3s ease",
-                  "&:hover": {
-                    background: "rgba(255,255,255,0.2)",
-                    transform: "translateY(-2px)",
-                    boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
-                  },
-                }}
-              >
-                0939 927 975
-              </Button>
+              </Tooltip> */}
             </Box>
 
             {/* Mobile Menu */}
@@ -625,20 +657,54 @@ export default function Header() {
                   </MenuItem>
                 )
               ))}
-              <MenuItem sx={{ borderTop: "1px solid rgba(255,255,255,0.1)", mt: 1 }}>
-                <Button
-                  startIcon={<Phone />}
-                  fullWidth
-                  sx={{
-                    color: "white",
-                    justifyContent: "flex-start",
-                    textTransform: "none",
-                    fontWeight: 600,
-                  }}
-                >
-                  0939 927 975
-                </Button>
-              </MenuItem>
+              
+              {/* Language Toggle in Mobile Menu */}
+              {/* <Divider sx={{ borderColor: "rgba(255,255,255,0.1)", mt: 1 }} />
+              <MenuItem 
+                onClick={() => setLocale(locale === 'vi' ? 'en' : 'vi')}
+                sx={{
+                  color: "white",
+                  py: 1.5,
+                  px: 3,
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    background: "rgba(255,255,255,0.1)",
+                    transform: "translateX(8px)",
+                  },
+                }}
+              >
+                <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                  {locale === 'vi' ? (
+                    <ReactCountryFlag 
+                      countryCode="VN" 
+                      svg 
+                      style={{ 
+                        width: '20px', 
+                        height: '15px',
+                        borderRadius: '2px'
+                      }} 
+                    />
+                  ) : (
+                    <ReactCountryFlag 
+                      countryCode="GB" 
+                      svg 
+                      style={{ 
+                        width: '20px', 
+                        height: '15px',
+                        borderRadius: '2px'
+                      }} 
+                    />
+                  )}
+                  <Typography
+                    sx={{
+                      fontWeight: 500,
+                      fontSize: "16px",
+                    }}
+                  >
+                    {locale === 'vi' ? 'Tiếng Việt' : 'English'}
+                  </Typography>
+                </Box>
+              </MenuItem> */}
             </Menu>
           </Toolbar>
         </Container>
