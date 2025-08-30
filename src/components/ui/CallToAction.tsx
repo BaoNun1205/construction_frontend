@@ -6,6 +6,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { CONTACT } from '@/constants/contact';
 import useScrollAnimations from '@/hooks/useScrollAnimations';
 import { Container, useMediaQuery } from '@mui/material';
+import PhoneButton from './PhoneButton';
 
 export default function CallToAction() {
   const theme = useTheme();
@@ -46,34 +47,22 @@ export default function CallToAction() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              {isMobile ? (
-                <a
-                  href={`tel:${CONTACT.PHONE.replace(/\s/g, '')}`}
-                  className="text-lg px-8 py-6 rounded-lg shadow-lg transition-all duration-300 font-semibold flex items-center justify-center"
-                  style={{
-                    backgroundColor: theme.palette.background.paper,
-                    color: theme.palette.primary.main,
-                    textDecoration: 'none',
-                  }}
-                  aria-label="Gọi tư vấn"
-                >
-                  <PhoneIcon className="mr-2 w-5 h-5" />
-                  {CONTACT.PHONE}
-                </a>
-              ) : (
-                <button
-                  type="button"
-                  onClick={handlePhoneClick}
-                  className="text-lg px-8 py-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 font-semibold flex items-center justify-center"
-                  style={{
-                    backgroundColor: theme.palette.background.paper,
-                    color: theme.palette.primary.main,
-                  }}
-                >
-                  <PhoneIcon className="mr-2 w-5 h-5" />
-                  {CONTACT.PHONE}
-                </button>
-              )}
+              <PhoneButton
+                sx={{
+                  color: 'white',
+                  textDecoration: 'none',
+                  px: 4,
+                  py: 3,
+                  border: '2px solid white',
+                  fontSize: '1rem',
+                  borderRadius: '0.5rem',
+                  boxShadow: '0 10px 30px rgba(0,0,0,0.08)',
+                  '&:hover': {
+                    transform: 'translateY(-3px) scale(1.05)',
+                    backgroundColor: 'rgba(255,255,255,0.1)'
+                  },
+                }}
+              />
 
               <button
                 type="button"
