@@ -255,7 +255,7 @@ export default function DesignConsultingPage() {
           }
         }}
       >
-        <Box sx={{ px: 6 }}>
+        <Box sx={{ px: { md: 6 } }}>
           <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
             <Box
               className="fade-in-on"
@@ -449,18 +449,12 @@ export default function DesignConsultingPage() {
               >
                 Nhanh, Chuẩn, Đẹp
               </h2>
-              {/* <p 
-                className="text-xl max-w-3xl mx-auto"
-                style={{ color: theme.palette.text.secondary }}
-              >
-                Quy trình thiết kế hiện đại với công nghệ AI và 12 bước được tối ưu hóa để mang lại kết quả tốt nhất
-              </p> */}
             </div>
 
             {/* 12 Steps Card Layout */}
             <div className="fade-in-on">
               <div
-                className="relative p-12 rounded-2xl overflow-hidden"
+                className="relative p-6 rounded-2xl overflow-hidden"
                 style={{
                   background: `linear-gradient(135deg, ${theme.palette.primary.main}05 0%, ${theme.palette.primary.main}10 100%)`,
                   border: `1px solid ${theme.palette.divider}`
