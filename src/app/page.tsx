@@ -8,14 +8,13 @@ import {
   Stack,
   Paper,
   useTheme,
-  Tooltip
+  Tooltip,
 } from '@mui/material';
 import {
   Build,
   Architecture,
   ContactMail,
   ArrowForward,
-  Phone,
   Construction,
   Visibility,
   Assignment,
@@ -32,8 +31,8 @@ import { useEffect, useState } from 'react';
 import { useTranslations } from '@/hooks/useTranslations';
 import { useProjects } from '@/hooks/useProjects';
 import ProjectHelpers from '@/utils/projectHelpers';
-import { CONTACT } from '@/constants/contact';
 import useScrollAnimations from '@/hooks/useScrollAnimations';
+import PhoneButton from '@/components/ui/PhoneButton';
 
 export default function Home() {
   const theme = useTheme();
@@ -233,24 +232,7 @@ export default function Home() {
                 >
                   {t('home.hero.contactBtn')}
                 </Button>
-                <Button
-                  variant="outlined"
-                  size="large"
-                  startIcon={<Phone />}
-                  sx={{
-                    borderColor: 'white',
-                    color: 'white',
-                    fontWeight: 600,
-                    px: 4,
-                    py: 1.5,
-                    '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                      borderColor: 'white'
-                    }
-                  }}
-                >
-                  {CONTACT.PHONE}
-                </Button>
+                <PhoneButton />
               </Stack>
             </div>
             <div className="slide-in-right">
