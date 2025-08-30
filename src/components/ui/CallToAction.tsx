@@ -1,31 +1,18 @@
 'use client';
 import React from 'react';
 import { useTheme } from '@mui/material/styles';
-import PhoneIcon from '@mui/icons-material/Phone';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { CONTACT } from '@/constants/contact';
 import useScrollAnimations from '@/hooks/useScrollAnimations';
-import { Container, useMediaQuery } from '@mui/material';
+import { Container } from '@mui/material';
 import PhoneButton from './PhoneButton';
 
 export default function CallToAction() {
   const theme = useTheme();
   useScrollAnimations();
 
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-
-  const handlePhoneClick = async () => {
-    try {
-      await navigator.clipboard.writeText(CONTACT.PHONE);
-      alert('Số điện thoại đã được sao chép vào clipboard. Vui lòng sử dụng điện thoại để gọi.');
-    } catch {
-      alert(`Số điện thoại: ${CONTACT.PHONE}`);
-    }
-  };
-
   return (
-    <Container className="pb-16">
-      <div className="mx-auto text-center fade-in-on">
+    <Container sx={{ pb: 8, px: { xs: 4, md: 0 } }}>
+      <div className="text-center fade-in-on">
         <div
           className="relative rounded-2xl p-12 md:p-16 text-white overflow-hidden"
           style={{

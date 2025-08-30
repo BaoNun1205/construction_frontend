@@ -56,21 +56,22 @@ export default function SupervisionPage() {
   }>;
 
   return (
-    <Box className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
-      <Container maxWidth="lg" className="py-16 space-y-20">
+    <Box className="min-h-screen">
+      <Container maxWidth="lg" className="py-16 space-y-20" sx={{ px: { xs: 4, md: 0 } }}>
         {/* Header Section */}
         <section className="fade-in-up">
           <div className="flex flex-col items-center justify-center text-center mb-16">
             <Typography
               variant="h2"
-              className="text-4xl font-bold text-center mb-6 text-gray-800"
+              className="text-4xl font-bold text-center text-gray-800"
+              sx={{ mb: 3 }}
             >
               {t('supervision.title') as string}
               <span style={{ color: theme.palette.primary.main }}> {t('supervision.titleHighlight') as string}</span>
             </Typography>
             <Typography
               variant="h6"
-              className="text-center text-gray-600 max-w-4xl mx-auto mb-8 leading-relaxed"
+              className="text-center text-gray-600 max-w-4xl mx-auto leading-relaxed"
             >
               {t('supervision.subtitle') as string}
             </Typography>
@@ -118,8 +119,9 @@ export default function SupervisionPage() {
                     </div>
                     <Typography 
                       variant="h5" 
-                      className="font-bold text-gray-800 transition-colors duration-300 mb-2"
+                      className="font-bold text-gray-800 transition-colors duration-300"
                       sx={{
+                        mb: 1,
                         '.group:hover &': {
                           color: theme.palette.primary.main
                         }
@@ -138,12 +140,20 @@ export default function SupervisionPage() {
                     </div>
                   </div>
                   
-                  <Typography variant="body1" className="text-gray-600 mb-6 leading-relaxed text-center">
+                  <Typography
+                    variant="body1"
+                    className="text-gray-600 leading-relaxed text-center"
+                    sx={{ mb: 3 }}
+                  >
                     {service.description}
                   </Typography>
                   
                   <div className="space-y-4 mb-6">
-                    <Typography variant="h6" className="font-semibold text-gray-800 text-center">
+                    <Typography
+                      variant="h6"
+                      className="font-semibold text-gray-800 text-center"
+                      sx={{ mb: 1.5 }}
+                    >
                       {t('supervision.supervisionContent') as string}
                     </Typography>
                     {service.features.map((feature, idx) => (
@@ -160,7 +170,11 @@ export default function SupervisionPage() {
                   </div>
 
                   <div className="mt-auto">
-                    <Typography variant="h6" className="font-semibold text-gray-800 mb-3 text-center">
+                    <Typography
+                      variant="h6"
+                      className="font-semibold text-gray-800 text-center"
+                      sx={{ mb: 1.5 }}
+                    >
                       {t('supervision.benefits') as string}
                     </Typography>
                     {service.benefits.map((benefit, idx) => (
@@ -179,7 +193,7 @@ export default function SupervisionPage() {
         {/* Process Section */}
         <section className="slide-in-right">
           <div className="flex flex-col items-center justify-center text-center mb-12">
-            <Typography variant="h3" className="font-bold text-gray-800 mb-4">
+            <Typography variant="h3" className="font-bold text-gray-800" sx={{ mb: 2 }}>
               {t('supervision.process.title') as string}
             </Typography>
             <Typography variant="body1" className="text-gray-600 max-w-2xl mx-auto">
@@ -199,7 +213,7 @@ export default function SupervisionPage() {
                   >
                     {process.step}
                   </div>
-                  <Typography variant="h6" className="font-bold text-gray-800 mb-2">
+                  <Typography variant="h6" className="font-bold text-gray-800" sx={{ mb: 1 }}>
                     {process.title}
                   </Typography>
                   <Typography variant="body2" className="text-gray-600">

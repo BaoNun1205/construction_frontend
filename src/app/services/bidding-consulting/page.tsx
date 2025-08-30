@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   Box,
   Container,
@@ -13,7 +13,6 @@ import {
   PersonSearch,
 } from '@mui/icons-material';
 import { useTranslations } from '@/hooks/useTranslations';
-import { CONTACT } from '@/constants/contact';
 import useScrollAnimations from '@/hooks/useScrollAnimations';
 import CallToAction from '@/components/ui/CallToAction';
 
@@ -68,20 +67,21 @@ export default function BiddingConsultingPage() {
 
   return (
     <Box className="min-h-screen">
-      <Container maxWidth="lg" className="py-16 space-y-20">
+      <Container className="py-16 space-y-20"  sx={{ px: { xs: 4, md: 0 } }}>
         {/* Header Section */}
         <section className="fade-in-up">
           <div className="flex flex-col items-center justify-center text-center mb-16">
             <Typography
               variant="h2"
-              className="text-4xl font-bold text-center mb-6 text-gray-800"
+              className="text-4xl font-bold text-center text-gray-800"
+              sx={{ mb: 3 }}
             >
               {t('biddingConsulting.title') as string}
               <span style={{ color: theme.palette.primary.main }}> {t('biddingConsulting.titleHighlight') as string}</span>
             </Typography>
             <Typography
               variant="h6"
-              className="text-center text-gray-600 max-w-4xl mx-auto mb-8 leading-relaxed"
+              className="text-center text-gray-600 max-w-4xl mx-auto leading-relaxed"
             >
               {t('biddingConsulting.subtitle') as string}
             </Typography>
@@ -129,8 +129,9 @@ export default function BiddingConsultingPage() {
                     </div>
                     <Typography 
                       variant="h5" 
-                      className="font-bold text-gray-800 transition-colors duration-300 mb-3"
+                      className="font-bold text-gray-800 transition-colors duration-300"
                       sx={{
+                        mb: 1.5,
                         '.group:hover &': {
                           color: theme.palette.primary.main
                         }
@@ -159,13 +160,17 @@ export default function BiddingConsultingPage() {
                       </div>
                     </div>
                   </div>
-                  
-                  <Typography variant="body1" className="text-gray-600 mb-6 leading-relaxed text-center">
+
+                  <Typography
+                    variant="body1"
+                    className="text-gray-600 leading-relaxed text-center"
+                    sx={{ mb: 3 }}
+                  >
                     {service.description}
                   </Typography>
                   
                   <div className="space-y-4 mb-6 flex-grow">
-                    <Typography variant="h6" className="font-semibold text-gray-800">
+                    <Typography variant="h6" className="font-semibold text-gray-800" sx={{ mb: 1 }}>
                       {t('biddingConsulting.mainActivities') as string}
                     </Typography>
                     {service.features.map((feature, idx) => (
@@ -182,12 +187,12 @@ export default function BiddingConsultingPage() {
                   </div>
 
                   <div className="border-t border-gray-200/50 pt-4">
-                    <Typography variant="subtitle2" className="font-semibold text-gray-800 mb-2">
+                    <Typography variant="subtitle2" className="font-semibold text-gray-800" sx={{ mb: 1 }}>
                       {service.documents ? t('biddingConsulting.documentsProvided') as string : service.criteria ? t('biddingConsulting.evaluationCriteria') as string : t('biddingConsulting.benefitsProvided') as string}
                     </Typography>
                     <div className="space-y-1">
                       {(service.documents || service.criteria || service.benefits)?.map((item, idx) => (
-                        <div key={idx} className="text-xs text-gray-600 bg-gray-50 px-2 py-1 rounded">
+                        <div key={idx} className="text-xs text-gray-600 px-2 py-1">
                           • {item}
                         </div>
                       ))}
@@ -202,7 +207,7 @@ export default function BiddingConsultingPage() {
         {/* Bidding Process */}
         <section className="slide-in-right">
           <div className="flex flex-col items-center justify-center text-center mb-12">
-            <Typography variant="h3" className="font-bold text-gray-800 mb-4">
+            <Typography variant="h3" className="font-bold text-gray-800" sx={{ mb: 2 }}>
               {t('biddingConsulting.process.title') as string}
             </Typography>
             <Typography variant="body1" className="text-gray-600 max-w-2xl mx-auto">
@@ -227,8 +232,8 @@ export default function BiddingConsultingPage() {
                     >
                       <span className="text-white text-lg">{process.icon}</span>
                     </div>
-                    
-                    <Typography variant="h6" className="font-bold text-gray-800 mb-2">
+
+                    <Typography variant="h6" className="font-bold text-gray-800" sx={{ mb: 1 }}>
                       {process.step}
                     </Typography>
                     
@@ -259,7 +264,7 @@ export default function BiddingConsultingPage() {
         {/* Advantages */}
         <section className="fade-in-up">
           <div className="flex flex-col items-center justify-center text-center mb-12">
-            <Typography variant="h3" className="font-bold text-gray-800 mb-4">
+            <Typography variant="h3" className="font-bold text-gray-800" sx={{ mb: 2 }}>
               {t('biddingConsulting.advantages.title') as string}
             </Typography>
             <Typography variant="body1" className="text-gray-600 max-w-2xl mx-auto">
@@ -279,7 +284,7 @@ export default function BiddingConsultingPage() {
                 >
                   <span>{advantage.icon}</span>
                 </div>
-                <Typography variant="h6" className="font-bold text-gray-800 mb-2">
+                <Typography variant="h6" className="font-bold text-gray-800" sx={{ mb: 1 }}>
                   {advantage.title}
                 </Typography>
                 <Typography variant="body2" className="text-gray-600">

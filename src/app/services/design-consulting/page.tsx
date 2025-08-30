@@ -255,105 +255,103 @@ export default function DesignConsultingPage() {
           }
         }}
       >
-        <Box sx={{ px: { md: 6 } }}>
-          <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
-            <Box
-              className="fade-in-on"
+        <Container sx={{ position: 'relative', zIndex: 2, px: { xs: 4, md: 0 } }}>
+          <Box
+            className="fade-in-on"
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              justifyContent: 'center',
+              height: '100%',
+              textAlign: { xs: 'center', md: 'left' }
+            }}
+          >
+            <Typography
+              variant="h2"
+              gutterBottom
               sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'flex-start',
-                justifyContent: 'center',
-                height: '100%',
-                textAlign: { xs: 'center', md: 'left' }
+                fontSize: { xs: '2.5rem', md: '3.5rem' },
+                fontWeight: 800,
+                mb: 3,
+                letterSpacing: '0.05em',
+                lineHeight: 1.2,
+                color: 'white',
+                textShadow: '2px 2px 8px rgba(0,0,0,0.7)',
               }}
             >
-              <Typography
-                variant="h2"
-                gutterBottom
+              Tư Vấn Thiết Kế
+            </Typography>
+            <Typography
+              variant="h5"
+              sx={{
+                mb: 4,
+                color: 'white',
+                fontWeight: 700,
+                lineHeight: 1.6,
+                textShadow: '1px 1px 4px rgba(0,0,0,0.5)',
+                width: { xs: '100%', md: '50%' },
+                textAlign: 'left',
+              }}
+            >
+              Đội ngũ kiến trúc sư và kỹ sư giàu kinh nghiệm sẽ biến ý tưởng của bạn thành hiện thực với những thiết kế độc đáo và chức năng
+            </Typography>
+            <Stack
+              direction={{ xs: 'column', sm: 'row' }}
+              spacing={2}
+              sx={{ mt: 4, width: '100%' }}
+            >
+              <Button
+                fullWidth
+                variant="contained"
+                size="large"
+                endIcon={<ArrowForwardIcon />}
                 sx={{
-                  fontSize: { xs: '2.5rem', md: '3.5rem' },
-                  fontWeight: 800,
-                  mb: 3,
-                  letterSpacing: '0.05em',
-                  lineHeight: 1.2,
-                  color: 'white',
-                  textShadow: '2px 2px 8px rgba(0,0,0,0.7)',
+                  width: { xs: '100%', sm: 'auto' },
+                  backgroundColor: 'white',
+                  color: 'black',
+                  fontWeight: 600,
+                  px: 4,
+                  py: 1.5,
+                  boxShadow: 2,
+                  '&:hover': {
+                    backgroundColor: theme.palette.secondary.main,
+                    color: 'white',
+                  },
                 }}
               >
-                Tư Vấn Thiết Kế
-              </Typography>
-              <Typography
-                variant="h5"
-                sx={{
-                  mb: 4,
-                  color: 'white',
-                  fontWeight: 700,
-                  lineHeight: 1.6,
-                  textShadow: '1px 1px 4px rgba(0,0,0,0.5)',
-                  width: { xs: '100%', md: '50%' },
-                  textAlign: 'left',
-                }}
-              >
-                Đội ngũ kiến trúc sư và kỹ sư giàu kinh nghiệm sẽ biến ý tưởng của bạn thành hiện thực với những thiết kế độc đáo và chức năng
-              </Typography>
-              <Stack
-                direction={{ xs: 'column', sm: 'row' }}
-                spacing={2}
-                sx={{ mt: 4, width: '100%' }}
-              >
-                <Button
-                  fullWidth
-                  variant="contained"
-                  size="large"
-                  endIcon={<ArrowForwardIcon />}
-                  sx={{
-                    width: { xs: '100%', sm: 'auto' },
-                    backgroundColor: 'white',
-                    color: 'black',
-                    fontWeight: 600,
-                    px: 4,
-                    py: 1.5,
-                    boxShadow: 2,
-                    '&:hover': {
-                      backgroundColor: theme.palette.secondary.main,
-                      color: 'white',
-                    },
-                  }}
-                >
-                  Bắt đầu tư vấn
-                </Button>
+                Bắt đầu tư vấn
+              </Button>
 
-                <Button
-                  fullWidth
-                  variant="contained"
-                  size="large"
-                  sx={{
-                    width: { xs: '100%', sm: 'auto' },
-                    backgroundColor: 'white',
-                    color: 'black',
-                    fontWeight: 600,
-                    px: 4,
-                    py: 1.5,
-                    boxShadow: 2,
-                    '&:hover': {
-                      backgroundColor: theme.palette.secondary.main,
-                      color: 'white',
-                    },
-                  }}
-                >
-                  Xem portfolio
-                </Button>
-              </Stack>
-            </Box>
-          </Container>
-        </Box>
+              <Button
+                fullWidth
+                variant="contained"
+                size="large"
+                sx={{
+                  width: { xs: '100%', sm: 'auto' },
+                  backgroundColor: 'white',
+                  color: 'black',
+                  fontWeight: 600,
+                  px: 4,
+                  py: 1.5,
+                  boxShadow: 2,
+                  '&:hover': {
+                    backgroundColor: theme.palette.secondary.main,
+                    color: 'white',
+                  },
+                }}
+              >
+                Xem portfolio
+              </Button>
+            </Stack>
+          </Box>
+        </Container>
       </Box>
-      
-      <Container maxWidth="lg" className="py-16 space-y-32">
+
+      <Container className="py-16 space-y-20" sx={{ px: { xs: 4, md: 0 } }}>
         {/* Main Sections */}
         <section>
-          <div className="max-w-6xl mx-auto space-y-20">
+          <div className="mx-auto space-y-20">
             {mainSections.map((section, index) => (
               <div key={section.id} className={`${index % 2 === 0 ? "slide-in-left" : "slide-in-right"}`}>
                 <div
@@ -560,18 +558,18 @@ export default function DesignConsultingPage() {
                       </div>
                       
                       <h4
-                        className="font-semibold mb-2 text-sm leading-tight"
-                        style={{ color: theme.palette.text.primary }}
+                        className="font-semibold mb-2 leading-tight"
+                        style={{ color: theme.palette.text.primary, fontSize: '1rem' }}
                       >
                         {step.title}
                       </h4>
                       
-                      <p
-                        className="text-xs mb-3 leading-relaxed"
-                        style={{ color: theme.palette.text.secondary }}
+                      {/* <p
+                        className="mb-3 leading-relaxed"
+                        style={{ color: theme.palette.text.secondary, fontSize: '0.9rem' }}
                       >
                         {step.description}
-                      </p>
+                      </p> */}
 
                       {step.details && (
                         <div className="space-y-2">
@@ -584,8 +582,7 @@ export default function DesignConsultingPage() {
                                 }}
                               ></div>
                               <span
-                                className="text-xs"
-                                style={{ color: theme.palette.text.secondary }}
+                                style={{ color: theme.palette.text.secondary, fontSize: '0.9rem' }}
                               >
                                 {detail}
                               </span>

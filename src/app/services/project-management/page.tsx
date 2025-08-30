@@ -60,8 +60,8 @@ export default function ProjectManagementPage() {
   }>;
 
   return (
-    <Box className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-50">
-      <Container maxWidth="lg" className="py-16 space-y-20">
+    <Box className="min-h-screen">
+      <Container className="py-16 space-y-20" sx={{ px: { xs: 4, md: 0 } }}>
         {/* Header Section */}
         <section className="fade-in-up">
           <div className="flex flex-col items-center justify-center text-center mb-16">
@@ -251,6 +251,7 @@ export default function ProjectManagementPage() {
             </div>
           </div>
         </section>
+        
       </Container>
       <CallToAction />
     </Box>
