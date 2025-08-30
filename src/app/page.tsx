@@ -6,24 +6,24 @@ import {
   Typography,
   Button,
   Stack,
-  Paper,
   useTheme,
-  Tooltip,
+  Tooltip
 } from '@mui/material';
 import {
   Build,
   Architecture,
-  ContactMail,
   ArrowForward,
   Construction,
-  Visibility,
-  Assignment,
-  Gavel,
   ArrowBackIos,
   ArrowForwardIos,
-  EmojiEvents,
   VerifiedUser,
-  Group
+  Group,
+  Handshake,
+  BuildOutlined,
+  ArchitectureOutlined,
+  VisibilityOutlined,
+  AssignmentOutlined,
+  GavelOutlined
 } from '@mui/icons-material';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -33,6 +33,7 @@ import { useProjects } from '@/hooks/useProjects';
 import ProjectHelpers from '@/utils/projectHelpers';
 import useScrollAnimations from '@/hooks/useScrollAnimations';
 import PhoneButton from '@/components/ui/PhoneButton';
+import CallToAction from '@/components/ui/CallToAction';
 
 export default function Home() {
   const theme = useTheme();
@@ -117,42 +118,42 @@ export default function Home() {
     {
       title: t('home.services.constructionService'),
       description: t('home.services.constructionDesc'),
-      icon: <Build sx={{ fontSize: 30, color: 'white' }} />,
+      icon: <BuildOutlined sx={{ fontSize: 30, color: theme.palette.action.hover }} />,
       href: '/services/construction',
-      color: theme.palette.primary.main
+      color: theme.palette.secondary.light
     },
     {
       title: t('home.services.designConsulting'),
       description: t('home.services.designDesc'),
-      icon: <Architecture sx={{ fontSize: 30, color: 'white' }} />,
+      icon: <ArchitectureOutlined sx={{ fontSize: 30, color: theme.palette.action.hover }} />,
       href: '/services/design-consulting',
-      color: '#4caf50'
+      color: theme.palette.secondary.light
     },
     {
       title: t('home.services.supervision'),
       description: t('home.services.supervisionDesc'),
-      icon: <Visibility sx={{ fontSize: 30, color: 'white' }} />,
+      icon: <VisibilityOutlined sx={{ fontSize: 30, color: theme.palette.action.hover }} />,
       href: '/services/supervision',
-      color: theme.palette.secondary.main
+      color: theme.palette.secondary.light
     },
     {
       title: t('home.services.projectManagement'),
       description: t('home.services.projectDesc'),
-      icon: <Assignment sx={{ fontSize: 30, color: 'white' }} />,
+      icon: <AssignmentOutlined sx={{ fontSize: 30, color: theme.palette.action.hover }} />,
       href: '/services/project-management',
-      color: '#9c27b0'
+      color: theme.palette.secondary.light
     },
     {
       title: t('home.services.bidding'),
       description: t('home.services.biddingDesc'),
-      icon: <Gavel sx={{ fontSize: 30, color: 'white' }} />,
+      icon: <GavelOutlined sx={{ fontSize: 30, color: theme.palette.action.hover }} />,
       href: '/services/bidding-consulting',
-      color: '#ff5722'
+      color: theme.palette.secondary.light
     }
   ];
 
   return (
-    <Box>
+    <Box className="min-h-screen">
       {/* Hero Section */}
       <Box
         sx={{
@@ -177,7 +178,7 @@ export default function Home() {
           }
         }}
       >
-        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
+        <Container sx={{ position: 'relative', zIndex: 2, px: { xs: 4, md: 0 } }}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div className="slide-in-left">
               <Typography
@@ -259,7 +260,7 @@ export default function Home() {
               </Box>
             </div>
           </div>
-          
+
           {/* Scroll Down Icon */}
           <Box 
             sx={{ 
@@ -308,10 +309,10 @@ export default function Home() {
         </Container>
       </Box>
 
-      {/* Animated Divider */}
-      <Box sx={{ py: 4 }}>
-        <Container maxWidth="lg">
-          <Box 
+      <Container className="py-16 space-y-20" sx={{ px: { xs: 4, md: 0 } }}>
+        {/* Animated Divider */}
+        <section>
+          <Box
             sx={{ 
               display: 'flex', 
               alignItems: 'center', 
@@ -323,7 +324,7 @@ export default function Home() {
               sx={{ 
                 flex: 1, 
                 height: '2px',
-                background: 'linear-gradient(to right, transparent, #1976d2, transparent)',
+                background: `linear-gradient(to right, transparent, ${theme.palette.action.hover}, transparent)`,
                 animation: 'shimmer 2s infinite'
               }} 
             />
@@ -340,7 +341,7 @@ export default function Home() {
               <Construction 
                 sx={{ 
                   fontSize: 40, 
-                  color: '#1976d2',
+                  color: theme.palette.action.hover,
                   animation: 'rotate 4s linear infinite'
                 }} 
               />
@@ -349,23 +350,23 @@ export default function Home() {
               sx={{ 
                 flex: 1, 
                 height: '2px',
-                background: 'linear-gradient(to left, transparent, #1976d2, transparent)',
+                background: `linear-gradient(to left, transparent, ${theme.palette.action.hover}, transparent)`,
                 animation: 'shimmer 2s infinite reverse'
               }} 
             />
           </Box>
-        </Container>
-      </Box>
+        </section>
 
-      {/* Services Section */}
-      <Box sx={{ color: 'black', py: 10 }}>
-        <Container maxWidth="lg">
+        {/* Services Section */}
+        <section>
           {/* Main Container with Border */}
           <Box
             sx={{
               border: `2px solid ${theme.palette.primary.main}`,
               borderRadius: 4,
-              p: 6
+              py: {xs: 4, md: 6},
+              pl: {xs: 4, md: 6},
+              pr: {xs: 6, md: 6}
             }}
           >
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -374,7 +375,7 @@ export default function Home() {
                 <Typography 
                   variant="h2" 
                   gutterBottom 
-                  sx={{ 
+                  sx={{
                     fontWeight: 700,
                     fontSize: { xs: '2.5rem', md: '3rem' },
                     lineHeight: 1.2,
@@ -403,14 +404,17 @@ export default function Home() {
                   component={Link}
                   href="/services"
                   sx={{
-                    backgroundColor: theme.palette.primary.main,
-                    color: 'white',
+                    backgroundColor: 'white',
+                    border: `2px solid ${theme.palette.primary.main}`,
+                    color: 'black',
+                    fontSize: '1rem',
                     fontWeight: 600,
                     px: 4,
                     py: 1.5,
                     borderRadius: '50px',
                     '&:hover': {
-                      backgroundColor: theme.palette.primary.dark,
+                      color: theme.palette.action.hover,
+                      borderColor: theme.palette.action.hover,
                     }
                   }}
                 >
@@ -472,8 +476,8 @@ export default function Home() {
                           href={service.href}
                           sx={{
                             p: 3,
-                            backgroundColor: 'white',
-                            border: '1px solid #e0e0e0',
+                            backgroundColor: theme.palette.primary.main,
+                            // border: '1px solid #e0e0e0',
                             borderRadius: 3,
                             textDecoration: 'none',
                             color: 'black',
@@ -483,8 +487,7 @@ export default function Home() {
                             position: 'relative',
                             '&:hover': {
                               transform: 'translateX(8px)',
-                              borderColor: theme.palette.primary.main,
-                              zIndex: 2,
+                              // borderColor: theme.palette.primary.main
                             }
                           }}
                         >
@@ -492,14 +495,13 @@ export default function Home() {
                             <Box
                               sx={{
                                 p: 1.5,
-                                borderRadius: 2,
-                                backgroundColor: service.color,
+                                borderRadius: '50%',
+                                backgroundColor: 'white',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                minWidth: 50,
-                                height: 50,
-                                boxShadow: `0 4px 12px ${service.color}40`
+                                minWidth: 64,
+                                height: 64
                               }}
                             >
                               {service.icon}
@@ -510,7 +512,7 @@ export default function Home() {
                                 sx={{ 
                                   fontWeight: 700,
                                   mb: 0.5,
-                                  color: 'black',
+                                  color: 'white',
                                   fontSize: '1.1rem'
                                 }}
                               >
@@ -519,7 +521,7 @@ export default function Home() {
                               <Typography 
                                 variant="body2" 
                                 sx={{ 
-                                  color: 'text.secondary',
+                                  color: 'white',
                                   lineHeight: 1.4,
                                   fontSize: '0.85rem',
                                   display: { xs: 'none', md: 'block' }
@@ -558,7 +560,7 @@ export default function Home() {
                         width: 22, 
                         height: 35, 
                         border: '2px solid', 
-                        borderColor: theme.palette.primary.main,
+                        borderColor: theme.palette.action.hover,
                         borderRadius: '12px',
                         display: 'flex',
                         justifyContent: 'center',
@@ -570,7 +572,7 @@ export default function Home() {
                       <Box sx={{ 
                         width: 3, 
                         height: 6, 
-                        backgroundColor: theme.palette.primary.main,
+                        backgroundColor: theme.palette.action.hover,
                         borderRadius: 2,
                         animation: 'scroll 1.5s infinite'
                       }} />
@@ -580,12 +582,10 @@ export default function Home() {
               </div>
             </div>
           </Box>
-        </Container>
-      </Box>
+        </section>
 
-      {/* Animated Divider */}
-      <Box sx={{ py: 4 }}>
-        <Container maxWidth="lg">
+        {/* Animated Divider */}
+        {/* <section>
           <Box 
             sx={{ 
               display: 'flex', 
@@ -629,14 +629,20 @@ export default function Home() {
               }} 
             />
           </Box>
-        </Container>
-      </Box>
+        </section> */}
 
-      {/* Projects Section */}
-      <Box sx={{ backgroundColor: theme.palette.grey[50], py: 8 }}>
-        <Container maxWidth="lg">
+        {/* Projects Section */}
+        <section>
           <Box textAlign="center" mb={6} className="fade-in-up">
-            <Typography variant="h2" gutterBottom sx={{ fontWeight: 700 }}>
+            <Typography
+              variant="h2"
+              gutterBottom
+              className="font-bold text-center"
+              sx={{
+                fontSize: { xs: '2rem', md: '2.5rem' },
+                fontWeight: 700
+              }}
+            >
               {t('home.projects.title')}
             </Typography>
             <Typography variant="h6" color="text.secondary">
@@ -838,157 +844,111 @@ export default function Home() {
               ))}
             </div>
           </div>
-        </Container>
-      </Box>
+        </section>
 
-      <Box sx={{ py: 8 }}>
-        <Container maxWidth="lg">
+        {/* Why choose us? */}
+        <section>
+          {/* Title outside the background */}
           <Typography
             variant="h2"
-            className="text-3xl font-bold text-center mb-12 text-gray-800"
-            sx={{ marginBottom: '3rem' }}
+            className="font-bold text-center"
+            sx={{ 
+              marginBottom: '2rem',
+              fontSize: { xs: '2rem', md: '2.5rem' },
+              fontWeight: 700
+            }}
           >
             {t('home.whyChooseUs.title')}
           </Typography>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Experience */}
-            <div className="scale-in animate-delay-1">
-              <div className="text-center p-6 rounded-2xl bg-white/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 hover:shadow-xl hover:scale-105 h-80 flex flex-col">
-                <div className="flex justify-center mb-4 flex-shrink-0">
-                  <EmojiEvents
-                    className="text-yellow-500" 
-                    sx={{ fontSize: 50 }} 
-                  />
-                </div>
-                <Typography variant="h6" className="font-bold mb-3 text-gray-800 flex-shrink-0">
-                  {t('home.whyChooseUs.experience.title')}
-                </Typography>
-                <div className="flex-1 overflow-y-auto">
-                  <Typography variant="body2" className="text-gray-600">
-                    {t('home.whyChooseUs.experience.description')}
+          
+          {/* Background box with 4 columns */}
+          <Box 
+            sx={{ 
+              backgroundColor: theme.palette.primary.main,
+              borderRadius: 3
+            }}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-0">
+              {/* Experience */}
+              <div className="scale-in animate-delay-1 border-b border-white md:border-b-0 md:border-r md:border-white md:last:border-r-0">
+                <div className="text-center p-6 h-68 md:h-86 flex flex-col">
+                  <div className="flex justify-center mb-6 flex-shrink-0">
+                    <Handshake
+                      sx={{ fontSize: 60, color: theme.palette.action.active }} 
+                    />
+                  </div>
+                  <Typography variant="h5" className="font-bold mb-4 text-white flex-shrink-0">
+                    {t('home.whyChooseUs.experience.title')}
                   </Typography>
+                  <div className="flex-1 overflow-y-auto">
+                    <Typography variant="body1" className="text-white/90 leading-relaxed">
+                      {t('home.whyChooseUs.experience.description')}
+                    </Typography>
+                  </div>
                 </div>
               </div>
-            </div>
-            {/* Solution */}
-            <div className="scale-in animate-delay-2">
-              <div className="text-center p-6 rounded-2xl bg-white/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 hover:shadow-xl hover:scale-105 h-80 flex flex-col">
-                <div className="flex justify-center mb-4 flex-shrink-0">
-                  <Architecture 
-                    className="text-blue-500" 
-                    sx={{ fontSize: 50 }} 
-                  />
-                </div>
-                <Typography variant="h6" className="font-bold mb-3 text-gray-800 flex-shrink-0">
-                  {t('home.whyChooseUs.solution.title')}
-                </Typography>
-                <div className="flex-1 overflow-y-auto">
-                  <Typography variant="body2" className="text-gray-600">
-                    {t('home.whyChooseUs.solution.description')}
-                  </Typography>
-                </div>
-              </div>
-            </div>
-            {/* Quality */}
-            <div className="scale-in animate-delay-3">
-              <div className="text-center p-6 rounded-2xl bg-white/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 hover:shadow-xl hover:scale-105 h-80 flex flex-col">
-                <div className="flex justify-center mb-4 flex-shrink-0">
-                  <VerifiedUser
-                    className="text-green-500" 
-                    sx={{ fontSize: 50 }} 
-                  />
-                </div>
-                <Typography variant="h6" className="font-bold mb-3 text-gray-800 flex-shrink-0">
-                  {t('home.whyChooseUs.quality.title')}
-                </Typography>
-                <div className="flex-1 overflow-y-auto">
-                  <Typography variant="body2" className="text-gray-600">
-                    {t('home.whyChooseUs.quality.description')}
-                  </Typography>
-                </div>
-              </div>
-            </div>
-            {/* Team */}
-            <div className="scale-in animate-delay-4">
-              <div className="text-center p-6 rounded-2xl bg-white/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 hover:shadow-xl hover:scale-105 h-80 flex flex-col">
-                <div className="flex justify-center mb-4 flex-shrink-0">
-                  <Group
-                    className="text-purple-500" 
-                    sx={{ fontSize: 50 }} 
-                  />
-                </div>
-                <Typography variant="h6" className="font-bold mb-3 text-gray-800 flex-shrink-0">
-                  {t('home.whyChooseUs.team.title')}
-                </Typography>
-                <div className="flex-1 overflow-y-auto">
-                  <Typography variant="body2" className="text-gray-600">
-                    {t('home.whyChooseUs.team.description')}
-                  </Typography>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </Box>
 
-      {/* CTA Section */}
-      <Container maxWidth="lg" sx={{ py: 8 }}>
-        <Paper
-          elevation={0}
-          className="scale-in"
-          sx={{
-            background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
-            color: 'white',
-            p: 6,
-            textAlign: 'center',
-            borderRadius: 3
-          }}
-        >
-          <Typography variant="h3" gutterBottom sx={{ fontWeight: 700, mb: 2 }}>
-            {t('home.cta.title')}
-          </Typography>
-          <Typography variant="h6" sx={{ mb: 4, opacity: 0.9 }}>
-            {t('home.cta.subtitle')}
-          </Typography>
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center">
-            <Button
-              variant="contained"
-              size="large"
-              component={Link}
-              href="/contact"
-              startIcon={<ContactMail />}
-              sx={{
-                backgroundColor: 'white',
-                color: theme.palette.primary.main,
-                fontWeight: 600,
-                px: 4,
-                '&:hover': {
-                  backgroundColor: 'rgba(255, 255, 255, 0.9)'
-                }
-              }}
-            >
-              {t('home.cta.consultBtn')}
-            </Button>
-            <Button
-              variant="outlined"
-              size="large"
-              component={Link}
-              href="/services"
-              sx={{
-                borderColor: 'white',
-                color: 'white',
-                fontWeight: 600,
-                px: 4,
-                '&:hover': {
-                  backgroundColor: 'rgba(255, 255, 255, 0.1)'
-                }
-              }}
-            >
-              {t('home.cta.servicesBtn')}
-            </Button>
-          </Stack>
-        </Paper>
+              {/* Solution */}
+              <div className="scale-in animate-delay-1 border-b border-white md:border-b-0 md:border-r md:border-white md:last:border-r-0">
+                <div className="text-center p-6 h-68 md:h-86 flex flex-col">
+                  <div className="flex justify-center mb-6 flex-shrink-0">
+                    <Construction
+                      sx={{ fontSize: 60, color: theme.palette.action.active }} 
+                    />
+                  </div>
+                  <Typography variant="h5" className="font-bold mb-4 text-white flex-shrink-0">
+                    {t('home.whyChooseUs.solution.title')}
+                  </Typography>
+                  <div className="flex-1 overflow-y-auto">
+                    <Typography variant="body1" className="text-white/90 leading-relaxed">
+                      {t('home.whyChooseUs.solution.description')}
+                    </Typography>
+                  </div>
+                </div>
+              </div>
+
+              {/* Quality */}
+              <div className="scale-in animate-delay-1 border-b border-white md:border-b-0 md:border-r md:border-white md:last:border-r-0">
+                <div className="text-center p-6 h-68 md:h-86 flex flex-col">
+                  <div className="flex justify-center mb-6 flex-shrink-0">
+                    <VerifiedUser
+                      sx={{ fontSize: 60, color: theme.palette.action.active }} 
+                    />
+                  </div>
+                  <Typography variant="h5" className="font-bold mb-4 text-white flex-shrink-0">
+                    {t('home.whyChooseUs.quality.title')}
+                  </Typography>
+                  <div className="flex-1 overflow-y-auto">
+                    <Typography variant="body1" className="text-white/90 leading-relaxed">
+                      {t('home.whyChooseUs.quality.description')}
+                    </Typography>
+                  </div>
+                </div>
+              </div>
+
+              {/* Team */}
+              <div className="scale-in animate-delay-4">
+                <div className="text-center p-6 h-68 md:h-86 flex flex-col">
+                  <div className="flex justify-center mb-6 flex-shrink-0">
+                    <Group
+                      sx={{ fontSize: 60, color: theme.palette.action.active }} 
+                    />
+                  </div>
+                  <Typography variant="h5" className="font-bold mb-4 text-white flex-shrink-0">
+                    {t('home.whyChooseUs.team.title')}
+                  </Typography>
+                  <div className="flex-1 overflow-y-auto">
+                    <Typography variant="body1" className="text-white/90 leading-relaxed">
+                      {t('home.whyChooseUs.team.description')}
+                    </Typography>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Box>
+        </section>
       </Container>
+      <CallToAction />
     </Box>
   );
 }

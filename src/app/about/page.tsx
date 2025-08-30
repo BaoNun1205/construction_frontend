@@ -41,6 +41,46 @@ export default function AboutPage() {
   const [isImageHovered, setIsImageHovered] = useState(false);
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
+  // Timeline data shared between desktop and mobile
+  const timelineData = [
+    {
+      year: "2020",
+      position: "bottom",
+      title: "Khởi đầu hành trình xây dựng với đội ngũ nhiệt huyết và chuyên nghiệp",
+      color: theme.palette.action.hover,
+    },
+    {
+      year: "2021",
+      position: "top",
+      title: "Mở rộng đội ngũ, hoàn thiện quy trình quản lý và thực hiện những dự án đầu tiên",
+      color: theme.palette.action.active,
+    },
+    {
+      year: "2022",
+      position: "bottom",
+      title: "Tích lũy kinh nghiệm, xây dựng uy tín với đối tác và chuẩn bị nền tảng pháp lý",
+      color: theme.palette.action.hover,
+    },
+    {
+      year: "2023",
+      position: "top",
+      title: "Lai Phát được thành lập do Sở Kế hoạch và Đầu tư TP. Hồ Chí Minh cấp giấy phép, kế thừa và phát triển từ tiền phong Talacons",
+      color: theme.palette.action.active,
+    },
+    {
+      year: "2024",
+      position: "bottom",
+      title: "Đạt được chứng nhận chất lượng và năng lực hoạt động xây dựng theo tiêu chuẩn nhà nước",
+      color: theme.palette.action.hover,
+    },
+    {
+      year: "2025",
+      position: "top",
+      title: "Tiếp tục phát triển mạnh mẽ và khẳng định vị thế trên thị trường xây dựng Việt Nam",
+      color: theme.palette.action.active,
+    },
+  ];
+
   return (
     <Box className="min-h-screen">
       {/* Business Information Section */}
@@ -68,7 +108,7 @@ export default function AboutPage() {
             }
           }}
         >
-          <Container maxWidth="lg">
+          <Container sx={{ px: { xs: 4, md: 0 } }}>
             <div className="relative z-10 text-white fade-in-up">
               <Typography
                 variant="h2"
@@ -181,7 +221,7 @@ export default function AboutPage() {
           </Container>
         </Box>
       </section>
-      <Container maxWidth="lg" className="py-16 space-y-20">
+      <Container className="py-16 space-y-20" sx={{ px: { xs: 4, md: 0 } }}>
         {/* Mission, Vision, Values */}
         <section className="fade-in-up">
           <Typography
@@ -571,51 +611,17 @@ export default function AboutPage() {
             {/* Desktop horizontal timeline */}
             <div className="hidden lg:block relative mt-6">
               {/* Main horizontal line */}
-              <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-cyan-400 transform -translate-y-0.5"></div>
+              <div
+                className="absolute top-1/2 left-0 right-0 h-0.5 transform -translate-y-0.5"
+                style={{ backgroundColor: theme.palette.primary.main }}
+              ></div>
 
               {/* Timeline items */}
               <div
                 className="flex justify-between items-center relative"
                 style={{ paddingTop: "160px", paddingBottom: "160px" }} // tăng khoảng cách trên/dưới
               >
-                {[
-                  {
-                    year: "2020",
-                    position: "bottom",
-                    title: "Khởi đầu hành trình xây dựng với đội ngũ nhiệt huyết và chuyên nghiệp",
-                    color: "teal",
-                  },
-                  {
-                    year: "2021",
-                    position: "top",
-                    title: "Mở rộng đội ngũ, hoàn thiện quy trình quản lý và thực hiện những dự án đầu tiên",
-                    color: "blue",
-                  },
-                  {
-                    year: "2022",
-                    position: "bottom",
-                    title: "Tích lũy kinh nghiệm, xây dựng uy tín với đối tác và chuẩn bị nền tảng pháp lý",
-                    color: "teal",
-                  },
-                  {
-                    year: "2023",
-                    position: "top",
-                    title: "Lai Phát được thành lập do Sở Kế hoạch và Đầu tư TP. Hồ Chí Minh cấp giấy phép, kế thừa và phát triển từ tiền phong Talacons",
-                    color: "blue",
-                  },
-                  {
-                    year: "2024",
-                    position: "bottom",
-                    title: "Đạt được chứng nhận chất lượng và năng lực hoạt động xây dựng theo tiêu chuẩn nhà nước",
-                    color: "teal",
-                  },
-                  {
-                    year: "2025",
-                    position: "top",
-                    title: "Tiếp tục phát triển mạnh mẽ và khẳng định vị thế trên thị trường xây dựng Việt Nam",
-                    color: "blue",
-                  },
-                ].map((item, index) => (
+                {timelineData.map((item, index) => (
                   <div key={index} className="flex flex-col items-center relative 
                   slide-in-left">
                     {/* Top content */}
@@ -624,30 +630,29 @@ export default function AboutPage() {
                         className="absolute bottom-6 w-56 text-center z-20 fade-in-on"
                         style={{ transitionDelay: `${(index + 1) * 500}ms` }}
                       >
-                        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-4">
+                        <div className="rounded-lg p-4 border mb-4" style={{ borderColor: item.color }}>
                           <p className="text-sm text-gray-700 leading-relaxed">{item.title}</p>
                         </div>
 
                         {/* connector with small circle at start */}
                           <div className="relative mx-auto" style={{ width: 2 }}>
                             <div
-                              className={`absolute -top-2 left-1/2 transform -translate-x-1/2 w-3 h-3 rounded-full ${
-                                item.color === "teal" ? "bg-cyan-400" : "bg-blue-500"
-                              }`}
+                              className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-3 h-3 rounded-full"
+                              style={{ backgroundColor: item.color }}
                             />
-                            <div className={`w-0.5 h-12 mx-auto ${item.color === "teal" ? "bg-cyan-400" : "bg-blue-500"}`}></div>
+                            <div className="w-0.5 h-12 mx-auto" style={{ backgroundColor: item.color }}></div>
                           </div>
                       </div>
                     )}
 
                     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
                       <div
-                        className={`w-6 h-6 rounded-full border-4 bg-white flex items-center justify-center ${
-                          item.color === "teal" ? "border-cyan-400" : "border-blue-500"
-                        }`}
+                        className="w-6 h-6 rounded-full border-4 bg-white flex items-center justify-center"
+                        style={{ borderColor: item.color }}
                       >
                         <div
-                          className={`w-2 h-2 rounded-full ${item.color === "teal" ? "bg-cyan-400" : "bg-blue-500"}`}
+                          className="w-2 h-2 rounded-full"
+                          style={{ backgroundColor: item.color }}
                         ></div>
                       </div>
                       <div
@@ -668,16 +673,16 @@ export default function AboutPage() {
                         {/* connector with small circle at start */}
                         <div className="relative mx-auto" style={{ width: 2 }}>
                           <div
-                            className={`absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-3 h-3 rounded-full ${
-                              item.color === "teal" ? "bg-cyan-400" : "bg-blue-500"
-                            }`}
+                            className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-3 h-3 rounded-full"
+                            style={{ backgroundColor: item.color }}
                           />
                           <div
-                            className={`w-0.5 h-12 mx-auto mb-4 ${item.color === "teal" ? "bg-cyan-400" : "bg-blue-500"}`}
+                            className="w-0.5 h-12 mx-auto mb-4"
+                            style={{ backgroundColor: item.color }}
                           ></div>
                         </div>
 
-                        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                        <div className="rounded-lg p-4 border mb-4" style={{ borderColor: item.color }}>
                           <p className="text-sm text-gray-700 leading-relaxed">{item.title}</p>
                         </div>
                       </div>
@@ -689,42 +694,14 @@ export default function AboutPage() {
 
             {/* Mobile vertical timeline */}
             <div className="lg:hidden relative mt-6">
-              <div className="absolute left-16 top-0 bottom-0 w-0.5 bg-cyan-400 transform translate-x-3"></div>
+              <div
+                className="absolute left-16 top-0 bottom-0 w-0.5 transform translate-x-3"
+                style={{ backgroundColor: theme.palette.primary.main }}
+              ></div>
 
               {/* Timeline items */}
               <div className="space-y-8">
-                {[
-                  {
-                    year: "2020",
-                    title: "Khởi đầu hành trình xây dựng với đội ngũ nhiệt huyết và chuyên nghiệp",
-                    color: "teal",
-                  },
-                  {
-                    year: "2021",
-                    title: "Mở rộng đội ngũ, hoàn thiện quy trình quản lý và thực hiện những dự án đầu tiên",
-                    color: "blue",
-                  },
-                  {
-                    year: "2022",
-                    title: "Tích lũy kinh nghiệm, xây dựng uy tín với đối tác và chuẩn bị nền tảng pháp lý",
-                    color: "teal",
-                  },
-                  {
-                    year: "2023",
-                    title: "Lai Phát được thành lập do Sở Kế hoạch và Đầu tư TP. Hồ Chí Minh cấp giấy phép, kế thừa và phát triển từ tiền phong Talacons",
-                    color: "blue",
-                  },
-                  {
-                    year: "2024",
-                    title: "Đạt được chứng nhận chất lượng và năng lực hoạt động xây dựng theo tiêu chuẩn nhà nước",
-                    color: "teal",
-                  },
-                  {
-                    year: "2025",
-                    title: "Tiếp tục phát triển mạnh mẽ và khẳng định vị thế trên thị trường xây dựng Việt Nam",
-                    color: "blue",
-                  },
-                ].map((item, index) => (
+                {timelineData.map((item, index) => (
                   <div key={index} className="flex items-center relative">
                     {/* Year */}
                     <div
@@ -736,25 +713,25 @@ export default function AboutPage() {
 
                     <div className="relative z-10">
                       <div
-                        className={`w-6 h-6 rounded-full border-4 bg-white flex items-center justify-center ${
-                          item.color === "teal" ? "border-cyan-400" : "border-blue-500"
-                        }`}
+                        className="w-6 h-6 rounded-full border-4 bg-white flex items-center justify-center"
+                        style={{ borderColor: item.color }}
                       >
                         <div
-                          className={`w-2 h-2 rounded-full ${item.color === "teal" ? "bg-cyan-400" : "bg-blue-500"}`}
+                          className="w-2 h-2 rounded-full"
+                          style={{ backgroundColor: item.color }}
                         ></div>
                       </div>
                     </div>
 
                     {/* Horizontal connecting line */}
-                    <div className={`w-6 h-0.5 ${item.color === "teal" ? "bg-cyan-400" : "bg-blue-500"}`}></div>
+                    <div className="w-6 h-0.5" style={{ backgroundColor: item.color }}></div>
 
                     {/* Content box */}
                     <div
                       className="flex-1 ml-2 slide-in-right"
                       style={{ transitionDelay: `${index * 500}ms` }}
                     >
-                      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 max-w-md">
+                      <div className="rounded-lg border p-4 max-w-md" style={{ borderColor: item.color }}>
                         <p className="text-sm text-gray-700 leading-relaxed">{item.title}</p>
                       </div>
                     </div>

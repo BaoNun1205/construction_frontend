@@ -77,24 +77,25 @@ export default function ConstructionPage() {
 
   return (
     <Box className="min-h-screen">
-      <Container maxWidth="lg" className="py-16 space-y-20">
+      <Container className="py-16 space-y-20" sx={{ px: { xs: 4, md: 0 } }}>
         {/* Header Section */}
         <section className="fade-in-up">
-					<div className="flex flex-col items-center justify-center text-center mb-16">
-						<Typography
-							variant="h2"
-							className="text-4xl font-bold text-center mb-6 text-gray-800"
-						>
-							{t('construction.title')}
-							<span style={{ color: theme.palette.primary.main }}> {t('construction.titleHighlight')}</span>
-						</Typography>
-						<Typography
-							variant="h6"
-							className="text-center text-gray-600 max-w-4xl mx-auto mb-8 leading-relaxed"
-						>
-							{t('construction.description')}
-						</Typography>
-					</div>
+          <div className="flex flex-col items-center justify-center text-center mb-16">
+            <Typography
+              variant="h2"
+              className="text-4xl font-bold text-center text-gray-800"
+              sx={{ mb: 3 }}
+            >
+              {t('construction.title')}
+              <span style={{ color: theme.palette.primary.main }}> {t('construction.titleHighlight')}</span>
+            </Typography>
+            <Typography
+              variant="h6"
+              className="text-center text-gray-600 max-w-4xl mx-auto leading-relaxed"
+            >
+              {t('construction.description')}
+            </Typography>
+          </div>
         </section>
 
         {/* Services Grid */}
@@ -147,8 +148,9 @@ export default function ConstructionPage() {
                     <div>
                       <Typography 
                         variant="h5" 
-                        className="font-bold text-gray-800 transition-colors duration-300 mb-2"
+                        className="font-bold text-gray-800 transition-colors duration-300"
                         sx={{
+                          mb: 1,
                           '.group:hover &': {
                             color: theme.palette.primary.main
                           }
@@ -168,12 +170,16 @@ export default function ConstructionPage() {
                     </div>
                   </div>
                   
-                  <Typography variant="body1" className="text-gray-600 mb-6 leading-relaxed">
+                  <Typography
+                    variant="body1"
+                    className="text-gray-600 leading-relaxed"
+                    sx={{ mb: 3 }}
+                    >
                     {service.description}
                   </Typography>
                   
                   <div className="space-y-3 flex-grow">
-                    <Typography variant="h6" className="font-semibold text-gray-800 mb-3">
+                    <Typography variant="h6" className="font-semibold text-gray-800" sx={{ mb: 1.5 }}>
                       {t('construction.featureTitle')}
                     </Typography>
                     {service.features.map((feature, idx) => (

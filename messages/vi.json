@@ -26,7 +26,7 @@
       "scrollDown": "Cuộn xuống để xem thêm"
     },
     "services": {
-      "title": "Phát triển ngành xây dựng Lai Phát",
+      "title": "Phát triển dự án xây dựng của bạn",
       "description": "Từ thi công dân dụng đến công nghiệp, kiến thức chuyên sâu về ngành giúp chúng tôi xây dựng những giải pháp phù hợp với nhu cầu hiện tại và tương lai của dự án.",
       "exploreBtn": "Khám phá dịch vụ của chúng tôi",
       "constructionService": "Dịch vụ thi công",
@@ -72,6 +72,10 @@
 			"team": {
 				"title": "Đội Ngũ Chuyên Nghiệp",
 				"description": "Quy tụ kiến trúc sư, kỹ sư và công nhân lành nghề, giàu kinh nghiệm và sáng tạo, tận tâm đồng hành cùng khách hàng để mang lại công trình bền vững và giá trị lâu dài."
+			},
+			"innovation": {
+				"title": "Công Nghệ & Đổi Mới",
+				"description": "Luôn cập nhật công nghệ xây dựng tiên tiến, ứng dụng phần mềm thiết kế 3D, BIM và các giải pháp thông minh để tối ưu hóa quy trình và nâng cao chất lượng sản phẩm."
 			}
 		}
   },

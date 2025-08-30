@@ -99,7 +99,7 @@ export default function ServicesPage() {
 
   return (
     <Box className="min-h-screen">
-      <Container maxWidth="lg" className="py-16 space-y-20">
+      <Container className="py-16 space-y-20"  sx={{ px: { xs: 4, md: 0 } }}>
         {/* Header Section */}
         <section className="fade-in-up">
           <Typography

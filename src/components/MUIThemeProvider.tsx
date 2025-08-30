@@ -19,7 +19,12 @@ const theme = createTheme({
       dark: '#002040',
       contrastText: '#fff',
     },
-
+    action: {
+      active: '#00c0b7',
+      hover: '#27aae1',
+      selected: '#eee',
+      disabled: '#ccc',
+    },
     background: {
       default: '#fafafa',
       paper: '#fff',
