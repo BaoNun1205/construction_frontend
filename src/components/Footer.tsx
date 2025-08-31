@@ -33,16 +33,14 @@ export default function Footer() {
   
   return (
     <Box
-      component="footer"
       sx={{
         background: theme.palette.primary.main,
         color: 'white',
-        mt: 'auto',
-        px: { xs: 2 }
+        mt: 'auto'
       }}
     >
       {/* Call to Action Section */}
-      <Container maxWidth="lg" sx={{ py: 8 }}>
+      <Container className="py-16" sx={{ px: { xs: 4, md: 0 } }}>
         <div className="text-center">
           <div
             className="relative rounded-2xl p-12 md:p-16 text-white overflow-hidden"
@@ -106,7 +104,7 @@ export default function Footer() {
       </Container>
 
       {/* Footer Content */}
-      <Container maxWidth="lg" sx={{ pb: 6 }}>
+      <Container className="pb-16" sx={{ px: { xs: 4, md: 0 } }}>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Company Info */}
           <div className="md:col-span-1">

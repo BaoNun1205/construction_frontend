@@ -11,7 +11,6 @@ import {
 } from '@mui/material';
 import {
   Build,
-  Architecture,
   ArrowForward,
   Construction,
   ArrowBackIos,
@@ -40,7 +39,6 @@ export default function Home() {
   const { t: tRaw } = useTranslations();
   // Type-safe wrapper for translation function
   const t = (key: string): string => tRaw(key) as string;
-  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
 
   const { data, isLoading, error } = useProjects()
   const projects = (data || []).map(project => ProjectHelpers.transformForHomePage(project));
@@ -364,9 +362,10 @@ export default function Home() {
             sx={{
               border: `2px solid ${theme.palette.primary.main}`,
               borderRadius: 4,
-              py: {xs: 4, md: 6},
-              pl: {xs: 4, md: 6},
-              pr: {xs: 6, md: 6}
+              py: 4,
+              pl: 4,
+              pr: 6,
+              position: 'relative'
             }}
           >
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -391,47 +390,18 @@ export default function Home() {
                     fontSize: '1.1rem',
                     lineHeight: 1.8,
                     color: 'text.secondary',
-                    mb: 6,
+                    // mb: 6,
                     maxWidth: 500
                   }}
                 >
                   {t('home.services.description')}
                 </Typography>
-                <Button
-                  variant="contained"
-                  size="large"
-                  endIcon={<ArrowForward />}
-                  component={Link}
-                  href="/services"
-                  sx={{
-                    backgroundColor: 'white',
-                    border: `2px solid ${theme.palette.primary.main}`,
-                    color: 'black',
-                    fontSize: '1rem',
-                    fontWeight: 600,
-                    px: 4,
-                    py: 1.5,
-                    borderRadius: '50px',
-                    '&:hover': {
-                      color: theme.palette.action.hover,
-                      borderColor: theme.palette.action.hover,
-                    }
-                  }}
-                >
-                  {t('home.services.exploreBtn')}
-                </Button>
               </div>
 
               {/* Right Services Cards */}
               <div className="slide-in-right" style={{ position: 'relative' }}>
                 <Box
                   className="scroll-container"
-                  onScroll={(e) => {
-                    const target = e.target as HTMLElement;
-                    const isScrolledToBottom = 
-                      target.scrollHeight - target.scrollTop <= target.clientHeight + 10;
-                    setShowScrollIndicator(!isScrolledToBottom);
-                  }}
                   onWheel={(e) => {
                     const target = e.currentTarget as HTMLElement;
                     const { deltaY } = e;
@@ -452,7 +422,7 @@ export default function Home() {
                     }
                   }}
                   sx={{
-                    height: 400,
+                    height: 350,
                     position: 'relative',
                     overflowY: 'auto',
                     overflowX: 'hidden',
@@ -539,46 +509,41 @@ export default function Home() {
                 </Box>
 
                 {/* Scroll Indicator - Mouse Effect */}
-                {showScrollIndicator && (
-                  <Box
-                    sx={{
-                      position: 'absolute',
-                      right: -35,
-                      top: '50%',
-                      transform: 'translateY(-50%)',
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    right: -35,
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    zIndex: 2,
+                    '&:hover': { opacity: 1 }
+                  }}
+                >
+                  <Box 
+                    sx={{ 
+                      width: 22, 
+                      height: 35, 
+                      border: '2px solid', 
+                      borderColor: theme.palette.primary.main,
+                      borderRadius: '12px',
                       display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      zIndex: 2,
-                      opacity: 0.7,
-                      '&:hover': { opacity: 1 }
+                      justifyContent: 'center',
+                      alignItems: 'flex-start',
+                      pt: 0.8
                     }}
                   >
-                    {/* Mouse Container */}
-                    <Box 
-                      sx={{ 
-                        width: 22, 
-                        height: 35, 
-                        border: '2px solid', 
-                        borderColor: theme.palette.action.hover,
-                        borderRadius: '12px',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'flex-start',
-                        pt: 0.8
-                      }}
-                    >
-                      {/* Mouse Wheel */}
-                      <Box sx={{ 
-                        width: 3, 
-                        height: 6, 
-                        backgroundColor: theme.palette.action.hover,
-                        borderRadius: 2,
-                        animation: 'scroll 1.5s infinite'
-                      }} />
-                    </Box>
+                    <Box sx={{ 
+                      width: 3, 
+                      height: 6, 
+                      backgroundColor: theme.palette.primary.main,
+                      borderRadius: 2,
+                      animation: 'scroll 1.5s infinite'
+                    }} />
                   </Box>
-                )}
+                </Box>
               </div>
             </div>
           </Box>
