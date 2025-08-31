@@ -17,11 +17,13 @@ import {
   Instagram,
   Phone,
   Email,
-  LocationOn
+  LocationOn,
+  ArrowForward
 } from '@mui/icons-material';
 import Link from 'next/link';
 import { useTranslations } from '@/hooks/useTranslations';
 import { CONTACT } from '@/constants/contact';
+import PhoneButton from './ui/PhoneButton';
 
 export default function Footer() {
   const theme = useTheme();
@@ -36,10 +38,75 @@ export default function Footer() {
         background: theme.palette.primary.main,
         color: 'white',
         mt: 'auto',
-        py: 6
+        px: { xs: 2 }
       }}
     >
-      <Container maxWidth="lg">
+      {/* Call to Action Section */}
+      <Container maxWidth="lg" sx={{ py: 8 }}>
+        <div className="text-center">
+          <div
+            className="relative rounded-2xl p-12 md:p-16 text-white overflow-hidden"
+            style={{
+              background: theme.palette.primary.main,
+              border: '2px solid white',
+              boxShadow: `0 20px 60px rgba(0,0,0,0.1)`,
+            }}
+          >
+            {/* Background decorative elements */}
+            <div className="absolute top-0 left-0 w-32 h-32 bg-white/10 rounded-full -translate-x-16 -translate-y-16" />
+            <div className="absolute bottom-0 right-0 w-40 h-40 bg-white/10 rounded-full translate-x-20 translate-y-20" />
+            <div className="absolute top-1/2 left-1/2 w-24 h-24 bg-white/5 rounded-full -translate-x-12 -translate-y-12 animate-pulse" />
+
+            <div className="relative z-10">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+                Bắt Đầu Dự Án Của Bạn Ngay Hôm Nay
+              </h2>
+              <p className="text-xl text-white/90 max-w-2xl mx-auto leading-relaxed mb-10">
+                Liên hệ với chúng tôi để được tư vấn miễn phí và nhận báo giá chi tiết cho dự án của bạn.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                <PhoneButton
+                  sx={{
+                    color: 'white',
+                    textDecoration: 'none',
+                    px: 4,
+                    py: 3,
+                    border: '2px solid white',
+                    fontSize: '1rem',
+                    borderRadius: '0.5rem',
+                    boxShadow: '0 10px 30px rgba(0,0,0,0.08)',
+                    '&:hover': {
+                      transform: 'translateY(-3px) scale(1.05)',
+                      backgroundColor: 'rgba(255,255,255,0.1)'
+                    },
+                  }}
+                />
+
+                <button
+                  type="button"
+                  className="text-lg px-8 py-6 rounded-lg border-2 border-white text-white transition-all duration-300 bg-transparent font-semibold flex items-center justify-center"
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-3px) scale(1.05)';
+                    (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'rgba(255,255,255,0.1)';
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0) scale(1)';
+                    (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'transparent';
+                  }}
+                  aria-label="Nhận báo giá"
+                >
+                  Nhận Báo Giá
+                  <ArrowForward className="ml-2 w-5 h-5" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Container>
+
+      {/* Footer Content */}
+      <Container maxWidth="lg" sx={{ pb: 6 }}>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Company Info */}
           <div className="md:col-span-1">
@@ -89,6 +156,9 @@ export default function Footer() {
               <MuiLink component={Link} href="/services" color="inherit" sx={{ opacity: 0.8, '&:hover': { opacity: 1 } }}>
                 {t('footer.services')}
               </MuiLink>
+              <MuiLink component={Link} href="/projects" color="inherit" sx={{ opacity: 0.8, '&:hover': { opacity: 1 } }}>
+                Dự Án
+              </MuiLink>
               <MuiLink component={Link} href="/store" color="inherit" sx={{ opacity: 0.8, '&:hover': { opacity: 1 } }}>
                 {t('footer.store')}
               </MuiLink>
@@ -101,20 +171,23 @@ export default function Footer() {
           {/* Services */}
           <div>
             <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
-              {t('footer.servicesTitle')}
+              Dịch Vụ
             </Typography>
             <Stack spacing={1}>
-              <MuiLink component={Link} href="/services/construction-technology" color="inherit" sx={{ opacity: 0.8, '&:hover': { opacity: 1 } }}>
-                {t('footer.constructionTech')}
+              <MuiLink component={Link} href="/services/construction" color="inherit" sx={{ opacity: 0.8, '&:hover': { opacity: 1 } }}>
+                Thi Công Xây Dựng
               </MuiLink>
-              <MuiLink component={Link} href="/services/consultation" color="inherit" sx={{ opacity: 0.8, '&:hover': { opacity: 1 } }}>
-                {t('footer.consultation')}
+              <MuiLink component={Link} href="/services/design-consulting" color="inherit" sx={{ opacity: 0.8, '&:hover': { opacity: 1 } }}>
+                Tư Vấn Thiết Kế
               </MuiLink>
-              <MuiLink component={Link} href="/services/quality-control" color="inherit" sx={{ opacity: 0.8, '&:hover': { opacity: 1 } }}>
-                {t('footer.qualityControl')}
+              <MuiLink component={Link} href="/services/supervision" color="inherit" sx={{ opacity: 0.8, '&:hover': { opacity: 1 } }}>
+                Giám Sát Công Trình
               </MuiLink>
-              <MuiLink href="#" color="inherit" sx={{ opacity: 0.8, '&:hover': { opacity: 1 } }}>
-                {t('footer.architecture')}
+              <MuiLink component={Link} href="/services/project-management" color="inherit" sx={{ opacity: 0.8, '&:hover': { opacity: 1 } }}>
+                Quản Lý Dự Án
+              </MuiLink>
+              <MuiLink component={Link} href="/services/bidding-consulting" color="inherit" sx={{ opacity: 0.8, '&:hover': { opacity: 1 } }}>
+                Tư Vấn Đấu Thầu
               </MuiLink>
             </Stack>
           </div>

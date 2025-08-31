@@ -14,7 +14,6 @@ import {
 } from '@mui/icons-material';
 import { useTranslations } from '@/hooks/useTranslations';
 import useScrollAnimations from '@/hooks/useScrollAnimations';
-import CallToAction from '@/components/ui/CallToAction';
 
 export default function BiddingConsultingPage() {
   useScrollAnimations();
@@ -295,7 +294,6 @@ export default function BiddingConsultingPage() {
           </div>
         </section>
       </Container>
-      <CallToAction />
     </Box>
   )
 }

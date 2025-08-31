@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   Box,
   Container,
@@ -13,9 +13,7 @@ import {
   Groups,
 } from '@mui/icons-material';
 import { useTranslations } from '@/hooks/useTranslations';
-import { CONTACT } from '@/constants/contact';
 import useScrollAnimations from '@/hooks/useScrollAnimations';
-import CallToAction from '@/components/ui/CallToAction';
 
 export default function ProjectManagementPage() {
   useScrollAnimations();
@@ -253,7 +251,6 @@ export default function ProjectManagementPage() {
         </section>
         
       </Container>
-      <CallToAction />
     </Box>
   )
 }

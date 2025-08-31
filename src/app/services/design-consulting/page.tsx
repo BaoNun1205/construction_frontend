@@ -17,7 +17,6 @@ import {
 } from "@mui/icons-material"
 import { Box, Button, Container, Stack, Typography } from "@mui/material"
 import { useTranslations } from "@/hooks/useTranslations"
-import CallToAction from "@/components/ui/CallToAction"
 import useScrollAnimations from "@/hooks/useScrollAnimations"
 
 export default function DesignConsultingPage() {
@@ -1055,7 +1054,6 @@ export default function DesignConsultingPage() {
           </div>
         </section>
       </Container>
-      <CallToAction />
     </Box>
   )
 }
