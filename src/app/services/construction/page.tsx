@@ -14,7 +14,6 @@ import {
   Engineering,
 } from '@mui/icons-material';
 import { useTranslations } from '@/hooks/useTranslations';
-import CallToAction from '@/components/ui/CallToAction';
 import useScrollAnimations from '@/hooks/useScrollAnimations';
 
 export default function ConstructionPage() {
@@ -200,7 +199,6 @@ export default function ConstructionPage() {
           </div>
         </section>
       </Container>
-      <CallToAction />
     </Box>
   )
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   Box,
   Container,
@@ -13,9 +13,7 @@ import {
   Security,
 } from '@mui/icons-material';
 import { useTranslations } from '@/hooks/useTranslations';
-import { CONTACT } from '@/constants/contact';
 import useScrollAnimations from '@/hooks/useScrollAnimations';
-import CallToAction from '@/components/ui/CallToAction';
 
 export default function SupervisionPage() {
   useScrollAnimations();
@@ -228,7 +226,6 @@ export default function SupervisionPage() {
           </div>
         </section>
       </Container>
-      <CallToAction />
     </Box>
   )
 }

@@ -33,7 +33,7 @@ import { useProjects } from '@/hooks/useProjects';
 import ProjectHelpers from '@/utils/projectHelpers';
 import useScrollAnimations from '@/hooks/useScrollAnimations';
 import PhoneButton from '@/components/ui/PhoneButton';
-import CallToAction from '@/components/ui/CallToAction';
+import ImageMarquee from '@/components/ui/ImageMarquee';
 
 export default function Home() {
   const theme = useTheme();
@@ -501,7 +501,7 @@ export default function Home() {
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 minWidth: 64,
-                                height: 64
+                                height: 64,
                               }}
                             >
                               {service.icon}
@@ -530,7 +530,7 @@ export default function Home() {
                                 {service.description}
                               </Typography>
                             </Box>
-                            <ArrowForward sx={{ color: 'text.secondary', ml: 1, fontSize: 20 }} />
+                            {/* <ArrowForward sx={{ color: 'text.secondary', ml: { xs: 0, md: 1 }, fontSize: 20 }} /> */}
                           </Box>
                         </Box>
                       </div>
@@ -724,7 +724,7 @@ export default function Home() {
                 const container = e.target as HTMLElement;
                 const leftBtn = document.getElementById('scroll-left-btn') as HTMLButtonElement;
                 const rightBtn = document.getElementById('scroll-right-btn') as HTMLButtonElement;
-                
+
                 if (leftBtn && rightBtn) {
                   // Disable left button if at start
                   leftBtn.disabled = container.scrollLeft <= 0;
@@ -742,7 +742,9 @@ export default function Home() {
                   style={{ scrollSnapAlign: 'start' }}
                 >
                   {/* Custom Project Card */}
-                  <div className="group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:transition-all duration-500 h-full">
+                  <div
+                    className="group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:transition-all duration-500 h-full"
+                  >
                     {/* Card Image */}
                     <div className="relative h-52 overflow-hidden">
                       <Image
@@ -777,7 +779,7 @@ export default function Home() {
 
                       {/* Card Footer */}
                       <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
-                        <div 
+                        <div
                           className="flex items-center gap-2 transition-colors duration-200"
                           style={{ color: theme.palette.primary.main }}
                         >
@@ -871,7 +873,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-0">
               {/* Experience */}
               <div className="scale-in animate-delay-1 border-b border-white md:border-b-0 md:border-r md:border-white md:last:border-r-0">
-                <div className="text-center p-6 h-68 md:h-86 flex flex-col">
+                <div className="text-center p-6 h-74 md:h-86 flex flex-col">
                   <div className="flex justify-center mb-6 flex-shrink-0">
                     <Handshake
                       sx={{ fontSize: 60, color: theme.palette.action.active }} 
@@ -890,7 +892,7 @@ export default function Home() {
 
               {/* Solution */}
               <div className="scale-in animate-delay-1 border-b border-white md:border-b-0 md:border-r md:border-white md:last:border-r-0">
-                <div className="text-center p-6 h-68 md:h-86 flex flex-col">
+                <div className="text-center p-6 h-74 md:h-86 flex flex-col">
                   <div className="flex justify-center mb-6 flex-shrink-0">
                     <Construction
                       sx={{ fontSize: 60, color: theme.palette.action.active }} 
@@ -909,7 +911,7 @@ export default function Home() {
 
               {/* Quality */}
               <div className="scale-in animate-delay-1 border-b border-white md:border-b-0 md:border-r md:border-white md:last:border-r-0">
-                <div className="text-center p-6 h-68 md:h-86 flex flex-col">
+                <div className="text-center p-6 h-74 md:h-86 flex flex-col">
                   <div className="flex justify-center mb-6 flex-shrink-0">
                     <VerifiedUser
                       sx={{ fontSize: 60, color: theme.palette.action.active }} 
@@ -928,7 +930,7 @@ export default function Home() {
 
               {/* Team */}
               <div className="scale-in animate-delay-4">
-                <div className="text-center p-6 h-68 md:h-86 flex flex-col">
+                <div className="text-center p-6 h-74 md:h-86 flex flex-col">
                   <div className="flex justify-center mb-6 flex-shrink-0">
                     <Group
                       sx={{ fontSize: 60, color: theme.palette.action.active }} 
@@ -948,7 +950,11 @@ export default function Home() {
           </Box>
         </section>
       </Container>
-      <CallToAction />
+
+      {/* Image Marquee Section */}
+      <ImageMarquee
+        title='Phát Triển Bền Vững'
+      />
     </Box>
   );
 }
