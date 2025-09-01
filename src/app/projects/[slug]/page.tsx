@@ -84,7 +84,7 @@ export default function ProjectDetailPage(props: any) {
 
   return (
     <Box className="min-h-screen">
-      <Container className="py-16 space-y-20"  sx={{ px: { xs: 4, md: 0 } }}>
+      <Container className="py-16 space-y-20"  sx={{ px: 4 }}>
         {/* Hero Section */}
         <div className={`relative overflow-hidden`}>
           <div className="relative max-w-7xl mx-auto">

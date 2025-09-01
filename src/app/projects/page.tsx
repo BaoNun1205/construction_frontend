@@ -285,7 +285,7 @@ export default function ProjectsPage() {
           }
         }}
       >
-        <Container sx={{ px: { xs: 4, md: 0 } }}>
+        <Container sx={{ px: 4 }}>
           <div className="relative z-10 text-white fade-in-up">
             <Typography
               variant="h6"
@@ -369,7 +369,7 @@ export default function ProjectsPage() {
       </Box>
 
       {/* Content Section */}
-      <Container className="pt-6 pb-16"  sx={{ px: { xs: 2, md: 0 } }}>
+      <Container className="pt-6 pb-16" sx={{ px: { xs: 2, sm: 3 } }}>
 
         {/* Projects Grid */}
         <section className="pb-16">

@@ -176,7 +176,7 @@ export default function Home() {
           }
         }}
       >
-        <Container sx={{ position: 'relative', zIndex: 2, px: { xs: 4, md: 0 } }}>
+        <Container sx={{ position: 'relative', zIndex: 2, px: 4 }}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div className="slide-in-left">
               <Typography
@@ -307,7 +307,7 @@ export default function Home() {
         </Container>
       </Box>
 
-      <Container className="py-16 space-y-20" sx={{ px: { xs: 4, md: 0 } }}>
+      <Container className="py-16 space-y-20" sx={{ px: 4 }}>
         {/* Animated Divider */}
         <section>
           <Box

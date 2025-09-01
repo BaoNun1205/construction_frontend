@@ -254,7 +254,7 @@ export default function DesignConsultingPage() {
           }
         }}
       >
-        <Container sx={{ position: 'relative', zIndex: 2, px: { xs: 4, md: 0 } }}>
+        <Container sx={{ position: 'relative', zIndex: 2, px: 4 }}>
           <Box
             className="fade-in-on"
             sx={{
@@ -347,7 +347,7 @@ export default function DesignConsultingPage() {
         </Container>
       </Box>
 
-      <Container className="py-16 space-y-20" sx={{ px: { xs: 4, md: 0 } }}>
+      <Container className="py-16 space-y-20" sx={{ px: 4 }}>
         {/* Main Sections */}
         <section>
           <div className="mx-auto space-y-20">

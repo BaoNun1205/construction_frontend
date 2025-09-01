@@ -108,7 +108,7 @@ export default function AboutPage() {
             }
           }}
         >
-          <Container sx={{ px: { xs: 4, md: 0 } }}>
+          <Container sx={{ px: 4 }}>
             <div className="relative z-10 text-white fade-in-up">
               <Typography
                 variant="h2"
@@ -144,7 +144,7 @@ export default function AboutPage() {
                       </Typography>
                       <ul className="text-white text-sm space-y-1">
                         <li>• Kết cấu BTCT, kết cấu thép</li>
-                        <li>• Hoàn thiện xây tô, ốp lát, chống thấm, sơn nước, trần thạch cao</li>
+                        <li>• Thi công hoàn thiện trọn gói</li>
                         <li>• Hệ thống M&E</li>
                         <li>• Nội thất</li>
                         <li>• Hạ tầng kỹ thuật</li>
@@ -221,7 +221,7 @@ export default function AboutPage() {
           </Container>
         </Box>
       </section>
-      <Container className="py-16 space-y-20" sx={{ px: { xs: 4, md: 0 } }}>
+      <Container className="py-16 space-y-20" sx={{ px: 4 }}>
         {/* Mission, Vision, Values */}
         <section className="fade-in-up">
           <Typography

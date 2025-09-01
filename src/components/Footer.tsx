@@ -24,6 +24,7 @@ import Link from 'next/link';
 import { useTranslations } from '@/hooks/useTranslations';
 import { CONTACT } from '@/constants/contact';
 import PhoneButton from './ui/PhoneButton';
+import BrandLogo from './ui/BrandLogo';
 
 export default function Footer() {
   const theme = useTheme();
@@ -40,7 +41,7 @@ export default function Footer() {
       }}
     >
       {/* Call to Action Section */}
-      <Container className="py-16" sx={{ px: { xs: 4, md: 0 } }}>
+      <Container className="py-16" sx={{ px: 4 }}>
         <div className="text-center">
           <div
             className="relative rounded-2xl p-12 md:p-16 text-white overflow-hidden"
@@ -104,13 +105,16 @@ export default function Footer() {
       </Container>
 
       {/* Footer Content */}
-      <Container className="pb-16" sx={{ px: { xs: 4, md: 0 } }}>
+      <Container className="pb-16" sx={{ px: 4 }}>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Company Info */}
           <div className="md:col-span-1">
-            <Typography variant="h6" gutterBottom sx={{ fontWeight: 700 }}>
-              {t('footer.company')}
-            </Typography>
+            <Box sx={{ mb: 2 }}>
+              <BrandLogo
+                variant="full"
+                scrolled={false}
+              />
+            </Box>
             <Typography variant="body2" sx={{ mb: 2, opacity: 0.8 }}>
               {t('footer.description')}
             </Typography>
