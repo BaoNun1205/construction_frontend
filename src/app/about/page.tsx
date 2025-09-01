@@ -130,7 +130,7 @@ export default function AboutPage() {
                   
                   <div className="space-y-4">
                     <div>
-                      <Typography variant="h6" className="font-semibold text-cyan-300 mb-2">
+                      <Typography variant="h6" className="font-semibold text-cyan-300" sx={{ mb: 1 }}>
                         Thiết kế:
                       </Typography>
                       <Typography variant="body2" className="text-white leading-relaxed">
@@ -139,7 +139,7 @@ export default function AboutPage() {
                     </div>
                     
                     <div>
-                      <Typography variant="h6" className="font-semibold text-cyan-300 mb-2">
+                      <Typography variant="h6" className="font-semibold text-cyan-300" sx={{ mb: 1 }}>
                         Thi công:
                       </Typography>
                       <ul className="text-white text-sm space-y-1">
@@ -225,9 +225,9 @@ export default function AboutPage() {
         {/* Mission, Vision, Values */}
         <section className="fade-in-up">
           <Typography
-            variant="h3"
+            variant="h2"
             className="text-2xl font-bold text-center mb-8 text-gray-800"
-            sx={{ marginBottom: '2rem' }}
+            sx={{ mb: 8 }}
           >
             {t('about.title')}
           </Typography>
@@ -273,7 +273,7 @@ export default function AboutPage() {
                   />
                   <Typography 
                     variant="h4" 
-                    className="font-bold mb-6 text-gray-800 transition-colors duration-300"
+                    className="font-bold text-gray-800 transition-colors duration-300"
                     sx={{
                       '.group:hover &': {
                         color: theme.palette.primary.main
@@ -329,7 +329,7 @@ export default function AboutPage() {
                   />
                   <Typography 
                     variant="h4" 
-                    className="font-bold mb-6 text-gray-800 transition-colors duration-300"
+                    className="font-bold text-gray-800 transition-colors duration-300"
                     sx={{
                       '.group:hover &': {
                         color: theme.palette.primary.main
@@ -385,7 +385,7 @@ export default function AboutPage() {
                   />
                   <Typography 
                     variant="h4" 
-                    className="font-bold mb-6 text-gray-800 transition-colors duration-300"
+                    className="font-bold text-gray-800 transition-colors duration-300"
                     sx={{
                       '.group:hover &': {
                         color: theme.palette.primary.main
@@ -408,7 +408,7 @@ export default function AboutPage() {
           <div className="text-center mb-16 fade-in-up">
             <Typography
               variant="h2"
-              className="text-3xl md:text-4xl font-bold text-gray-800 mb-6"
+              className="text-3xl md:text-4xl font-bold text-gray-800"
             >
               {t('about.certificates.title')}
             </Typography>
@@ -491,14 +491,26 @@ export default function AboutPage() {
                       </div>
                     </div>
                     <div className="mt-6 pt-6 border-t border-gray-200">
-                      <Typography variant="h6" className="font-semibold text-gray-800 mb-3">
+                      <Typography
+                        variant="h6"
+                        className="font-semibold text-gray-800"
+                        sx={{ mb: 1.5 }}
+                      >
                         {t('about.certificates.businessRegistration.companyLabel')}:
                       </Typography>
-                      <Typography variant="body2" className="text-gray-800 font-semibold mb-4">
+                      <Typography
+                        variant="body2"
+                        className="text-gray-800 font-semibold"
+                        sx={{ mb: 2 }}
+                      >
                         {t('about.certificates.businessRegistration.company')}
                       </Typography>
                       <div className="mb-4">
-                        <Typography variant="body2" className="text-gray-600 font-medium mb-2">
+                        <Typography
+                          variant="body2"
+                          className="text-gray-600 font-medium"
+                          sx={{ mb: 1 }}
+                        >
                           {t('about.certificates.businessRegistration.addressLabel')}:
                         </Typography>
                         <Typography variant="body2" className="text-gray-600">
@@ -506,7 +518,11 @@ export default function AboutPage() {
                         </Typography>
                       </div>
                       <div className="mb-4">
-                        <Typography variant="body2" className="text-gray-600 font-medium mb-2">
+                        <Typography
+                          variant="body2"
+                          className="text-gray-600 font-medium"
+                          sx={{ mb: 1 }}
+                        >
                           {t('about.certificates.businessRegistration.representativeLabel')}:
                         </Typography>
                         <Typography variant="body2" className="text-gray-600">
@@ -515,7 +531,7 @@ export default function AboutPage() {
                       </div>
                     </div>
                     <div className="mt-4 pt-4 border-t border-gray-200">
-                      <Typography variant="h6" className="font-semibold text-gray-800 mb-3">
+                      <Typography variant="h6" className="font-semibold text-gray-800" sx={{ mb: 1.5 }}>
                         {t('about.certificates.businessRegistration.businessScopeTitle')}:
                       </Typography>
                       <div className="grid grid-cols-1 gap-2">
@@ -601,7 +617,7 @@ export default function AboutPage() {
         <section className="slide-in-left ">
           <Typography
             variant="h2"
-            className="fade-in-on text-3xl font-bold text-center mb-20 text-gray-800 relative z-30"
+            className="fade-in-on text-3xl font-bold text-center text-gray-800 relative z-30"
           >
             {t('about.history.title')}
           </Typography>
@@ -747,7 +763,7 @@ export default function AboutPage() {
           <Typography
             variant="h2"
             className="text-3xl font-bold text-center mb-12 text-gray-800"
-            sx={{ marginBottom: '3rem' }}
+            sx={{ mb: 8 }}
           >
             {t('about.team.title')}
           </Typography>
@@ -768,10 +784,18 @@ export default function AboutPage() {
                     className="transition-transform duration-300 group-hover:rotate-6"
                   />
                 </Avatar>
-                <Typography variant="h5" className="font-bold mb-2 transition-colors duration-300 group-hover:text-amber-600">
+                <Typography
+                  variant="h5"
+                  className="font-bold transition-colors duration-300 group-hover:text-amber-600"
+                  sx={{ mb: 1 }}
+                >
                   {t('about.team.members.deputy.name')}
                 </Typography>
-                <Typography variant="subtitle1" className="text-amber-500 mb-3 transition-colors duration-300 group-hover:text-amber-600">
+                <Typography
+                  variant="subtitle1"
+                  className="text-amber-500 transition-colors duration-300 group-hover:text-amber-600"
+                  sx={{ mb: 1.5 }}
+                >
                   {t('about.team.members.deputy.position')}
                 </Typography>
                 <div className="flex flex-wrap justify-center gap-2 mb-4">
@@ -809,10 +833,18 @@ export default function AboutPage() {
                     className="transition-transform duration-300 group-hover:rotate-6"
                   />
                 </Avatar>
-                <Typography variant="h5" className="font-bold mb-2 transition-colors duration-300 group-hover:text-cyan-700">
+                <Typography
+                  variant="h5"
+                  className="font-bold transition-colors duration-300 group-hover:text-cyan-700"
+                  sx={{ mb: 1 }}
+                >
                   {t('about.team.members.ceo.name')}
                 </Typography>
-                <Typography variant="subtitle1" className="text-cyan-600 mb-3 transition-colors duration-300 group-hover:text-cyan-700">
+                <Typography
+                  variant="subtitle1"
+                  className="text-cyan-600 transition-colors duration-300 group-hover:text-cyan-700"
+                  sx={{ mb: 1.5 }}
+                >
                   {t('about.team.members.ceo.position')}
                 </Typography>
                 <div className="flex flex-wrap justify-center gap-2 mb-4">
@@ -850,10 +882,18 @@ export default function AboutPage() {
                     className="transition-transform duration-300 group-hover:rotate-6"
                   />
                 </Avatar>
-                <Typography variant="h5" className="font-bold mb-2 transition-colors duration-300 group-hover:text-green-700">
+                <Typography
+                  variant="h5"
+                  className="font-bold transition-colors duration-300 group-hover:text-green-700"
+                  sx={{ mb: 1 }}
+                >
                   {t('about.team.members.technical.name')}
                 </Typography>
-                <Typography variant="subtitle1" className="text-green-600 mb-3 transition-colors duration-300 group-hover:text-green-700">
+                <Typography
+                  variant="subtitle1"
+                  className="text-green-600 transition-colors duration-300 group-hover:text-green-700"
+                  sx={{ mb: 1.5 }}
+                >
                   {t('about.team.members.technical.position')}
                 </Typography>
                 <div className="flex flex-wrap justify-center gap-2 mb-4">
@@ -881,7 +921,7 @@ export default function AboutPage() {
           <Typography
             variant="h2"
             className="text-3xl font-bold text-center mb-12 text-gray-800"
-            sx={{ marginBottom: '3rem' }}
+            sx={{ mb: 8 }}
           >
             {t('about.partners.title')}
           </Typography>
@@ -890,7 +930,8 @@ export default function AboutPage() {
               <Card className="p-6 h-full transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.02] hover:-translate-y-1 group">
                 <Typography
                   variant="h5"
-                  className="font-bold mb-4 text-cyan-600 flex items-center transition-colors duration-300 group-hover:text-cyan-700"
+                  className="font-bold text-cyan-600 flex items-center transition-colors duration-300 group-hover:text-cyan-700"
+                  sx={{ mb: 2 }}
                 >
                   <Handshake className="mr-2 transition-transform duration-300 group-hover:scale-110" />
                   {t('about.partners.strategicPartners.title')}
@@ -936,7 +977,8 @@ export default function AboutPage() {
               <Card className="p-6 h-full transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.02] hover:-translate-y-1 group">
                 <Typography
                   variant="h5"
-                  className="font-bold mb-4 text-amber-500 flex items-center transition-colors duration-300 group-hover:text-amber-600"
+                  className="font-bold text-amber-500 flex items-center transition-colors duration-300 group-hover:text-amber-600"
+                  sx={{ mb: 2 }}
                 >
                   <Business className="mr-2 transition-transform duration-300 group-hover:scale-110" />
                   {t('about.partners.clients.title')}

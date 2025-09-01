@@ -12,6 +12,7 @@ export interface Project {
   details: string[]
   status: 'completed' | 'in-progress'
   description: string
+  isFeatured: boolean
   category: ProjectCategory
   createdAt?: string
   updatedAt?: string
@@ -27,6 +28,7 @@ export interface CreateProjectDto {
   details: string[]
   status: 'completed' | 'in-progress'
   description: string
+  isFeatured?: boolean
   category: string
 }
 
@@ -40,5 +42,6 @@ export interface UpdateProjectDto {
   details?: string[]
   status?: 'completed' | 'in-progress'
   description?: string
+  isFeatured?: boolean
   category?: string
 }

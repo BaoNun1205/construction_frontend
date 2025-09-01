@@ -150,7 +150,7 @@ export default function Header() {
         zIndex: 1100,
       }}
     >
-        <Container sx={{ px: 4 }}>
+        <Container sx={{ px: { xs: 2, sm: 3 } }}>
           <Toolbar
             disableGutters
             sx={{
