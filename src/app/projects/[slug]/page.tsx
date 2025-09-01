@@ -361,38 +361,6 @@ export default function ProjectDetailPage(props: any) {
               </div>
             </div>
           </section>
-
-          {/* Call to Action */}
-          <section
-            id="cta"
-            data-animate
-            className={`mt-16 text-center transition-all duration-1000 delay-700 ${visibleElements.has("cta") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-          >
-            <div className={`bg-gradient-to-r from-${statusColor}-50 via-${statusColor === 'green' ? 'teal' : 'amber'}-50 to-${statusColor}-50 rounded-3xl p-12 border border-gray-200`}>
-              <div className="flex flex-col items-center justify-center text-center">
-                <Typography
-                  variant="h3"
-                  className="font-serif text-3xl font-bold text-foreground"
-                  sx={{ mb: 1 }}
-                >
-                  Quan tâm đến dự án này?
-                </Typography>
-                <Typography
-                  variant="body1"
-                  className="text-muted-foreground text-lg max-w-2xl mx-auto"
-                  sx={{ mb: 2 }}
-                >
-                  Liên hệ với chúng tôi để được tư vấn chi tiết và nhận báo giá tốt nhất
-                </Typography>
-              </div>
-              <button className={`inline-flex items-center px-8 py-4 bg-${statusColor}-600 hover:bg-${statusColor}-700 text-white font-serif font-semibold rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300`}>
-                <Typography variant="body1" className="font-semibold">
-                  Yêu cầu thêm thông tin
-                </Typography>
-                <ChevronRight className="w-5 h-5 ml-2" />
-              </button>
-            </div>
-          </section>
         </div>
 
         {/* Image/Video Modal */}

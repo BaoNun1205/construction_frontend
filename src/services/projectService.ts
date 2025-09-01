@@ -19,6 +19,14 @@ export class ProjectService {
     return res.data
   }
 
+  // GET /projects/featured
+  static async getFeaturedProjects(): Promise<Project[]> {
+    const res: ApiResponse<Project[]> = await api.get('/projects/featured', {
+      requireAuth: false
+    })
+    return res.data
+  }
+
   // GET /projects/:id
   static async getProjectById(id: string): Promise<Project> {
     const res: ApiResponse<Project> = await api.get(`/projects/${id}`, {

@@ -28,11 +28,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useTranslations } from '@/hooks/useTranslations';
-import { useProjects } from '@/hooks/useProjects';
 import ProjectHelpers from '@/utils/projectHelpers';
 import useScrollAnimations from '@/hooks/useScrollAnimations';
 import PhoneButton from '@/components/ui/PhoneButton';
 import ImageMarquee from '@/components/ui/ImageMarquee';
+import { useFeaturedProjects } from '@/hooks/useProjects';
 
 export default function Home() {
   const theme = useTheme();
@@ -40,7 +40,7 @@ export default function Home() {
   // Type-safe wrapper for translation function
   const t = (key: string): string => tRaw(key) as string;
 
-  const { data, isLoading, error } = useProjects()
+  const { data, isLoading, error } = useFeaturedProjects()
   const projects = (data || []).map(project => ProjectHelpers.transformForHomePage(project));
 
   useScrollAnimations(undefined, undefined, undefined, [projects]);

@@ -9,7 +9,8 @@ export const projectKeys = {
   list: (filters: Record<string, unknown>) => [...projectKeys.lists(), { filters }] as const,
   details: () => [...projectKeys.all, 'detail'] as const,
   detail: (id: string) => [...projectKeys.details(), id] as const,
-  slug: (slug: string) => [...projectKeys.all, 'slug', slug] as const
+  slug: (slug: string) => [...projectKeys.all, 'slug', slug] as const,
+  featured: () => [...projectKeys.all, 'featured'] as const
 }
 
 // Fetch all projects or filter by status
@@ -35,6 +36,15 @@ export function useProjectBySlug(slug: string) {
     queryKey: projectKeys.slug(slug),
     queryFn: () => ProjectService.getProjectBySlug(slug),
     enabled: !!slug, // only run if slug is provided
+  })
+}
+
+// Fetch featured projects
+export function useFeaturedProjects() {
+  return useQuery({
+    queryKey: projectKeys.featured(),
+    queryFn: () => ProjectService.getFeaturedProjects(),
+    staleTime: 5 * 60 * 1000, // cache for 5 minutes
   })
 }
 
