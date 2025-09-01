@@ -12,6 +12,7 @@ import {
   MenuItem,
   Fade,
   useTheme,
+  useMediaQuery,
   Divider,
   Tooltip,
 } from "@mui/material"
@@ -28,6 +29,7 @@ import { useLocale } from "@/contexts/LocaleContext"
 import { useTranslations } from "@/hooks/useTranslations"
 import ReactCountryFlag from "react-country-flag"
 import { CONTACT } from "@/constants/contact"
+import BrandLogo from "./ui/BrandLogo"
 
 export default function Header() {
   const theme = useTheme()
@@ -41,6 +43,11 @@ export default function Header() {
   const [anchorElProjects, setAnchorElProjects] = useState<null | HTMLElement>(null)
   const [scrolled, setScrolled] = useState(false)
   const [isReady, setIsReady] = useState(false)
+
+  // Use media query để kiểm soát chính xác khi nào hiển thị mobile/desktop menu
+  // iPad và nhỏ hơn sẽ dùng mobile menu để tránh text bị rơi xuống dòng
+  const isMobile = useMediaQuery(theme.breakpoints.down('lg')) // xs, sm, md (≤1200px) - bao gồm iPad
+  const isDesktop = useMediaQuery(theme.breakpoints.up('lg')) // lg, xl (≥1200px)
 
   // Services data as requested
   const services = [
@@ -143,7 +150,7 @@ export default function Header() {
         zIndex: 1100,
       }}
     >
-        <Container maxWidth="xl">
+        <Container sx={{ px: 4 }}>
           <Toolbar
             disableGutters
             sx={{
@@ -152,83 +159,17 @@ export default function Header() {
             }}
           >
             {/* Logo Desktop */}
-            <Box
-              component={Link}
-              href="/"
-              sx={{
-                mr: 4,
-                display: { xs: "none", md: "flex" },
-                alignItems: "center",
-                textDecoration: "none",
-                transition: "transform 0.3s ease",
-                "&:hover": {
-                  transform: "scale(1.05)",
-                },
-              }}
-            >
-              <Box
-                sx={{
-                  position: "relative",
-                  p: 1,
-                  borderRadius: 2,
-                  background: scrolled 
-                    ? "rgba(255,255,255,0.15)" 
-                    : "rgba(0,0,0,0.3)",
-                  backdropFilter: "blur(10px)",
-                  border: scrolled 
-                    ? "1px solid rgba(255,255,255,0.2)"
-                    : "1px solid rgba(255,255,255,0.3)",
-                  boxShadow: (scrolled || !isHomePage)
-                    ? `0 4px 20px ${theme.palette.primary.main}30` 
-                    : "0 4px 20px rgba(0,0,0,0.3)",
-                  transition: "all 0.3s ease-in-out",
-                }}
-              >
-                <Image
-                  src="/logo-laiphat.png"
-                  alt="Lai Phát Construction"
-                  width={50}
-                  height={50}
-                  style={{
-                    objectFit: "contain",
-                    filter: "brightness(1.1)",
-                  }}
-                />
-              </Box>
-              <Box sx={{ ml: 2 }}>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    fontWeight: 700,
-                    color: "#e42222ff",
-                    fontSize: "1.4rem",
-                    lineHeight: 1,
-                    letterSpacing: "0.5px",
-                    textShadow: "2px 2px 4px rgba(0,0,0,0.3)"
-                  }}
-                >
-                  {t('header.company') as string}
-                </Typography>
-                <Typography
-                  variant="caption"
-                  sx={{
-                    color: "rgba(255,255,255,0.9)",
-                    fontSize: "0.75rem",
-                    fontWeight: 500,
-                    display: "block",
-                    lineHeight: 1,
-                    mt: 0.5,
-                    fontStyle: "italic",
-                    textShadow: "1px 1px 2px rgba(0,0,0,0.2)"
-                  }}
-                >
-                  {t('header.title') as string}
-                </Typography>
-              </Box>
+            <Box sx={{ mr: 4, display: isDesktop ? "flex" : "none" }}>
+              <BrandLogo
+                variant="full"
+                scrolled={scrolled}
+                company={t("header.company") as string}
+                title={t("header.title") as string}
+              />
             </Box>
 
             {/* Mobile Menu Button */}
-            <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>
+            <Box sx={{ flexGrow: 0, display: isMobile ? "flex" : "none" }}>
               <IconButton
                 size="large"
                 aria-label="menu"
@@ -254,7 +195,7 @@ export default function Header() {
               href="/"
               sx={{
                 ml: 2,
-                display: { xs: "flex", md: "none" },
+                display: isMobile ? "flex" : "none",
                 flexGrow: 1,
                 justifyContent: "center",
                 textDecoration: "none",
@@ -312,7 +253,7 @@ export default function Header() {
             </Box>
 
             {/* Desktop Navigation */}
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, justifyContent: "center" }}>
+            <Box sx={{ flexGrow: 1, display: isDesktop ? "flex" : "none", justifyContent: "center" }}>
               {navigationItems.map((item) => (
                 item.hasDropdown ? (
                   <Box 
@@ -450,7 +391,7 @@ export default function Header() {
                 href="/contact"
                 startIcon={<Phone />}
                 sx={{
-                  display: { xs: "none", md: "flex" },
+                  display: isDesktop ? "flex" : "none",
                   color: "white",
                   background: "rgba(255,255,255,0.1)",
                   backdropFilter: "blur(10px)",
@@ -478,7 +419,7 @@ export default function Header() {
                 href="/contact"
                 startIcon={<Phone />}
                 sx={{
-                  display: { xs: "flex", md: "none" },
+                  display: isMobile ? "flex" : "none",
                   color: "white",
                   background: "rgba(255,255,255,0.1)",
                   backdropFilter: "blur(10px)",
@@ -552,8 +493,11 @@ export default function Header() {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               TransitionComponent={Fade}
+              disableScrollLock={true}
+              disablePortal={false}
+              keepMounted={false}
               sx={{
-                display: { xs: "block", md: "none" },
+                display: isMobile ? "block" : "none",
                 "& .MuiPaper-root": {
                   background: "linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)",
                   backdropFilter: "blur(20px)",
