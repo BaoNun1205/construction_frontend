@@ -1,256 +1,401 @@
-'use client';
+"use client"
 
-import React from 'react';
-import {
-  Box,
-  Container,
-  Typography,
-  useTheme,
-} from '@mui/material';
-import {
-  Assignment,
-  AccountBalance,
-  Groups,
-} from '@mui/icons-material';
-import { useTranslations } from '@/hooks/useTranslations';
-import useScrollAnimations from '@/hooks/useScrollAnimations';
+import useScrollAnimations from "@/hooks/useScrollAnimations";
+import { 
+  GroupOutlined,
+  SecurityOutlined,
+  ScheduleOutlined,
+  VerifiedUserOutlined,
+  MonetizationOnOutlined,
+  RequestQuoteOutlined,
+  CampaignOutlined,
+  Diversity3Outlined,
+  HubOutlined,
+  ReportOutlined,
+  CompostOutlined,
+  ShoppingCartOutlined,
+  WarningOutlined,
+  TrackChangesOutlined
+} from "@mui/icons-material"
+import { Box, Container, Typography, useMediaQuery, useTheme } from "@mui/material"
+
+const projectData = {
+  "Mục tiêu": [
+    {
+      name: "Quản lý phạm vi",
+      description: "Xác định và kiểm soát các hạng mục công việc trong phạm vi dự án.",
+      icon: TrackChangesOutlined,
+    },
+    {
+      name: "Quản lý thời gian",
+      description: "Lập tiến độ, theo dõi và giám sát các mốc thời gian quan trọng.",
+      icon: ScheduleOutlined,
+    },
+    {
+      name: "Quản lý chi phí",
+      description: "Lập dự toán, kiểm soát và tối ưu chi phí trong quá trình thi công.",
+      icon: RequestQuoteOutlined,
+    },
+    {
+      name: "Quản lý chất lượng",
+      description: "Đảm bảo công trình đạt tiêu chuẩn kỹ thuật và chất lượng.",
+      icon: VerifiedUserOutlined,
+    },
+  ],
+  "Nhiệm vụ hỗ trợ": [
+    {
+      name: "Quản lý nhân lực",
+      icon: GroupOutlined,
+    },
+    {
+      name: "Quản lý truyền thông",
+      icon: CampaignOutlined  ,
+    },
+    {
+      name: "Quản lý rủi ro",
+      icon: WarningOutlined,
+    },
+    {
+      name: "Quản lý mua sắm – xây lắp",
+      icon: ShoppingCartOutlined,
+    },
+    {
+      name: "Quản lý bên liên quan",
+      icon: Diversity3Outlined,
+    },
+    {
+      name: "Quản lý sự tích hợp",
+      icon: HubOutlined,
+    },
+  ],
+  "Dự án xây dựng": [
+    {
+      name: "Quản lý an toàn",
+      icon: SecurityOutlined,
+    },
+    {
+      name: "Quản lý môi trường xây dựng",
+      icon: CompostOutlined,
+    },
+    {
+      name: "Quản lý tài chính",
+      icon: MonetizationOnOutlined,
+    },
+    {
+      name: "Quản lý khiếu nại",
+      icon: ReportOutlined,
+    },
+  ],
+}
 
 export default function ProjectManagementPage() {
-  useScrollAnimations();
   const theme = useTheme();
-  const { t } = useTranslations();
-
-  const managementServices = [
-    {
-      icon: <Assignment sx={{ fontSize: 60 }} />,
-      title: t('projectManagement.services.planning.title') as string,
-      description: t('projectManagement.services.planning.description') as string,
-      features: t('projectManagement.services.planning.features') as string[],
-      tools: t('projectManagement.services.planning.tools') as string[],
-      experience: t('projectManagement.services.planning.experience') as string,
-      projects: t('projectManagement.services.planning.projects') as string
-    },
-    {
-      icon: <AccountBalance sx={{ fontSize: 60 }} />,
-      title: t('projectManagement.services.budget.title') as string,
-      description: t('projectManagement.services.budget.description') as string,
-      features: t('projectManagement.services.budget.features') as string[],
-      tools: t('projectManagement.services.budget.tools') as string[],
-      experience: t('projectManagement.services.budget.experience') as string,
-      projects: t('projectManagement.services.budget.projects') as string
-    },
-    {
-      icon: <Groups sx={{ fontSize: 60 }} />,
-      title: t('projectManagement.services.resources.title') as string,
-      description: t('projectManagement.services.resources.description') as string,
-      features: t('projectManagement.services.resources.features') as string[],
-      tools: t('projectManagement.services.resources.tools') as string[],
-      experience: t('projectManagement.services.resources.experience') as string,
-      projects: t('projectManagement.services.resources.projects') as string
-    },
-  ];
-
-  const managementPhases = t('projectManagement.phases.steps') as Array<{
-    phase: string;
-    duration: string;
-    activities: string[];
-    icon: string;
-  }>;
+  useScrollAnimations();
+  const isLg = useMediaQuery((theme) => theme.breakpoints.up("lg"));
+  const isXs = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   return (
-    <Box className="min-h-screen">
-      <Container className="py-16 space-y-20" sx={{ px: 4 }}>
-        {/* Header Section */}
-        <section className="fade-in-up">
-          <div className="flex flex-col items-center justify-center text-center mb-16">
-            <Typography
-              variant="h2"
-              className="text-4xl font-bold text-center mb-6 text-gray-800"
-            >
-              {t('projectManagement.title') as string}
-              <span style={{ color: theme.palette.primary.main }}> {t('projectManagement.titleHighlight') as string}</span>
-            </Typography>
-            <Typography
-              variant="h6"
-              className="text-center text-gray-600 max-w-4xl mx-auto mb-8 leading-relaxed"
-            >
-              {t('projectManagement.subtitle') as string}
-            </Typography>
-          </div>
-        </section>
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero Section */}
+      <section>
+        <Box
+          sx={{
+            color: 'white',
+            pt: { xs: 12, md: 20 },
+            pb: { xs: 8, md: 12 },
+            position: 'relative',
+            overflow: 'hidden',
+            backgroundImage: 'url(/banner/banner_home5.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            '&::before': {
+              content: '""',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: 'rgba(10, 24, 61, 0.95)',
+              zIndex: 1,
+            },
+          }}
+        >
+          <Container sx={{ px: 4, position: 'relative' }}>
+            <div className="relative z-10 text-white fade-in-up">
+              <div className="flex flex-col lg:flex-row gap-16 items-center">
+                {/* Text Section */}
+                <div className="flex-1 space-y-8 w-full">
+                  <div>
+                    <Typography
+                      variant="h1"
+                      className="text-5xl md:text-6xl font-black text-white leading-tight"
+                      sx={{ mb: 3 }}
+                    >
+                      Quản lý Dự án{' '}
+                      <Typography
+                        component="span"
+                        fontSize={40}
+                        fontWeight={700}
+                        color={theme.palette.secondary.light}
+                      >
+                        Xây dựng
+                      </Typography>
+                    </Typography>
+                    <Typography
+                      variant="h4"
+                      className="text-2xl font-normal text-white"
+                      sx={{ mb: 1 }}
+                    >
+                      Chuyên nghiệp & Hiệu quả
+                    </Typography>
+                    <Typography
+                      variant="h6"
+                      className="text-xl text-white leading-relaxed max-w-xl"
+                    >
+                      Hệ thống tổng thể để quản lý các khía cạnh quan trọng của dự án xây dựng, từ mục tiêu cốt lõi đến các
+                      nhiệm vụ hỗ trợ và quản lý dự án cụ thể.
+                    </Typography>
+                  </div>
+                </div>
 
-        {/* Services Grid */}
-        <section className="slide-in-left">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {managementServices.map((service, index) => (
-              <div
-                key={index}
-                className="group relative p-8 rounded-3xl bg-gradient-to-br from-white/90 to-gray-50/90 backdrop-blur-lg border border-gray-200/50 transition-all duration-700 cursor-pointer scale-in overflow-hidden h-full"
-                style={{
-                  boxShadow: '0 10px 40px rgba(0,0,0,0.08)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-12px) scale(1.02)';
-                  e.currentTarget.style.boxShadow = `0 25px 80px ${theme.palette.primary.main}25`;
-                  e.currentTarget.style.borderColor = `${theme.palette.primary.main}50`;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                  e.currentTarget.style.boxShadow = '0 10px 40px rgba(0,0,0,0.08)';
-                  e.currentTarget.style.borderColor = 'rgba(229,231,235,0.5)';
+                {/* Icon Section */}
+                <div className="flex-1 w-full">
+                  <Box
+                    component="img"
+                    src="/project-management/banner.webp"
+                    alt="Project Management Banner"
+                    sx={{
+                      width: '100%',
+                      height: 'auto',
+                      borderRadius: 2,
+                      boxShadow: 3
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          </Container>
+        </Box>
+      </section>
+
+      {/* Main Features Section */}
+      <section className="py-20">
+        <Container sx={{ px: 4 }}>
+          <div className="space-y-20">
+            {/* Main objectives */}
+            <div>
+              {/* Title outside the background */}
+              <div className="flex items-center gap-4 mb-8">
+                <Box 
+                  sx={{ 
+                    width: 4, 
+                    height: 48, 
+                    backgroundColor: theme.palette.action.hover, 
+                    borderRadius: 2 
+                  }} 
+                />
+                <div>
+                  <Typography 
+                    variant="h3" 
+                    className="text-3xl font-black text-gray-900"
+                  >
+                    Nhiệm vụ hỗ trợ
+                  </Typography>
+                  <Typography 
+                    variant="body1" 
+                    className="text-gray-600"
+                  >
+                    Các chức năng hỗ trợ thiết yếu
+                  </Typography>
+                </div>
+              </div>
+              
+              {/* Background box with 4 columns */}
+              <Box 
+                sx={{ 
+                  borderRadius: 3,
+                  border: '1px solid',
+                  borderColor: 'grey.300'
                 }}
               >
-                {/* Gradient overlay on hover */}
-                <div 
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"
-                  style={{
-                    background: `linear-gradient(to bottom right, ${theme.palette.primary.main}08, ${theme.palette.primary.main}15)`
-                  }}
-                ></div>
-                
-                <div className="relative z-10 h-full flex flex-col">
-                  <div className="text-center mb-6">
-                    <div 
-                      className="inline-flex p-4 rounded-2xl mb-4 transition-all duration-300 group-hover:scale-110"
-                      style={{
-                        background: `linear-gradient(to bottom right, ${theme.palette.primary.main}20, ${theme.palette.primary.main}30)`
-                      }}
-                    >
-                      {service.icon}
-                    </div>
-                    <Typography 
-                      variant="h5" 
-                      className="font-bold text-gray-800 transition-colors duration-300 mb-3"
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-0">
+                  {projectData["Mục tiêu"].map((item, index) => {
+                    const IconComponent = item.icon
+                    const colors = [
+                      { iconColor: theme.palette.action.active },
+                      { iconColor: theme.palette.action.hover },
+                      { iconColor: theme.palette.action.active },
+                      { iconColor: theme.palette.action.hover },
+                    ]
+                    const colorSet = colors[index % colors.length]
+                    
+                    return (
+                      <div 
+                        key={index}
+                        className="border-b border-gray-300 md:border-b-0 md:border-r md:last:border-r-0"
+                      >
+                        <div className="text-center md:text-left p-6 flex flex-col">
+                          <div className="flex justify-center md:justify-start mb-4 flex-shrink-0">
+                            <IconComponent
+                              sx={{ fontSize: 60, color: colorSet.iconColor }} 
+                            />
+                          </div>
+                          <Typography variant="h5" className="font-bold mb-4 text-gray-900 flex-shrink-0">
+                            {item.name}
+                          </Typography>
+                          <div className="flex-1 overflow-y-auto">
+                            <Typography variant="body1" className="text-gray-700 leading-relaxed">
+                              {item.description}
+                            </Typography>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </Box>
+            </div>
+
+            {/* Support tasks */}
+            <div>
+              <div className="flex items-center gap-4 mb-8">
+                <Box 
+                  sx={{ 
+                    width: 4, 
+                    height: 48, 
+                    backgroundColor: theme.palette.action.hover, 
+                    borderRadius: 2 
+                  }} 
+                />
+                <div>
+                  <Typography 
+                    variant="h3" 
+                    className="text-3xl font-black text-gray-900"
+                  >
+                    Nhiệm vụ hỗ trợ
+                  </Typography>
+                  <Typography 
+                    variant="body1" 
+                    className="text-gray-600"
+                  >
+                    Các chức năng hỗ trợ thiết yếu
+                  </Typography>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 bg-[#EEF9FF] p-4 rounded-2xl">
+                {projectData["Nhiệm vụ hỗ trợ"].map((item, index) => {
+                  const IconComponent = item.icon
+                  const colors = [
+                    { icon: theme.palette.action.active },
+                    { icon: theme.palette.action.hover },
+                    { icon: theme.palette.action.active },
+                    { icon: theme.palette.action.hover },
+                    { icon: theme.palette.action.active },
+                    { icon: theme.palette.action.hover },
+                  ]
+                  const colorSet = colors[index % colors.length]
+                  
+                  return (
+                    <Box
+                      key={index}
+                      className="group text-center"
                       sx={{
-                        '.group:hover &': {
-                          color: theme.palette.primary.main
+                        backgroundColor: { xs: 'primary.main', lg: 'white' },
+                        borderRadius: 2,
+                        p: 3,
+                        transition: 'all 0.3s ease-in-out',
+                        '&:hover': {
+                          transform: { lg: 'scale(1.05)' },
+                          backgroundColor: { lg: 'primary.main' },
+                          borderColor: { lg: 'primary.main' },
+                          color: { lg: 'white' }
                         }
                       }}
                     >
-                      {service.title}
-                    </Typography>
-                    <div className="flex justify-center gap-2 mb-2">
-                      <div 
-                        className="px-3 py-1 rounded-full text-xs font-medium"
-                        style={{
-                          background: `${theme.palette.primary.main}12`,
-                          color: theme.palette.primary.main
-                        }}
+                      <div className={`mx-auto mb-4`}>
+                        <IconComponent sx={{ fontSize: 32, color: colorSet.icon }} />
+                      </div>
+                      <Typography
+                        variant="h6"
+                        className={`text-lg font-semibold transition-colors duration-300 ${
+                          isLg ? 'text-gray-900 group-hover:text-white' : 'text-white'
+                        }`}
                       >
-                        {service.experience}
-                      </div>
-                      <div 
-                        className="px-3 py-1 rounded-full text-xs font-medium"
-                        style={{
-                          background: '#10b98115',
-                          color: '#10b981'
-                        }}
-                      >
-                        {service.projects}
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <Typography variant="body1" className="text-gray-600 mb-6 leading-relaxed text-center">
-                    {service.description}
-                  </Typography>
-                  
-                  <div className="space-y-4 mb-6 flex-grow">
-                    <Typography variant="h6" className="font-semibold text-gray-800">
-                      {t('projectManagement.mainActivities') as string}
-                    </Typography>
-                    {service.features.map((feature, idx) => (
-                      <div key={idx} className="flex items-start text-sm text-gray-700 group-hover:text-gray-800 transition-colors duration-300">
-                        <div 
-                          className="w-2 h-2 rounded-full mr-3 mt-1.5 group-hover:scale-125 transition-transform duration-300 flex-shrink-0"
-                          style={{
-                            background: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.primary.main})`
-                          }}
-                        ></div>
-                        <span className="font-medium">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
+                        {item.name}
+                      </Typography>
+                    </Box>
+                  )
+                })}
+              </div>
+            </div>
 
-                  <div className="border-t border-gray-200/50 pt-4">
-                    <Typography variant="subtitle2" className="font-semibold text-gray-800 mb-2">
-                      {t('projectManagement.toolsUsed') as string}
-                    </Typography>
-                    <div className="flex flex-wrap gap-1">
-                      {service.tools.map((tool, idx) => (
-                        <span 
-                          key={idx}
-                          className="px-2 py-1 text-xs rounded-lg bg-gray-100 text-gray-600 border"
-                        >
-                          {tool}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+            {/* Construction projects */}
+            <div>
+              <div className="flex items-center gap-4 mb-8">
+                <Box 
+                  sx={{ 
+                    width: 4, 
+                    height: 48, 
+                    backgroundColor: theme.palette.action.hover, 
+                    borderRadius: 2 
+                  }} 
+                />
+                <div>
+                  <Typography 
+                    variant="h3" 
+                    className="text-3xl font-black text-gray-900"
+                  >
+                    Dự án xây dựng
+                  </Typography>
+                  <Typography 
+                    variant="body1" 
+                    className="text-gray-600"
+                  >
+                    Chuyên biệt cho ngành xây dựng
+                  </Typography>
                 </div>
               </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Project Phases */}
-        <section className="slide-in-right">
-          <div className="flex flex-col items-center justify-center text-center mb-12">
-            <Typography variant="h3" className="font-bold text-gray-800 mb-4">
-              {t('projectManagement.phases.title') as string}
-            </Typography>
-            <Typography variant="body1" className="text-gray-600 max-w-2xl mx-auto">
-              {t('projectManagement.phases.subtitle') as string}
-            </Typography>
-          </div>
-
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-blue-400 via-purple-500 to-indigo-600 transform -translate-y-1/2"></div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
-              {managementPhases.map((phase, index) => (
-                <div key={index} className="relative">
-                  <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50 hover:shadow-lg transition-all duration-300 text-center">
-                    {/* Icon */}
-                    <div 
-                      className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl relative z-10"
-                      style={{
-                        background: `linear-gradient(135deg, ${theme.palette.primary.main}, #8b5cf6)`
-                      }}
-                    >
-                      <span className="text-white text-lg">{phase.icon}</span>
-                    </div>
-                    
-                    <Typography variant="h6" className="font-bold text-gray-800 mb-2">
-                      {phase.phase}
-                    </Typography>
-                    
-                    <div 
-                      className="inline-block px-3 py-1 rounded-full text-xs font-medium mb-3"
-                      style={{
-                        background: `${theme.palette.primary.main}15`,
-                        color: theme.palette.primary.main
-                      }}
-                    >
-                      {phase.duration}
-                    </div>
-                    
-                    <div className="space-y-2">
-                      {phase.activities.map((activity, idx) => (
-                        <div key={idx} className="text-sm text-gray-600">
-                          • {activity}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
+              
+              <Box
+                className="grid grid-cols-2 lg:grid-cols-4 gap-6"
+              >
+                {projectData["Dự án xây dựng"].map((item, index) => {
+                  const IconComponent = item.icon
+                  const colors = [
+                    { bg: "bg-cyan-50", icon: theme.palette.action.active, shadow: theme.palette.action.active },
+                    { bg: "bg-green-50", icon: theme.palette.action.hover, shadow: theme.palette.action.hover },
+                    { bg: "bg-green-50", icon: theme.palette.action.active, shadow: theme.palette.action.active },
+                    { bg: "bg-cyan-50", icon: theme.palette.action.hover, shadow: theme.palette.action.hover },
+                  ]
+                  const colorSet = colors[index % colors.length]
+                  
+                  return (
+                      <Box
+                        key={index}
+                        className="group rounded-2xl p-8 border border-gray-200 transition-all duration-300 text-center hover:scale-105"
+                        sx={{ bgcolor: 'white' }}
+                      >
+                      <Box
+                        className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-2 group-hover:transition-shadow`}
+                      >
+                        <IconComponent sx={{ fontSize: 32, color: colorSet.icon }} />
+                      </Box>
+                      <Typography 
+                        variant="body1" 
+                        className="text-base font-semibold text-gray-900 leading-tight"
+                      >
+                        {item.name}
+                      </Typography>
+                    </Box>
+                  )
+                })}
+              </Box>
             </div>
           </div>
-        </section>
-        
-      </Container>
-    </Box>
+        </Container>
+      </section>
+    </div>
   )
 }
