@@ -34,7 +34,7 @@ import BrandLogo from "./ui/BrandLogo"
 export default function Header() {
   const theme = useTheme()
   const pathname = usePathname()
-  const homePagePaths = ['/', '/services/design-consulting', '/about', '/projects']
+  const homePagePaths = ['/', '/services/design-consulting', '/about', '/projects', '/services/project-management']
   const isHomePage = homePagePaths.includes(pathname)
   const { locale, setLocale } = useLocale()
   const { t } = useTranslations()

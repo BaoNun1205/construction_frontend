@@ -15,14 +15,15 @@ import {
   Construction,
   ArrowBackIos,
   ArrowForwardIos,
-  VerifiedUser,
-  Group,
-  Handshake,
   BuildOutlined,
   ArchitectureOutlined,
   VisibilityOutlined,
   AssignmentOutlined,
-  GavelOutlined
+  GavelOutlined,
+  HandshakeOutlined,
+  ConstructionOutlined,
+  VerifiedUserOutlined,
+  GroupOutlined
 } from '@mui/icons-material';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -549,53 +550,6 @@ export default function Home() {
           </Box>
         </section>
 
-        {/* Animated Divider */}
-        {/* <section>
-          <Box 
-            sx={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center',
-              position: 'relative'
-            }}
-          >
-            <Box 
-              sx={{ 
-                flex: 1, 
-                height: '2px',
-                background: 'linear-gradient(to right, transparent, #ff9800, transparent)',
-                animation: 'shimmer 2s infinite'
-              }} 
-            />
-            <Box 
-              sx={{ 
-                mx: 3,
-                p: 2,
-                borderRadius: '50%',
-                backgroundColor: 'white',
-                boxShadow: '0 4px 20px rgba(255, 152, 0, 0.3)',
-                animation: 'float 3s ease-in-out infinite reverse'
-              }}
-            >
-              <Architecture 
-                sx={{ 
-                  fontSize: 40, 
-                  color: '#ff9800',
-                  animation: 'pulse 2s ease-in-out infinite'
-                }} 
-              />
-            </Box>
-            <Box 
-              sx={{ 
-                flex: 1, 
-                height: '2px',
-                background: 'linear-gradient(to left, transparent, #ff9800, transparent)',
-                animation: 'shimmer 2s infinite reverse'
-              }} 
-            />
-          </Box>
-        </section> */}
-
         {/* Projects Section */}
         <section>
           <Box textAlign="center" mb={6} className="fade-in-up">
@@ -838,9 +792,9 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-0">
               {/* Experience */}
               <div className="scale-in animate-delay-1 border-b border-white md:border-b-0 md:border-r md:border-white md:last:border-r-0">
-                <div className="text-center p-6 h-74 md:h-86 flex flex-col">
-                  <div className="flex justify-center mb-6 flex-shrink-0">
-                    <Handshake
+                <div className="text-center p-6 flex flex-col">
+                  <div className="flex justify-center mb-4 flex-shrink-0">
+                    <HandshakeOutlined
                       sx={{ fontSize: 60, color: theme.palette.action.active }} 
                     />
                   </div>
@@ -857,9 +811,9 @@ export default function Home() {
 
               {/* Solution */}
               <div className="scale-in animate-delay-1 border-b border-white md:border-b-0 md:border-r md:border-white md:last:border-r-0">
-                <div className="text-center p-6 h-74 md:h-86 flex flex-col">
-                  <div className="flex justify-center mb-6 flex-shrink-0">
-                    <Construction
+                <div className="text-center p-6 flex flex-col">
+                  <div className="flex justify-center mb-4 flex-shrink-0">
+                    <ConstructionOutlined
                       sx={{ fontSize: 60, color: theme.palette.action.active }} 
                     />
                   </div>
@@ -876,9 +830,9 @@ export default function Home() {
 
               {/* Quality */}
               <div className="scale-in animate-delay-1 border-b border-white md:border-b-0 md:border-r md:border-white md:last:border-r-0">
-                <div className="text-center p-6 h-74 md:h-86 flex flex-col">
-                  <div className="flex justify-center mb-6 flex-shrink-0">
-                    <VerifiedUser
+                <div className="text-center p-6 flex flex-col">
+                  <div className="flex justify-center mb-4 flex-shrink-0">
+                    <VerifiedUserOutlined
                       sx={{ fontSize: 60, color: theme.palette.action.active }} 
                     />
                   </div>
@@ -895,9 +849,9 @@ export default function Home() {
 
               {/* Team */}
               <div className="scale-in animate-delay-4">
-                <div className="text-center p-6 h-74 md:h-86 flex flex-col">
-                  <div className="flex justify-center mb-6 flex-shrink-0">
-                    <Group
+                <div className="text-center p-6 flex flex-col">
+                  <div className="flex justify-center mb-4 flex-shrink-0">
+                    <GroupOutlined
                       sx={{ fontSize: 60, color: theme.palette.action.active }} 
                     />
                   </div>

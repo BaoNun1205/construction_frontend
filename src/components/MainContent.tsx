@@ -10,7 +10,7 @@ interface MainContentProps {
 
 export default function MainContent({ children }: MainContentProps) {
   const pathname = usePathname()
-  const homePagePaths = ['/', '/services/design-consulting', '/about', '/projects']
+  const homePagePaths = ['/', '/services/design-consulting', '/about', '/projects', '/services/project-management']
   const isHomePage = homePagePaths.includes(pathname)
 
   return (
