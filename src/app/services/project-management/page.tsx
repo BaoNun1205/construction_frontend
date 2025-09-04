@@ -200,13 +200,13 @@ export default function ProjectManagementPage() {
                     variant="h3" 
                     className="text-3xl font-black text-gray-900"
                   >
-                    Nhiệm vụ hỗ trợ
+                    Mục tiêu
                   </Typography>
                   <Typography 
                     variant="body1" 
                     className="text-gray-600"
                   >
-                    Các chức năng hỗ trợ thiết yếu
+                    Các mục tiêu chính của quản lý dự án xây dựng
                   </Typography>
                 </div>
               </div>
