@@ -1,24 +1,23 @@
-"use client"
+'use client'
 
-import React from "react"
+import React from 'react'
 import { useProjectBySlug } from '@/hooks/useProjects'
 import { ProjectHelpers } from '@/utils/projectHelpers'
-import { useState, useEffect } from "react"
-import Image from "next/image"
+import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import {
   CalendarToday,
   LocationOn,
   CheckCircle,
   Close,
-  ChevronRight,
   CameraAlt,
   AccessTime,
   People,
   EmojiEvents,
   PlayArrow,
-  Schedule,
-} from "@mui/icons-material"
-import { Typography, CircularProgress, Alert, Box, Container } from "@mui/material"
+  Schedule
+} from '@mui/icons-material'
+import { Typography, CircularProgress, Alert, Box, Container } from '@mui/material'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function ProjectDetailPage(props: any) {
@@ -38,10 +37,10 @@ export default function ProjectDetailPage(props: any) {
           }
         })
       },
-      { threshold: 0.1 },
+      { threshold: 0.1 }
     )
 
-    const elements = document.querySelectorAll("[data-animate]")
+    const elements = document.querySelectorAll('[data-animate]')
     elements.forEach((el) => observer.observe(el))
 
     return () => observer.disconnect()
@@ -84,14 +83,14 @@ export default function ProjectDetailPage(props: any) {
 
   return (
     <Box className="min-h-screen">
-      <Container className="py-16 space-y-20"  sx={{ px: 4 }}>
+      <Container className="py-16 space-y-20" sx={{ px: 4 }}>
         {/* Hero Section */}
-        <div className={`relative overflow-hidden`}>
+        <div className={'relative overflow-hidden'}>
           <div className="relative max-w-7xl mx-auto">
             <div
               id="hero"
               data-animate
-              className={`transition-all duration-1000 ${visibleElements.has("hero") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+              className={`transition-all duration-1000 ${visibleElements.has('hero') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
             >
               <div className="text-center mb-12">
                 <div className={`inline-flex items-center px-4 py-2 bg-${statusColor}-100 rounded-full mb-4`}>
@@ -126,7 +125,7 @@ export default function ProjectDetailPage(props: any) {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Working Areas Card */}
                 <div
-                  className={`bg-white/80 backdrop-blur-sm border border-gray-200 rounded-3xl p-8 transition-all duration-700 delay-200 hover:shadow-xl hover:scale-[1.02] ${visibleElements.has("hero") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                  className={`bg-white/80 backdrop-blur-sm border border-gray-200 rounded-3xl p-8 transition-all duration-700 delay-200 hover:shadow-xl hover:scale-[1.02] ${visibleElements.has('hero') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
                 >
                   <div className="flex items-center mb-6">
                     <div className={`p-4 bg-${statusColor}-100 rounded-2xl mr-4`}>
@@ -153,7 +152,7 @@ export default function ProjectDetailPage(props: any) {
 
                 {/* Time & Contractor Card */}
                 <div
-                  className={`bg-white/80 backdrop-blur-sm border border-gray-200 rounded-3xl p-8 transition-all duration-700 delay-300 hover:shadow-xl hover:scale-[1.02] ${visibleElements.has("hero") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                  className={`bg-white/80 backdrop-blur-sm border border-gray-200 rounded-3xl p-8 transition-all duration-700 delay-300 hover:shadow-xl hover:scale-[1.02] ${visibleElements.has('hero') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
                 >
                   {/* Time Section */}
                   <div className="mb-8">
@@ -192,7 +191,7 @@ export default function ProjectDetailPage(props: any) {
                       ) : (
                         <div className="flex items-center justify-between mb-3">
                           <div className="flex items-center">
-                            <div className={`w-3 h-3 bg-orange-500 rounded-full mr-3`}></div>
+                            <div className={'w-3 h-3 bg-orange-500 rounded-full mr-3'}></div>
                             <Typography variant="body2" className="text-gray-600 font-medium">
                               Trạng thái
                             </Typography>
@@ -251,7 +250,7 @@ export default function ProjectDetailPage(props: any) {
           <section
             id="gallery"
             data-animate
-            className={`mb-16 transition-all duration-1000 delay-500 ${visibleElements.has("gallery") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+            className={`mb-16 transition-all duration-1000 delay-500 ${visibleElements.has('gallery') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
           >
             <div className="text-center mb-12">
               <div className={`inline-flex items-center px-4 py-2 bg-${statusColor}-100 rounded-full mb-4`}>
@@ -300,7 +299,7 @@ export default function ProjectDetailPage(props: any) {
                         />
                       ) : (
                         <Image
-                          src={image || "/placeholder.svg"}
+                          src={image || '/placeholder.svg'}
                           alt={`Hình ảnh dự án ${index + 1}`}
                           fill
                           className="object-cover rounded-2xl transition-transform duration-700 group-hover:scale-110"
@@ -310,7 +309,7 @@ export default function ProjectDetailPage(props: any) {
                     </div>
                     {isVideo && (
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <div className={`w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-lg group-hover:bg-white group-hover:scale-110 transition-all duration-300`}>
+                        <div className={'w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-lg group-hover:bg-white group-hover:scale-110 transition-all duration-300'}>
                           <PlayArrow className={`w-8 h-8 text-${statusColor}-600 ml-1`} />
                         </div>
                       </div>
@@ -332,7 +331,7 @@ export default function ProjectDetailPage(props: any) {
           <section
             id="details"
             data-animate
-            className={`transition-all duration-1000 delay-600 ${visibleElements.has("details") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+            className={`transition-all duration-1000 delay-600 ${visibleElements.has('details') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
           >
             <div className="bg-card border border-border rounded-3xl overflow-hidden shadow-lg p-8">
               <div className="space-y-6">
@@ -385,7 +384,7 @@ export default function ProjectDetailPage(props: any) {
                   />
                 ) : (
                   <Image
-                    src={selectedImage || "/placeholder.svg"}
+                    src={selectedImage || '/placeholder.svg'}
                     alt="Hình ảnh dự án phóng to"
                     fill
                     className="object-contain rounded-2xl"

@@ -1,12 +1,12 @@
-'use client';
+'use client'
 
-import React, { useEffect } from 'react';
+import React from 'react'
 import {
   Box,
   Container,
   Typography,
-  Chip,
-} from '@mui/material';
+  Chip
+} from '@mui/material'
 import {
   Construction,
   Engineering,
@@ -14,42 +14,42 @@ import {
   Assessment,
   Schedule,
   AccountBalance,
-  Landscape,
-} from '@mui/icons-material';
-import { useTranslations } from '@/hooks/useTranslations';
-import useScrollAnimations from '@/hooks/useScrollAnimations';
+  Landscape
+} from '@mui/icons-material'
+import { useTranslations } from '@/hooks/useTranslations'
+import useScrollAnimations from '@/hooks/useScrollAnimations'
 
 export default function ServicesPage() {
-  useScrollAnimations();
-  const { t: tRaw } = useTranslations();
+  useScrollAnimations()
+  const { t: tRaw } = useTranslations()
   // Type-safe wrapper for translation function
-  const t = (key: string): string => tRaw(key) as string;
+  const t = (key: string): string => tRaw(key) as string
 
   const constructionServices = [
     {
       icon: <Construction sx={{ fontSize: 50 }} />,
       title: t('services.constructionTech.civilConstruction.title'),
       description: t('services.constructionTech.civilConstruction.description'),
-      color: "#1976d2",
+      color: '#1976d2'
     },
     {
       icon: <Engineering sx={{ fontSize: 50 }} />,
-      title: t('services.constructionTech.industrialConstruction.title'), 
+      title: t('services.constructionTech.industrialConstruction.title'),
       description: t('services.constructionTech.industrialConstruction.description'),
-      color: "#2e7d32",
+      color: '#2e7d32'
     },
     {
       icon: <AccountBalance sx={{ fontSize: 50 }} />,
       title: t('services.constructionTech.urbanInfrastructure.title'),
       description: t('services.constructionTech.urbanInfrastructure.description'),
-      color: "#7b1fa2",
+      color: '#7b1fa2'
     },
     {
       icon: <Landscape sx={{ fontSize: 50 }} />,
       title: t('services.constructionTech.landscapeDesign.title'),
       description: t('services.constructionTech.landscapeDesign.description'),
-      color: "#ed6c02",
-    },
+      color: '#ed6c02'
+    }
   ]
 
   const managementServices = [
@@ -62,7 +62,7 @@ export default function ServicesPage() {
         t('services.projectManagement.management.features.1'),
         t('services.projectManagement.management.features.2')
       ],
-      color: "#3f51b5",
+      color: '#3f51b5'
     },
     {
       icon: <Assessment sx={{ fontSize: 50 }} />,
@@ -73,7 +73,7 @@ export default function ServicesPage() {
         t('services.projectManagement.qualityControl.features.1'),
         t('services.projectManagement.qualityControl.features.2')
       ],
-      color: "#d32f2f",
+      color: '#d32f2f'
     },
     {
       icon: <Schedule sx={{ fontSize: 50 }} />,
@@ -84,8 +84,8 @@ export default function ServicesPage() {
         t('services.projectManagement.scheduleManagement.features.1'),
         t('services.projectManagement.scheduleManagement.features.2')
       ],
-      color: "#00796b",
-    },
+      color: '#00796b'
+    }
   ]
 
   const consultingServices = [
@@ -94,12 +94,12 @@ export default function ServicesPage() {
     t('services.consulting.services.2'),
     t('services.consulting.services.3'),
     t('services.consulting.services.4'),
-    t('services.consulting.services.5'),
+    t('services.consulting.services.5')
   ]
 
   return (
     <Box className="min-h-screen">
-      <Container className="py-16 space-y-20"  sx={{ px: 4 }}>
+      <Container className="py-16 space-y-20" sx={{ px: 4 }}>
         {/* Header Section */}
         <section className="fade-in-up">
           <Typography
@@ -119,20 +119,20 @@ export default function ServicesPage() {
             </Typography>
           </div>
           <div className="flex flex-wrap justify-center gap-3">
-            <Chip 
-              label={t('services.chips.experience')} 
-              className="bg-cyan-100 text-cyan-800" 
-              size="medium" 
+            <Chip
+              label={t('services.chips.experience')}
+              className="bg-cyan-100 text-cyan-800"
+              size="medium"
             />
-            <Chip 
-              label={t('services.chips.projects')} 
-              className="bg-green-100 text-green-800" 
-              size="medium" 
+            <Chip
+              label={t('services.chips.projects')}
+              className="bg-green-100 text-green-800"
+              size="medium"
             />
-            <Chip 
-              label={t('services.chips.team')} 
-              className="bg-amber-100 text-amber-800" 
-              size="medium" 
+            <Chip
+              label={t('services.chips.team')}
+              className="bg-amber-100 text-amber-800"
+              size="medium"
             />
           </div>
         </section>
@@ -155,15 +155,15 @@ export default function ServicesPage() {
                 style={{
                   background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.2) 100%)',
                   backdropFilter: 'blur(10px)',
-                  boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
+                  boxShadow: '0 8px 32px rgba(0,0,0,0.1)'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
-                  e.currentTarget.style.boxShadow = '0 20px 60px rgba(88,208,245,0.3)';
+                  e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)'
+                  e.currentTarget.style.boxShadow = '0 20px 60px rgba(88,208,245,0.3)'
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                  e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.1)';
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)'
+                  e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.1)'
                 }}
               >
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-cyan-400/20 to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -202,23 +202,23 @@ export default function ServicesPage() {
                 key={index}
                 className="group relative p-8 rounded-3xl bg-gradient-to-br from-white/80 to-gray-50/80 backdrop-blur-lg border border-gray-200/50 hover:border-cyan-300/50 transition-all duration-700 cursor-pointer scale-in overflow-hidden"
                 style={{
-                  boxShadow: '0 10px 40px rgba(0,0,0,0.08)',
+                  boxShadow: '0 10px 40px rgba(0,0,0,0.08)'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-12px) scale(1.03)';
-                  e.currentTarget.style.boxShadow = '0 25px 80px rgba(88,208,245,0.25)';
+                  e.currentTarget.style.transform = 'translateY(-12px) scale(1.03)'
+                  e.currentTarget.style.boxShadow = '0 25px 80px rgba(88,208,245,0.25)'
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                  e.currentTarget.style.boxShadow = '0 10px 40px rgba(0,0,0,0.08)';
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)'
+                  e.currentTarget.style.boxShadow = '0 10px 40px rgba(0,0,0,0.08)'
                 }}
               >
                 {/* Gradient overlay on hover */}
                 <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
-                
+
                 {/* Decorative element */}
                 <div className="absolute top-4 right-4 w-16 h-16 bg-gradient-to-br from-cyan-200/30 to-blue-300/30 rounded-full group-hover:scale-125 transition-transform duration-500"></div>
-                
+
                 <div className="relative z-10 h-full flex flex-col">
                   <div className="flex items-center mb-6">
                     <div className="p-4 bg-gradient-to-br from-cyan-100 to-blue-100 rounded-2xl mr-4 group-hover:from-cyan-200 group-hover:to-blue-200 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
@@ -253,16 +253,16 @@ export default function ServicesPage() {
               <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full -translate-x-16 -translate-y-16"></div>
               <div className="absolute bottom-0 right-0 w-40 h-40 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full translate-x-20 translate-y-20"></div>
             </div>
-            
+
             <div className="relative z-10">
               <div className="flex flex-col items-center justify-center text-center mb-12">
-              <Typography variant="h3" className="mb-6 font-bold text-gray-800">
-                {t('services.consulting.title')}
-              </Typography>
-              <Typography variant="body1" className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                {t('services.consulting.description')}
-              </Typography>
-            </div>
+                <Typography variant="h3" className="mb-6 font-bold text-gray-800">
+                  {t('services.consulting.title')}
+                </Typography>
+                <Typography variant="body1" className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                  {t('services.consulting.description')}
+                </Typography>
+              </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {consultingServices.map((service, index) => (
@@ -270,20 +270,20 @@ export default function ServicesPage() {
                     key={index}
                     className="group relative p-6 rounded-2xl bg-white/50 backdrop-blur-md border border-gray-200/50 hover:bg-white/80 hover:border-cyan-300/50 transition-all duration-400 cursor-pointer overflow-hidden"
                     style={{
-                      boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
+                      boxShadow: '0 4px 20px rgba(0,0,0,0.05)'
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-4px) scale(1.02)';
-                      e.currentTarget.style.boxShadow = '0 12px 40px rgba(88,208,245,0.2)';
+                      e.currentTarget.style.transform = 'translateY(-4px) scale(1.02)'
+                      e.currentTarget.style.boxShadow = '0 12px 40px rgba(88,208,245,0.2)'
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                      e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.05)';
+                      e.currentTarget.style.transform = 'translateY(0) scale(1)'
+                      e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.05)'
                     }}
                   >
                     {/* Hover gradient overlay */}
                     <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-400"></div>
-                    
+
                     <div className="relative z-10 flex items-center">
                       <div className="w-3 h-3 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full mr-4 group-hover:scale-150 group-hover:shadow-lg group-hover:shadow-cyan-300/50 transition-all duration-400"></div>
                       <Typography variant="body1" className="text-gray-800 font-semibold group-hover:text-cyan-600 transition-colors duration-300">
@@ -298,13 +298,13 @@ export default function ServicesPage() {
                 <button
                   className="relative px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-2xl overflow-hidden group transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/30"
                   style={{
-                    background: 'linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)',
+                    background: 'linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
+                    e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)'
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                    e.currentTarget.style.transform = 'translateY(0) scale(1)'
                   }}
                 >
                   <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>

@@ -1,7 +1,8 @@
-'use client';
-import React from 'react';
-import Image from 'next/image';
-import { Box, Typography } from '@mui/material';
+/* eslint-disable react/no-unknown-property */
+'use client'
+import React from 'react'
+import Image from 'next/image'
+import { Box, Typography } from '@mui/material'
 
 type Props = {
   speed?: number;
@@ -19,32 +20,32 @@ export default function ImageMarquee({
   // Use static images directly - no API needed
   const baseImages = [
     '/image/action1.jpg',
-    '/image/action2.jpg', 
+    '/image/action2.jpg',
     '/image/action3.jpg',
     '/image/action4.jpg'
-  ];
+  ]
 
   // Create many repetitions for smooth infinite scroll
-  const images = Array(30).fill(baseImages).flat();
-  
+  const images = Array(30).fill(baseImages).flat()
+
   // Calculate image dimensions
-  const imageWidth = Math.round(imageHeight * 2.5); // 3:2 aspect ratio
-  
+  const imageWidth = Math.round(imageHeight * 2.5) // 3:2 aspect ratio
+
   // Animation duration calculation
-  const totalWidth = images.length * (imageWidth + gap);
-  const duration = totalWidth / speed;
+  const totalWidth = images.length * (imageWidth + gap)
+  const duration = totalWidth / speed
 
   return (
-    <Box sx={{ 
-      overflow: 'hidden', 
-      width: '100%', 
-      py: 6, 
+    <Box sx={{
+      overflow: 'hidden',
+      width: '100%',
+      py: 6,
       backgroundColor: '#f8f9fa'
     }}>
       <Typography
         variant="h2"
         className="font-bold text-center"
-        sx={{ 
+        sx={{
           marginBottom: '2rem',
           fontSize: { xs: '2rem', md: '2.5rem' },
           fontWeight: 700
@@ -103,5 +104,5 @@ export default function ImageMarquee({
         }
       `}</style>
     </Box>
-  );
+  )
 }

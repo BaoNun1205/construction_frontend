@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import useScrollAnimations from "@/hooks/useScrollAnimations";
-import { 
+import useScrollAnimations from '@/hooks/useScrollAnimations'
+import {
   GroupOutlined,
   SecurityOutlined,
   ScheduleOutlined,
@@ -16,83 +16,83 @@ import {
   ShoppingCartOutlined,
   WarningOutlined,
   TrackChangesOutlined
-} from "@mui/icons-material"
-import { Box, Container, Typography, useMediaQuery, useTheme } from "@mui/material"
+} from '@mui/icons-material'
+import { Box, Container, Typography, useMediaQuery, useTheme } from '@mui/material'
 
 const projectData = {
-  "Mục tiêu": [
+  'Mục tiêu': [
     {
-      name: "Quản lý phạm vi",
-      description: "Xác định và kiểm soát các hạng mục công việc trong phạm vi dự án.",
-      icon: TrackChangesOutlined,
+      name: 'Quản lý phạm vi',
+      description: 'Xác định và kiểm soát các hạng mục công việc trong phạm vi dự án.',
+      icon: TrackChangesOutlined
     },
     {
-      name: "Quản lý thời gian",
-      description: "Lập tiến độ, theo dõi và giám sát các mốc thời gian quan trọng.",
-      icon: ScheduleOutlined,
+      name: 'Quản lý thời gian',
+      description: 'Lập tiến độ, theo dõi và giám sát các mốc thời gian quan trọng.',
+      icon: ScheduleOutlined
     },
     {
-      name: "Quản lý chi phí",
-      description: "Lập dự toán, kiểm soát và tối ưu chi phí trong quá trình thi công.",
-      icon: RequestQuoteOutlined,
+      name: 'Quản lý chi phí',
+      description: 'Lập dự toán, kiểm soát và tối ưu chi phí trong quá trình thi công.',
+      icon: RequestQuoteOutlined
     },
     {
-      name: "Quản lý chất lượng",
-      description: "Đảm bảo công trình đạt tiêu chuẩn kỹ thuật và chất lượng.",
-      icon: VerifiedUserOutlined,
-    },
+      name: 'Quản lý chất lượng',
+      description: 'Đảm bảo công trình đạt tiêu chuẩn kỹ thuật và chất lượng.',
+      icon: VerifiedUserOutlined
+    }
   ],
-  "Nhiệm vụ hỗ trợ": [
+  'Nhiệm vụ hỗ trợ': [
     {
-      name: "Quản lý nhân lực",
-      icon: GroupOutlined,
+      name: 'Quản lý nhân lực',
+      icon: GroupOutlined
     },
     {
-      name: "Quản lý truyền thông",
-      icon: CampaignOutlined  ,
+      name: 'Quản lý truyền thông',
+      icon: CampaignOutlined
     },
     {
-      name: "Quản lý rủi ro",
-      icon: WarningOutlined,
+      name: 'Quản lý rủi ro',
+      icon: WarningOutlined
     },
     {
-      name: "Quản lý mua sắm – xây lắp",
-      icon: ShoppingCartOutlined,
+      name: 'Quản lý mua sắm – xây lắp',
+      icon: ShoppingCartOutlined
     },
     {
-      name: "Quản lý bên liên quan",
-      icon: Diversity3Outlined,
+      name: 'Quản lý bên liên quan',
+      icon: Diversity3Outlined
     },
     {
-      name: "Quản lý sự tích hợp",
-      icon: HubOutlined,
-    },
+      name: 'Quản lý sự tích hợp',
+      icon: HubOutlined
+    }
   ],
-  "Dự án xây dựng": [
+  'Dự án xây dựng': [
     {
-      name: "Quản lý an toàn",
-      icon: SecurityOutlined,
+      name: 'Quản lý an toàn',
+      icon: SecurityOutlined
     },
     {
-      name: "Quản lý môi trường xây dựng",
-      icon: CompostOutlined,
+      name: 'Quản lý môi trường xây dựng',
+      icon: CompostOutlined
     },
     {
-      name: "Quản lý tài chính",
-      icon: MonetizationOnOutlined,
+      name: 'Quản lý tài chính',
+      icon: MonetizationOnOutlined
     },
     {
-      name: "Quản lý khiếu nại",
-      icon: ReportOutlined,
-    },
-  ],
+      name: 'Quản lý khiếu nại',
+      icon: ReportOutlined
+    }
+  ]
 }
 
 export default function ProjectManagementPage() {
-  const theme = useTheme();
-  useScrollAnimations();
-  const isLg = useMediaQuery((theme) => theme.breakpoints.up("lg"));
-  const isXs = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const theme = useTheme()
+  useScrollAnimations()
+  const isLg = useMediaQuery((theme) => theme.breakpoints.up('lg'))
+  const isXs = useMediaQuery((theme) => theme.breakpoints.down('sm'))
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -117,8 +117,8 @@ export default function ProjectManagementPage() {
               right: 0,
               bottom: 0,
               backgroundColor: 'rgba(10, 24, 61, 0.95)',
-              zIndex: 1,
-            },
+              zIndex: 1
+            }
           }}
         >
           <Container sx={{ px: 4, position: 'relative' }}>
@@ -187,58 +187,58 @@ export default function ProjectManagementPage() {
             <div>
               {/* Title outside the background */}
               <div className="flex items-center gap-4 mb-8">
-                <Box 
-                  sx={{ 
-                    width: 4, 
-                    height: 48, 
-                    backgroundColor: theme.palette.action.hover, 
-                    borderRadius: 2 
-                  }} 
+                <Box
+                  sx={{
+                    width: 4,
+                    height: 48,
+                    backgroundColor: theme.palette.action.hover,
+                    borderRadius: 2
+                  }}
                 />
                 <div>
-                  <Typography 
-                    variant="h3" 
+                  <Typography
+                    variant="h3"
                     className="text-3xl font-black text-gray-900"
                   >
                     Mục tiêu
                   </Typography>
-                  <Typography 
-                    variant="body1" 
+                  <Typography
+                    variant="body1"
                     className="text-gray-600"
                   >
                     Các mục tiêu chính của quản lý dự án xây dựng
                   </Typography>
                 </div>
               </div>
-              
+
               {/* Background box with 4 columns */}
-              <Box 
-                sx={{ 
+              <Box
+                sx={{
                   borderRadius: 3,
                   border: '1px solid',
                   borderColor: 'grey.300'
                 }}
               >
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-0">
-                  {projectData["Mục tiêu"].map((item, index) => {
+                  {projectData['Mục tiêu'].map((item, index) => {
                     const IconComponent = item.icon
                     const colors = [
                       { iconColor: theme.palette.action.active },
                       { iconColor: theme.palette.action.hover },
                       { iconColor: theme.palette.action.active },
-                      { iconColor: theme.palette.action.hover },
+                      { iconColor: theme.palette.action.hover }
                     ]
                     const colorSet = colors[index % colors.length]
-                    
+
                     return (
-                      <div 
+                      <div
                         key={index}
                         className="border-b border-gray-300 md:border-b-0 md:border-r md:last:border-r-0"
                       >
                         <div className="text-center md:text-left p-6 flex flex-col">
                           <div className="flex justify-center md:justify-start mb-4 flex-shrink-0">
                             <IconComponent
-                              sx={{ fontSize: 60, color: colorSet.iconColor }} 
+                              sx={{ fontSize: 60, color: colorSet.iconColor }}
                             />
                           </div>
                           <Typography variant="h5" className="font-bold mb-4 text-gray-900 flex-shrink-0">
@@ -260,23 +260,23 @@ export default function ProjectManagementPage() {
             {/* Support tasks */}
             <div>
               <div className="flex items-center gap-4 mb-8">
-                <Box 
-                  sx={{ 
-                    width: 4, 
-                    height: 48, 
-                    backgroundColor: theme.palette.action.hover, 
-                    borderRadius: 2 
-                  }} 
+                <Box
+                  sx={{
+                    width: 4,
+                    height: 48,
+                    backgroundColor: theme.palette.action.hover,
+                    borderRadius: 2
+                  }}
                 />
                 <div>
-                  <Typography 
-                    variant="h3" 
+                  <Typography
+                    variant="h3"
                     className="text-3xl font-black text-gray-900"
                   >
                     Nhiệm vụ hỗ trợ
                   </Typography>
-                  <Typography 
-                    variant="body1" 
+                  <Typography
+                    variant="body1"
                     className="text-gray-600"
                   >
                     Các chức năng hỗ trợ thiết yếu
@@ -285,7 +285,7 @@ export default function ProjectManagementPage() {
               </div>
 
               <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 bg-[#EEF9FF] p-4 rounded-2xl">
-                {projectData["Nhiệm vụ hỗ trợ"].map((item, index) => {
+                {projectData['Nhiệm vụ hỗ trợ'].map((item, index) => {
                   const IconComponent = item.icon
                   const colors = [
                     { icon: theme.palette.action.active },
@@ -293,10 +293,10 @@ export default function ProjectManagementPage() {
                     { icon: theme.palette.action.active },
                     { icon: theme.palette.action.hover },
                     { icon: theme.palette.action.active },
-                    { icon: theme.palette.action.hover },
+                    { icon: theme.palette.action.hover }
                   ]
                   const colorSet = colors[index % colors.length]
-                  
+
                   return (
                     <Box
                       key={index}
@@ -314,7 +314,7 @@ export default function ProjectManagementPage() {
                         }
                       }}
                     >
-                      <div className={`mx-auto mb-4`}>
+                      <div className={'mx-auto mb-4'}>
                         <IconComponent sx={{ fontSize: 32, color: colorSet.icon }} />
                       </div>
                       <Typography
@@ -334,56 +334,56 @@ export default function ProjectManagementPage() {
             {/* Construction projects */}
             <div>
               <div className="flex items-center gap-4 mb-8">
-                <Box 
-                  sx={{ 
-                    width: 4, 
-                    height: 48, 
-                    backgroundColor: theme.palette.action.hover, 
-                    borderRadius: 2 
-                  }} 
+                <Box
+                  sx={{
+                    width: 4,
+                    height: 48,
+                    backgroundColor: theme.palette.action.hover,
+                    borderRadius: 2
+                  }}
                 />
                 <div>
-                  <Typography 
-                    variant="h3" 
+                  <Typography
+                    variant="h3"
                     className="text-3xl font-black text-gray-900"
                   >
                     Dự án xây dựng
                   </Typography>
-                  <Typography 
-                    variant="body1" 
+                  <Typography
+                    variant="body1"
                     className="text-gray-600"
                   >
                     Chuyên biệt cho ngành xây dựng
                   </Typography>
                 </div>
               </div>
-              
+
               <Box
                 className="grid grid-cols-2 lg:grid-cols-4 gap-6"
               >
-                {projectData["Dự án xây dựng"].map((item, index) => {
+                {projectData['Dự án xây dựng'].map((item, index) => {
                   const IconComponent = item.icon
                   const colors = [
-                    { bg: "bg-cyan-50", icon: theme.palette.action.active, shadow: theme.palette.action.active },
-                    { bg: "bg-green-50", icon: theme.palette.action.hover, shadow: theme.palette.action.hover },
-                    { bg: "bg-green-50", icon: theme.palette.action.active, shadow: theme.palette.action.active },
-                    { bg: "bg-cyan-50", icon: theme.palette.action.hover, shadow: theme.palette.action.hover },
+                    { bg: 'bg-cyan-50', icon: theme.palette.action.active, shadow: theme.palette.action.active },
+                    { bg: 'bg-green-50', icon: theme.palette.action.hover, shadow: theme.palette.action.hover },
+                    { bg: 'bg-green-50', icon: theme.palette.action.active, shadow: theme.palette.action.active },
+                    { bg: 'bg-cyan-50', icon: theme.palette.action.hover, shadow: theme.palette.action.hover }
                   ]
                   const colorSet = colors[index % colors.length]
-                  
+
                   return (
+                    <Box
+                      key={index}
+                      className="group rounded-2xl p-8 border border-gray-200 transition-all duration-300 text-center hover:scale-105"
+                      sx={{ bgcolor: 'white' }}
+                    >
                       <Box
-                        key={index}
-                        className="group rounded-2xl p-8 border border-gray-200 transition-all duration-300 text-center hover:scale-105"
-                        sx={{ bgcolor: 'white' }}
-                      >
-                      <Box
-                        className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-2 group-hover:transition-shadow`}
+                        className={'w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-2 group-hover:transition-shadow'}
                       >
                         <IconComponent sx={{ fontSize: 32, color: colorSet.icon }} />
                       </Box>
-                      <Typography 
-                        variant="body1" 
+                      <Typography
+                        variant="body1"
                         className="text-base font-semibold text-gray-900 leading-tight"
                       >
                         {item.name}

@@ -1,21 +1,21 @@
-'use client';
-import React from 'react';
-import { Button, useMediaQuery, useTheme, type SxProps, type Theme } from '@mui/material';
-import { Phone } from '@mui/icons-material';
-import { CONTACT } from '@/constants/contact';
+'use client'
+import React from 'react'
+import { Button, useMediaQuery, useTheme, type SxProps, type Theme } from '@mui/material'
+import { Phone } from '@mui/icons-material'
+import { CONTACT } from '@/constants/contact'
 
 export default function PhoneButton({ sx }: { sx?: SxProps<Theme> }) {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(CONTACT.PHONE);
-      alert('Số điện thoại đã được sao chép vào clipboard. Vui lòng sử dụng điện thoại để gọi.');
+      await navigator.clipboard.writeText(CONTACT.PHONE)
+      alert('Số điện thoại đã được sao chép vào clipboard. Vui lòng sử dụng điện thoại để gọi.')
     } catch {
-      alert(`Số điện thoại: ${CONTACT.PHONE}`);
+      alert(`Số điện thoại: ${CONTACT.PHONE}`)
     }
-  };
+  }
 
   if (isMobile) {
     return (
@@ -41,7 +41,7 @@ export default function PhoneButton({ sx }: { sx?: SxProps<Theme> }) {
       >
         {CONTACT.PHONE}
       </Button>
-    );
+    )
   }
 
   return (
@@ -66,5 +66,5 @@ export default function PhoneButton({ sx }: { sx?: SxProps<Theme> }) {
     >
       {CONTACT.PHONE}
     </Button>
-  );
+  )
 }

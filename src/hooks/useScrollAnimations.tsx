@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect } from 'react'
 
+// eslint-disable-next-line no-undef
 type UseScrollAnimationsOptions = IntersectionObserverInit;
 
 export default function useScrollAnimations(
@@ -9,21 +10,21 @@ export default function useScrollAnimations(
   deps: unknown[] = []
 ) {
   useEffect(() => {
-    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) return;
+    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) return
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          (entry.target as HTMLElement).classList.add(addClass);
+          (entry.target as HTMLElement).classList.add(addClass)
         }
-      });
-    }, options);
+      })
+    }, options)
 
-    const animatedElements = document.querySelectorAll(selector);
-    animatedElements.forEach((el) => observer.observe(el));
+    const animatedElements = document.querySelectorAll(selector)
+    animatedElements.forEach((el) => observer.observe(el))
 
-    return () => observer.disconnect();
+    return () => observer.disconnect()
     // use provided deps when given, otherwise fall back to sensible defaults
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, deps.length ? deps : [selector, addClass, JSON.stringify(options)]);
+  }, deps.length ? deps : [selector, addClass, JSON.stringify(options)])
 }

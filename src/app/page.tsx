@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import {
   Box,
@@ -8,7 +8,7 @@ import {
   Stack,
   useTheme,
   Tooltip
-} from '@mui/material';
+} from '@mui/material'
 import {
   Build,
   ArrowForward,
@@ -24,35 +24,35 @@ import {
   ConstructionOutlined,
   VerifiedUserOutlined,
   GroupOutlined
-} from '@mui/icons-material';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import { useTranslations } from '@/hooks/useTranslations';
-import ProjectHelpers from '@/utils/projectHelpers';
-import useScrollAnimations from '@/hooks/useScrollAnimations';
-import PhoneButton from '@/components/ui/PhoneButton';
-import ImageMarquee from '@/components/ui/ImageMarquee';
-import { useFeaturedProjects } from '@/hooks/useProjects';
+} from '@mui/icons-material'
+import Link from 'next/link'
+import Image from 'next/image'
+import { useEffect, useState } from 'react'
+import { useTranslations } from '@/hooks/useTranslations'
+import ProjectHelpers from '@/utils/projectHelpers'
+import useScrollAnimations from '@/hooks/useScrollAnimations'
+import PhoneButton from '@/components/ui/PhoneButton'
+import ImageMarquee from '@/components/ui/ImageMarquee'
+import { useFeaturedProjects } from '@/hooks/useProjects'
 
 export default function Home() {
-  const theme = useTheme();
-  const { t: tRaw } = useTranslations();
+  const theme = useTheme()
+  const { t: tRaw } = useTranslations()
   // Type-safe wrapper for translation function
-  const t = (key: string): string => tRaw(key) as string;
+  const t = (key: string): string => tRaw(key) as string
 
   const { data, isLoading, error } = useFeaturedProjects()
-  const projects = (data || []).map(project => ProjectHelpers.transformForHomePage(project));
+  const projects = (data || []).map(project => ProjectHelpers.transformForHomePage(project))
 
-  useScrollAnimations(undefined, undefined, undefined, [projects]);
+  useScrollAnimations(undefined, undefined, undefined, [projects])
 
   // Component for project title with fixed height and tooltip
   const ProjectTitle = ({ title }: { title: string }) => {
-    const [isOverflowing, setIsOverflowing] = useState(false);
+    const [isOverflowing, setIsOverflowing] = useState(false)
 
     useEffect(() => {
       // Check if text would overflow beyond 2 lines
-      const tempDiv = document.createElement('div');
+      const tempDiv = document.createElement('div')
       tempDiv.style.cssText = `
         position: absolute;
         visibility: hidden;
@@ -61,22 +61,22 @@ export default function Home() {
         font-weight: bold;
         line-height: 1.5;
         font-family: inherit;
-      `;
-      tempDiv.textContent = title;
-      document.body.appendChild(tempDiv);
-      
-      const height = tempDiv.offsetHeight;
-      const lineHeight = 30; // 20px font-size * 1.5 line-height
-      const maxHeight = lineHeight * 2; // 2 lines
-      
-      setIsOverflowing(height > maxHeight);
-      document.body.removeChild(tempDiv);
-    }, [title]);
+      `
+      tempDiv.textContent = title
+      document.body.appendChild(tempDiv)
+
+      const height = tempDiv.offsetHeight
+      const lineHeight = 30 // 20px font-size * 1.5 line-height
+      const maxHeight = lineHeight * 2 // 2 lines
+
+      setIsOverflowing(height > maxHeight)
+      document.body.removeChild(tempDiv)
+    }, [title])
 
     return (
-      <Tooltip 
-        title={isOverflowing ? title : ""} 
-        arrow 
+      <Tooltip
+        title={isOverflowing ? title : ''}
+        arrow
         placement="top"
         componentsProps={{
           tooltip: {
@@ -89,7 +89,7 @@ export default function Home() {
           }
         }}
       >
-        <h3 
+        <h3
           className="text-xl font-bold text-gray-800 mb-3 transition-colors duration-300 cursor-default"
           style={{
             height: '60px', // Fixed height for exactly 2 lines (30px * 2)
@@ -101,17 +101,17 @@ export default function Home() {
             wordBreak: 'break-word'
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.color = theme.palette.primary.main;
+            e.currentTarget.style.color = theme.palette.primary.main
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.color = '#1f2937';
+            e.currentTarget.style.color = '#1f2937'
           }}
         >
           {title}
         </h3>
       </Tooltip>
-    );
-  };
+    )
+  }
 
   const services = [
     {
@@ -149,7 +149,7 @@ export default function Home() {
       href: '/services/bidding-consulting',
       color: theme.palette.secondary.light
     }
-  ];
+  ]
 
   return (
     <Box className="min-h-screen">
@@ -192,7 +192,7 @@ export default function Home() {
                   textTransform: 'uppercase',
                   lineHeight: 1.2,
                   color: 'white',
-                  textShadow: '2px 2px 8px rgba(0,0,0,0.7)',
+                  textShadow: '2px 2px 8px rgba(0,0,0,0.7)'
                 }}
               >
                 {t('home.hero.title')}
@@ -261,18 +261,18 @@ export default function Home() {
           </div>
 
           {/* Scroll Down Icon */}
-          <Box 
-            sx={{ 
-              display: 'flex', 
-              justifyContent: 'center', 
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
               mt: 4,
               animation: 'bounce 2s infinite'
             }}
           >
-            <Box 
+            <Box
               component="div"
               onClick={() => window.scrollTo({ top: 800, behavior: 'smooth' })}
-              sx={{ 
+              sx={{
                 cursor: 'pointer',
                 display: 'flex',
                 flexDirection: 'column',
@@ -284,10 +284,10 @@ export default function Home() {
               <Typography variant="body2" sx={{ mb: 1, color: 'white', textShadow: '1px 1px 2px rgba(0,0,0,0.5)' }}>
                 {t('home.hero.scrollDown')}
               </Typography>
-              <Box sx={{ 
-                width: 30, 
-                height: 30, 
-                border: '2px solid', 
+              <Box sx={{
+                width: 30,
+                height: 30,
+                border: '2px solid',
                 borderColor: 'white',
                 borderRadius: '15px',
                 display: 'flex',
@@ -295,9 +295,9 @@ export default function Home() {
                 alignItems: 'flex-start',
                 pt: 0.5
               }}>
-                <Box sx={{ 
-                  width: 4, 
-                  height: 6, 
+                <Box sx={{
+                  width: 4,
+                  height: 6,
                   backgroundColor: 'white',
                   borderRadius: 2,
                   animation: 'scroll 1.5s infinite'
@@ -312,23 +312,23 @@ export default function Home() {
         {/* Animated Divider */}
         <section>
           <Box
-            sx={{ 
-              display: 'flex', 
-              alignItems: 'center', 
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
               justifyContent: 'center',
               position: 'relative'
             }}
           >
-            <Box 
-              sx={{ 
-                flex: 1, 
+            <Box
+              sx={{
+                flex: 1,
                 height: '2px',
                 background: `linear-gradient(to right, transparent, ${theme.palette.action.hover}, transparent)`,
                 animation: 'shimmer 2s infinite'
-              }} 
+              }}
             />
-            <Box 
-              sx={{ 
+            <Box
+              sx={{
                 mx: 3,
                 p: 2,
                 borderRadius: '50%',
@@ -337,21 +337,21 @@ export default function Home() {
                 animation: 'float 3s ease-in-out infinite'
               }}
             >
-              <Construction 
-                sx={{ 
-                  fontSize: 40, 
+              <Construction
+                sx={{
+                  fontSize: 40,
                   color: theme.palette.action.hover,
                   animation: 'rotate 4s linear infinite'
-                }} 
+                }}
               />
             </Box>
-            <Box 
-              sx={{ 
-                flex: 1, 
+            <Box
+              sx={{
+                flex: 1,
                 height: '2px',
                 background: `linear-gradient(to left, transparent, ${theme.palette.action.hover}, transparent)`,
                 animation: 'shimmer 2s infinite reverse'
-              }} 
+              }}
             />
           </Box>
         </section>
@@ -372,9 +372,9 @@ export default function Home() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               {/* Left Content */}
               <div className="slide-in-left">
-                <Typography 
-                  variant="h2" 
-                  gutterBottom 
+                <Typography
+                  variant="h2"
+                  gutterBottom
                   sx={{
                     fontWeight: 700,
                     fontSize: { xs: '2.5rem', md: '3rem' },
@@ -385,9 +385,9 @@ export default function Home() {
                 >
                   {t('home.services.title')}
                 </Typography>
-                <Typography 
-                  variant="body1" 
-                  sx={{ 
+                <Typography
+                  variant="body1"
+                  sx={{
                     fontSize: '1.1rem',
                     lineHeight: 1.8,
                     color: 'text.secondary',
@@ -404,22 +404,22 @@ export default function Home() {
                 <Box
                   className="scroll-container"
                   onWheel={(e) => {
-                    const target = e.currentTarget as HTMLElement;
-                    const { deltaY } = e;
-                    const { scrollTop, scrollHeight, clientHeight } = target;
-                    
+                    const target = e.currentTarget as HTMLElement
+                    const { deltaY } = e
+                    const { scrollTop, scrollHeight, clientHeight } = target
+
                     // If scrolling down and at bottom, prevent default
                     if (deltaY > 0 && scrollTop + clientHeight >= scrollHeight - 1) {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      return;
+                      e.preventDefault()
+                      e.stopPropagation()
+                      return
                     }
-                    
-                    // If scrolling up and at top, prevent default  
+
+                    // If scrolling up and at top, prevent default
                     if (deltaY < 0 && scrollTop <= 0) {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      return;
+                      e.preventDefault()
+                      e.stopPropagation()
+                      return
                     }
                   }}
                   sx={{
@@ -433,7 +433,7 @@ export default function Home() {
                     scrollbarWidth: 'none', // Firefox
                     msOverflowStyle: 'none', // IE and Edge
                     '&::-webkit-scrollbar': {
-                      display: 'none', // Chrome, Safari, Opera
+                      display: 'none' // Chrome, Safari, Opera
                     }
                   }}
                 >
@@ -457,7 +457,7 @@ export default function Home() {
                             boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
                             position: 'relative',
                             '&:hover': {
-                              transform: 'translateX(8px)',
+                              transform: 'translateX(8px)'
                               // borderColor: theme.palette.primary.main
                             }
                           }}
@@ -472,15 +472,15 @@ export default function Home() {
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 minWidth: 64,
-                                height: 64,
+                                height: 64
                               }}
                             >
                               {service.icon}
                             </Box>
                             <Box sx={{ flex: 1 }}>
-                              <Typography 
-                                variant="h6" 
-                                sx={{ 
+                              <Typography
+                                variant="h6"
+                                sx={{
                                   fontWeight: 700,
                                   mb: 0.5,
                                   color: 'white',
@@ -489,9 +489,9 @@ export default function Home() {
                               >
                                 {service.title}
                               </Typography>
-                              <Typography 
-                                variant="body2" 
-                                sx={{ 
+                              <Typography
+                                variant="body2"
+                                sx={{
                                   color: 'white',
                                   lineHeight: 1.4,
                                   fontSize: '0.85rem',
@@ -523,11 +523,11 @@ export default function Home() {
                     '&:hover': { opacity: 1 }
                   }}
                 >
-                  <Box 
-                    sx={{ 
-                      width: 22, 
-                      height: 35, 
-                      border: '2px solid', 
+                  <Box
+                    sx={{
+                      width: 22,
+                      height: 35,
+                      border: '2px solid',
                       borderColor: theme.palette.primary.main,
                       borderRadius: '12px',
                       display: 'flex',
@@ -536,9 +536,9 @@ export default function Home() {
                       pt: 0.8
                     }}
                   >
-                    <Box sx={{ 
-                      width: 3, 
-                      height: 6, 
+                    <Box sx={{
+                      width: 3,
+                      height: 6,
                       backgroundColor: theme.palette.primary.main,
                       borderRadius: 2,
                       animation: 'scroll 1.5s infinite'
@@ -579,18 +579,18 @@ export default function Home() {
                 transition: 'color 300ms'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.color = theme.palette.primary.main;
+                e.currentTarget.style.color = theme.palette.primary.main
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.color = '#6b7280';
+                e.currentTarget.style.color = '#6b7280'
               }}
               onClick={() => {
-                const container = document.querySelector('.projects-scroll-container') as HTMLElement;
+                const container = document.querySelector('.projects-scroll-container') as HTMLElement
                 if (container) {
                   container.scrollBy({
                     left: -320, // Scroll one card width to the left
                     behavior: 'smooth'
-                  });
+                  })
                 }
               }}
               id="scroll-left-btn"
@@ -606,18 +606,18 @@ export default function Home() {
                 transition: 'color 300ms'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.color = theme.palette.primary.main;
+                e.currentTarget.style.color = theme.palette.primary.main
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.color = '#6b7280';
+                e.currentTarget.style.color = '#6b7280'
               }}
               onClick={() => {
-                const container = document.querySelector('.projects-scroll-container') as HTMLElement;
+                const container = document.querySelector('.projects-scroll-container') as HTMLElement
                 if (container) {
                   container.scrollBy({
                     left: 320, // Scroll one card width to the right
                     behavior: 'smooth'
-                  });
+                  })
                 }
               }}
               id="scroll-right-btn"
@@ -632,109 +632,109 @@ export default function Home() {
               <div>Không có dự án nào!</div>
             )}
             {!isLoading && !error && projects.length > 0 && (
-            <div 
-              className="projects-scroll-container flex gap-6 overflow-x-auto scrollbar-hide pb-4"
-              style={{
-                scrollSnapType: 'x mandatory',
-                scrollBehavior: 'smooth',
-                WebkitOverflowScrolling: 'touch'
-              }}
-              onScroll={(e) => {
-                const container = e.target as HTMLElement;
-                const leftBtn = document.getElementById('scroll-left-btn') as HTMLButtonElement;
-                const rightBtn = document.getElementById('scroll-right-btn') as HTMLButtonElement;
+              <div
+                className="projects-scroll-container flex gap-6 overflow-x-auto scrollbar-hide pb-4"
+                style={{
+                  scrollSnapType: 'x mandatory',
+                  scrollBehavior: 'smooth',
+                  WebkitOverflowScrolling: 'touch'
+                }}
+                onScroll={(e) => {
+                  const container = e.target as HTMLElement
+                  const leftBtn = document.getElementById('scroll-left-btn') as HTMLButtonElement
+                  const rightBtn = document.getElementById('scroll-right-btn') as HTMLButtonElement
 
-                if (leftBtn && rightBtn) {
+                  if (leftBtn && rightBtn) {
                   // Disable left button if at start
-                  leftBtn.disabled = container.scrollLeft <= 0;
-                  
-                  // Disable right button if at end
-                  const isAtEnd = container.scrollLeft >= container.scrollWidth - container.clientWidth - 1;
-                  rightBtn.disabled = isAtEnd;
-                }
-              }}
-            >
-              {projects.map((project, index) => (
-                <div
-                  key={index}
-                  className={`flex-shrink-0 w-80 slide-in-left animate-delay-${index + 1}`}
-                  style={{ scrollSnapAlign: 'start' }}
-                >
-                  {/* Custom Project Card */}
+                    leftBtn.disabled = container.scrollLeft <= 0
+
+                    // Disable right button if at end
+                    const isAtEnd = container.scrollLeft >= container.scrollWidth - container.clientWidth - 1
+                    rightBtn.disabled = isAtEnd
+                  }
+                }}
+              >
+                {projects.map((project, index) => (
                   <div
-                    className="group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:transition-all duration-500 h-full"
+                    key={index}
+                    className={`flex-shrink-0 w-80 slide-in-left animate-delay-${index + 1}`}
+                    style={{ scrollSnapAlign: 'start' }}
                   >
-                    {/* Card Image */}
-                    <div className="relative h-52 overflow-hidden">
-                      <Image
-                        src={project.image}
-                        alt={project.title}
-                        fill
-                        className="object-cover group-hover:scale-110 transition-transform duration-700"
-                      />
-                      {/* Gradient Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    {/* Custom Project Card */}
+                    <div
+                      className="group relative bg-white rounded-3xl overflow-hidden shadow-lg hover:transition-all duration-500 h-full"
+                    >
+                      {/* Card Image */}
+                      <div className="relative h-52 overflow-hidden">
+                        <Image
+                          src={project.image}
+                          alt={project.title}
+                          fill
+                          className="object-cover group-hover:scale-110 transition-transform duration-700"
+                        />
+                        {/* Gradient Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-                      {/* Hover View Button */}
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <Link
-                          href={project.url}
-                          className="bg-white/20 backdrop-blur-sm border-2 border-white text-white px-6 py-2 rounded-full font-semibold hover:bg-white hover:text-gray-800 transition-all duration-300"
-                        >
-                          {t('home.projects.viewDetail')}
-                        </Link>
-                      </div>
-                    </div>
-
-                    {/* Card Content */}
-                    <div className="p-6">
-                      <ProjectTitle title={project.title} />
-                      <p className="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-3">
-                        {project.description}
-                      </p>
-                      <p className="text-gray-500 text-xs font-medium mb-4">
-                        {project.statusRaw === 'completed' ? t('home.projects.completedOn') : t('home.projects.startedOn')}: {project.duration}
-                      </p>
-
-                      {/* Card Footer */}
-                      <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
-                        <div
-                          className="flex items-center gap-2 transition-colors duration-200"
-                          style={{ color: theme.palette.primary.main }}
-                        >
-                          <Build sx={{ fontSize: 18 }} />
-                          <span className="text-sm font-medium">
-                            {project.statusRaw === 'completed' ? t('home.projects.completed') : t('home.projects.inProgress')}
-                          </span>
+                        {/* Hover View Button */}
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <Link
+                            href={project.url}
+                            className="bg-white/20 backdrop-blur-sm border-2 border-white text-white px-6 py-2 rounded-full font-semibold hover:bg-white hover:text-gray-800 transition-all duration-300"
+                          >
+                            {t('home.projects.viewDetail')}
+                          </Link>
                         </div>
-                        <button 
-                          className="transition-colors duration-200"
-                          style={{ color: theme.palette.primary.main }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.color = theme.palette.primary.dark || '#1565c0';
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.color = theme.palette.primary.main;
-                          }}
-                        >
-                          <ArrowForward sx={{ fontSize: 20 }} />
-                        </button>
                       </div>
-                    </div>
 
-                    {/* Card Glow Effect */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                      <div 
-                        className="absolute inset-0 rounded-3xl"
-                        style={{
-                          background: `linear-gradient(to right, ${theme.palette.primary.main}10, ${theme.palette.secondary.main}10, ${theme.palette.primary.light}10)`
-                        }}
-                      ></div>
+                      {/* Card Content */}
+                      <div className="p-6">
+                        <ProjectTitle title={project.title} />
+                        <p className="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-3">
+                          {project.description}
+                        </p>
+                        <p className="text-gray-500 text-xs font-medium mb-4">
+                          {project.statusRaw === 'completed' ? t('home.projects.completedOn') : t('home.projects.startedOn')}: {project.duration}
+                        </p>
+
+                        {/* Card Footer */}
+                        <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
+                          <div
+                            className="flex items-center gap-2 transition-colors duration-200"
+                            style={{ color: theme.palette.primary.main }}
+                          >
+                            <Build sx={{ fontSize: 18 }} />
+                            <span className="text-sm font-medium">
+                              {project.statusRaw === 'completed' ? t('home.projects.completed') : t('home.projects.inProgress')}
+                            </span>
+                          </div>
+                          <button
+                            className="transition-colors duration-200"
+                            style={{ color: theme.palette.primary.main }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.color = theme.palette.primary.dark || '#1565c0'
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.color = theme.palette.primary.main
+                            }}
+                          >
+                            <ArrowForward sx={{ fontSize: 20 }} />
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Card Glow Effect */}
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                        <div
+                          className="absolute inset-0 rounded-3xl"
+                          style={{
+                            background: `linear-gradient(to right, ${theme.palette.primary.main}10, ${theme.palette.secondary.main}10, ${theme.palette.primary.light}10)`
+                          }}
+                        ></div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
             )}
 
             {/* Scroll Indicators */}
@@ -747,18 +747,18 @@ export default function Home() {
                     backgroundColor: '#d1d5db'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = theme.palette.primary.main;
+                    e.currentTarget.style.backgroundColor = theme.palette.primary.main
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = '#d1d5db';
+                    e.currentTarget.style.backgroundColor = '#d1d5db'
                   }}
                   onClick={() => {
-                    const container = document.querySelector('.projects-scroll-container');
+                    const container = document.querySelector('.projects-scroll-container')
                     if (container) {
                       container.scrollTo({
                         left: index * (320 * 3), // 320px per card width + gap
                         behavior: 'smooth'
-                      });
+                      })
                     }
                   }}
                 ></button>
@@ -773,7 +773,7 @@ export default function Home() {
           <Typography
             variant="h2"
             className="font-bold text-center"
-            sx={{ 
+            sx={{
               marginBottom: '2rem',
               fontSize: { xs: '2rem', md: '2.5rem' },
               fontWeight: 700
@@ -781,10 +781,10 @@ export default function Home() {
           >
             {t('home.whyChooseUs.title')}
           </Typography>
-          
+
           {/* Background box with 4 columns */}
-          <Box 
-            sx={{ 
+          <Box
+            sx={{
               backgroundColor: theme.palette.primary.main,
               borderRadius: 3
             }}
@@ -795,7 +795,7 @@ export default function Home() {
                 <div className="text-center p-6 flex flex-col">
                   <div className="flex justify-center mb-4 flex-shrink-0">
                     <HandshakeOutlined
-                      sx={{ fontSize: 60, color: theme.palette.action.active }} 
+                      sx={{ fontSize: 60, color: theme.palette.action.active }}
                     />
                   </div>
                   <Typography variant="h5" className="font-bold mb-4 text-white flex-shrink-0">
@@ -814,7 +814,7 @@ export default function Home() {
                 <div className="text-center p-6 flex flex-col">
                   <div className="flex justify-center mb-4 flex-shrink-0">
                     <ConstructionOutlined
-                      sx={{ fontSize: 60, color: theme.palette.action.active }} 
+                      sx={{ fontSize: 60, color: theme.palette.action.active }}
                     />
                   </div>
                   <Typography variant="h5" className="font-bold mb-4 text-white flex-shrink-0">
@@ -833,7 +833,7 @@ export default function Home() {
                 <div className="text-center p-6 flex flex-col">
                   <div className="flex justify-center mb-4 flex-shrink-0">
                     <VerifiedUserOutlined
-                      sx={{ fontSize: 60, color: theme.palette.action.active }} 
+                      sx={{ fontSize: 60, color: theme.palette.action.active }}
                     />
                   </div>
                   <Typography variant="h5" className="font-bold mb-4 text-white flex-shrink-0">
@@ -852,7 +852,7 @@ export default function Home() {
                 <div className="text-center p-6 flex flex-col">
                   <div className="flex justify-center mb-4 flex-shrink-0">
                     <GroupOutlined
-                      sx={{ fontSize: 60, color: theme.palette.action.active }} 
+                      sx={{ fontSize: 60, color: theme.palette.action.active }}
                     />
                   </div>
                   <Typography variant="h5" className="font-bold mb-4 text-white flex-shrink-0">
@@ -875,5 +875,5 @@ export default function Home() {
         title='Phát Triển Bền Vững'
       />
     </Box>
-  );
+  )
 }

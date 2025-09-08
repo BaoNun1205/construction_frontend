@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react'
 import {
   Box,
   Container,
@@ -13,8 +13,8 @@ import {
   CardMedia,
   Modal,
   IconButton,
-  useMediaQuery,
-} from '@mui/material';
+  useMediaQuery
+} from '@mui/material'
 
 import {
   Business,
@@ -26,60 +26,60 @@ import {
   Architecture,
   Engineering,
   Close,
-  ZoomIn,
-} from '@mui/icons-material';
-import { useTranslations } from '@/hooks/useTranslations';
-import { CONTACT } from '@/constants/contact';
-import useScrollAnimations from '@/hooks/useScrollAnimations';
+  ZoomIn
+} from '@mui/icons-material'
+import { useTranslations } from '@/hooks/useTranslations'
+import { CONTACT } from '@/constants/contact'
+import useScrollAnimations from '@/hooks/useScrollAnimations'
 
 export default function AboutPage() {
-  useScrollAnimations();
-  const theme = useTheme();
-  const { t: tRaw } = useTranslations();
+  useScrollAnimations()
+  const theme = useTheme()
+  const { t: tRaw } = useTranslations()
   // Type-safe wrapper for translation function
-  const t = (key: string): string => tRaw(key) as string;
-  const [isImageHovered, setIsImageHovered] = useState(false);
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const t = (key: string): string => tRaw(key) as string
+  const [isImageHovered, setIsImageHovered] = useState(false)
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   // Timeline data shared between desktop and mobile
   const timelineData = [
     {
-      year: "2020",
-      position: "bottom",
-      title: "Khởi đầu hành trình xây dựng với đội ngũ nhiệt huyết và chuyên nghiệp",
-      color: theme.palette.action.hover,
+      year: '2020',
+      position: 'bottom',
+      title: 'Khởi đầu hành trình xây dựng với đội ngũ nhiệt huyết và chuyên nghiệp',
+      color: theme.palette.action.hover
     },
     {
-      year: "2021",
-      position: "top",
-      title: "Mở rộng đội ngũ, hoàn thiện quy trình quản lý và thực hiện những dự án đầu tiên",
-      color: theme.palette.action.active,
+      year: '2021',
+      position: 'top',
+      title: 'Mở rộng đội ngũ, hoàn thiện quy trình quản lý và thực hiện những dự án đầu tiên',
+      color: theme.palette.action.active
     },
     {
-      year: "2022",
-      position: "bottom",
-      title: "Tích lũy kinh nghiệm, xây dựng uy tín với đối tác và chuẩn bị nền tảng pháp lý",
-      color: theme.palette.action.hover,
+      year: '2022',
+      position: 'bottom',
+      title: 'Tích lũy kinh nghiệm, xây dựng uy tín với đối tác và chuẩn bị nền tảng pháp lý',
+      color: theme.palette.action.hover
     },
     {
-      year: "2023",
-      position: "top",
-      title: "Lai Phát được thành lập do Sở Kế hoạch và Đầu tư TP. Hồ Chí Minh cấp giấy phép, kế thừa và phát triển từ tiền phong Talacons",
-      color: theme.palette.action.active,
+      year: '2023',
+      position: 'top',
+      title: 'Lai Phát được thành lập do Sở Kế hoạch và Đầu tư TP. Hồ Chí Minh cấp giấy phép, kế thừa và phát triển từ tiền phong Talacons',
+      color: theme.palette.action.active
     },
     {
-      year: "2024",
-      position: "bottom",
-      title: "Đạt được chứng nhận chất lượng và năng lực hoạt động xây dựng theo tiêu chuẩn nhà nước",
-      color: theme.palette.action.hover,
+      year: '2024',
+      position: 'bottom',
+      title: 'Đạt được chứng nhận chất lượng và năng lực hoạt động xây dựng theo tiêu chuẩn nhà nước',
+      color: theme.palette.action.hover
     },
     {
-      year: "2025",
-      position: "top",
-      title: "Tiếp tục phát triển mạnh mẽ và khẳng định vị thế trên thị trường xây dựng Việt Nam",
-      color: theme.palette.action.active,
-    },
-  ];
+      year: '2025',
+      position: 'top',
+      title: 'Tiếp tục phát triển mạnh mẽ và khẳng định vị thế trên thị trường xây dựng Việt Nam',
+      color: theme.palette.action.active
+    }
+  ]
 
   return (
     <Box className="min-h-screen">
@@ -127,7 +127,7 @@ export default function AboutPage() {
                       Lĩnh vực hoạt động
                     </Typography>
                   </div>
-                  
+
                   <div className="space-y-4">
                     <div>
                       <Typography variant="h6" className="font-semibold text-cyan-300" sx={{ mb: 1 }}>
@@ -137,7 +137,7 @@ export default function AboutPage() {
                         Nhà phố, nhà xưởng, tiểu cảnh sân vườn...
                       </Typography>
                     </div>
-                    
+
                     <div>
                       <Typography variant="h6" className="font-semibold text-cyan-300" sx={{ mb: 1 }}>
                         Thi công:
@@ -161,7 +161,7 @@ export default function AboutPage() {
                       Định hướng & Mục tiêu
                     </Typography>
                   </div>
-                  
+
                   <div className="space-y-3">
                     <div className="flex items-start">
                       <div className="w-2 h-2 bg-amber-400 rounded-full mt-2 mr-3 flex-shrink-0"></div>
@@ -169,21 +169,21 @@ export default function AboutPage() {
                         Triển khai giải pháp thiết kế & thi công trọn gói cho nhiều loại công trình (nhà phố, nhà xưởng, cải tạo, sửa chữa, hạ tầng kỹ thuật).
                       </Typography>
                     </div>
-                    
+
                     <div className="flex items-start">
                       <div className="w-2 h-2 bg-amber-400 rounded-full mt-2 mr-3 flex-shrink-0"></div>
                       <Typography variant="body2" className="text-white leading-relaxed">
                         Không ngừng học hỏi, sáng tạo, phát triển nguồn nhân lực và kỹ thuật thi công.
                       </Typography>
                     </div>
-                    
+
                     <div className="flex items-start">
                       <div className="w-2 h-2 bg-amber-400 rounded-full mt-2 mr-3 flex-shrink-0"></div>
                       <Typography variant="body2" className="text-white leading-relaxed">
                         Nâng cao chất lượng, giá cả, dịch vụ, an toàn lao động, bảo vệ môi trường.
                       </Typography>
                     </div>
-                    
+
                     <div className="mt-4 p-3 bg-amber-500/20 rounded-lg border border-amber-400/30">
                       <Typography variant="body2" className="text-amber-200 font-semibold">
                         Mục tiêu: Trở thành công ty uy tín, cạnh tranh trong nước và mở rộng ra thị trường quốc tế.
@@ -200,7 +200,7 @@ export default function AboutPage() {
                       Cam kết
                     </Typography>
                   </div>
-                  
+
                   <div className="text-center">
                     <div className="mb-4">
                       <VerifiedUser className="text-green-400 mb-2" sx={{ fontSize: 60 }} />
@@ -208,7 +208,7 @@ export default function AboutPage() {
                     <Typography variant="body1" className="text-white leading-relaxed font-medium">
                       Đặt niềm tin và sự tín nhiệm của khách hàng làm trọng tâm.
                     </Typography>
-                    
+
                     <div className="mt-4 p-3 bg-green-500/20 rounded-lg border border-green-400/30">
                       <Typography variant="body2" className="text-green-200 font-semibold">
                         Chất lượng • Uy tín • Chuyên nghiệp
@@ -233,46 +233,46 @@ export default function AboutPage() {
           </Typography>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="scale-in animate-delay-1">
-              <div 
+              <div
                 className="h-full text-center p-8 rounded-3xl bg-gradient-to-br from-white/80 to-gray-50/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 cursor-pointer group overflow-hidden relative"
                 style={{
-                  boxShadow: '0 10px 40px rgba(0,0,0,0.08)',
+                  boxShadow: '0 10px 40px rgba(0,0,0,0.08)'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-12px) scale(1.03)';
-                  e.currentTarget.style.boxShadow = `0 25px 80px ${theme.palette.primary.main}25`;
-                  e.currentTarget.style.borderColor = `${theme.palette.primary.main}50`;
+                  e.currentTarget.style.transform = 'translateY(-12px) scale(1.03)'
+                  e.currentTarget.style.boxShadow = `0 25px 80px ${theme.palette.primary.main}25`
+                  e.currentTarget.style.borderColor = `${theme.palette.primary.main}50`
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                  e.currentTarget.style.boxShadow = '0 10px 40px rgba(0,0,0,0.08)';
-                  e.currentTarget.style.borderColor = 'rgba(229,231,235,0.5)';
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)'
+                  e.currentTarget.style.boxShadow = '0 10px 40px rgba(0,0,0,0.08)'
+                  e.currentTarget.style.borderColor = 'rgba(229,231,235,0.5)'
                 }}
               >
                 {/* Top accent */}
-                <div 
+                <div
                   className="absolute top-0 left-0 right-0 h-1 rounded-t-3xl"
                   style={{ backgroundColor: theme.palette.primary.main }}
                 ></div>
-                
+
                 {/* Gradient overlay on hover */}
-                <div 
+                <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"
                   style={{
                     background: `linear-gradient(to bottom right, ${theme.palette.primary.main}10, ${theme.palette.primary.main}20)`
                   }}
                 ></div>
-                
+
                 <div className="relative z-10">
-                  <Business 
-                    className="mb-6 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3" 
-                    sx={{ 
-                      fontSize: 60, 
-                      color: theme.palette.primary.main 
-                    }} 
+                  <Business
+                    className="mb-6 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
+                    sx={{
+                      fontSize: 60,
+                      color: theme.palette.primary.main
+                    }}
                   />
-                  <Typography 
-                    variant="h4" 
+                  <Typography
+                    variant="h4"
                     className="font-bold text-gray-800 transition-colors duration-300"
                     sx={{
                       '.group:hover &': {
@@ -289,46 +289,46 @@ export default function AboutPage() {
               </div>
             </div>
             <div className="scale-in animate-delay-2">
-              <div 
+              <div
                 className="h-full text-center p-8 rounded-3xl bg-gradient-to-br from-white/80 to-gray-50/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 cursor-pointer group overflow-hidden relative"
                 style={{
-                  boxShadow: '0 10px 40px rgba(0,0,0,0.08)',
+                  boxShadow: '0 10px 40px rgba(0,0,0,0.08)'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-12px) scale(1.03)';
-                  e.currentTarget.style.boxShadow = `0 25px 80px ${theme.palette.primary.main}25`;
-                  e.currentTarget.style.borderColor = `${theme.palette.primary.main}50`;
+                  e.currentTarget.style.transform = 'translateY(-12px) scale(1.03)'
+                  e.currentTarget.style.boxShadow = `0 25px 80px ${theme.palette.primary.main}25`
+                  e.currentTarget.style.borderColor = `${theme.palette.primary.main}50`
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                  e.currentTarget.style.boxShadow = '0 10px 40px rgba(0,0,0,0.08)';
-                  e.currentTarget.style.borderColor = 'rgba(229,231,235,0.5)';
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)'
+                  e.currentTarget.style.boxShadow = '0 10px 40px rgba(0,0,0,0.08)'
+                  e.currentTarget.style.borderColor = 'rgba(229,231,235,0.5)'
                 }}
               >
                 {/* Top accent */}
-                <div 
+                <div
                   className="absolute top-0 left-0 right-0 h-1 rounded-t-3xl"
                   style={{ backgroundColor: theme.palette.primary.main }}
                 ></div>
-                
+
                 {/* Gradient overlay on hover */}
-                <div 
+                <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"
                   style={{
                     background: `linear-gradient(to bottom right, ${theme.palette.primary.main}10, ${theme.palette.primary.main}20)`
                   }}
                 ></div>
-                
+
                 <div className="relative z-10">
-                  <Visibility 
-                    className="mb-6 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3" 
-                    sx={{ 
-                      fontSize: 60, 
-                      color: theme.palette.primary.main 
-                    }} 
+                  <Visibility
+                    className="mb-6 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
+                    sx={{
+                      fontSize: 60,
+                      color: theme.palette.primary.main
+                    }}
                   />
-                  <Typography 
-                    variant="h4" 
+                  <Typography
+                    variant="h4"
                     className="font-bold text-gray-800 transition-colors duration-300"
                     sx={{
                       '.group:hover &': {
@@ -345,46 +345,46 @@ export default function AboutPage() {
               </div>
             </div>
             <div className="scale-in animate-delay-3">
-              <div 
+              <div
                 className="h-full text-center p-8 rounded-3xl bg-gradient-to-br from-white/80 to-gray-50/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-500 cursor-pointer group overflow-hidden relative"
                 style={{
-                  boxShadow: '0 10px 40px rgba(0,0,0,0.08)',
+                  boxShadow: '0 10px 40px rgba(0,0,0,0.08)'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-12px) scale(1.03)';
-                  e.currentTarget.style.boxShadow = `0 25px 80px ${theme.palette.primary.main}25`;
-                  e.currentTarget.style.borderColor = `${theme.palette.primary.main}50`;
+                  e.currentTarget.style.transform = 'translateY(-12px) scale(1.03)'
+                  e.currentTarget.style.boxShadow = `0 25px 80px ${theme.palette.primary.main}25`
+                  e.currentTarget.style.borderColor = `${theme.palette.primary.main}50`
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                  e.currentTarget.style.boxShadow = '0 10px 40px rgba(0,0,0,0.08)';
-                  e.currentTarget.style.borderColor = 'rgba(229,231,235,0.5)';
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)'
+                  e.currentTarget.style.boxShadow = '0 10px 40px rgba(0,0,0,0.08)'
+                  e.currentTarget.style.borderColor = 'rgba(229,231,235,0.5)'
                 }}
               >
                 {/* Top accent */}
-                <div 
+                <div
                   className="absolute top-0 left-0 right-0 h-1 rounded-t-3xl"
                   style={{ backgroundColor: theme.palette.primary.main }}
                 ></div>
-                
+
                 {/* Gradient overlay on hover */}
-                <div 
+                <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"
                   style={{
                     background: `linear-gradient(to bottom right, ${theme.palette.primary.main}10, ${theme.palette.primary.main}20)`
                   }}
                 ></div>
-                
+
                 <div className="relative z-10">
-                  <Handshake 
-                    className="mb-6 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3" 
-                    sx={{ 
-                      fontSize: 60, 
-                      color: theme.palette.primary.main 
-                    }} 
+                  <Handshake
+                    className="mb-6 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
+                    sx={{
+                      fontSize: 60,
+                      color: theme.palette.primary.main
+                    }}
                   />
-                  <Typography 
-                    variant="h4" 
+                  <Typography
+                    variant="h4"
                     className="font-bold text-gray-800 transition-colors duration-300"
                     sx={{
                       '.group:hover &': {
@@ -573,7 +573,7 @@ export default function AboutPage() {
             </div>
 
             <div className={`${isMobile ? 'col-span-1' : ''} slide-in-right`}>
-              <Card className={`transition-all duration-500 ease-in-out hover:shadow-2xl hover:-translate-y-2 group overflow-visible h-full w-full`}>
+              <Card className={'transition-all duration-500 ease-in-out hover:shadow-2xl hover:-translate-y-2 group overflow-visible h-full w-full'}>
                 <div className="p-6 h-full flex flex-col justify-center">
                   <div className="relative flex-1 flex items-center justify-center group/image">
                     <CardMedia
@@ -585,7 +585,7 @@ export default function AboutPage() {
                         transformOrigin: 'center center'
                       }}
                     />
-                    
+
                     {/* Zoom button overlay */}
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <IconButton
@@ -635,13 +635,13 @@ export default function AboutPage() {
               {/* Timeline items */}
               <div
                 className="flex justify-between items-center relative"
-                style={{ paddingTop: "160px", paddingBottom: "160px" }} // tăng khoảng cách trên/dưới
+                style={{ paddingTop: '160px', paddingBottom: '160px' }} // tăng khoảng cách trên/dưới
               >
                 {timelineData.map((item, index) => (
-                  <div key={index} className="flex flex-col items-center relative 
+                  <div key={index} className="flex flex-col items-center relative
                   slide-in-left">
                     {/* Top content */}
-                    {item.position === "top" && (
+                    {item.position === 'top' && (
                       <div
                         className="absolute bottom-6 w-56 text-center z-20 fade-in-on"
                         style={{ transitionDelay: `${(index + 1) * 500}ms` }}
@@ -651,13 +651,13 @@ export default function AboutPage() {
                         </div>
 
                         {/* connector with small circle at start */}
-                          <div className="relative mx-auto" style={{ width: 2 }}>
-                            <div
-                              className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-3 h-3 rounded-full"
-                              style={{ backgroundColor: item.color }}
-                            />
-                            <div className="w-0.5 h-12 mx-auto" style={{ backgroundColor: item.color }}></div>
-                          </div>
+                        <div className="relative mx-auto" style={{ width: 2 }}>
+                          <div
+                            className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-3 h-3 rounded-full"
+                            style={{ backgroundColor: item.color }}
+                          />
+                          <div className="w-0.5 h-12 mx-auto" style={{ backgroundColor: item.color }}></div>
+                        </div>
                       </div>
                     )}
 
@@ -673,7 +673,7 @@ export default function AboutPage() {
                       </div>
                       <div
                         className={`absolute left-1/2 transform -translate-x-1/2 px-2 ${
-                          ["2020", "2022", "2024"].includes(item.year) ? "-top-12" : "-bottom-12"
+                          ['2020', '2022', '2024'].includes(item.year) ? '-top-12' : '-bottom-12'
                         }`}
                       >
                         <div className="font-bold text-2xl text-gray-800">{item.year}</div>
@@ -681,7 +681,7 @@ export default function AboutPage() {
                     </div>
 
                     {/* Bottom content */}
-                    {item.position === "bottom" && (
+                    {item.position === 'bottom' && (
                       <div
                         className="absolute top-6 w-56 text-center z-20 fade-in-up"
                         style={{ transitionDelay: `${(index + 1) * 500}ms` }}
@@ -771,16 +771,16 @@ export default function AboutPage() {
             <div className="flex-1 min-w-[300px] scale-in">
               <Card className="text-center p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-2 cursor-pointer group">
                 <Avatar
-                  sx={{ 
-                    width: 100, 
-                    height: 100, 
+                  sx={{
+                    width: 100,
+                    height: 100,
                     margin: '0 auto 16px',
                     transition: 'all 0.3s ease-in-out'
                   }}
                   className="bg-amber-500 group-hover:scale-110 group-hover:shadow-lg"
                 >
-                  <Architecture 
-                    sx={{ fontSize: 50 }} 
+                  <Architecture
+                    sx={{ fontSize: 50 }}
                     className="transition-transform duration-300 group-hover:rotate-6"
                   />
                 </Avatar>
@@ -799,15 +799,15 @@ export default function AboutPage() {
                   {t('about.team.members.deputy.position')}
                 </Typography>
                 <div className="flex flex-wrap justify-center gap-2 mb-4">
-                  <Chip 
+                  <Chip
                     label={t('about.team.members.deputy.experience')}
-                    size="small" 
-                    className="bg-amber-100 text-amber-800 transition-all duration-300 group-hover:bg-amber-200" 
+                    size="small"
+                    className="bg-amber-100 text-amber-800 transition-all duration-300 group-hover:bg-amber-200"
                   />
-                  <Chip 
+                  <Chip
                     label={t('about.team.members.deputy.specialty')}
-                    size="small" 
-                    className="bg-gray-100 transition-all duration-300 group-hover:bg-gray-200" 
+                    size="small"
+                    className="bg-gray-100 transition-all duration-300 group-hover:bg-gray-200"
                   />
                 </div>
                 <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
@@ -818,9 +818,9 @@ export default function AboutPage() {
             <div className="flex-1 min-w-[300px] scale-in">
               <Card className="text-center p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-2 cursor-pointer group">
                 <Avatar
-                  sx={{ 
-                    width: 100, 
-                    height: 100, 
+                  sx={{
+                    width: 100,
+                    height: 100,
                     margin: '0 auto 16px',
                     transition: 'all 0.3s ease-in-out'
                   }}
@@ -828,8 +828,8 @@ export default function AboutPage() {
                   src="/persons/ChiefExecutiveOfficer.jpg"
                   alt={t('about.team.members.ceo.name')}
                 >
-                  <Engineering 
-                    sx={{ fontSize: 50 }} 
+                  <Engineering
+                    sx={{ fontSize: 50 }}
                     className="transition-transform duration-300 group-hover:rotate-6"
                   />
                 </Avatar>
@@ -848,15 +848,15 @@ export default function AboutPage() {
                   {t('about.team.members.ceo.position')}
                 </Typography>
                 <div className="flex flex-wrap justify-center gap-2 mb-4">
-                  <Chip 
+                  <Chip
                     label={t('about.team.members.ceo.experience')}
-                    size="small" 
-                    className="bg-cyan-100 text-cyan-800 transition-all duration-300 group-hover:bg-cyan-200" 
+                    size="small"
+                    className="bg-cyan-100 text-cyan-800 transition-all duration-300 group-hover:bg-cyan-200"
                   />
-                  <Chip 
+                  <Chip
                     label={t('about.team.members.ceo.specialty')}
-                    size="small" 
-                    className="bg-gray-100 transition-all duration-300 group-hover:bg-gray-200" 
+                    size="small"
+                    className="bg-gray-100 transition-all duration-300 group-hover:bg-gray-200"
                   />
                 </div>
                 <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
@@ -867,9 +867,9 @@ export default function AboutPage() {
             <div className="flex-1 min-w-[300px] scale-in">
               <Card className="text-center p-6 transition-all duration-500 ease-in-out hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-2 cursor-pointer group">
                 <Avatar
-                  sx={{ 
-                    width: 100, 
-                    height: 100, 
+                  sx={{
+                    width: 100,
+                    height: 100,
                     margin: '0 auto 16px',
                     transition: 'all 0.3s ease-in-out'
                   }}
@@ -877,8 +877,8 @@ export default function AboutPage() {
                   src="/persons/Technician.jpg"
                   alt={t('about.team.members.technical.name')}
                 >
-                  <Group 
-                    sx={{ fontSize: 50 }} 
+                  <Group
+                    sx={{ fontSize: 50 }}
                     className="transition-transform duration-300 group-hover:rotate-6"
                   />
                 </Avatar>
@@ -897,15 +897,15 @@ export default function AboutPage() {
                   {t('about.team.members.technical.position')}
                 </Typography>
                 <div className="flex flex-wrap justify-center gap-2 mb-4">
-                  <Chip 
+                  <Chip
                     label={t('about.team.members.technical.experience')}
-                    size="small" 
-                    className="bg-green-100 text-green-800 transition-all duration-300 group-hover:bg-green-200" 
+                    size="small"
+                    className="bg-green-100 text-green-800 transition-all duration-300 group-hover:bg-green-200"
                   />
-                  <Chip 
+                  <Chip
                     label={t('about.team.members.technical.specialty')}
-                    size="small" 
-                    className="bg-gray-100 transition-all duration-300 group-hover:bg-gray-200" 
+                    size="small"
+                    className="bg-gray-100 transition-all duration-300 group-hover:bg-gray-200"
                   />
                 </div>
                 <Typography variant="body2" className="text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
@@ -993,10 +993,10 @@ export default function AboutPage() {
                         {t('about.partners.clients.hcmc.description')}
                       </Typography>
                     </div>
-                    <Chip 
+                    <Chip
                       label={t('about.partners.clients.hcmc.type')}
-                      size="small" 
-                      className="bg-blue-100 text-blue-800 transition-all duration-300 hover:bg-blue-200" 
+                      size="small"
+                      className="bg-blue-100 text-blue-800 transition-all duration-300 hover:bg-blue-200"
                     />
                   </div>
                   <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg transition-all duration-300 hover:bg-gray-100 hover:scale-[1.01]">
@@ -1008,10 +1008,10 @@ export default function AboutPage() {
                         {t('about.partners.clients.samsung.description')}
                       </Typography>
                     </div>
-                    <Chip 
+                    <Chip
                       label={t('about.partners.clients.samsung.type')}
-                      size="small" 
-                      className="bg-green-100 text-green-800 transition-all duration-300 hover:bg-green-200" 
+                      size="small"
+                      className="bg-green-100 text-green-800 transition-all duration-300 hover:bg-green-200"
                     />
                   </div>
                   <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg transition-all duration-300 hover:bg-gray-100 hover:scale-[1.01]">
@@ -1023,10 +1023,10 @@ export default function AboutPage() {
                         {t('about.partners.clients.saigoncoop.description')}
                       </Typography>
                     </div>
-                    <Chip 
+                    <Chip
                       label={t('about.partners.clients.saigoncoop.type')}
-                      size="small" 
-                      className="bg-purple-100 text-purple-800 transition-all duration-300 hover:bg-purple-200" 
+                      size="small"
+                      className="bg-purple-100 text-purple-800 transition-all duration-300 hover:bg-purple-200"
                     />
                   </div>
                 </div>
@@ -1046,14 +1046,14 @@ export default function AboutPage() {
           style: { backgroundColor: 'rgba(0, 0, 0, 0.75)' }
         }}
       >
-        <Box 
+        <Box
           className="relative max-w-[90vw] max-h-[90vh] bg-transparent outline-none"
         >
           {/* Close Button */}
           <IconButton
             onClick={() => setIsImageHovered(false)}
             className="absolute top-2 right-2 z-10 bg-white/80 hover:bg-white/90"
-            style={{ 
+            style={{
               position: 'absolute',
               top: 8,
               right: 8,
@@ -1064,7 +1064,7 @@ export default function AboutPage() {
           >
             <Close />
           </IconButton>
-          
+
           <CardMedia
             component="img"
             image="/certificate/certificate.jpg"
@@ -1074,5 +1074,5 @@ export default function AboutPage() {
         </Box>
       </Modal>
     </Box>
-  );
+  )
 }

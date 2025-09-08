@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import {
   Box,
@@ -9,7 +9,7 @@ import {
   Divider,
   Stack,
   useTheme
-} from '@mui/material';
+} from '@mui/material'
 import {
   Facebook,
   Twitter,
@@ -19,19 +19,19 @@ import {
   Email,
   LocationOn,
   ArrowForward
-} from '@mui/icons-material';
-import Link from 'next/link';
-import { useTranslations } from '@/hooks/useTranslations';
-import { CONTACT } from '@/constants/contact';
-import PhoneButton from './ui/PhoneButton';
-import BrandLogo from './ui/BrandLogo';
+} from '@mui/icons-material'
+import Link from 'next/link'
+import { useTranslations } from '@/hooks/useTranslations'
+import { CONTACT } from '@/constants/contact'
+import PhoneButton from './ui/PhoneButton'
+import BrandLogo from './ui/BrandLogo'
 
 export default function Footer() {
-  const theme = useTheme();
-  const { t: tRaw } = useTranslations();
+  const theme = useTheme()
+  const { t: tRaw } = useTranslations()
   // Type-safe wrapper for translation function
-  const t = (key: string): string => tRaw(key) as string;
-  
+  const t = (key: string): string => tRaw(key) as string
+
   return (
     <Box
       sx={{
@@ -48,7 +48,7 @@ export default function Footer() {
             style={{
               background: theme.palette.primary.main,
               border: '2px solid white',
-              boxShadow: `0 20px 60px rgba(0,0,0,0.1)`,
+              boxShadow: '0 20px 60px rgba(0,0,0,0.1)'
             }}
           >
             {/* Background decorative elements */}
@@ -78,20 +78,20 @@ export default function Footer() {
                     '&:hover': {
                       transform: 'translateY(-3px) scale(1.05)',
                       backgroundColor: 'rgba(255,255,255,0.1)'
-                    },
+                    }
                   }}
                 />
 
                 <button
                   type="button"
-                  className="text-lg px-8 py-6 rounded-lg border-2 border-white text-white transition-all duration-300 bg-transparent font-semibold flex items-center justify-center"
+                  className="text-lg px-8 py-6 rounded-lg border-2 cursor-pointer border-white text-white transition-all duration-300 bg-transparent font-semibold flex items-center justify-center"
                   onMouseEnter={(e) => {
                     (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-3px) scale(1.05)';
-                    (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'rgba(255,255,255,0.1)';
+                    (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'rgba(255,255,255,0.1)'
                   }}
                   onMouseLeave={(e) => {
                     (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0) scale(1)';
-                    (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'transparent';
+                    (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'transparent'
                   }}
                   aria-label="Nhận báo giá"
                 >
@@ -223,7 +223,7 @@ export default function Footer() {
         </div>
 
         <Divider sx={{ borderColor: 'rgba(255,255,255,0.2)', my: 4 }} />
-        
+
         <div className="flex flex-col md:flex-row justify-between items-center">
           <Typography variant="body2" sx={{ opacity: 0.7 }}>
             {t('footer.copyright')}
@@ -239,5 +239,5 @@ export default function Footer() {
         </div>
       </Container>
     </Box>
-  );
+  )
 }

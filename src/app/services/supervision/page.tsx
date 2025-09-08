@@ -1,24 +1,24 @@
-'use client';
+'use client'
 
-import React from 'react';
+import React from 'react'
 import {
   Box,
   Container,
   Typography,
-  useTheme,
-} from '@mui/material';
+  useTheme
+} from '@mui/material'
 import {
   VerifiedUser,
   Timeline,
-  Security,
-} from '@mui/icons-material';
-import { useTranslations } from '@/hooks/useTranslations';
-import useScrollAnimations from '@/hooks/useScrollAnimations';
+  Security
+} from '@mui/icons-material'
+import { useTranslations } from '@/hooks/useTranslations'
+import useScrollAnimations from '@/hooks/useScrollAnimations'
 
 export default function SupervisionPage() {
-  useScrollAnimations();
-  const theme = useTheme();
-  const { t } = useTranslations();
+  useScrollAnimations()
+  const theme = useTheme()
+  const { t } = useTranslations()
 
   const supervisionServices = [
     {
@@ -44,14 +44,14 @@ export default function SupervisionPage() {
       features: t('supervision.services.safety.features') as string[],
       benefits: t('supervision.services.safety.benefits') as string[],
       projects: t('supervision.services.safety.projects') as string
-    },
-  ];
+    }
+  ]
 
   const supervisionProcess = t('supervision.process.steps') as Array<{
     step: string;
     title: string;
     description: string;
-  }>;
+  }>
 
   return (
     <Box className="min-h-screen">
@@ -82,32 +82,32 @@ export default function SupervisionPage() {
             {supervisionServices.map((service, index) => (
               <div
                 key={index}
-                className="group relative p-8 rounded-3xl bg-gradient-to-br from-white/90 to-gray-50/90 backdrop-blur-lg border border-gray-200/50 transition-all duration-700 cursor-pointer scale-in overflow-hidden h-full"
+                className="group relative p-8 rounded-3xl bg-gradient-to-br from-white/90 to-gray-50/90 backdrop-blur-lg border border-gray-200/50 transition-all duration-700 scale-in overflow-hidden h-full"
                 style={{
-                  boxShadow: '0 10px 40px rgba(0,0,0,0.08)',
+                  boxShadow: '0 10px 40px rgba(0,0,0,0.08)'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-12px) scale(1.02)';
-                  e.currentTarget.style.boxShadow = `0 25px 80px ${theme.palette.primary.main}25`;
-                  e.currentTarget.style.borderColor = `${theme.palette.primary.main}50`;
+                  e.currentTarget.style.transform = 'translateY(-12px) scale(1.02)'
+                  e.currentTarget.style.boxShadow = `0 25px 80px ${theme.palette.primary.main}25`
+                  e.currentTarget.style.borderColor = `${theme.palette.primary.main}50`
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                  e.currentTarget.style.boxShadow = '0 10px 40px rgba(0,0,0,0.08)';
-                  e.currentTarget.style.borderColor = 'rgba(229,231,235,0.5)';
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)'
+                  e.currentTarget.style.boxShadow = '0 10px 40px rgba(0,0,0,0.08)'
+                  e.currentTarget.style.borderColor = 'rgba(229,231,235,0.5)'
                 }}
               >
                 {/* Gradient overlay on hover */}
-                <div 
+                <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"
                   style={{
                     background: `linear-gradient(to bottom right, ${theme.palette.primary.main}08, ${theme.palette.primary.main}15)`
                   }}
                 ></div>
-                
+
                 <div className="relative z-10 h-full flex flex-col">
                   <div className="text-center mb-6">
-                    <div 
+                    <div
                       className="inline-flex p-4 rounded-2xl mb-4 transition-all duration-300 group-hover:scale-110"
                       style={{
                         background: `linear-gradient(to bottom right, ${theme.palette.primary.main}20, ${theme.palette.primary.main}30)`
@@ -115,8 +115,8 @@ export default function SupervisionPage() {
                     >
                       {service.icon}
                     </div>
-                    <Typography 
-                      variant="h5" 
+                    <Typography
+                      variant="h5"
                       className="font-bold text-gray-800 transition-colors duration-300"
                       sx={{
                         mb: 1,
@@ -127,7 +127,7 @@ export default function SupervisionPage() {
                     >
                       {service.title}
                     </Typography>
-                    <div 
+                    <div
                       className="inline-block px-3 py-1 rounded-full text-xs font-medium"
                       style={{
                         background: `${theme.palette.primary.main}12`,
@@ -137,7 +137,7 @@ export default function SupervisionPage() {
                       {service.projects}
                     </div>
                   </div>
-                  
+
                   <Typography
                     variant="body1"
                     className="text-gray-600 leading-relaxed text-center"
@@ -145,7 +145,7 @@ export default function SupervisionPage() {
                   >
                     {service.description}
                   </Typography>
-                  
+
                   <div className="space-y-4 mb-6">
                     <Typography
                       variant="h6"
@@ -156,7 +156,7 @@ export default function SupervisionPage() {
                     </Typography>
                     {service.features.map((feature, idx) => (
                       <div key={idx} className="flex items-center text-sm text-gray-700 group-hover:text-gray-800 transition-colors duration-300">
-                        <div 
+                        <div
                           className="w-2 h-2 rounded-full mr-3 group-hover:scale-125 transition-transform duration-300 flex-shrink-0"
                           style={{
                             background: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.primary.main})`
@@ -203,7 +203,7 @@ export default function SupervisionPage() {
             {supervisionProcess.map((process, index) => (
               <div key={index} className="relative">
                 <div className="text-center p-6 rounded-2xl bg-white/80 backdrop-blur-sm border border-gray-200/50 hover:shadow-lg transition-all duration-300">
-                  <div 
+                  <div
                     className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-white"
                     style={{
                       background: `linear-gradient(135deg, ${theme.palette.primary.main}, #10b981)`
