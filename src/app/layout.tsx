@@ -1,36 +1,37 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import MUIThemeProvider from "@/components/MUIThemeProvider";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import MainContent from "@/components/MainContent";
-import { LocaleProvider } from "@/contexts/LocaleContext";
-import QueryProvider from "@/providers/QueryProvider";
-import { Box } from "@mui/material";
+import React from 'react'
+import type { Metadata } from 'next'
+import { Geist, Geist_Mono } from 'next/font/google'
+import './globals.css'
+import MUIThemeProvider from '@/components/MUIThemeProvider'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
+import MainContent from '@/components/MainContent'
+import { LocaleProvider } from '@/contexts/LocaleContext'
+import QueryProvider from '@/providers/QueryProvider'
+import { Box } from '@mui/material'
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+  variable: '--font-geist-sans',
+  subsets: ['latin']
+})
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+  variable: '--font-geist-mono',
+  subsets: ['latin']
+})
 
 export const metadata: Metadata = {
-  title: "Lai Phát - Uy tín tạo niềm tin",
-  description: "Công ty xây dựng LaiPhat - Chuyên cung cấp dịch vụ xây dựng, tư vấn, thiết kế và vật liệu xây dựng chất lượng cao.",
+  title: 'Lai Phát - Uy tín tạo niềm tin',
+  description: 'Công ty xây dựng LaiPhat - Chuyên cung cấp dịch vụ xây dựng, tư vấn, thiết kế và vật liệu xây dựng chất lượng cao.',
   icons: {
     icon: '/logo-laiphat.png',
     shortcut: '/logo-laiphat.png',
-    apple: '/logo-laiphat.png',
-  },
-};
+    apple: '/logo-laiphat.png'
+  }
+}
 
 export default function RootLayout({
-  children,
+  children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
@@ -51,7 +52,7 @@ export default function RootLayout({
                 sx={{
                   display: 'flex',
                   flexDirection: 'column',
-                  minHeight: '100vh',
+                  minHeight: '100vh'
                 }}
               >
                 <Header />
@@ -65,5 +66,5 @@ export default function RootLayout({
         </QueryProvider>
       </body>
     </html>
-  );
+  )
 }

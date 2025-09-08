@@ -1,8 +1,8 @@
-"use client"
+'use client'
 
-import { useState, useRef } from "react"
-import { useTheme } from "@mui/material/styles"
-import Image from "next/image"
+import { useState, useRef } from 'react'
+import { useTheme } from '@mui/material/styles'
+import Image from 'next/image'
 import {
   Group as GroupIcon,
   GpsFixed as GpsFixedIcon,
@@ -13,25 +13,26 @@ import {
   Description as DescriptionIcon,
   Build as BuildIcon,
   CheckCircle as CheckCircleIcon,
-  ArrowForward as ArrowForwardIcon,
-} from "@mui/icons-material"
-import { Box, Button, Container, Stack, Typography } from "@mui/material"
-import { useTranslations } from "@/hooks/useTranslations"
-import useScrollAnimations from "@/hooks/useScrollAnimations"
+  ArrowForward as ArrowForwardIcon
+} from '@mui/icons-material'
+import { Box, Button, Container, Stack, Typography } from '@mui/material'
+import { useTranslations } from '@/hooks/useTranslations'
+import useScrollAnimations from '@/hooks/useScrollAnimations'
+import Link from 'next/link'
 
 export default function DesignConsultingPage() {
   useScrollAnimations()
   const theme = useTheme()
-  const { t: tRaw } = useTranslations();
+  const { t: tRaw } = useTranslations()
   // Type-safe wrapper for translation function
-  const t = (key: string): string => tRaw(key) as string;
+  const t = (key: string): string => tRaw(key) as string
 
   const [activeAITool, setActiveAITool] = useState<number | null>(null)
   const aiToolsRef = useRef<HTMLElement>(null)
 
   // Function to scroll to AI Tools section
   const scrollToAITools = () => {
-    aiToolsRef.current?.scrollIntoView({ 
+    aiToolsRef.current?.scrollIntoView({
       behavior: 'smooth',
       block: 'start'
     })
@@ -39,181 +40,181 @@ export default function DesignConsultingPage() {
 
   const mainSections = [
     {
-      id: "purpose",
-      title: "Mục đích của tư vấn thiết kế kiến trúc",
+      id: 'purpose',
+      title: 'Mục đích của tư vấn thiết kế kiến trúc',
       icon: <GpsFixedIcon className="w-8 h-8" />,
-      image: "/design-consulting/target.jpg",
+      image: '/design-consulting/target.jpg',
       content: [
-        "Tư vấn thiết kế kiến trúc nhằm tạo ra những công trình xây dựng đáp ứng đầy đủ nhu cầu sử dụng của khách hàng",
-        "Đảm bảo tính thẩm mỹ, chức năng và tuân thủ các quy định pháp luật về xây dựng",
-        "Tối ưu hóa không gian sống và làm việc, tạo ra môi trường sống thoải mái và hiện đại",
-        "Cung cấp giải pháp thiết kế bền vững, tiết kiệm năng lượng và thân thiện với môi trường",
-      ],
+        'Tư vấn thiết kế kiến trúc nhằm tạo ra những công trình xây dựng đáp ứng đầy đủ nhu cầu sử dụng của khách hàng',
+        'Đảm bảo tính thẩm mỹ, chức năng và tuân thủ các quy định pháp luật về xây dựng',
+        'Tối ưu hóa không gian sống và làm việc, tạo ra môi trường sống thoải mái và hiện đại',
+        'Cung cấp giải pháp thiết kế bền vững, tiết kiệm năng lượng và thân thiện với môi trường'
+      ]
     },
     {
-      id: "requirements",
-      title: "Yêu cầu tư vấn",
+      id: 'requirements',
+      title: 'Yêu cầu tư vấn',
       icon: <DescriptionIcon className="w-8 h-8" />,
-      image: "/design-consulting/request.jpg",
+      image: '/design-consulting/request.jpg',
       content: [
-        "Khách hàng cung cấp đầy đủ thông tin về nhu cầu sử dụng, quy mô và ngân sách dự kiến",
-        "Cung cấp hồ sơ pháp lý đất đai, giấy phép xây dựng (nếu có)",
-        "Thông tin về điều kiện địa chất, hạ tầng kỹ thuật khu vực",
-        "Yêu cầu về phong cách kiến trúc, màu sắc và vật liệu ưa thích",
-        "Cam kết hợp tác trong suốt quá trình thiết kế và thi công",
-      ],
-    },
+        'Khách hàng cung cấp đầy đủ thông tin về nhu cầu sử dụng, quy mô và ngân sách dự kiến',
+        'Cung cấp hồ sơ pháp lý đất đai, giấy phép xây dựng (nếu có)',
+        'Thông tin về điều kiện địa chất, hạ tầng kỹ thuật khu vực',
+        'Yêu cầu về phong cách kiến trúc, màu sắc và vật liệu ưa thích',
+        'Cam kết hợp tác trong suốt quá trình thiết kế và thi công'
+      ]
+    }
   ]
 
   // Quy trình thiết kế AI kiến trúc theo sơ đồ (12 bước)
   const aiDesignProcess = [
     {
       step: 1,
-      title: "Gặp gỡ Chủ đầu tư",
-      details: ["Làm công tác tư tưởng", "Quy trình làm việc", "Nguyên tắc làm việc"],
-      icon: <GroupIcon className="w-6 h-6" />,
+      title: 'Gặp gỡ Chủ đầu tư',
+      details: ['Làm công tác tư tưởng', 'Quy trình làm việc', 'Nguyên tắc làm việc'],
+      icon: <GroupIcon className="w-6 h-6" />
     },
     {
       step: 2,
-      title: "Khảo sát hiện trạng / Thu thập dữ liệu / Tư vấn định hướng thiết kế",
-      details: ["Thu thập tất cả dữ liệu đầu vào gồm phong cách, công năng, các yếu tốc cầu khác"],
-      icon: <LocationOnIcon className="w-6 h-6" />,
+      title: 'Khảo sát hiện trạng / Thu thập dữ liệu / Tư vấn định hướng thiết kế',
+      details: ['Thu thập tất cả dữ liệu đầu vào gồm phong cách, công năng, các yếu tốc cầu khác'],
+      icon: <LocationOnIcon className="w-6 h-6" />
     },
     {
       step: 3,
-      title: "Phác thảo view mẫu",
-      details: ["Phác thảo view mặt bằng"],
-      icon: <PaletteIcon className="w-6 h-6" />,
+      title: 'Phác thảo view mẫu',
+      details: ['Phác thảo view mặt bằng'],
+      icon: <PaletteIcon className="w-6 h-6" />
     },
     {
       step: 4,
       title: 'Lên phương án concept "view mẫu" 3D',
-      details: ['Phác thảo view 3D kiến trúc (chọn view "ăn tiền" nhất)', "Ứng dụng AI để bứt phá tiến độ"],
+      details: ['Phác thảo view 3D kiến trúc (chọn view "ăn tiền" nhất)', 'Ứng dụng AI để bứt phá tiến độ'],
       icon: <BuildIcon className="w-6 h-6" />,
-      isAIStep: true,
+      isAIStep: true
     },
     {
       step: 5,
-      title: "Chốt hợp đồng thiết kế",
-      details: ["Bước then chốt để quyết định giai đoạn thiết kế tiếp theo"],
-      icon: <HandshakeIcon className="w-6 h-6" />,
+      title: 'Chốt hợp đồng thiết kế',
+      details: ['Bước then chốt để quyết định giai đoạn thiết kế tiếp theo'],
+      icon: <HandshakeIcon className="w-6 h-6" />
     },
     {
       step: 6,
-      title: "Đồng bộ hóa các bản vẽ mặt bằng, mặt đứng, mặt cắt",
-      details: ["Kết hợp đồng bộ bản vẽ kết cấu, điện nước, nội thất"],
-      icon: <DescriptionIcon className="w-6 h-6" />,
+      title: 'Đồng bộ hóa các bản vẽ mặt bằng, mặt đứng, mặt cắt',
+      details: ['Kết hợp đồng bộ bản vẽ kết cấu, điện nước, nội thất'],
+      icon: <DescriptionIcon className="w-6 h-6" />
     },
     {
       step: 7,
-      title: "Bảo vệ phương án",
-      details: ["Do bộ phận quản lý đảm nhiệm, nhằm bảo vệ thàng quả làm việc các bước trước đó", "Cần kiến thức sâu, giàu kinh nghiệm đàm phán"],
-      icon: <CheckCircleIcon className="w-6 h-6" />,
+      title: 'Bảo vệ phương án',
+      details: ['Do bộ phận quản lý đảm nhiệm, nhằm bảo vệ thàng quả làm việc các bước trước đó', 'Cần kiến thức sâu, giàu kinh nghiệm đàm phán'],
+      icon: <CheckCircleIcon className="w-6 h-6" />
     },
     {
       step: 8,
-      title: "Dựng 3D động loạt (market bố cục đồng loạt)",
-      details: ["Cover lại từ bố cục concept đã được duyệt", "Bổ sung một số ý cần thiết (dưới 10%)"],
-      icon: <BuildIcon className="w-6 h-6" />,
+      title: 'Dựng 3D động loạt (market bố cục đồng loạt)',
+      details: ['Cover lại từ bố cục concept đã được duyệt', 'Bổ sung một số ý cần thiết (dưới 10%)'],
+      icon: <BuildIcon className="w-6 h-6" />
     },
     {
       step: 9,
-      title: "Tổng Defect bố cục",
-      details: ["Do bộ phận quản lý đảm nhiệm"],
-      icon: <CheckCircleIcon className="w-6 h-6" />,
+      title: 'Tổng Defect bố cục',
+      details: ['Do bộ phận quản lý đảm nhiệm'],
+      icon: <CheckCircleIcon className="w-6 h-6" />
     },
     {
       step: 10,
-      title: "Render đông loạt",
-      details: ["Do bộ phận kỹ thuật đảm nhiệm"],
-      icon: <PaletteIcon className="w-6 h-6" />,
+      title: 'Render đông loạt',
+      details: ['Do bộ phận kỹ thuật đảm nhiệm'],
+      icon: <PaletteIcon className="w-6 h-6" />
     },
     {
       step: 11,
-      title: "Triển khai bản vẽ kỹ thuật thi công",
-      details: ["Do bộ phận kỹ thuật đảm nhiệm"],
-      icon: <FolderOpenIcon className="w-6 h-6" />,
+      title: 'Triển khai bản vẽ kỹ thuật thi công',
+      details: ['Do bộ phận kỹ thuật đảm nhiệm'],
+      icon: <FolderOpenIcon className="w-6 h-6" />
     },
     {
       step: 12,
-      title: "Tổng duyệt và bàn giao hồ sơ",
-      details: ["Do bộ phận quản lý đảm nhiệm"],
-      icon: <CheckCircleIcon className="w-6 h-6" />,
-    },
+      title: 'Tổng duyệt và bàn giao hồ sơ',
+      details: ['Do bộ phận quản lý đảm nhiệm'],
+      icon: <CheckCircleIcon className="w-6 h-6" />
+    }
   ]
 
   // Các công cụ và ứng dụng AI được sử dụng (theo sơ đồ)
   const aiTools = [
     {
-      id: "ai-architecture",
-      title: "AI - KIẾN TRÚC",
-      description: "Trung tâm công nghệ AI",
-      details: ["Hệ thống AI chính", "Quản lý toàn bộ quy trình"],
-      image: "/design-consulting/ai.jpg",
-      isCenter: true,
+      id: 'ai-architecture',
+      title: 'AI - KIẾN TRÚC',
+      description: 'Trung tâm công nghệ AI',
+      details: ['Hệ thống AI chính', 'Quản lý toàn bộ quy trình'],
+      image: '/design-consulting/ai.jpg',
+      isCenter: true
     },
     {
-      id: "advantages",
-      title: "Ưu việt",
-      description: "Các ưu điểm vượt trội của AI trong thiết kế",
+      id: 'advantages',
+      title: 'Ưu việt',
+      description: 'Các ưu điểm vượt trội của AI trong thiết kế',
       details: [
-        "NÓI KHÔNG với máy tính cấu hình cao, các thiết bị đắt tiền",
-        "NÓI KHÔNG với những thao tác cài đặt phức tạp",
-        "VỨT SỌT RÁC đống code như màng nhện rắc rối khó hiểu",
-        "BỨT PHÁ tiến độ thiết kế",
-        "ĐỘT PHÁ khối lượng concept",
-        "CHINH PHỤC khách hàng"
+        'NÓI KHÔNG với máy tính cấu hình cao, các thiết bị đắt tiền',
+        'NÓI KHÔNG với những thao tác cài đặt phức tạp',
+        'VỨT SỌT RÁC đống code như màng nhện rắc rối khó hiểu',
+        'BỨT PHÁ tiến độ thiết kế',
+        'ĐỘT PHÁ khối lượng concept',
+        'CHINH PHỤC khách hàng'
       ],
-      image: "/design-consulting/superiority.jpg",
+      image: '/design-consulting/superiority.jpg'
     },
     {
-      id: "applications",
-      title: "Ứng dụng",
-      description: "Phần mềm và công cụ",
+      id: 'applications',
+      title: 'Ứng dụng',
+      description: 'Phần mềm và công cụ',
       details: [
-        "Remake bố cục vật liệu kiến trúc từ hình concept 3D đã có.",
+        'Remake bố cục vật liệu kiến trúc từ hình concept 3D đã có.',
         'Làm bố cục vật liệu từ sketch, render theo một phong cách "đã được tạo sẵn" (lora)',
-        "Thỏa mãn đam mê, luyện tay nghề kiến trúc",
-        "Tạo sản phẩm mẫu (quảng bá, truyền thông)"
+        'Thỏa mãn đam mê, luyện tay nghề kiến trúc',
+        'Tạo sản phẩm mẫu (quảng bá, truyền thông)'
       ],
-      image: "/design-consulting/application.jpg",
+      image: '/design-consulting/application.jpg'
     },
     {
-      id: "conditions",
-      title: "Điều kiện",
-      description: "Yêu cầu hệ thống",
+      id: 'conditions',
+      title: 'Điều kiện',
+      description: 'Yêu cầu hệ thống',
       details: [
-        "Smart phone đă đăng nhập Google",
+        'Smart phone đă đăng nhập Google',
         'Sẵn sàng "tốc ký" những nội dung quan trọng',
         '"Tư duy mở" & Khả năng cảm nhận'
       ],
-      image: "/design-consulting/condition.jpg",
+      image: '/design-consulting/condition.jpg'
     },
     {
-      id: "operations",
-      title: "Thao tác", 
-      description: "Các thao tác chính",
+      id: 'operations',
+      title: 'Thao tác',
+      description: 'Các thao tác chính',
       details: [
-        "Tải hình ảnh đầu vào / chế độ controlnet",
-        "Xác định chủ thể kiến trúc, phân tích thành phần kiến trúc",
-        "Chạy ứng dụng / nhận sản phẩm",
-        "Chuẩn bị model, promt, lora"
+        'Tải hình ảnh đầu vào / chế độ controlnet',
+        'Xác định chủ thể kiến trúc, phân tích thành phần kiến trúc',
+        'Chạy ứng dụng / nhận sản phẩm',
+        'Chuẩn bị model, promt, lora'
       ],
-      image: "/design-consulting/process.jpg",
+      image: '/design-consulting/process.jpg'
     },
     {
-      id: "thinking",
-      title: "Nghĩ khác làm khác",
-      description: "Triết lý và phương pháp làm việc đột phá",
+      id: 'thinking',
+      title: 'Nghĩ khác làm khác',
+      description: 'Triết lý và phương pháp làm việc đột phá',
       details: [
-        "Xác định mục tiêu: học để ứng dụng.  Loại bỏ những mục tiêu lan man",
-        "Dám loại bỏ những thứ không cần thiết", 
-        "Kế thừa tinh hoa các cao thủ",
-        "Tư duy ngược: làm rồi học (Tư duy truyền thống: học rồi làm)",
-        "Trên đời không ai có thể tự mình làm mọi việc. Tìm cộng sự khi cần (Team work is dream work)"
+        'Xác định mục tiêu: học để ứng dụng.  Loại bỏ những mục tiêu lan man',
+        'Dám loại bỏ những thứ không cần thiết',
+        'Kế thừa tinh hoa các cao thủ',
+        'Tư duy ngược: làm rồi học (Tư duy truyền thống: học rồi làm)',
+        'Trên đời không ai có thể tự mình làm mọi việc. Tìm cộng sự khi cần (Team work is dream work)'
       ],
-      image: "/design-consulting/thinking.jpg",
-    },
+      image: '/design-consulting/thinking.jpg'
+    }
   ]
 
   return (
@@ -264,7 +265,7 @@ export default function DesignConsultingPage() {
                 letterSpacing: '0.05em',
                 lineHeight: 1.2,
                 color: 'white',
-                textShadow: '2px 2px 8px rgba(0,0,0,0.7)',
+                textShadow: '2px 2px 8px rgba(0,0,0,0.7)'
               }}
             >
               Tư Vấn Thiết Kế
@@ -278,7 +279,7 @@ export default function DesignConsultingPage() {
                 lineHeight: 1.6,
                 textShadow: '1px 1px 4px rgba(0,0,0,0.5)',
                 width: { xs: '100%', md: '50%' },
-                textAlign: 'left',
+                textAlign: 'left'
               }}
             >
               Đội ngũ kiến trúc sư và kỹ sư giàu kinh nghiệm sẽ biến ý tưởng của bạn thành hiện thực với những thiết kế độc đáo và chức năng
@@ -303,8 +304,8 @@ export default function DesignConsultingPage() {
                   boxShadow: 2,
                   '&:hover': {
                     backgroundColor: theme.palette.secondary.main,
-                    color: 'white',
-                  },
+                    color: 'white'
+                  }
                 }}
               >
                 Bắt đầu tư vấn
@@ -324,11 +325,13 @@ export default function DesignConsultingPage() {
                   boxShadow: 2,
                   '&:hover': {
                     backgroundColor: theme.palette.secondary.main,
-                    color: 'white',
-                  },
+                    color: 'white'
+                  }
                 }}
               >
-                Xem portfolio
+                <Link href="/projects/design-templates" className="text-inherit no-underline">
+                  Xem mẫu thiết kế
+                </Link>
               </Button>
             </Stack>
           </Box>
@@ -340,13 +343,13 @@ export default function DesignConsultingPage() {
         <section>
           <div className="mx-auto space-y-20">
             {mainSections.map((section, index) => (
-              <div key={section.id} className={`${index % 2 === 0 ? "slide-in-left" : "slide-in-right"}`}>
+              <div key={section.id} className={`${index % 2 === 0 ? 'slide-in-left' : 'slide-in-right'}`}>
                 <div
-                  className={`flex flex-col ${index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"} items-center gap-16`}
+                  className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-16`}
                 >
                   <div className="flex-1 space-y-8">
                     <div className="flex items-center gap-6">
-                      <div 
+                      <div
                         className="p-4 rounded-xl"
                         style={{
                           backgroundColor: `${theme.palette.primary.main}15`,
@@ -355,7 +358,7 @@ export default function DesignConsultingPage() {
                       >
                         {section.icon}
                       </div>
-                      <h2 
+                      <h2
                         className="text-3xl md:text-4xl font-bold"
                         style={{ color: theme.palette.text.primary }}
                       >
@@ -366,11 +369,11 @@ export default function DesignConsultingPage() {
                     <div className="space-y-6">
                       {section.content.map((item, idx) => (
                         <div key={idx} className="flex items-start gap-4">
-                          <CheckCircleIcon 
-                            className="w-6 h-6 mt-1 flex-shrink-0" 
+                          <CheckCircleIcon
+                            className="w-6 h-6 mt-1 flex-shrink-0"
                             style={{ color: theme.palette.primary.main }}
                           />
-                          <p 
+                          <p
                             className="text-lg leading-relaxed"
                             style={{ color: theme.palette.text.secondary }}
                           >
@@ -383,14 +386,14 @@ export default function DesignConsultingPage() {
 
                   <div className="flex-1">
                     <div className="relative">
-                      <div 
+                      <div
                         className="w-full h-60 md:h-80 rounded-2xl overflow-hidden shadow-lg"
                         style={{
                           background: `linear-gradient(135deg, ${theme.palette.grey[100]} 0%, ${theme.palette.primary.main}20 100%)`
                         }}
                       >
                         {section.image ? (
-                          <Image 
+                          <Image
                             src={section.image}
                             alt={section.title}
                             width={800}
@@ -402,7 +405,7 @@ export default function DesignConsultingPage() {
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center">
-                            <div 
+                            <div
                               className="text-6xl"
                               style={{ color: `${theme.palette.primary.main}50` }}
                             >
@@ -422,13 +425,13 @@ export default function DesignConsultingPage() {
         <section style={{ backgroundColor: `${theme.palette.grey[50]}` }}>
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-20 fade-in-on">
-              <h2 
+              <h2
                 className="text-4xl md:text-5xl font-bold mb-6 fade-in-on"
                 style={{ color: theme.palette.primary.main }}
               >
                 Quy Trình Thiết Kế Kiến Trúc
               </h2>
-              <h2 
+              <h2
                 className="text-4xl md:text-5xl font-bold mb-6 fade-in-on"
                 style={{ color: theme.palette.secondary.light }}
               >
@@ -471,14 +474,14 @@ export default function DesignConsultingPage() {
                       textDecoration: 'none'
                     }}
                     onMouseEnter={e => {
-                      e.currentTarget.style.backgroundColor = theme.palette.secondary.main;
-                      e.currentTarget.style.color = 'white';
-                      e.currentTarget.style.borderColor = theme.palette.secondary.dark;
+                      e.currentTarget.style.backgroundColor = theme.palette.secondary.main
+                      e.currentTarget.style.color = 'white'
+                      e.currentTarget.style.borderColor = theme.palette.secondary.dark
                     }}
                     onMouseLeave={e => {
-                      e.currentTarget.style.backgroundColor = `${theme.palette.secondary.dark}20`;
-                      e.currentTarget.style.color = theme.palette.secondary.main;
-                      e.currentTarget.style.borderColor = theme.palette.secondary.main;
+                      e.currentTarget.style.backgroundColor = `${theme.palette.secondary.dark}20`
+                      e.currentTarget.style.color = theme.palette.secondary.main
+                      e.currentTarget.style.borderColor = theme.palette.secondary.main
                     }}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4" /></svg>
@@ -506,22 +509,22 @@ export default function DesignConsultingPage() {
                       <div className="flex items-center gap-4 mb-4">
                         <div
                           className="w-12 h-12 rounded-full flex items-center justify-center font-bold text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
-                          style={{ 
-                            backgroundColor: index === 3 ? theme.palette.secondary.light : theme.palette.primary.main 
+                          style={{
+                            backgroundColor: index === 3 ? theme.palette.secondary.light : theme.palette.primary.main
                           }}
                         >
                           {step.step}
                         </div>
                         {index !== 3 && (
                           <div
-                          className="p-2 rounded-lg"
-                          style={{
-                            backgroundColor: index === 3 ? `${theme.palette.primary.main}15` : `${theme.palette.primary.main}15`,
-                            color: index === 3 ? theme.palette.primary.main : theme.palette.primary.main
-                          }}
-                        >
-                          {step.icon}
-                        </div>
+                            className="p-2 rounded-lg"
+                            style={{
+                              backgroundColor: index === 3 ? `${theme.palette.primary.main}15` : `${theme.palette.primary.main}15`,
+                              color: index === 3 ? theme.palette.primary.main : theme.palette.primary.main
+                            }}
+                          >
+                            {step.icon}
+                          </div>
                         )
                         }
                         {index === 3 && (
@@ -543,14 +546,14 @@ export default function DesignConsultingPage() {
                           </div>
                         )}
                       </div>
-                      
+
                       <h4
                         className="font-semibold mb-2 leading-tight"
                         style={{ color: theme.palette.text.primary, fontSize: '1rem' }}
                       >
                         {step.title}
                       </h4>
-                      
+
                       {/* <p
                         className="mb-3 leading-relaxed"
                         style={{ color: theme.palette.text.secondary, fontSize: '0.9rem' }}
@@ -564,8 +567,8 @@ export default function DesignConsultingPage() {
                             <div key={detailIndex} className="flex items-start gap-2">
                               <div
                                 className="w-1 h-1 rounded-full mt-2 flex-shrink-0"
-                                style={{ 
-                                  backgroundColor: index === 3 ? theme.palette.primary.main : theme.palette.primary.main 
+                                style={{
+                                  backgroundColor: index === 3 ? theme.palette.primary.main : theme.palette.primary.main
                                 }}
                               ></div>
                               <span
@@ -601,14 +604,14 @@ export default function DesignConsultingPage() {
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-20 fade-in-on">
               <div className="flex items-center justify-center gap-3 mb-4">
-                <h2 
+                <h2
                   className="text-4xl md:text-5xl font-bold"
                   style={{ color: theme.palette.primary.main }}
                 >
                   Công Nghệ & Ứng Dụng AI
                 </h2>
               </div>
-              <p 
+              <p
                 className="text-xl max-w-3xl mx-auto mb-4"
                 style={{ color: theme.palette.text.secondary }}
               >
@@ -624,16 +627,16 @@ export default function DesignConsultingPage() {
                     key={tool.id}
                     onClick={() => setActiveAITool(index)}
                     className={`p-6 rounded-xl cursor-pointer transition-all duration-300 border-2 flex-1 ${
-                      activeAITool === index 
-                        ? 'shadow-lg transform scale-105' 
+                      activeAITool === index
+                        ? 'shadow-lg transform scale-105'
                         : 'hover:shadow-md hover:transform hover:scale-102'
                     }`}
                     style={{
-                      backgroundColor: activeAITool === index 
-                        ? `${theme.palette.primary.main}10` 
+                      backgroundColor: activeAITool === index
+                        ? `${theme.palette.primary.main}10`
                         : theme.palette.background.paper,
-                      borderColor: activeAITool === index 
-                        ? theme.palette.primary.main 
+                      borderColor: activeAITool === index
+                        ? theme.palette.primary.main
                         : theme.palette.divider,
                       marginBottom: index < aiTools.filter(tool => !tool.isCenter).length - 1 ? '16px' : '0'
                     }}
@@ -648,10 +651,10 @@ export default function DesignConsultingPage() {
                       <div className="flex-1">
                         <h3
                           className="text-xl font-bold mb-1"
-                          style={{ 
-                            color: activeAITool === index 
-                              ? theme.palette.primary.main 
-                              : theme.palette.text.primary 
+                          style={{
+                            color: activeAITool === index
+                              ? theme.palette.primary.main
+                              : theme.palette.text.primary
                           }}
                         >
                           {tool.title}
@@ -664,14 +667,14 @@ export default function DesignConsultingPage() {
                         </p>
                       </div>
                       <div className="text-2xl">
-                        <ArrowForwardIcon 
+                        <ArrowForwardIcon
                           className={`transition-transform duration-300 ${
                             activeAITool === index ? 'rotate-90' : ''
                           }`}
-                          style={{ 
-                            color: activeAITool === index 
-                              ? theme.palette.primary.main 
-                              : theme.palette.text.secondary 
+                          style={{
+                            color: activeAITool === index
+                              ? theme.palette.primary.main
+                              : theme.palette.text.secondary
                           }}
                         />
                       </div>
@@ -697,12 +700,12 @@ export default function DesignConsultingPage() {
                     }
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = theme.palette.primary.main;
-                    e.currentTarget.style.color = theme.palette.primary.main;
+                    e.currentTarget.style.borderColor = theme.palette.primary.main
+                    e.currentTarget.style.color = theme.palette.primary.main
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = theme.palette.divider;
-                    e.currentTarget.style.color = theme.palette.text.primary;
+                    e.currentTarget.style.borderColor = theme.palette.divider
+                    e.currentTarget.style.color = theme.palette.text.primary
                   }}
                 >
                   ← Trước
@@ -719,8 +722,8 @@ export default function DesignConsultingPage() {
                         width: activeAITool === index ? '32px' : '12px',
                         height: '12px',
                         borderRadius: '6px',
-                        backgroundColor: activeAITool === index 
-                          ? theme.palette.primary.main 
+                        backgroundColor: activeAITool === index
+                          ? theme.palette.primary.main
                           : theme.palette.divider
                       }}
                     />
@@ -742,12 +745,12 @@ export default function DesignConsultingPage() {
                     }
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = theme.palette.primary.main;
-                    e.currentTarget.style.color = theme.palette.primary.main;
+                    e.currentTarget.style.borderColor = theme.palette.primary.main
+                    e.currentTarget.style.color = theme.palette.primary.main
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = theme.palette.divider;
-                    e.currentTarget.style.color = theme.palette.text.primary;
+                    e.currentTarget.style.borderColor = theme.palette.divider
+                    e.currentTarget.style.color = theme.palette.text.primary
                   }}
                 >
                   Tiếp →
@@ -768,7 +771,7 @@ export default function DesignConsultingPage() {
                     backgroundColor: 'background.paper',
                     display: 'flex',
                     flexDirection: 'column',
-                    backgroundImage: activeAITool !== null && aiTools.filter(tool => !tool.isCenter)[activeAITool] 
+                    backgroundImage: activeAITool !== null && aiTools.filter(tool => !tool.isCenter)[activeAITool]
                       ? `url(${aiTools.filter(tool => !tool.isCenter)[activeAITool].image})`
                       : 'url(/design-consulting/ai.jpg)',
                     backgroundSize: 'cover',
@@ -786,7 +789,7 @@ export default function DesignConsultingPage() {
                     }
                   }}
                 >
-                  <Box 
+                  <Box
                     sx={{
                       position: 'relative',
                       zIndex: 10,
@@ -820,7 +823,7 @@ export default function DesignConsultingPage() {
                           >
                             {activeAITool + 1}
                           </Box>
-                          
+
                           <Typography
                             variant="h4"
                             sx={{
@@ -831,8 +834,8 @@ export default function DesignConsultingPage() {
                           >
                             {aiTools.filter(tool => !tool.isCenter)[activeAITool].title}
                           </Typography>
-                          
-                          <Typography 
+
+                          <Typography
                             variant="body1"
                             sx={{ color: 'white' }}
                           >
@@ -854,7 +857,7 @@ export default function DesignConsultingPage() {
                         </Typography>
 
                         {/* Content - Scrollable */}
-                        <Box 
+                        <Box
                           sx={{
                             flex: 1,
                             overflowY: 'auto',
@@ -868,8 +871,8 @@ export default function DesignConsultingPage() {
                         >
                           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                             {aiTools.filter(tool => !tool.isCenter)[activeAITool].details?.map((detail, index) => (
-                              <Box 
-                                key={index} 
+                              <Box
+                                key={index}
                                 sx={{
                                   display: 'flex',
                                   alignItems: 'flex-start',
@@ -903,8 +906,8 @@ export default function DesignConsultingPage() {
                         </Box>
                       </div>
                     ) : (
-                      <Box 
-                        key="default-content" 
+                      <Box
+                        key="default-content"
                         sx={{
                           display: 'flex',
                           flexDirection: 'column',
@@ -928,18 +931,18 @@ export default function DesignConsultingPage() {
                           sx={{
                             fontWeight: 'bold',
                             mb: 3,
-                            color: 'white',
+                            color: 'white'
                           }}
                         >
                           Công Nghệ AI
                         </Typography>
-                        <Typography 
+                        <Typography
                           variant="body1"
                           sx={{
                             lineHeight: 1.6,
                             maxWidth: '400px',
                             mx: 'auto',
-                            color: 'white',
+                            color: 'white'
                           }}
                         >
                           Chọn một mục bên trái để xem chi tiết từng công nghệ AI được sử dụng trong bước 4 của quy trình thiết kế.
@@ -968,12 +971,12 @@ export default function DesignConsultingPage() {
                   }
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = theme.palette.primary.main;
-                  e.currentTarget.style.color = theme.palette.primary.main;
+                  e.currentTarget.style.borderColor = theme.palette.primary.main
+                  e.currentTarget.style.color = theme.palette.primary.main
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = theme.palette.divider;
-                  e.currentTarget.style.color = theme.palette.text.primary;
+                  e.currentTarget.style.borderColor = theme.palette.divider
+                  e.currentTarget.style.color = theme.palette.text.primary
                 }}
               >
                 <span className="hidden sm:inline">← Trước</span>
@@ -991,8 +994,8 @@ export default function DesignConsultingPage() {
                       width: activeAITool === index ? '24px' : '8px',
                       height: '8px',
                       borderRadius: '4px',
-                      backgroundColor: activeAITool === index 
-                        ? theme.palette.primary.main 
+                      backgroundColor: activeAITool === index
+                        ? theme.palette.primary.main
                         : theme.palette.divider
                     }}
                   />
@@ -1014,12 +1017,12 @@ export default function DesignConsultingPage() {
                   }
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = theme.palette.primary.main;
-                  e.currentTarget.style.color = theme.palette.primary.main;
+                  e.currentTarget.style.borderColor = theme.palette.primary.main
+                  e.currentTarget.style.color = theme.palette.primary.main
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = theme.palette.divider;
-                  e.currentTarget.style.color = theme.palette.text.primary;
+                  e.currentTarget.style.borderColor = theme.palette.divider
+                  e.currentTarget.style.color = theme.palette.text.primary
                 }}
               >
                 <span className="hidden sm:inline">Tiếp →</span>
@@ -1029,12 +1032,12 @@ export default function DesignConsultingPage() {
 
             {/* Progress Information */}
             <div className="text-center fade-in-on mt-4">
-              <span 
+              <span
                 className="text-sm font-medium"
                 style={{ color: theme.palette.text.secondary }}
               >
-                {activeAITool === null 
-                  ? 'Chọn một mục để xem chi tiết' 
+                {activeAITool === null
+                  ? 'Chọn một mục để xem chi tiết'
                   : `${activeAITool + 1} / ${aiTools.filter(tool => !tool.isCenter).length}`
                 }
               </span>

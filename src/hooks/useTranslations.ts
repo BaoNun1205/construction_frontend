@@ -1,30 +1,30 @@
-import { useLocale } from '@/contexts/LocaleContext';
-import viMessages from '../../messages/vi.json';
-import enMessages from '../../messages/en.json';
+import { useLocale } from '@/contexts/LocaleContext'
+import viMessages from '../../messages/vi.json'
+import enMessages from '../../messages/en.json'
 
 const messages = {
   vi: viMessages,
-  en: enMessages,
-};
+  en: enMessages
+}
 
 export function useTranslations() {
-  const { locale } = useLocale();
+  const { locale } = useLocale()
 
   const t = (key: string): unknown => {
-    const keys = key.split('.');
-    let value: unknown = messages[locale];
-    
+    const keys = key.split('.')
+    let value: unknown = messages[locale]
+
     for (const k of keys) {
       if (value && typeof value === 'object' && k in value) {
-        value = (value as Record<string, unknown>)[k];
+        value = (value as Record<string, unknown>)[k]
       } else {
-        return key; // Return the key if not found
+        return key // Return the key if not found
       }
     }
-    
-    // Return the actual value (can be string, object, array, etc.)
-    return value !== undefined ? value : key;
-  };
 
-  return { t, locale };
+    // Return the actual value (can be string, object, array, etc.)
+    return value !== undefined ? value : key
+  }
+
+  return { t, locale }
 }

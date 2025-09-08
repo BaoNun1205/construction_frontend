@@ -1,6 +1,7 @@
-'use client';
+/* eslint-disable react/no-unknown-property */
+'use client'
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import {
   Box,
   Container,
@@ -8,28 +9,28 @@ import {
   Button,
   Paper,
   Stack,
-  Fade,
-} from '@mui/material';
+  Fade
+} from '@mui/material'
 import {
   Home,
   ArrowBack,
   Search,
   Construction,
-  Warning,
-} from '@mui/icons-material';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+  Warning
+} from '@mui/icons-material'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 export default function NotFound() {
-  const router = useRouter();
-  const [showContent, setShowContent] = useState(false);
+  const router = useRouter()
+  const [showContent, setShowContent] = useState(false)
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setShowContent(true);
-    }, 300);
-    return () => clearTimeout(timer);
-  }, []);
+      setShowContent(true)
+    }, 300)
+    return () => clearTimeout(timer)
+  }, [])
 
   return (
     <Box
@@ -41,7 +42,7 @@ export default function NotFound() {
         justifyContent: 'center',
         position: 'relative',
         overflow: 'hidden',
-        py: '80px', // Account for fixed header
+        py: '80px' // Account for fixed header
       }}
     >
       {/* Animated Background Elements */}
@@ -57,7 +58,7 @@ export default function NotFound() {
             radial-gradient(circle at 80% 20%, rgba(78, 205, 196, 0.2) 0%, transparent 50%),
             radial-gradient(circle at 40% 80%, rgba(255, 193, 7, 0.2) 0%, transparent 50%)
           `,
-          animation: 'float 8s ease-in-out infinite',
+          animation: 'float 8s ease-in-out infinite'
         }}
       />
 
@@ -67,7 +68,7 @@ export default function NotFound() {
           position: 'absolute',
           top: '10%',
           left: '10%',
-          animation: 'bounce 3s infinite',
+          animation: 'bounce 3s infinite'
         }}
       >
         <Construction sx={{ fontSize: 40, color: 'rgba(255,255,255,0.1)' }} />
@@ -77,7 +78,7 @@ export default function NotFound() {
           position: 'absolute',
           top: '20%',
           right: '15%',
-          animation: 'bounce 3s infinite 1s',
+          animation: 'bounce 3s infinite 1s'
         }}
       >
         <Warning sx={{ fontSize: 35, color: 'rgba(255,255,255,0.1)' }} />
@@ -87,7 +88,7 @@ export default function NotFound() {
           position: 'absolute',
           bottom: '15%',
           left: '20%',
-          animation: 'bounce 3s infinite 2s',
+          animation: 'bounce 3s infinite 2s'
         }}
       >
         <Search sx={{ fontSize: 45, color: 'rgba(255,255,255,0.1)' }} />
@@ -105,7 +106,7 @@ export default function NotFound() {
               backdropFilter: 'blur(20px)',
               border: '1px solid rgba(255, 255, 255, 0.2)',
               position: 'relative',
-              overflow: 'hidden',
+              overflow: 'hidden'
             }}
           >
             {/* Decorative Elements */}
@@ -118,7 +119,7 @@ export default function NotFound() {
                 height: 160,
                 borderRadius: '50%',
                 background: 'linear-gradient(45deg, #FF6B6B, #4ECDC4)',
-                opacity: 0.1,
+                opacity: 0.1
               }}
             />
             <Box
@@ -130,7 +131,7 @@ export default function NotFound() {
                 height: 120,
                 borderRadius: '50%',
                 background: 'linear-gradient(45deg, #A8E6CF, #FFD93D)',
-                opacity: 0.1,
+                opacity: 0.1
               }}
             />
 
@@ -147,7 +148,7 @@ export default function NotFound() {
                   WebkitTextFillColor: 'transparent',
                   lineHeight: 1,
                   textShadow: '0 4px 20px rgba(102, 126, 234, 0.3)',
-                  animation: 'pulse 2s infinite',
+                  animation: 'pulse 2s infinite'
                 }}
               >
                 404
@@ -161,7 +162,7 @@ export default function NotFound() {
                 mb: 2,
                 fontWeight: 'bold',
                 color: '#333',
-                fontSize: { xs: '1.8rem', md: '2.5rem' },
+                fontSize: { xs: '1.8rem', md: '2.5rem' }
               }}
             >
               Không tìm thấy trang
@@ -170,11 +171,11 @@ export default function NotFound() {
             <Typography
               variant="h6"
               color="text.secondary"
-              sx={{ 
-                mb: 4, 
+              sx={{
+                mb: 4,
                 lineHeight: 1.6,
                 maxWidth: '600px',
-                mx: 'auto',
+                mx: 'auto'
               }}
             >
               Rất tiếc, trang bạn đang tìm kiếm không tồn tại hoặc đã được di chuyển.
@@ -187,13 +188,13 @@ export default function NotFound() {
               <Typography variant="h6" sx={{ mb: 2, color: '#667eea' }}>
                 Gợi ý cho bạn:
               </Typography>
-              <Box sx={{ 
-                display: 'flex', 
+              <Box sx={{
+                display: 'flex',
                 flexDirection: 'column',
                 gap: 1,
                 maxWidth: '400px',
                 mx: 'auto',
-                textAlign: 'left',
+                textAlign: 'left'
               }}>
                 <Typography variant="body2" color="text.secondary">
                   • Kiểm tra lại chính tả trong đường dẫn URL
@@ -233,9 +234,9 @@ export default function NotFound() {
                   '&:hover': {
                     background: 'linear-gradient(45deg, #5a6fd8, #6a4190)',
                     transform: 'translateY(-2px)',
-                    boxShadow: '0 6px 25px rgba(102, 126, 234, 0.5)',
+                    boxShadow: '0 6px 25px rgba(102, 126, 234, 0.5)'
                   },
-                  transition: 'all 0.3s ease',
+                  transition: 'all 0.3s ease'
                 }}
               >
                 Về trang chủ
@@ -255,9 +256,9 @@ export default function NotFound() {
                   '&:hover': {
                     backgroundColor: 'rgba(102, 126, 234, 0.05)',
                     borderColor: '#5a6fd8',
-                    transform: 'translateY(-2px)',
+                    transform: 'translateY(-2px)'
                   },
-                  transition: 'all 0.3s ease',
+                  transition: 'all 0.3s ease'
                 }}
               >
                 Quay lại
@@ -354,5 +355,5 @@ export default function NotFound() {
         }
       `}</style>
     </Box>
-  );
+  )
 }

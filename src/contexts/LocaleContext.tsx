@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 
 type Locale = 'vi' | 'en';
 
@@ -9,35 +9,35 @@ interface LocaleContextType {
   setLocale: (locale: Locale) => void;
 }
 
-const LocaleContext = createContext<LocaleContextType | undefined>(undefined);
+const LocaleContext = createContext<LocaleContextType | undefined>(undefined)
 
 export function LocaleProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>('vi');
+  const [locale, setLocaleState] = useState<Locale>('vi')
 
   useEffect(() => {
     // Load locale from localStorage on mount
-    const savedLocale = localStorage.getItem('locale') as Locale;
+    const savedLocale = localStorage.getItem('locale') as Locale
     if (savedLocale && (savedLocale === 'vi' || savedLocale === 'en')) {
-      setLocaleState(savedLocale);
+      setLocaleState(savedLocale)
     }
-  }, []);
+  }, [])
 
   const setLocale = (newLocale: Locale) => {
-    setLocaleState(newLocale);
-    localStorage.setItem('locale', newLocale);
-  };
+    setLocaleState(newLocale)
+    localStorage.setItem('locale', newLocale)
+  }
 
   return (
     <LocaleContext.Provider value={{ locale, setLocale }}>
       {children}
     </LocaleContext.Provider>
-  );
+  )
 }
 
 export function useLocale() {
-  const context = useContext(LocaleContext);
+  const context = useContext(LocaleContext)
   if (context === undefined) {
-    throw new Error('useLocale must be used within a LocaleProvider');
+    throw new Error('useLocale must be used within a LocaleProvider')
   }
-  return context;
+  return context
 }
