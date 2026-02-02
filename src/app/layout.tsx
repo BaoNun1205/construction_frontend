@@ -3,12 +3,10 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import MUIThemeProvider from '@/components/MUIThemeProvider'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-import MainContent from '@/components/MainContent'
+import ConditionalLayout from '@/components/ConditionalLayout'
 import { LocaleProvider } from '@/contexts/LocaleContext'
 import QueryProvider from '@/providers/QueryProvider'
-import { Box } from '@mui/material'
+import { AuthProvider } from '@/providers/AuthProvider'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -45,25 +43,17 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <QueryProvider>
-          <LocaleProvider>
-            <MUIThemeProvider>
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  minHeight: '100vh'
-                }}
-              >
-                <Header />
-                <MainContent>
+        <AuthProvider>
+          <QueryProvider>
+            <LocaleProvider>
+              <MUIThemeProvider>
+                <ConditionalLayout>
                   {children}
-                </MainContent>
-                <Footer />
-              </Box>
-            </MUIThemeProvider>
-          </LocaleProvider>
-        </QueryProvider>
+                </ConditionalLayout>
+              </MUIThemeProvider>
+            </LocaleProvider>
+          </QueryProvider>
+        </AuthProvider>
       </body>
     </html>
   )

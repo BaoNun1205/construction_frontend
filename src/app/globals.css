@@ -370,12 +370,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #001137;
+  background: rgba(0, 0, 0, 0.2);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #002266;
+  background: rgba(0, 0, 0, 0.3);
 }
 
 /* Prevent scroll chaining */
@@ -509,4 +509,15 @@ body {
 
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
   background: #0891b2;
+}
+
+.detail-modal .ant-modal-content {
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.detail-modal .ant-modal-body {
+  max-height: 70vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }

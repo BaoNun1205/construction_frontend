@@ -13,6 +13,7 @@ type Props = {
   size?: number
   href?: string
   sx?: SxProps
+  collapsed?: boolean
 }
 
 export default function BrandLogo({
@@ -22,7 +23,8 @@ export default function BrandLogo({
   title = 'Uy tín tạo niềm tin',
   size = 50,
   href = '/',
-  sx
+  sx,
+  collapsed = false
 }: Props) {
   return (
     <Box
@@ -58,7 +60,7 @@ export default function BrandLogo({
         />
       </Box>
 
-      {variant === 'full' && (
+      {variant === 'full' && !collapsed && (
         <Box sx={{ ml: 2 }}>
           {company && (
             <Typography

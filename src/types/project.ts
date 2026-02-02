@@ -1,4 +1,4 @@
-import { ProjectCategory } from "./projectCategory"
+import { ProjectCategory } from './projectCategory'
 
 export interface Project {
   _id: string
@@ -30,18 +30,7 @@ export interface CreateProjectDto {
   description: string
   isFeatured?: boolean
   category: string
+  deletedMedia?: string[]
 }
 
-export interface UpdateProjectDto {
-  title?: string
-  workingScope?: string[]
-  startDate?: string
-  endDate?: string
-  mainImage?: string
-  media?: string[]
-  details?: string[]
-  status?: 'completed' | 'in-progress'
-  description?: string
-  isFeatured?: boolean
-  category?: string
-}
+export type UpdateProjectDto = Partial<CreateProjectDto>
