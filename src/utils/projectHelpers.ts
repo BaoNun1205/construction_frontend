@@ -1,4 +1,4 @@
-import { Project } from "@/types/project"
+import { Project } from '@/types/project'
 
 
 export class ProjectHelpers {
@@ -18,7 +18,7 @@ export class ProjectHelpers {
     const end = endDate ? new Date(endDate) : new Date() // Dùng ngày hiện tại nếu không có endDate
     const diffTime = Math.abs(end.getTime() - start.getTime())
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-    
+
     if (diffDays < 30) {
       return `${diffDays} ngày`
     } else if (diffDays < 365) {
@@ -36,11 +36,11 @@ export class ProjectHelpers {
   // Convert status từ API sang text hiển thị
   static getStatusText(status: string): string {
     switch (status) {
-      case 'completed':
-        return 'Hoàn thành'
-      case 'in-progress':
-        return 'Đang triển khai'
-      default:
+    case 'completed':
+      return 'Hoàn thành'
+    case 'in-progress':
+      return 'Đang triển khai'
+    default:
       return 'Không xác định'
     }
   }
@@ -48,14 +48,14 @@ export class ProjectHelpers {
   // Get status color cho UI
   static getStatusColor(status: string): 'success' | 'warning' | 'info' | 'default' {
     switch (status) {
-      case 'completed':
-        return 'success'
-      case 'in-progress':
-        return 'warning'
-      case 'pending':
-        return 'info'
-      default:
-        return 'default'
+    case 'completed':
+      return 'success'
+    case 'in-progress':
+      return 'warning'
+    case 'pending':
+      return 'info'
+    default:
+      return 'default'
     }
   }
 
@@ -86,14 +86,14 @@ export class ProjectHelpers {
       duration: this.formatDateRange(project.startDate, project.endDate),
       url: `/projects/${project.slug}`,
       category: project.category.name,
-      categorySlug: project.category.slug,
+      categorySlug: project.category.slug
     }
   }
 
   // Transform Project từ API thành format cho trang chi tiết
   static transformForDetailPage(project: Project) {
     const mediaCounts = this.getMediaCounts(project.media || [])
-    
+
     return {
       id: project._id,
       title: project.title,

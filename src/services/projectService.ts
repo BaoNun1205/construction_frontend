@@ -1,4 +1,4 @@
-import api from '@/lib/axios'
+import { apiClient } from '@/lib/axios'
 import { ApiResponse } from '@/types/api'
 import { CreateProjectDto, Project, UpdateProjectDto } from '@/types/project'
 
@@ -8,12 +8,12 @@ export class ProjectService {
     const config = { requireAuth: false }
     let res: ApiResponse<Project[]>
     if (status) {
-      res = await api.get('/projects', {
+      res = await apiClient.get('/projects', {
         ...config,
         params: { status }
       })
     } else {
-      res = await api.get('/projects', config)
+      res = await apiClient.get('/projects', config)
     }
 
     return res.data
@@ -21,7 +21,7 @@ export class ProjectService {
 
   // GET /projects/featured
   static async getFeaturedProjects(): Promise<Project[]> {
-    const res: ApiResponse<Project[]> = await api.get('/projects/featured', {
+    const res: ApiResponse<Project[]> = await apiClient.get('/projects/featured', {
       requireAuth: false
     })
     return res.data
@@ -29,7 +29,7 @@ export class ProjectService {
 
   // GET /projects/:id
   static async getProjectById(id: string): Promise<Project> {
-    const res: ApiResponse<Project> = await api.get(`/projects/${id}`, {
+    const res: ApiResponse<Project> = await apiClient.get(`/projects/${id}`, {
       requireAuth: false
     })
     return res.data
@@ -37,7 +37,7 @@ export class ProjectService {
 
   // GET /projects/slug/:slug
   static async getProjectBySlug(slug: string): Promise<Project> {
-    const res: ApiResponse<Project> = await api.get(`/projects/slug/${slug}`, {
+    const res: ApiResponse<Project> = await apiClient.get(`/projects/slug/${slug}`, {
       requireAuth: false
     })
     return res.data
@@ -45,18 +45,18 @@ export class ProjectService {
 
   // POST /projects
   static async createProject(projectData: CreateProjectDto): Promise<Project> {
-    return await api.post<Project>('/projects', projectData, {
+    return await apiClient.post<Project>('/projects', projectData, {
       requireAuth: true
     })
   }
 
   // POST /projects/with-media
   static async createProjectWithMedia(
-    projectData: CreateProjectDto, 
+    projectData: CreateProjectDto,
     files: File[]
   ): Promise<Project> {
     const formData = new FormData()
-    
+
     // Add data project
     Object.entries(projectData).forEach(([key, value]) => {
       if (value !== undefined) {
@@ -69,13 +69,13 @@ export class ProjectService {
         }
       }
     })
-    
+
     // Add files
     files.forEach((file) => {
       formData.append('media', file)
     })
 
-    return await api.post<Project>('/projects/with-media', formData, {
+    return await apiClient.post<Project>('/projects/with-media', formData, {
       requireAuth: true,
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -85,7 +85,7 @@ export class ProjectService {
 
   // PUT /projects/:id
   static async updateProject(id: string, projectData: UpdateProjectDto): Promise<Project> {
-    return await api.put<Project>(`/projects/${id}`, projectData, {
+    return await apiClient.put<Project>(`/projects/${id}`, projectData, {
       requireAuth: true
     })
   }
@@ -93,11 +93,11 @@ export class ProjectService {
   // PUT /projects/:id/media
   static async updateProjectWithMedia(
     id: string,
-    projectData: UpdateProjectDto, 
+    projectData: UpdateProjectDto,
     files: File[]
   ): Promise<Project> {
     const formData = new FormData()
-    
+
     // Add data project
     Object.entries(projectData).forEach(([key, value]) => {
       if (value !== undefined) {
@@ -110,13 +110,13 @@ export class ProjectService {
         }
       }
     })
-    
+
     // Add new files
     files.forEach((file) => {
       formData.append('media', file)
     })
 
-    return await api.put<Project>(`/projects/${id}/media`, formData, {
+    return await apiClient.put<Project>(`/projects/${id}/media`, formData, {
       requireAuth: true,
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -126,7 +126,7 @@ export class ProjectService {
 
   // DELETE /projects/:id
   static async deleteProject(id: string): Promise<void> {
-    await api.delete(`/projects/${id}`, {
+    await apiClient.delete(`/projects/${id}`, {
       requireAuth: true
     })
   }
