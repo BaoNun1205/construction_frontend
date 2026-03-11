@@ -20,10 +20,11 @@ export class CloudinaryService {
    * Get signature from backend for secure upload
    */
   static async getSignature(folder?: string): Promise<CloudinarySignature> {
-    const response = await apiClient.post('/uploads/sign', { folder }, {
+    const signature = await apiClient.post<CloudinarySignature>('/uploads/sign', { folder }, {
       requireAuth: true
     })
-    return response.data
+
+    return signature
   }
 
   /**
@@ -48,30 +49,39 @@ export class CloudinaryService {
       formData.append('folder', folder)
     }
 
-    // Upload to Cloudinary
-    const response = await fetch(
-      `https://api.cloudinary.com/v1_1/${signature.cloudName}/auto/upload`,
-      {
-        method: 'POST',
-        body: formData,
-        // Add progress tracking if callback provided
-        ...(onProgress && {
-          onUploadProgress: (progressEvent: any) => {
-            const progress = Math.round(
-              (progressEvent.loaded * 100) / progressEvent.total
-            )
+    // Use XMLHttpRequest for upload so we can report progress
+    return await new Promise<CloudinaryUploadResult>((resolve, reject) => {
+      const xhr = new XMLHttpRequest()
+      const url = `https://api.cloudinary.com/v1_1/${signature.cloudName}/auto/upload`
+
+      xhr.open('POST', url)
+
+      xhr.onload = () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          try {
+            const json = JSON.parse(xhr.responseText) as CloudinaryUploadResult
+            resolve(json)
+          } catch (err) {
+            reject(err)
+          }
+        } else {
+          reject(new Error(`Upload failed: ${xhr.status} ${xhr.statusText}`))
+        }
+      }
+
+      xhr.onerror = () => reject(new Error('Network error during upload'))
+
+      if (onProgress && xhr.upload) {
+        xhr.upload.onprogress = (ev: ProgressEvent) => {
+          if (ev.lengthComputable) {
+            const progress = Math.round((ev.loaded * 100) / ev.total)
             onProgress(progress)
           }
-        })
+        }
       }
-    )
 
-    if (!response.ok) {
-      const error = await response.text()
-      throw new Error(`Upload failed: ${error}`)
-    }
-
-    return await response.json()
+      xhr.send(formData)
+    })
   }
 
   /**

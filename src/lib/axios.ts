@@ -15,6 +15,7 @@ interface CustomAxiosInstance extends AxiosInstance {
   get<T = unknown>(url: string, config?: CustomAxiosRequestConfig): Promise<T>
   post<T = unknown>(url: string, data?: unknown, config?: CustomAxiosRequestConfig): Promise<T>
   put<T = unknown>(url: string, data?: unknown, config?: CustomAxiosRequestConfig): Promise<T>
+  patch<T = unknown>(url: string, data?: unknown, config?: CustomAxiosRequestConfig): Promise<T>
   delete<T = unknown>(url: string, config?: CustomAxiosRequestConfig): Promise<T>
 }
 
