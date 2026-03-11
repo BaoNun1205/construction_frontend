@@ -5,7 +5,6 @@ export interface ProjectCategory {
   description: string
   icon: string
   completedProjects: string
-  constructionTypes: string[]
   order: number
   isActive: boolean
   createdAt?: string
@@ -18,7 +17,6 @@ export interface CreateProjectCategoryDto {
   description?: string
   icon?: string
   completedProjects?: string
-  constructionTypes?: string[]
   order?: number
   isActive?: boolean
 }
