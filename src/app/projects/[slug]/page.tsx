@@ -1,9 +1,8 @@
 'use client'
 
-import React from 'react'
+import React, { use, useState, useEffect } from 'react' 
 import { useProjectBySlug } from '@/hooks/useProjects'
 import { ProjectHelpers } from '@/utils/projectHelpers'
-import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import {
   CalendarToday,
@@ -20,8 +19,10 @@ import {
 import { Typography, CircularProgress, Alert, Box, Container } from '@mui/material'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function ProjectDetailPage(props: any) {
-  const { slug } = props.params as { slug: string }
+// export default function ProjectDetailPage(props: any) {
+export default function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = use(params)
+  const slug = resolvedParams.slug
   const { data: rawProject, isLoading, isError, error } = useProjectBySlug(slug)
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
   const [visibleElements, setVisibleElements] = useState<Set<string>>(new Set())
