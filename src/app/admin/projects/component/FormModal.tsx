@@ -39,6 +39,9 @@ interface Props {
   // eslint-disable-next-line no-unused-vars
   setIsModalVisible: (visible: boolean) => void
   editingProject: Project | null
+  // optional external submit handler
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  handleSubmit?: (values: Record<string, any>) => Promise<any>
 }
 
 const getBase64 = (file: Blob | File) =>
@@ -63,7 +66,8 @@ const FormModal = ({
   form,
   isModalVisible,
   setIsModalVisible,
-  editingProject
+  editingProject,
+  handleSubmit
 } : Props) => {
   const queryClient = useQueryClient()
   const createProjectMutation = useCreateProject()
@@ -419,7 +423,7 @@ const FormModal = ({
       <Form
         form={form}
         layout="vertical"
-        onFinish={onFinish}
+        onFinish={(values) => (handleSubmit ? handleSubmit(values) : onFinish(values))}
       >
         <Row gutter={16}>
           <Col span={24}>
