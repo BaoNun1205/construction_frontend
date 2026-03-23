@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Link from 'next/link'
 import {
   Box,
   Container,
@@ -295,10 +296,13 @@ export default function ServicesPage() {
               </div>
 
               <div className="text-center mt-12">
-                <button
-                  className="relative px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-2xl overflow-hidden group transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/30"
+                <Link
+                  href="/contact#contact-form"
+                  aria-label="Liên hệ để nhận tư vấn miễn phí"
+                  className="relative inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-2xl overflow-hidden group transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/30"
                   style={{
-                    background: 'linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)'
+                    background: 'linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)',
+                    textDecoration: 'none'
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)'
@@ -309,7 +313,7 @@ export default function ServicesPage() {
                 >
                   <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <span className="relative z-10 text-lg">{t('services.consulting.consultBtn')}</span>
-                </button>
+                </Link>
               </div>
             </div>
           </div>
