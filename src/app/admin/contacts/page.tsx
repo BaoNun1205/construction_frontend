@@ -11,7 +11,10 @@ import {
   Descriptions,
   Drawer,
   Empty,
+  Grid,
   Input,
+  List,
+  Pagination,
   Row,
   Space,
   Statistic,
@@ -36,6 +39,7 @@ import type { Contact } from '@/types/contact'
 
 const { Title, Text, Paragraph } = Typography
 const { Search } = Input
+const { useBreakpoint } = Grid
 
 const formatDateTime = (value?: string) => {
   if (!value) {
@@ -46,6 +50,8 @@ const formatDateTime = (value?: string) => {
 }
 
 export default function ContactsPage() {
+  const screens = useBreakpoint()
+  const isMobile = !screens.md
   const { message: messageApi } = App.useApp()
   const { data: contacts = [], isLoading, error } = useContacts()
   const markAsReadMutation = useMarkContactAsRead()
@@ -55,6 +61,8 @@ export default function ContactsPage() {
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null)
   const [isDrawerVisible, setIsDrawerVisible] = useState(false)
   const [deletingContactId, setDeletingContactId] = useState<string | null>(null)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
 
   const summary = useMemo(() => {
     const now = dayjs()
@@ -93,6 +101,11 @@ export default function ContactsPage() {
       return searchableText.includes(keyword)
     })
   }, [contacts, searchValue])
+
+  const paginatedContacts = useMemo(() => {
+    const startIndex = (currentPage - 1) * pageSize
+    return filteredContacts.slice(startIndex, startIndex + pageSize)
+  }, [currentPage, filteredContacts, pageSize])
 
   const handleViewContact = (contact: Contact) => {
     setSelectedContact(contact)
@@ -243,7 +256,7 @@ export default function ContactsPage() {
   ]
 
   return (
-    <Space direction="vertical" size={20} style={{ width: '100%' }}>
+    <Space direction="vertical" size={16} style={{ width: '100%' }}>
       {error && (
         <Alert
           type="error"
@@ -253,9 +266,9 @@ export default function ContactsPage() {
         />
       )}
 
-      <Row gutter={[16, 16]}>
-        <Col xs={24} md={12} xl={6}>
-          <Card bordered={false} style={{ borderRadius: 20 }}>
+      <Row gutter={[12, 12]}>
+        <Col xs={12} xl={6}>
+          <Card bordered={false} style={{ borderRadius: 18 }} styles={{ body: { padding: isMobile ? 16 : 24 } }}>
             <Statistic
               title="Tổng liên hệ"
               value={summary.totalContacts}
@@ -263,8 +276,8 @@ export default function ContactsPage() {
             />
           </Card>
         </Col>
-        <Col xs={24} md={12} xl={6}>
-          <Card bordered={false} style={{ borderRadius: 20 }}>
+        <Col xs={12} xl={6}>
+          <Card bordered={false} style={{ borderRadius: 18 }} styles={{ body: { padding: isMobile ? 16 : 24 } }}>
             <Statistic
               title="Chưa đọc"
               value={summary.unreadContacts}
@@ -272,8 +285,8 @@ export default function ContactsPage() {
             />
           </Card>
         </Col>
-        <Col xs={24} md={12} xl={6}>
-          <Card bordered={false} style={{ borderRadius: 20 }}>
+        <Col xs={12} xl={6}>
+          <Card bordered={false} style={{ borderRadius: 18 }} styles={{ body: { padding: isMobile ? 16 : 24 } }}>
             <Statistic
               title="Có số điện thoại"
               value={summary.contactsWithPhone}
@@ -281,8 +294,8 @@ export default function ContactsPage() {
             />
           </Card>
         </Col>
-        <Col xs={24} md={12} xl={6}>
-          <Card bordered={false} style={{ borderRadius: 20 }}>
+        <Col xs={12} xl={6}>
+          <Card bordered={false} style={{ borderRadius: 18 }} styles={{ body: { padding: isMobile ? 16 : 24 } }}>
             <Statistic
               title="Mới trong tháng"
               value={summary.contactsThisMonth}
@@ -294,52 +307,153 @@ export default function ContactsPage() {
 
       <Card
         bordered={false}
-        style={{ borderRadius: 24 }}
-        styles={{ body: { padding: 24 } }}
+        style={{ borderRadius: isMobile ? 18 : 24 }}
+        styles={{ body: { padding: isMobile ? 16 : 24 } }}
       >
         <div
           style={{
             display: 'flex',
             justifyContent: 'space-between',
-            alignItems: 'center',
+            alignItems: isMobile ? 'stretch' : 'center',
             gap: 16,
             flexWrap: 'wrap',
+            flexDirection: isMobile ? 'column' : 'row',
             marginBottom: 20
           }}
         >
           <Space direction="vertical" size={4}>
-            <Title level={2} style={{ margin: 0 }}>
+            <Title level={2} style={{ margin: 0, fontSize: isMobile ? 24 : undefined }}>
               Quản lý liên lạc khách hàng
             </Title>
             <Text type="secondary">
-              Hãy xem qua và quản lý các liên hệ từ khách hàng. Đừng để sót bất kỳ yêu cầu nào!
+              Hãy xem qua và quản lý các liên hệ từ khách hàng. Đừng để sót bất kỳ yêu cầu nào.
             </Text>
           </Space>
 
           <Search
             allowClear
             placeholder="Tìm theo tên, email, số điện thoại, nội dung"
-            style={{ width: 360, maxWidth: '100%' }}
-            onChange={(event) => setSearchValue(event.target.value)}
+            style={{ width: isMobile ? '100%' : 360, maxWidth: '100%' }}
+            onChange={(event) => {
+              setSearchValue(event.target.value)
+              setCurrentPage(1)
+            }}
           />
         </div>
 
-        <Table<Contact>
-          rowKey={(record) => record._id}
-          columns={columns}
-          dataSource={filteredContacts}
-          loading={isLoading}
-          pagination={{
-            pageSize: 10,
-            showSizeChanger: true,
-            pageSizeOptions: ['10', '20', '50'],
-            showTotal: (total, range) => `${range[0]}-${range[1]} của ${total} liên hệ`
-          }}
-          locale={{
-            emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Chưa có liên hệ nào" />
-          }}
-          scroll={{ x: 1100 }}
-        />
+        {isMobile ? (
+          <List<Contact>
+            loading={isLoading}
+            dataSource={paginatedContacts}
+            locale={{
+              emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Chưa có liên hệ nào" />
+            }}
+            renderItem={(contact) => (
+              <List.Item style={{ paddingInline: 0 }}>
+                <Card
+                  bordered
+                  style={{ width: '100%', borderRadius: 18 }}
+                  styles={{ body: { padding: 14 } }}
+                >
+                  <Space direction="vertical" size={12} style={{ width: '100%' }}>
+                    <Space align="start" size={12}>
+                      <Avatar
+                        style={{
+                          backgroundColor: contact.isRead ? '#e2e8f0' : '#ede9fe',
+                          color: contact.isRead ? '#475569' : '#6d28d9'
+                        }}
+                      >
+                        {contact.name?.trim()?.charAt(0)?.toUpperCase() || 'K'}
+                      </Avatar>
+                      <Space direction="vertical" size={2} style={{ minWidth: 0 }}>
+                        <Space size={8} wrap>
+                          <Text strong>{contact.name}</Text>
+                          <Tag color={contact.isRead ? 'default' : 'purple'}>
+                            {contact.isRead ? 'Đã đọc' : 'Chưa đọc'}
+                          </Tag>
+                        </Space>
+                        <Text type="secondary">{formatDateTime(contact.createdAt)}</Text>
+                      </Space>
+                    </Space>
+
+                    <Space direction="vertical" size={4}>
+                      <a href={`mailto:${contact.email}`}>
+                        <MailOutlined /> {contact.email}
+                      </a>
+                      {contact.phone ? (
+                        <a href={`tel:${contact.phone}`}>
+                          <PhoneOutlined /> {contact.phone}
+                        </a>
+                      ) : (
+                        <Text type="secondary">Không có số điện thoại</Text>
+                      )}
+                    </Space>
+
+                    <Paragraph ellipsis={{ rows: 3, expandable: false }} style={{ marginBottom: 0 }}>
+                      {contact.message}
+                    </Paragraph>
+
+                    <Space style={{ width: '100%', justifyContent: 'space-between' }}>
+                      <Button
+                        type="text"
+                        icon={<EyeOutlined />}
+                        onClick={() => handleViewContact(contact)}
+                      >
+                        Xem chi tiết
+                      </Button>
+                      <Space size={4}>
+                        <Button
+                          type="text"
+                          disabled={contact.isRead}
+                          icon={<CheckCircleOutlined />}
+                          onClick={() => void handleMarkAsRead(contact)}
+                        />
+                        <Button
+                          type="text"
+                          danger
+                          icon={<DeleteOutlined />}
+                          loading={deleteContactMutation.isPending && deletingContactId === contact._id}
+                          onClick={() => void handleDeleteContact(contact)}
+                        />
+                      </Space>
+                    </Space>
+                  </Space>
+                </Card>
+              </List.Item>
+            )}
+          />
+        ) : (
+          <Table<Contact>
+            rowKey={(record) => record._id}
+            columns={columns}
+            dataSource={paginatedContacts}
+            loading={isLoading}
+            pagination={false}
+            scroll={{ x: 1100 }}
+          />
+        )}
+
+        {filteredContacts.length > 0 && (
+          <Pagination
+            style={{ marginTop: 16 }}
+            align={isMobile ? 'center' : 'end'}
+            current={currentPage}
+            pageSize={pageSize}
+            total={filteredContacts.length}
+            showSizeChanger
+            pageSizeOptions={['10', '20', '50']}
+            responsive
+            showTotal={(total, range) => `${range[0]}-${range[1]} của ${total} liên hệ`}
+            onChange={(page, size) => {
+              setCurrentPage(page)
+              setPageSize(size)
+            }}
+            onShowSizeChange={(_, size) => {
+              setCurrentPage(1)
+              setPageSize(size)
+            }}
+          />
+        )}
       </Card>
 
       <Drawer
@@ -350,18 +464,25 @@ export default function ContactsPage() {
           setSelectedContact(null)
         }}
         open={isDrawerVisible}
-        width={560}
+        width={isMobile ? '100%' : 560}
+        styles={{
+          body: {
+            padding: isMobile ? 16 : 24
+          }
+        }}
         extra={
           selectedContact ? (
-            <Space>
+            <Space wrap>
               <Button
+                size={isMobile ? 'small' : 'middle'}
                 disabled={selectedContact.isRead}
                 icon={<CheckCircleOutlined />}
                 onClick={() => void handleMarkAsRead(selectedContact)}
               >
-                Đánh dấu đã đọc
+                {!isMobile && 'Đánh dấu đã đọc'}
               </Button>
               <Button
+                size={isMobile ? 'small' : 'middle'}
                 danger
                 icon={<DeleteOutlined />}
                 loading={
@@ -370,7 +491,7 @@ export default function ContactsPage() {
                 }
                 onClick={() => void handleDeleteContact(selectedContact)}
               >
-                Xóa
+                {!isMobile && 'Xóa'}
               </Button>
             </Space>
           ) : null
@@ -421,6 +542,7 @@ export default function ContactsPage() {
                 borderRadius: 20,
                 background: 'linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%)'
               }}
+              styles={{ body: { padding: isMobile ? 16 : 24 } }}
             >
               <Paragraph style={{ marginBottom: 0, whiteSpace: 'pre-wrap' }}>
                 {selectedContact.message}

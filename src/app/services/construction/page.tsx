@@ -13,6 +13,7 @@ import {
   Factory,
   Engineering
 } from '@mui/icons-material'
+import ServiceKeywordLinks from '@/components/seo/ServiceKeywordLinks'
 import { useTranslations } from '@/hooks/useTranslations'
 import useScrollAnimations from '@/hooks/useScrollAnimations'
 
@@ -20,7 +21,6 @@ export default function ConstructionPage() {
   useScrollAnimations()
   const theme = useTheme()
   const { t: tRaw } = useTranslations()
-  // Type-safe wrapper for translation function
   const t = (key: string): string => tRaw(key) as string
 
   const constructionServices = [
@@ -74,14 +74,42 @@ export default function ConstructionPage() {
     }
   ]
 
+  const keywordLinks = [
+    {
+      href: '/services/design-consulting',
+      label: 'Tư vấn thiết kế nhà phố, biệt thự và công trình',
+      description: 'Khám phá giải pháp thiết kế kiến trúc, concept 3D và hồ sơ kỹ thuật trước khi triển khai thi công.'
+    },
+    {
+      href: '/services/supervision',
+      label: 'Tư vấn giám sát thi công công trình xây dựng',
+      description: 'Theo dõi chất lượng, tiến độ và an toàn để công trình được thi công đúng tiêu chuẩn.'
+    },
+    {
+      href: '/services/project-management',
+      label: 'Quản lý dự án xây dựng toàn diện',
+      description: 'Kiểm soát phạm vi, ngân sách, tiến độ và nhân lực cho công trình dân dụng lẫn công nghiệp.'
+    },
+    {
+      href: '/projects',
+      label: 'Xem dự án thi công xây dựng tiêu biểu',
+      description: 'Tham khảo các công trình thực tế mà Lai Phát đã triển khai và hoàn thiện.'
+    },
+    {
+      href: '/contact#contact-form',
+      label: 'Liên hệ nhận báo giá thi công xây dựng',
+      description: 'Gửi thông tin công trình để được tư vấn nhanh về quy mô, phương án và báo giá phù hợp.'
+    }
+  ]
+
   return (
     <Box className="min-h-screen">
-      <Container className="py-16 space-y-20" sx={{ px: 4 }}>
-        {/* Header Section */}
+      <Container className="space-y-20 py-16" sx={{ px: 4 }}>
         <section className="fade-in-up">
-          <div className="flex flex-col items-center justify-center text-center mb-16">
+          <div className="mb-16 flex flex-col items-center justify-center text-center">
             <Typography
               variant="h2"
+              component="h1"
               className="text-4xl font-bold text-center text-gray-800"
               sx={{ mb: 3 }}
             >
@@ -90,20 +118,20 @@ export default function ConstructionPage() {
             </Typography>
             <Typography
               variant="h6"
-              className="text-center text-gray-600 max-w-4xl mx-auto leading-relaxed"
+              component="p"
+              className="mx-auto max-w-4xl text-center leading-relaxed text-gray-600"
             >
               {t('construction.description')}
             </Typography>
           </div>
         </section>
 
-        {/* Services Grid */}
         <section className="slide-in-left">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
             {constructionServices.map((service, index) => (
               <div
                 key={index}
-                className="group relative p-8 rounded-3xl bg-gradient-to-br from-white/80 to-gray-50/80 backdrop-blur-lg border border-gray-200/50 transition-all duration-700 scale-in overflow-hidden"
+                className="group relative overflow-hidden rounded-3xl border border-gray-200/50 bg-gradient-to-br from-white/80 to-gray-50/80 p-8 backdrop-blur-lg transition-all duration-700 scale-in"
                 style={{
                   boxShadow: '0 10px 40px rgba(0,0,0,0.08)'
                 }}
@@ -118,26 +146,24 @@ export default function ConstructionPage() {
                   e.currentTarget.style.borderColor = 'rgba(229,231,235,0.5)'
                 }}
               >
-                {/* Gradient overlay on hover */}
                 <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"
+                  className="absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                   style={{
                     background: `linear-gradient(to bottom right, ${theme.palette.primary.main}10, ${theme.palette.primary.main}20)`
                   }}
-                ></div>
+                />
 
-                {/* Decorative element */}
                 <div
-                  className="absolute top-4 right-4 w-16 h-16 rounded-full group-hover:scale-125 transition-transform duration-500"
+                  className="absolute right-4 top-4 h-16 w-16 rounded-full transition-transform duration-500 group-hover:scale-125"
                   style={{
                     background: `linear-gradient(to bottom right, ${theme.palette.primary.main}20, ${theme.palette.primary.main}30)`
                   }}
-                ></div>
+                />
 
-                <div className="relative z-10 h-full flex flex-col">
-                  <div className="flex items-center mb-6">
+                <div className="relative z-10 flex h-full flex-col">
+                  <div className="mb-6 flex items-center">
                     <div
-                      className="p-4 rounded-2xl mr-4 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
+                      className="mr-4 rounded-2xl p-4 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
                       style={{
                         background: `linear-gradient(to bottom right, ${theme.palette.primary.main}15, ${theme.palette.primary.main}25)`
                       }}
@@ -147,6 +173,7 @@ export default function ConstructionPage() {
                     <div>
                       <Typography
                         variant="h5"
+                        component="h2"
                         className="font-bold text-gray-800 transition-colors duration-300"
                         sx={{
                           mb: 1,
@@ -158,7 +185,7 @@ export default function ConstructionPage() {
                         {service.title}
                       </Typography>
                       <div
-                        className="px-3 py-1 rounded-full text-sm font-medium"
+                        className="rounded-full px-3 py-1 text-sm font-medium"
                         style={{
                           background: `${theme.palette.primary.main}15`,
                           color: theme.palette.primary.main
@@ -171,24 +198,25 @@ export default function ConstructionPage() {
 
                   <Typography
                     variant="body1"
-                    className="text-gray-600 leading-relaxed"
+                    component="p"
+                    className="leading-relaxed text-gray-600"
                     sx={{ mb: 3 }}
                   >
                     {service.description}
                   </Typography>
 
-                  <div className="space-y-3 flex-grow">
-                    <Typography variant="h6" className="font-semibold text-gray-800" sx={{ mb: 1.5 }}>
+                  <div className="flex-grow space-y-3">
+                    <Typography variant="h6" component="h3" className="font-semibold text-gray-800" sx={{ mb: 1.5 }}>
                       {t('construction.featureTitle')}
                     </Typography>
                     {service.features.map((feature, idx) => (
-                      <div key={idx} className="flex items-center text-sm text-gray-700 group-hover:text-gray-800 transition-colors duration-300">
+                      <div key={idx} className="flex items-center text-sm text-gray-700 transition-colors duration-300 group-hover:text-gray-800">
                         <div
-                          className="w-2 h-2 rounded-full mr-3 group-hover:scale-125 transition-transform duration-300"
+                          className="mr-3 h-2 w-2 rounded-full transition-transform duration-300 group-hover:scale-125"
                           style={{
                             background: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.primary.main})`
                           }}
-                        ></div>
+                        />
                         <span className="font-medium">{feature}</span>
                       </div>
                     ))}
@@ -198,6 +226,13 @@ export default function ConstructionPage() {
             ))}
           </div>
         </section>
+
+        <ServiceKeywordLinks
+          id="construction-related-links"
+          title="Khám Phá Thêm Giải Pháp Thi Công Xây Dựng Liên Quan"
+          description="Cụm liên kết này giúp người dùng đi nhanh tới các dịch vụ thường đi cùng thi công xây dựng như thiết kế, giám sát, quản lý dự án và các dự án thực tế. Đồng thời đây cũng là internal link tự nhiên theo nhóm từ khóa thi công công trình, xây dựng dân dụng và xây dựng công nghiệp."
+          links={keywordLinks}
+        />
       </Container>
     </Box>
   )

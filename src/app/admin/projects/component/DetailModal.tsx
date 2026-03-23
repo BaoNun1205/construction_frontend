@@ -10,7 +10,8 @@ import {
   Row,
   Col,
   Divider,
-  Image
+  Image,
+  Grid
 } from 'antd'
 import {
   EnvironmentOutlined,
@@ -21,6 +22,7 @@ import dayjs from 'dayjs'
 import { Project } from '@/types/project'
 
 const { Title, Text, Paragraph } = Typography
+const { useBreakpoint } = Grid
 
 interface Props {
   isDetailModalVisible: boolean
@@ -34,6 +36,8 @@ const DetailModal = ({
   setIsDetailModalVisible,
   viewingProject
 }: Props) => {
+  const screens = useBreakpoint()
+  const isMobile = !screens.md
   const [fsSrc, setFsSrc] = useState<string | null>(null)
   const fsContainerRef = useRef<HTMLDivElement | null>(null)
   const fsVideoRef = useRef<HTMLVideoElement | null>(null)
@@ -87,9 +91,15 @@ const DetailModal = ({
             Đóng
           </Button>
         ]}
-        width={1000}
+        width={isMobile ? 'calc(100vw - 16px)' : 1000}
         centered
         wrapClassName="detail-modal"
+        styles={{
+          body: {
+            maxHeight: isMobile ? 'calc(100vh - 180px)' : undefined,
+            overflowY: isMobile ? 'auto' : undefined
+          }
+        }}
       />
     )
   }
@@ -109,14 +119,20 @@ const DetailModal = ({
           Đóng
         </Button>
       ]}
-      width={1000}
+      width={isMobile ? 'calc(100vw - 16px)' : 1000}
       centered
       wrapClassName='detail-modal'
+      styles={{
+        body: {
+          maxHeight: isMobile ? 'calc(100vh - 180px)' : undefined,
+          overflowY: isMobile ? 'auto' : undefined
+        }
+      }}
     >
       {viewingProject && (
         <div>
           <Row gutter={[24, 24]}>
-            <Col span={12}>
+            <Col xs={24} md={12}>
               <Image
                 width="100%"
                 height={250}
@@ -125,7 +141,7 @@ const DetailModal = ({
                 style={{ objectFit: 'cover', borderRadius: '8px' }}
               />
             </Col>
-            <Col span={12}>
+            <Col xs={24} md={12}>
               <Title level={3}>{viewingProject.title}</Title>
               <Space direction="vertical" size="middle" style={{ width: '100%' }}>
                 <div>
@@ -201,7 +217,7 @@ const DetailModal = ({
               <Title level={4}>Video</Title>
               <Row gutter={[16, 16]}>
                 {videos.map((videoUrl, index) => (
-                  <Col key={index} span={8}>
+                  <Col key={index} xs={24} sm={12} md={8}>
                     {/* Video thumbnail với controls đầy đủ và kích thước cố định */}
                     <div
                       style={{
@@ -262,7 +278,7 @@ const DetailModal = ({
               <Title level={4}>Hình ảnh</Title>
               <Row gutter={[16, 16]}>
                 {images.map((imageUrl, index) => (
-                  <Col key={index} span={8}>
+                  <Col key={index} xs={12} sm={8} md={8}>
                     <Image
                       width="100%"
                       height={120}

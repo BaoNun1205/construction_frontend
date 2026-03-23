@@ -7,6 +7,7 @@ import {
   Card,
   Col,
   Empty,
+  Grid,
   List,
   Progress,
   Row,
@@ -34,7 +35,8 @@ import { useProjectCategoriesIncludingInactive } from '@/hooks/useProjectCategor
 import type { Contact } from '@/types/contact'
 import type { Project } from '@/types/project'
 
-const { Title, Text } = Typography
+const { Title, Text, Paragraph } = Typography
+const { useBreakpoint } = Grid
 
 const formatDateTime = (value?: string | null) => {
   if (!value) {
@@ -64,6 +66,8 @@ const getStatusMeta = (status: Project['status']) => {
 }
 
 export default function DashboardPage() {
+  const screens = useBreakpoint()
+  const isMobile = !screens.md
   const { token } = theme.useToken()
   const { data: projects = [], isLoading: projectsLoading, error: projectsError } = useProjects()
   const { data: contacts = [], isLoading: contactsLoading, error: contactsError } = useContacts()
@@ -255,7 +259,7 @@ export default function DashboardPage() {
     (categoriesLoading && categories.length === 0)
 
   return (
-    <Space direction="vertical" size={24} style={{ width: '100%' }}>
+    <Space direction="vertical" size={isMobile ? 16 : 24} style={{ width: '100%' }}>
       {dataErrorSections.length > 0 && (
         <Alert
           type="warning"
@@ -270,17 +274,17 @@ export default function DashboardPage() {
         loading={isHeroLoading}
         styles={{
           body: {
-            padding: 28
+            padding: isMobile ? 18 : 28
           }
         }}
         style={{
-          borderRadius: 28,
+          borderRadius: isMobile ? 20 : 28,
           overflow: 'hidden',
           background: 'linear-gradient(135deg, #0f172a 0%, #1d4ed8 52%, #38bdf8 100%)',
           boxShadow: '0 24px 60px rgba(15, 23, 42, 0.16)'
         }}
       >
-        <Row gutter={[24, 24]} align="middle">
+        <Row gutter={[20, 20]} align="middle">
           <Col xs={24} lg={15}>
             <Space direction="vertical" size={10}>
               <Tag
@@ -296,19 +300,26 @@ export default function DashboardPage() {
               >
                 Tổng quan vận hành
               </Tag>
-              <Title level={2} style={{ margin: 0, color: 'white' }}>
+              <Title
+                level={2}
+                style={{
+                  margin: 0,
+                  color: 'white',
+                  fontSize: isMobile ? 28 : undefined
+                }}
+              >
                 Dashboard quản trị hệ thống
               </Title>
               <Text
                 style={{
                   color: 'rgba(255,255,255,0.82)',
-                  fontSize: 16,
+                  fontSize: isMobile ? 14 : 16,
                   lineHeight: 1.75
                 }}
               >
                 Theo dõi nhanh dự án, liên hệ khách hàng và danh mục đang vận hành để nắm tình hình quản trị mỗi ngày.
               </Text>
-              <Space size={12} wrap>
+              <Space size={[10, 10]} wrap>
                 <Tag color="rgba(255,255,255,0.14)" style={{ color: 'white', borderRadius: 999, paddingInline: 12, paddingBlock: 4 }}>
                   {summary.projectsThisMonth} dự án mới tháng này
                 </Tag>
@@ -328,18 +339,18 @@ export default function DashboardPage() {
                 <Card
                   bordered={false}
                   style={{
-                    borderRadius: 20,
+                    borderRadius: 18,
                     background: 'rgba(255,255,255,0.12)',
                     backdropFilter: 'blur(16px)',
                     color: 'white'
                   }}
-                  styles={{ body: { padding: 20 } }}
+                  styles={{ body: { padding: isMobile ? 16 : 20 } }}
                 >
                   <Statistic
                     title={<span style={{ color: 'rgba(255,255,255,0.72)' }}>Hoàn thành</span>}
                     value={summary.completionRate}
                     suffix="%"
-                    valueStyle={{ color: 'white' }}
+                    valueStyle={{ color: 'white', fontSize: isMobile ? 24 : undefined }}
                     prefix={<CheckCircleOutlined />}
                   />
                 </Card>
@@ -348,18 +359,18 @@ export default function DashboardPage() {
                 <Card
                   bordered={false}
                   style={{
-                    borderRadius: 20,
+                    borderRadius: 18,
                     background: 'rgba(255,255,255,0.12)',
                     backdropFilter: 'blur(16px)',
                     color: 'white'
                   }}
-                  styles={{ body: { padding: 20 } }}
+                  styles={{ body: { padding: isMobile ? 16 : 20 } }}
                 >
                   <Statistic
                     title={<span style={{ color: 'rgba(255,255,255,0.72)' }}>Chưa đọc</span>}
                     value={summary.unreadContacts}
                     suffix="liên hệ"
-                    valueStyle={{ color: 'white' }}
+                    valueStyle={{ color: 'white', fontSize: isMobile ? 24 : undefined }}
                     prefix={<MailOutlined />}
                   />
                 </Card>
@@ -368,12 +379,12 @@ export default function DashboardPage() {
                 <Card
                   bordered={false}
                   style={{
-                    borderRadius: 20,
+                    borderRadius: 18,
                     background: 'rgba(255,255,255,0.12)',
                     backdropFilter: 'blur(16px)',
                     color: 'white'
                   }}
-                  styles={{ body: { padding: 20 } }}
+                  styles={{ body: { padding: isMobile ? 16 : 20 } }}
                 >
                   <Space direction="vertical" size={10} style={{ width: '100%' }}>
                     <Text style={{ color: 'rgba(255,255,255,0.72)' }}>
@@ -405,22 +416,22 @@ export default function DashboardPage() {
         </Row>
       </Card>
 
-      <Row gutter={[16, 16]}>
+      <Row gutter={[12, 12]}>
         {statCards.map((card) => (
-          <Col xs={24} sm={12} xl={6} key={card.key}>
+          <Col xs={12} xl={6} key={card.key}>
             <Card
               bordered={false}
               loading={isHeroLoading}
               style={{
-                borderRadius: 22,
+                borderRadius: 18,
                 boxShadow: '0 14px 34px rgba(15, 23, 42, 0.06)',
                 height: '100%'
               }}
-              styles={{ body: { padding: 22 } }}
+              styles={{ body: { padding: isMobile ? 16 : 22 } }}
             >
-              <Space direction="vertical" size={14} style={{ width: '100%' }}>
+              <Space direction="vertical" size={12} style={{ width: '100%' }}>
                 <Avatar
-                  size={52}
+                  size={isMobile ? 44 : 52}
                   icon={card.icon}
                   style={{
                     backgroundColor: `${card.accent}18`,
@@ -429,27 +440,30 @@ export default function DashboardPage() {
                 />
                 <Space direction="vertical" size={4}>
                   <Text type="secondary">{card.title}</Text>
-                  <Title level={3} style={{ margin: 0 }}>
-                    {card.value.toLocaleString('vi-VN')} <Text type="secondary">{card.suffix}</Text>
+                  <Title level={3} style={{ margin: 0, fontSize: isMobile ? 22 : undefined }}>
+                    {card.value.toLocaleString('vi-VN')}
                   </Title>
+                  <Text type="secondary">{card.suffix}</Text>
                 </Space>
-                <Text style={{ color: token.colorTextDescription }}>
-                  {card.description}
-                </Text>
+                {!isMobile && (
+                  <Text style={{ color: token.colorTextDescription }}>
+                    {card.description}
+                  </Text>
+                )}
               </Space>
             </Card>
           </Col>
         ))}
       </Row>
 
-      <Row gutter={[16, 16]}>
+      <Row gutter={[12, 12]}>
         <Col xs={24} xl={8}>
           <Card
             bordered={false}
             loading={projectsLoading && projects.length === 0}
             title="Hiệu suất dự án"
-            style={{ borderRadius: 22, height: '100%' }}
-            styles={{ body: { padding: 24 } }}
+            style={{ borderRadius: 18, height: '100%' }}
+            styles={{ body: { padding: isMobile ? 16 : 24 } }}
           >
             <Row gutter={[20, 20]} align="middle">
               <Col xs={24} sm={10} xl={24} xxl={10}>
@@ -457,7 +471,7 @@ export default function DashboardPage() {
                   <Progress
                     type="circle"
                     percent={summary.completionRate}
-                    size={150}
+                    size={isMobile ? 120 : 150}
                     strokeColor={{
                       '0%': '#38bdf8',
                       '100%': '#2563eb'
@@ -512,14 +526,14 @@ export default function DashboardPage() {
             bordered={false}
             loading={contactsLoading && contacts.length === 0}
             title="Tín hiệu liên hệ"
-            style={{ borderRadius: 22, height: '100%' }}
-            styles={{ body: { padding: 24 } }}
+            style={{ borderRadius: 18, height: '100%' }}
+            styles={{ body: { padding: isMobile ? 16 : 24 } }}
           >
             <Space direction="vertical" size={18} style={{ width: '100%' }}>
               <div
                 style={{
                   borderRadius: 18,
-                  padding: 18,
+                  padding: isMobile ? 14 : 18,
                   background: 'linear-gradient(135deg, rgba(124,58,237,0.12) 0%, rgba(59,130,246,0.12) 100%)'
                 }}
               >
@@ -573,8 +587,8 @@ export default function DashboardPage() {
             bordered={false}
             loading={categoriesLoading && categories.length === 0}
             title="Danh mục nổi bật"
-            style={{ borderRadius: 22, height: '100%' }}
-            styles={{ body: { padding: 24 } }}
+            style={{ borderRadius: 18, height: '100%' }}
+            styles={{ body: { padding: isMobile ? 16 : 24 } }}
           >
             {summary.topCategories.length > 0 ? (
               <Space direction="vertical" size={16} style={{ width: '100%' }}>
@@ -622,25 +636,64 @@ export default function DashboardPage() {
         </Col>
       </Row>
 
-      <Row gutter={[16, 16]}>
+      <Row gutter={[12, 12]}>
         <Col xs={24} xxl={16}>
           <Card
             bordered={false}
             title="Dự án cập nhật gần đây"
-            style={{ borderRadius: 22 }}
-            styles={{ body: { padding: 0 } }}
+            style={{ borderRadius: 18 }}
+            styles={{ body: { padding: isMobile ? 16 : 0 } }}
           >
-            <Table<Project>
-              rowKey={(record) => record._id}
-              columns={projectColumns}
-              dataSource={summary.recentProjects}
-              loading={projectsLoading}
-              pagination={false}
-              locale={{
-                emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Chưa có dự án" />
-              }}
-              scroll={{ x: 760 }}
-            />
+            {isMobile ? (
+              <List<Project>
+                dataSource={summary.recentProjects}
+                loading={projectsLoading}
+                locale={{
+                  emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Chưa có dự án" />
+                }}
+                renderItem={(project) => {
+                  const statusMeta = getStatusMeta(project.status)
+
+                  return (
+                    <List.Item style={{ paddingInline: 0 }}>
+                      <Card bordered style={{ width: '100%', borderRadius: 16 }}>
+                        <Space direction="vertical" size={8} style={{ width: '100%' }}>
+                          <Space size={8} wrap>
+                            <Text strong>{project.title}</Text>
+                            {project.isFeatured && <Tag color="gold">Nổi bật</Tag>}
+                          </Space>
+                          <Space size={[8, 8]} wrap>
+                            <Tag color="blue">{project.category?.name || 'Chưa có danh mục'}</Tag>
+                            <Tag color={statusMeta.color} icon={statusMeta.icon}>
+                              {statusMeta.label}
+                            </Tag>
+                          </Space>
+                          <Text type="secondary">
+                            {dayjs(project.startDate).format('DD/MM/YYYY')}
+                            {project.endDate ? ` - ${dayjs(project.endDate).format('DD/MM/YYYY')}` : ''}
+                          </Text>
+                          <Text type="secondary">
+                            Cập nhật: {formatDateTime(getProjectReferenceDate(project))}
+                          </Text>
+                        </Space>
+                      </Card>
+                    </List.Item>
+                  )
+                }}
+              />
+            ) : (
+              <Table<Project>
+                rowKey={(record) => record._id}
+                columns={projectColumns}
+                dataSource={summary.recentProjects}
+                loading={projectsLoading}
+                pagination={false}
+                locale={{
+                  emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Chưa có dự án" />
+                }}
+                scroll={{ x: 760 }}
+              />
+            )}
           </Card>
         </Col>
 
@@ -648,15 +701,15 @@ export default function DashboardPage() {
           <Card
             bordered={false}
             title="Liên hệ mới nhất"
-            style={{ borderRadius: 22, height: '100%' }}
-            styles={{ body: { padding: 12 } }}
+            style={{ borderRadius: 18, height: '100%' }}
+            styles={{ body: { padding: isMobile ? 12 : 12 } }}
           >
             <List<Contact>
               dataSource={summary.recentContacts}
               loading={contactsLoading}
               locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Chưa có liên hệ" /> }}
               renderItem={(contact) => (
-                <List.Item style={{ paddingInline: 12, paddingBlock: 14 }}>
+                <List.Item style={{ paddingInline: isMobile ? 4 : 12, paddingBlock: 14 }}>
                   <List.Item.Meta
                     avatar={
                       <Avatar

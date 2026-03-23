@@ -29,7 +29,6 @@ import BrandLogo from './ui/BrandLogo'
 export default function Footer() {
   const theme = useTheme()
   const { t: tRaw } = useTranslations()
-  // Type-safe wrapper for translation function
   const t = (key: string): string => tRaw(key) as string
 
   return (
@@ -40,31 +39,29 @@ export default function Footer() {
         mt: 'auto'
       }}
     >
-      {/* Call to Action Section */}
       <Container className="py-16" sx={{ px: 4 }}>
         <div className="text-center">
           <div
-            className="relative rounded-2xl p-12 md:p-16 text-white overflow-hidden"
+            className="relative overflow-hidden rounded-2xl p-12 text-white md:p-16"
             style={{
               background: theme.palette.primary.main,
               border: '2px solid white',
               boxShadow: '0 20px 60px rgba(0,0,0,0.1)'
             }}
           >
-            {/* Background decorative elements */}
-            <div className="absolute top-0 left-0 w-32 h-32 bg-white/10 rounded-full -translate-x-16 -translate-y-16" />
-            <div className="absolute bottom-0 right-0 w-40 h-40 bg-white/10 rounded-full translate-x-20 translate-y-20" />
-            <div className="absolute top-1/2 left-1/2 w-24 h-24 bg-white/5 rounded-full -translate-x-12 -translate-y-12 animate-pulse" />
+            <div className="absolute left-0 top-0 h-32 w-32 -translate-x-16 -translate-y-16 rounded-full bg-white/10" />
+            <div className="absolute bottom-0 right-0 h-40 w-40 translate-x-20 translate-y-20 rounded-full bg-white/10" />
+            <div className="absolute left-1/2 top-1/2 h-24 w-24 -translate-x-12 -translate-y-12 animate-pulse rounded-full bg-white/5" />
 
             <div className="relative z-10">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+              <h2 className="mb-6 text-4xl font-bold text-white md:text-5xl">
                 Bắt Đầu Dự Án Của Bạn Ngay Hôm Nay
               </h2>
-              <p className="text-xl text-white/90 max-w-2xl mx-auto leading-relaxed mb-10">
+              <p className="mx-auto mb-10 max-w-2xl text-xl leading-relaxed text-white/90">
                 Liên hệ với chúng tôi để được tư vấn miễn phí và nhận báo giá chi tiết cho dự án của bạn.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <div className="flex flex-col justify-center gap-6 sm:flex-row">
                 <PhoneButton
                   sx={{
                     color: 'white',
@@ -82,32 +79,42 @@ export default function Footer() {
                   }}
                 />
 
-                <button
-                  type="button"
-                  className="text-lg px-8 py-6 rounded-lg border-2 cursor-pointer border-white text-white transition-all duration-300 bg-transparent font-semibold flex items-center justify-center"
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-3px) scale(1.05)';
-                    (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'rgba(255,255,255,0.1)'
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0) scale(1)';
-                    (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'transparent'
-                  }}
+                <MuiLink
+                  component={Link}
+                  href="/contact#contact-form"
+                  underline="none"
                   aria-label="Nhận báo giá"
+                  sx={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 1,
+                    px: 4,
+                    py: 3,
+                    borderRadius: '0.5rem',
+                    border: '2px solid white',
+                    color: 'white',
+                    fontSize: '1.125rem',
+                    fontWeight: 600,
+                    backgroundColor: 'transparent',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      transform: 'translateY(-3px) scale(1.05)',
+                      backgroundColor: 'rgba(255,255,255,0.1)'
+                    }
+                  }}
                 >
                   Nhận Báo Giá
-                  <ArrowForward className="ml-2 w-5 h-5" />
-                </button>
+                  <ArrowForward sx={{ fontSize: 20 }} />
+                </MuiLink>
               </div>
             </div>
           </div>
         </div>
       </Container>
 
-      {/* Footer Content */}
       <Container className="pb-16" sx={{ px: 4 }}>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          {/* Company Info */}
+        <div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-4">
           <div className="md:col-span-1">
             <Box sx={{ mb: 2 }}>
               <BrandLogo
@@ -121,6 +128,11 @@ export default function Footer() {
             <Stack direction="row" spacing={1}>
               <IconButton
                 size="small"
+                component="a"
+                href={CONTACT.FACEBOOK}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook Lai Phát"
                 sx={{ color: 'white', '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' } }}
               >
                 <Facebook />
@@ -146,7 +158,6 @@ export default function Footer() {
             </Stack>
           </div>
 
-          {/* Quick Links */}
           <div>
             <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
               {t('footer.quickLinks')}
@@ -164,13 +175,12 @@ export default function Footer() {
               <MuiLink component={Link} href="/store" color="inherit" sx={{ opacity: 0.8, '&:hover': { opacity: 1 } }}>
                 {t('footer.store')}
               </MuiLink>
-              <MuiLink component={Link} href="/contact" color="inherit" sx={{ opacity: 0.8, '&:hover': { opacity: 1 } }}>
+              <MuiLink component={Link} href="/contact#contact-form" color="inherit" sx={{ opacity: 0.8, '&:hover': { opacity: 1 } }}>
                 {t('footer.contact')}
               </MuiLink>
             </Stack>
           </div>
 
-          {/* Services */}
           <div>
             <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
               Dịch Vụ
@@ -194,7 +204,6 @@ export default function Footer() {
             </Stack>
           </div>
 
-          {/* Contact Info */}
           <div>
             <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
               {t('footer.contactTitle')}
@@ -224,7 +233,7 @@ export default function Footer() {
 
         <Divider sx={{ borderColor: 'rgba(255,255,255,0.2)', my: 4 }} />
 
-        <div className="flex flex-col md:flex-row justify-between items-center">
+        <div className="flex flex-col items-center justify-between md:flex-row">
           <Typography variant="body2" sx={{ opacity: 0.7 }}>
             {t('footer.copyright')}
           </Typography>
