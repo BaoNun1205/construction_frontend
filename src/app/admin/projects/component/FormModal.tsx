@@ -80,7 +80,6 @@ const FormModal = ({
   const [previewContent, setPreviewContent] = useState<PreviewContent | null>(null)
   const [isUploading, setIsUploading] = useState(false)
   const [uploadedUrls, setUploadedUrls] = useState<string[]>([])
-  const [deletedUrls, setDeletedUrls] = useState<string[]>([])
 
   useEffect(() => {
     if (editingProject && isModalVisible) {
@@ -93,12 +92,12 @@ const FormModal = ({
         endDate: editingProject.endDate ? dayjs(editingProject.endDate) : null,
         status: editingProject.status,
         category: editingProject.category._id,
-        mainImage: editingProject.mainImage
+        mainImage: editingProject.mainImage,
+        isFeatured: Boolean(editingProject.isFeatured)
       })
 
       const existingUrls = Array.isArray(editingProject.media) ? editingProject.media.filter(Boolean) : []
       setUploadedUrls(Array.from(new Set(existingUrls)))
-      setDeletedUrls([])
       setPreviewOpen(false)
       setPreviewContent(null)
 
@@ -122,7 +121,6 @@ const FormModal = ({
       form.resetFields()
       setFileList([])
       setUploadedUrls([])
-      setDeletedUrls([])
       setPreviewOpen(false)
       setPreviewContent(null)
     }
@@ -219,10 +217,6 @@ const FormModal = ({
     const removedValue = isRemote ? url : `local:${String(file.uid)}`
 
     if (isRemote) {
-      setDeletedUrls(prev => {
-        if (prev.includes(url)) return prev
-        return [...prev, url]
-      })
       setUploadedUrls((prev) => prev.filter((u) => u !== url))
     }
 
@@ -364,8 +358,7 @@ const FormModal = ({
         mediaFolder,
         status: values.status,
         category: values.category,
-        isFeatured: !!values.isFeatured,
-        deletedMedia: deletedUrls.length ? deletedUrls : undefined
+        isFeatured: !!values.isFeatured
       } as CreateProjectDto | UpdateProjectDto
 
       // Submit project data
@@ -390,7 +383,6 @@ const FormModal = ({
       form.resetFields()
       setFileList([])
       setUploadedUrls([])
-      setDeletedUrls([])
       setPreviewOpen(false)
       setPreviewContent(null)
 
@@ -424,7 +416,6 @@ const FormModal = ({
         })
         setFileList([])
         setUploadedUrls([])
-        setDeletedUrls([])
         setPreviewOpen(false)
         setPreviewContent(null)
       }}
