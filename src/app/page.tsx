@@ -27,7 +27,12 @@ import {
 } from '@mui/icons-material'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useEffect, useRef, useState, type UIEvent } from 'react'
+import {
+  useEffect,
+  useRef,
+  useState,
+  type UIEvent
+} from 'react'
 import { useTranslations } from '@/hooks/useTranslations'
 import ProjectHelpers from '@/utils/projectHelpers'
 import useScrollAnimations from '@/hooks/useScrollAnimations'
@@ -223,86 +228,11 @@ export default function Home() {
     setActiveWhyChooseIndex(0)
   }, [whyChooseItems.length])
 
-  const scrollToServicePage = (pageIndex: number) => {
-    const container = mobileServicesRef.current
-
-    if (!container) {
-      return
-    }
-
-    container.scrollTo({
-      left: pageIndex * container.clientWidth,
-      behavior: 'smooth'
-    })
-  }
-
-  const handleMobileServicesScroll = (event: UIEvent<HTMLDivElement>) => {
-    const container = event.currentTarget
-
-    if (!container.clientWidth) {
-      return
-    }
-
-    setActiveServicePage(Math.round(container.scrollLeft / container.clientWidth))
-  }
-
-  const scrollToProjectPage = (pageIndex: number) => {
-    const container = mobileProjectsRef.current
-    const page = container?.children[pageIndex] as HTMLElement | undefined
-
-    if (!container || !page) {
-      return
-    }
-
-    container.scrollTo({
-      left: page.offsetLeft - container.offsetLeft,
-      behavior: 'smooth'
-    })
-  }
-
-  const handleMobileProjectsScroll = (event: UIEvent<HTMLDivElement>) => {
-    const container = event.currentTarget
-    const pages = Array.from(container.children) as HTMLElement[]
-
-    if (pages.length === 0) {
-      return
-    }
-
-    let closestIndex = 0
-    let smallestDistance = Number.POSITIVE_INFINITY
-
-    pages.forEach((page, index) => {
-      const distance = Math.abs(page.offsetLeft - container.scrollLeft)
-
-      if (distance < smallestDistance) {
-        smallestDistance = distance
-        closestIndex = index
-      }
-    })
-
-    setActiveProjectPage(closestIndex)
-  }
-
-  const scrollToWhyChooseItem = (itemIndex: number) => {
-    const container = mobileWhyChooseRef.current
-    const item = container?.children[itemIndex] as HTMLElement | undefined
-
-    if (!container || !item) {
-      return
-    }
-
-    container.scrollTo({
-      left: item.offsetLeft - container.offsetLeft,
-      behavior: 'smooth'
-    })
-  }
-
-  const handleMobileWhyChooseScroll = (event: UIEvent<HTMLDivElement>) => {
-    const container = event.currentTarget
+  const getClosestSnapIndex = (container: HTMLDivElement) => {
     const items = Array.from(container.children) as HTMLElement[]
 
     if (items.length === 0) {
-      return
+      return 0
     }
 
     let closestIndex = 0
@@ -317,8 +247,64 @@ export default function Home() {
       }
     })
 
-    setActiveWhyChooseIndex(closestIndex)
+    return closestIndex
   }
+
+  const scrollToSnapChild = (container: HTMLDivElement | null, itemIndex: number) => {
+    const item = container?.children[itemIndex] as HTMLElement | undefined
+
+    if (!container || !item) {
+      return
+    }
+
+    container.scrollTo({
+      left: item.offsetLeft - container.offsetLeft,
+      behavior: 'smooth'
+    })
+  }
+
+  const scrollToServicePage = (pageIndex: number) => {
+    scrollToSnapChild(mobileServicesRef.current, pageIndex)
+  }
+
+  const handleMobileServicesScroll = (event: UIEvent<HTMLDivElement>) => {
+    const container = event.currentTarget
+
+    if (!container.children.length) {
+      return
+    }
+
+    setActiveServicePage(getClosestSnapIndex(container))
+  }
+
+  const scrollToProjectPage = (pageIndex: number) => {
+    scrollToSnapChild(mobileProjectsRef.current, pageIndex)
+  }
+
+  const handleMobileProjectsScroll = (event: UIEvent<HTMLDivElement>) => {
+    const container = event.currentTarget
+
+    if (!container.children.length) {
+      return
+    }
+
+    setActiveProjectPage(getClosestSnapIndex(container))
+  }
+
+  const scrollToWhyChooseItem = (itemIndex: number) => {
+    scrollToSnapChild(mobileWhyChooseRef.current, itemIndex)
+  }
+
+  const handleMobileWhyChooseScroll = (event: UIEvent<HTMLDivElement>) => {
+    const container = event.currentTarget
+
+    if (!container.children.length) {
+      return
+    }
+
+    setActiveWhyChooseIndex(getClosestSnapIndex(container))
+  }
+
 
   return (
     <Box className="min-h-screen">
@@ -603,7 +589,10 @@ export default function Home() {
                     overflowX: 'auto',
                     px: 0.25,
                     scrollSnapType: 'x mandatory',
+                    scrollBehavior: 'smooth',
                     scrollPaddingLeft: '2px',
+                    overscrollBehaviorX: 'contain',
+                    touchAction: 'pan-x',
                     WebkitOverflowScrolling: 'touch',
                     scrollbarWidth: 'none',
                     '&::-webkit-scrollbar': {
@@ -616,7 +605,8 @@ export default function Home() {
                       key={`mobile-service-page-${pageIndex}`}
                       sx={{
                         flex: '0 0 calc(100% - 6px)',
-                        scrollSnapAlign: 'start'
+                        scrollSnapAlign: 'start',
+                        scrollSnapStop: 'always'
                       }}
                     >
                       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.25 }}>
@@ -1068,7 +1058,10 @@ export default function Home() {
                       overflowX: 'auto',
                       px: 0.25,
                       scrollSnapType: 'x mandatory',
+                      scrollBehavior: 'smooth',
                       scrollPaddingLeft: '2px',
+                      overscrollBehaviorX: 'contain',
+                      touchAction: 'pan-x',
                       WebkitOverflowScrolling: 'touch',
                       scrollbarWidth: 'none',
                       '&::-webkit-scrollbar': {
@@ -1081,7 +1074,8 @@ export default function Home() {
                         key={`mobile-project-page-${pageIndex}`}
                         sx={{
                           flex: '0 0 calc(100% - 6px)',
-                          scrollSnapAlign: 'start'
+                          scrollSnapAlign: 'start',
+                          scrollSnapStop: 'always'
                         }}
                       >
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
@@ -1450,7 +1444,10 @@ export default function Home() {
                 overflowX: 'auto',
                 px: 0.25,
                 scrollSnapType: 'x mandatory',
+                scrollBehavior: 'smooth',
                 scrollPaddingLeft: '2px',
+                overscrollBehaviorX: 'contain',
+                touchAction: 'pan-x',
                 WebkitOverflowScrolling: 'touch',
                 scrollbarWidth: 'none',
                 '&::-webkit-scrollbar': {
@@ -1464,6 +1461,7 @@ export default function Home() {
                   sx={{
                     flex: '0 0 calc(100% - 6px)',
                     scrollSnapAlign: 'start',
+                    scrollSnapStop: 'always',
                     backgroundColor: theme.palette.primary.main,
                     borderRadius: 3.5,
                     p: 3,

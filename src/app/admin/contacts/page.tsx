@@ -1,447 +1,436 @@
 'use client'
 
-import { useState } from 'react'
-import { 
-  Card, 
-  Table, 
-  Button, 
-  Space, 
-  Modal, 
-  Form, 
-  Input, 
-  Select, 
-  message,
-  Popconfirm,
-  Tag,
-  Typography,
-  DatePicker,
-  Drawer,
+import { useMemo, useState } from 'react'
+import {
+  App,
+  Alert,
+  Avatar,
+  Button,
+  Card,
+  Col,
   Descriptions,
-  Timeline
+  Drawer,
+  Empty,
+  Input,
+  Row,
+  Space,
+  Statistic,
+  Table,
+  Tag,
+  Typography
 } from 'antd'
-import { 
-  EyeOutlined,
-  EditOutlined, 
+import {
+  CheckCircleOutlined,
+  ClockCircleOutlined,
+  ContactsOutlined,
   DeleteOutlined,
-  PhoneOutlined,
+  EyeOutlined,
   MailOutlined,
   MessageOutlined,
-  ClockCircleOutlined
+  PhoneOutlined
 } from '@ant-design/icons'
-import { ColumnsType } from 'antd/es/table'
+import type { ColumnsType } from 'antd/es/table'
+import dayjs from 'dayjs'
+import { useContacts, useDeleteContact, useMarkContactAsRead } from '@/hooks/useContacts'
+import type { Contact } from '@/types/contact'
 
-const { Title, Paragraph } = Typography
-const { TextArea } = Input
-const { Option } = Select
+const { Title, Text, Paragraph } = Typography
+const { Search } = Input
 
-interface Contact {
-  key: string
-  id: string
-  name: string
-  email: string
-  phone: string
-  subject: string
-  message: string
-  status: string
-  priority: string
-  source: string
-  assignedTo: string
-  createdAt: string
-  updatedAt: string
-  notes: string[]
+const formatDateTime = (value?: string) => {
+  if (!value) {
+    return '--'
+  }
+
+  return dayjs(value).format('DD/MM/YYYY HH:mm')
 }
 
-// Mock data
-const initialContacts: Contact[] = [
-  {
-    key: '1',
-    id: 'CT001',
-    name: 'Nguyễn Văn A',
-    email: 'nguyenvana@email.com',
-    phone: '0901234567',
-    subject: 'Tư vấn thiết kế nhà phố',
-    message: 'Tôi muốn tư vấn thiết kế nhà phố 3 tầng tại Quận 7',
-    status: 'new',
-    priority: 'high',
-    source: 'website',
-    assignedTo: 'Admin',
-    createdAt: '2024-10-08',
-    updatedAt: '2024-10-08',
-    notes: [],
-  },
-  {
-    key: '2',
-    id: 'CT002',
-    name: 'Trần Thị B',
-    email: 'tranthib@email.com',
-    phone: '0907654321',
-    subject: 'Báo giá thi công biệt thự',
-    message: 'Cần báo giá thi công biệt thự 2 tầng tại Thủ Đức',
-    status: 'in_progress',
-    priority: 'medium',
-    source: 'phone',
-    assignedTo: 'Admin',
-    createdAt: '2024-10-07',
-    updatedAt: '2024-10-09',
-    notes: ['Đã gọi điện tư vấn', 'Khách hàng quan tâm đến thiết kế hiện đại'],
-  },
-]
-
-const statusOptions = [
-  { value: 'new', label: 'Mới', color: 'blue' },
-  { value: 'in_progress', label: 'Đang xử lý', color: 'orange' },
-  { value: 'completed', label: 'Hoàn thành', color: 'green' },
-  { value: 'cancelled', label: 'Đã hủy', color: 'red' },
-]
-
-const priorityOptions = [
-  { value: 'low', label: 'Thấp', color: 'default' },
-  { value: 'medium', label: 'Trung bình', color: 'orange' },
-  { value: 'high', label: 'Cao', color: 'red' },
-]
-
-const sourceOptions = [
-  { value: 'website', label: 'Website' },
-  { value: 'phone', label: 'Điện thoại' },
-  { value: 'email', label: 'Email' },
-  { value: 'referral', label: 'Giới thiệu' },
-]
-
 export default function ContactsPage() {
-  const [contacts, setContacts] = useState<Contact[]>(initialContacts)
-  const [isModalVisible, setIsModalVisible] = useState(false)
-  const [isDrawerVisible, setIsDrawerVisible] = useState(false)
+  const { message: messageApi } = App.useApp()
+  const { data: contacts = [], isLoading, error } = useContacts()
+  const markAsReadMutation = useMarkContactAsRead()
+  const deleteContactMutation = useDeleteContact()
+
+  const [searchValue, setSearchValue] = useState('')
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null)
-  const [editingContact, setEditingContact] = useState<Contact | null>(null)
-  const [form] = Form.useForm()
-  const [noteForm] = Form.useForm()
+  const [isDrawerVisible, setIsDrawerVisible] = useState(false)
+  const [deletingContactId, setDeletingContactId] = useState<string | null>(null)
+
+  const summary = useMemo(() => {
+    const now = dayjs()
+    const totalContacts = contacts.length
+    const unreadContacts = contacts.filter((contact) => !contact.isRead).length
+    const contactsWithPhone = contacts.filter((contact) => Boolean(contact.phone)).length
+    const contactsThisMonth = contacts.filter((contact) =>
+      dayjs(contact.createdAt).isSame(now, 'month')
+    ).length
+
+    return {
+      totalContacts,
+      unreadContacts,
+      contactsWithPhone,
+      contactsThisMonth
+    }
+  }, [contacts])
+
+  const filteredContacts = useMemo(() => {
+    const keyword = searchValue.trim().toLowerCase()
+
+    if (!keyword) {
+      return contacts
+    }
+
+    return contacts.filter((contact) => {
+      const searchableText = [
+        contact.name,
+        contact.email,
+        contact.phone || '',
+        contact.message
+      ]
+        .join(' ')
+        .toLowerCase()
+
+      return searchableText.includes(keyword)
+    })
+  }, [contacts, searchValue])
 
   const handleViewContact = (contact: Contact) => {
     setSelectedContact(contact)
     setIsDrawerVisible(true)
   }
 
-  const handleEditContact = (contact: Contact) => {
-    setEditingContact(contact)
-    form.setFieldsValue(contact)
-    setIsModalVisible(true)
-  }
+  const handleMarkAsRead = async (contact: Contact) => {
+    if (contact.isRead) {
+      return
+    }
 
-  const handleDeleteContact = (contactId: string) => {
-    setContacts(contacts.filter(contact => contact.id !== contactId))
-    message.success('Xóa liên lạc thành công!')
-  }
-
-  const handleSaveContact = async (values: any) => {
     try {
-      if (editingContact) {
-        // Update existing contact
-        setContacts(contacts.map(contact => 
-          contact.id === editingContact.id 
-            ? { ...contact, ...values, updatedAt: new Date().toISOString().split('T')[0] }
-            : contact
-        ))
-        message.success('Cập nhật liên lạc thành công!')
-      }
+      const updatedContact = await markAsReadMutation.mutateAsync(contact._id)
+      messageApi.success('Đã đánh dấu liên hệ là đã đọc.')
 
-      setIsModalVisible(false)
-      form.resetFields()
-    } catch (error) {
-      message.error('Có lỗi xảy ra!')
+      if (selectedContact?._id === contact._id) {
+        setSelectedContact(updatedContact)
+      }
+    } catch (mutationError) {
+      messageApi.error('Không thể cập nhật trạng thái liên hệ.')
+      // eslint-disable-next-line no-console
+      console.error('Mark as read error:', mutationError)
     }
   }
 
-  const handleAddNote = async (values: any) => {
-    if (selectedContact) {
-      const updatedContacts = contacts.map(contact => 
-        contact.id === selectedContact.id 
-          ? { 
-              ...contact, 
-              notes: [...contact.notes, `${new Date().toLocaleString()}: ${values.note}`],
-              updatedAt: new Date().toISOString().split('T')[0]
-            }
-          : contact
-      )
-      setContacts(updatedContacts)
-      setSelectedContact({
-        ...selectedContact,
-        notes: [...selectedContact.notes, `${new Date().toLocaleString()}: ${values.note}`]
-      })
-      noteForm.resetFields()
-      message.success('Thêm ghi chú thành công!')
+  const handleDeleteContact = async (contact: Contact) => {
+    if (deleteContactMutation.isPending) {
+      return
+    }
+
+    setDeletingContactId(contact._id)
+
+    try {
+      await deleteContactMutation.mutateAsync(contact._id)
+      messageApi.success('Xóa liên hệ thành công.')
+
+      if (selectedContact?._id === contact._id) {
+        setIsDrawerVisible(false)
+        setSelectedContact(null)
+      }
+    } catch (mutationError) {
+      messageApi.error('Không thể xóa liên hệ.')
+      // eslint-disable-next-line no-console
+      console.error('Delete contact error:', mutationError)
+    } finally {
+      setDeletingContactId(null)
     }
   }
 
   const columns: ColumnsType<Contact> = [
     {
-      title: 'Mã liên lạc',
-      dataIndex: 'id',
-      key: 'id',
-      width: 100,
-    },
-    {
-      title: 'Tên khách hàng',
+      title: 'Khách hàng',
       dataIndex: 'name',
       key: 'name',
-      width: 150,
+      width: 240,
+      render: (_: string, record) => (
+        <Space align="start" size={12}>
+          <Avatar
+            style={{
+              backgroundColor: record.isRead ? '#e2e8f0' : '#ede9fe',
+              color: record.isRead ? '#475569' : '#6d28d9'
+            }}
+          >
+            {record.name?.trim()?.charAt(0)?.toUpperCase() || 'K'}
+          </Avatar>
+          <Space direction="vertical" size={2}>
+            <Space size={8} wrap>
+              <Text strong>{record.name}</Text>
+              <Tag color={record.isRead ? 'default' : 'purple'}>
+                {record.isRead ? 'Đã đọc' : 'Chưa đọc'}
+              </Tag>
+            </Space>
+            <Text type="secondary">{record.email}</Text>
+          </Space>
+        </Space>
+      )
     },
     {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
-      width: 200,
-      render: (email: string) => (
-        <a href={`mailto:${email}`} target="_blank" rel="noopener noreferrer">
-          <MailOutlined /> {email}
-        </a>
-      ),
+      title: 'Liên hệ',
+      key: 'contact',
+      width: 220,
+      render: (_: unknown, record) => (
+        <Space direction="vertical" size={4}>
+          <a href={`mailto:${record.email}`}>
+            <MailOutlined /> {record.email}
+          </a>
+          {record.phone ? (
+            <a href={`tel:${record.phone}`}>
+              <PhoneOutlined /> {record.phone}
+            </a>
+          ) : (
+            <Text type="secondary">Không có số điện thoại</Text>
+          )}
+        </Space>
+      )
     },
     {
-      title: 'Số điện thoại',
-      dataIndex: 'phone',
-      key: 'phone',
-      width: 130,
-      render: (phone: string) => (
-        <a href={`tel:${phone}`}>
-          <PhoneOutlined /> {phone}
-        </a>
-      ),
+      title: 'Nội dung',
+      dataIndex: 'message',
+      key: 'message',
+      render: (message: string) => (
+        <Paragraph
+          style={{ marginBottom: 0, maxWidth: 420 }}
+          ellipsis={{ rows: 2, expandable: false, tooltip: message }}
+        >
+          {message}
+        </Paragraph>
+      )
     },
     {
-      title: 'Chủ đề',
-      dataIndex: 'subject',
-      key: 'subject',
-      width: 200,
-    },
-    {
-      title: 'Trạng thái',
-      dataIndex: 'status',
-      key: 'status',
-      width: 120,
-      render: (status: string) => {
-        const statusOption = statusOptions.find(opt => opt.value === status)
-        return <Tag color={statusOption?.color}>{statusOption?.label}</Tag>
-      },
-    },
-    {
-      title: 'Độ ưu tiên',
-      dataIndex: 'priority',
-      key: 'priority',
-      width: 120,
-      render: (priority: string) => {
-        const priorityOption = priorityOptions.find(opt => opt.value === priority)
-        return <Tag color={priorityOption?.color}>{priorityOption?.label}</Tag>
-      },
-    },
-    {
-      title: 'Nguồn',
-      dataIndex: 'source',
-      key: 'source',
-      width: 100,
-      render: (source: string) => {
-        const sourceOption = sourceOptions.find(opt => opt.value === source)
-        return <Tag>{sourceOption?.label}</Tag>
-      },
-    },
-    {
-      title: 'Ngày tạo',
+      title: 'Thời gian gửi',
       dataIndex: 'createdAt',
       key: 'createdAt',
-      width: 120,
+      width: 170,
+      sorter: (a, b) => dayjs(a.createdAt).valueOf() - dayjs(b.createdAt).valueOf(),
+      defaultSortOrder: 'descend',
+      render: (createdAt: string) => (
+        <Text type="secondary">{formatDateTime(createdAt)}</Text>
+      )
     },
     {
       title: 'Thao tác',
       key: 'actions',
-      width: 150,
-      render: (_, record) => (
+      width: 170,
+      render: (_: unknown, record) => (
         <Space size="small">
           <Button
-            type="primary"
-            size="small"
+            type="text"
             icon={<EyeOutlined />}
             onClick={() => handleViewContact(record)}
           />
           <Button
-            type="default"
-            size="small"
-            icon={<EditOutlined />}
-            onClick={() => handleEditContact(record)}
+            type="text"
+            disabled={record.isRead}
+            icon={<CheckCircleOutlined />}
+            onClick={() => void handleMarkAsRead(record)}
           />
-          <Popconfirm
-            title="Bạn có chắc chắn muốn xóa liên lạc này?"
-            onConfirm={() => handleDeleteContact(record.id)}
-            okText="Có"
-            cancelText="Không"
-          >
-            <Button
-              type="primary"
-              danger
-              size="small"
-              icon={<DeleteOutlined />}
-            />
-          </Popconfirm>
+          <Button
+            type="text"
+            danger
+            icon={<DeleteOutlined />}
+            loading={deleteContactMutation.isPending && deletingContactId === record._id}
+            onClick={() => void handleDeleteContact(record)}
+          />
         </Space>
-      ),
-    },
+      )
+    }
   ]
 
   return (
-    <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-        <Title level={2}>Quản lý liên lạc khách hàng</Title>
-      </div>
+    <Space direction="vertical" size={20} style={{ width: '100%' }}>
+      {error && (
+        <Alert
+          type="error"
+          showIcon
+          message="Không thể tải dữ liệu liên hệ"
+          description="Vui lòng kiểm tra kết nối API hoặc quyền truy cập admin."
+        />
+      )}
 
-      <Card>
-        <Table
+      <Row gutter={[16, 16]}>
+        <Col xs={24} md={12} xl={6}>
+          <Card bordered={false} style={{ borderRadius: 20 }}>
+            <Statistic
+              title="Tổng liên hệ"
+              value={summary.totalContacts}
+              prefix={<ContactsOutlined />}
+            />
+          </Card>
+        </Col>
+        <Col xs={24} md={12} xl={6}>
+          <Card bordered={false} style={{ borderRadius: 20 }}>
+            <Statistic
+              title="Chưa đọc"
+              value={summary.unreadContacts}
+              prefix={<ClockCircleOutlined />}
+            />
+          </Card>
+        </Col>
+        <Col xs={24} md={12} xl={6}>
+          <Card bordered={false} style={{ borderRadius: 20 }}>
+            <Statistic
+              title="Có số điện thoại"
+              value={summary.contactsWithPhone}
+              prefix={<PhoneOutlined />}
+            />
+          </Card>
+        </Col>
+        <Col xs={24} md={12} xl={6}>
+          <Card bordered={false} style={{ borderRadius: 20 }}>
+            <Statistic
+              title="Mới trong tháng"
+              value={summary.contactsThisMonth}
+              prefix={<MailOutlined />}
+            />
+          </Card>
+        </Col>
+      </Row>
+
+      <Card
+        bordered={false}
+        style={{ borderRadius: 24 }}
+        styles={{ body: { padding: 24 } }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            gap: 16,
+            flexWrap: 'wrap',
+            marginBottom: 20
+          }}
+        >
+          <Space direction="vertical" size={4}>
+            <Title level={2} style={{ margin: 0 }}>
+              Quản lý liên lạc khách hàng
+            </Title>
+            <Text type="secondary">
+              Hãy xem qua và quản lý các liên hệ từ khách hàng. Đừng để sót bất kỳ yêu cầu nào!
+            </Text>
+          </Space>
+
+          <Search
+            allowClear
+            placeholder="Tìm theo tên, email, số điện thoại, nội dung"
+            style={{ width: 360, maxWidth: '100%' }}
+            onChange={(event) => setSearchValue(event.target.value)}
+          />
+        </div>
+
+        <Table<Contact>
+          rowKey={(record) => record._id}
           columns={columns}
-          dataSource={contacts}
-          pagination={{ pageSize: 10 }}
-          scroll={{ x: 1300 }}
+          dataSource={filteredContacts}
+          loading={isLoading}
+          pagination={{
+            pageSize: 10,
+            showSizeChanger: true,
+            pageSizeOptions: ['10', '20', '50'],
+            showTotal: (total, range) => `${range[0]}-${range[1]} của ${total} liên hệ`
+          }}
+          locale={{
+            emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Chưa có liên hệ nào" />
+          }}
+          scroll={{ x: 1100 }}
         />
       </Card>
 
-      {/* Edit Contact Modal */}
-      <Modal
-        title="Chỉnh sửa liên lạc"
-        open={isModalVisible}
-        onCancel={() => {
-          setIsModalVisible(false)
-          form.resetFields()
-        }}
-        onOk={() => form.submit()}
-        width={600}
-        okText="Cập nhật"
-        cancelText="Hủy"
-      >
-        <Form
-          form={form}
-          layout="vertical"
-          onFinish={handleSaveContact}
-        >
-          <Form.Item
-            name="status"
-            label="Trạng thái"
-            rules={[{ required: true, message: 'Vui lòng chọn trạng thái!' }]}
-          >
-            <Select placeholder="Chọn trạng thái">
-              {statusOptions.map(option => (
-                <Option key={option.value} value={option.value}>
-                  {option.label}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-
-          <Form.Item
-            name="priority"
-            label="Độ ưu tiên"
-            rules={[{ required: true, message: 'Vui lòng chọn độ ưu tiên!' }]}
-          >
-            <Select placeholder="Chọn độ ưu tiên">
-              {priorityOptions.map(option => (
-                <Option key={option.value} value={option.value}>
-                  {option.label}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-
-          <Form.Item
-            name="assignedTo"
-            label="Phân công cho"
-          >
-            <Input placeholder="Tên người xử lý" />
-          </Form.Item>
-        </Form>
-      </Modal>
-
-      {/* Contact Detail Drawer */}
       <Drawer
-        title="Chi tiết liên lạc"
+        title="Chi tiết liên hệ"
         placement="right"
-        onClose={() => setIsDrawerVisible(false)}
+        onClose={() => {
+          setIsDrawerVisible(false)
+          setSelectedContact(null)
+        }}
         open={isDrawerVisible}
-        width={600}
+        width={560}
+        extra={
+          selectedContact ? (
+            <Space>
+              <Button
+                disabled={selectedContact.isRead}
+                icon={<CheckCircleOutlined />}
+                onClick={() => void handleMarkAsRead(selectedContact)}
+              >
+                Đánh dấu đã đọc
+              </Button>
+              <Button
+                danger
+                icon={<DeleteOutlined />}
+                loading={
+                  deleteContactMutation.isPending &&
+                  deletingContactId === selectedContact._id
+                }
+                onClick={() => void handleDeleteContact(selectedContact)}
+              >
+                Xóa
+              </Button>
+            </Space>
+          ) : null
+        }
       >
-        {selectedContact && (
-          <div>
-            <Descriptions title="Thông tin khách hàng" bordered column={1}>
-              <Descriptions.Item label="Mã liên lạc">{selectedContact.id}</Descriptions.Item>
-              <Descriptions.Item label="Tên khách hàng">{selectedContact.name}</Descriptions.Item>
+        {selectedContact ? (
+          <Space direction="vertical" size={20} style={{ width: '100%' }}>
+            <Descriptions bordered column={1} size="small">
+              <Descriptions.Item label="Khách hàng">
+                {selectedContact.name}
+              </Descriptions.Item>
               <Descriptions.Item label="Email">
                 <a href={`mailto:${selectedContact.email}`}>
                   <MailOutlined /> {selectedContact.email}
                 </a>
               </Descriptions.Item>
               <Descriptions.Item label="Số điện thoại">
-                <a href={`tel:${selectedContact.phone}`}>
-                  <PhoneOutlined /> {selectedContact.phone}
-                </a>
+                {selectedContact.phone ? (
+                  <a href={`tel:${selectedContact.phone}`}>
+                    <PhoneOutlined /> {selectedContact.phone}
+                  </a>
+                ) : (
+                  'Không có'
+                )}
               </Descriptions.Item>
-              <Descriptions.Item label="Chủ đề">{selectedContact.subject}</Descriptions.Item>
               <Descriptions.Item label="Trạng thái">
-                {(() => {
-                  const statusOption = statusOptions.find(opt => opt.value === selectedContact.status)
-                  return <Tag color={statusOption?.color}>{statusOption?.label}</Tag>
-                })()}
+                <Tag color={selectedContact.isRead ? 'default' : 'purple'}>
+                  {selectedContact.isRead ? 'Đã đọc' : 'Chưa đọc'}
+                </Tag>
               </Descriptions.Item>
-              <Descriptions.Item label="Độ ưu tiên">
-                {(() => {
-                  const priorityOption = priorityOptions.find(opt => opt.value === selectedContact.priority)
-                  return <Tag color={priorityOption?.color}>{priorityOption?.label}</Tag>
-                })()}
+              <Descriptions.Item label="Thời gian gửi">
+                {formatDateTime(selectedContact.createdAt)}
               </Descriptions.Item>
-              <Descriptions.Item label="Nguồn">
-                {(() => {
-                  const sourceOption = sourceOptions.find(opt => opt.value === selectedContact.source)
-                  return <Tag>{sourceOption?.label}</Tag>
-                })()}
+              <Descriptions.Item label="Cập nhật lần cuối">
+                {formatDateTime(selectedContact.updatedAt)}
               </Descriptions.Item>
-              <Descriptions.Item label="Phân công cho">{selectedContact.assignedTo}</Descriptions.Item>
-              <Descriptions.Item label="Ngày tạo">{selectedContact.createdAt}</Descriptions.Item>
-              <Descriptions.Item label="Cập nhật lần cuối">{selectedContact.updatedAt}</Descriptions.Item>
             </Descriptions>
 
-            <div style={{ marginTop: 24 }}>
-              <Title level={4}>Nội dung tin nhắn</Title>
-              <Card>
-                <Paragraph>{selectedContact.message}</Paragraph>
-              </Card>
-            </div>
-
-            <div style={{ marginTop: 24 }}>
-              <Title level={4}>Ghi chú</Title>
-              {selectedContact.notes.length > 0 ? (
-                <Timeline>
-                  {selectedContact.notes.map((note, index) => (
-                    <Timeline.Item key={index} dot={<ClockCircleOutlined />}>
-                      {note}
-                    </Timeline.Item>
-                  ))}
-                </Timeline>
-              ) : (
-                <p>Chưa có ghi chú nào</p>
-              )}
-              
-              <Card style={{ marginTop: 16 }} title="Thêm ghi chú">
-                <Form form={noteForm} onFinish={handleAddNote}>
-                  <Form.Item
-                    name="note"
-                    rules={[{ required: true, message: 'Vui lòng nhập ghi chú!' }]}
-                  >
-                    <TextArea rows={3} placeholder="Nhập ghi chú..." />
-                  </Form.Item>
-                  <Form.Item>
-                    <Button type="primary" htmlType="submit" icon={<MessageOutlined />}>
-                      Thêm ghi chú
-                    </Button>
-                  </Form.Item>
-                </Form>
-              </Card>
-            </div>
-          </div>
+            <Card
+              title={
+                <Space>
+                  <MessageOutlined />
+                  <span>Nội dung liên hệ</span>
+                </Space>
+              }
+              bordered={false}
+              style={{
+                borderRadius: 20,
+                background: 'linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%)'
+              }}
+            >
+              <Paragraph style={{ marginBottom: 0, whiteSpace: 'pre-wrap' }}>
+                {selectedContact.message}
+              </Paragraph>
+            </Card>
+          </Space>
+        ) : (
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Không có liên hệ được chọn" />
         )}
       </Drawer>
-    </div>
+    </Space>
   )
 }
