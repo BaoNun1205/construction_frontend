@@ -19,6 +19,7 @@ import {
 import { 
   Menu as MenuIcon, 
   Phone,
+  Login,
   ExpandMore,
 } from "@mui/icons-material"
 import Link from "next/link"
@@ -41,6 +42,7 @@ export default function Header() {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null)
   const [anchorElServices, setAnchorElServices] = useState<null | HTMLElement>(null)
   const [anchorElProjects, setAnchorElProjects] = useState<null | HTMLElement>(null)
+  const [anchorElConnect, setAnchorElConnect] = useState<null | HTMLElement>(null)
   const [scrolled, setScrolled] = useState(false)
   const [isReady, setIsReady] = useState(false)
 
@@ -121,6 +123,14 @@ export default function Header() {
 
   const handleCloseProjectsMenu = () => {
     setAnchorElProjects(null)
+  }
+
+  const handleOpenConnectMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElConnect(event.currentTarget)
+  }
+
+  const handleCloseConnectMenu = () => {
+    setAnchorElConnect(null)
   }
 
   const navigationItems = [
@@ -383,15 +393,15 @@ export default function Header() {
               ))}
             </Box>
 
-            {/* Contact Info & Language Toggle */}
+            {/* Contact / Account Actions */}
             <Box sx={{ flexGrow: 0, display: "flex", gap: 1, alignItems: "center" }}>
-              {/* Contact Button for Desktop */}
               <Button
-                component={Link}
-                href="/contact"
+                id="connect-button"
+                onClick={handleOpenConnectMenu}
                 startIcon={<Phone />}
+                endIcon={!isMobile ? <ExpandMore /> : undefined}
                 sx={{
-                  display: isDesktop ? "flex" : "none",
+                  display: "flex",
                   color: "white",
                   background: "rgba(255,255,255,0.1)",
                   backdropFilter: "blur(10px)",
@@ -399,7 +409,8 @@ export default function Header() {
                   borderRadius: 2,
                   px: 2,
                   py: 1,
-                  fontSize: "16px",
+                  minWidth: isMobile ? "auto" : undefined,
+                  fontSize: isMobile ? "14px" : "16px",
                   fontWeight: 600,
                   textTransform: "none",
                   transition: "all 0.3s ease",
@@ -410,36 +421,7 @@ export default function Header() {
                   },
                 }}
               >
-                Liên hệ
-              </Button>
-
-              {/* Contact Button for Mobile/Tablet */}
-              <Button
-                component={Link}
-                href="/contact"
-                startIcon={<Phone />}
-                sx={{
-                  display: isMobile ? "flex" : "none",
-                  color: "white",
-                  background: "rgba(255,255,255,0.1)",
-                  backdropFilter: "blur(10px)",
-                  border: "1px solid rgba(255,255,255,0.3)",
-                  borderRadius: 2,
-                  px: 2,
-                  py: 1,
-                  fontSize: "14px",
-                  fontWeight: 600,
-                  textTransform: "none",
-                  transition: "all 0.3s ease",
-                  minWidth: "auto",
-                  "&:hover": {
-                    background: "rgba(255,255,255,0.2)",
-                    transform: "translateY(-2px)",
-                    boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
-                  },
-                }}
-              >
-                Liên hệ
+                Kết nối
               </Button>
 
               {/* Language Toggle - Desktop */}
@@ -488,6 +470,75 @@ export default function Header() {
             </Box>
 
             {/* Mobile Menu */}
+            <Menu
+              anchorEl={anchorElConnect}
+              open={Boolean(anchorElConnect)}
+              onClose={handleCloseConnectMenu}
+              TransitionComponent={Fade}
+              sx={{
+                "& .MuiPaper-root": {
+                  background: "rgba(255, 255, 255, 0.96)",
+                  backdropFilter: "blur(18px)",
+                  border: "1px solid rgba(15,23,42,0.08)",
+                  borderRadius: 3,
+                  mt: 1,
+                  minWidth: 220,
+                  boxShadow: "0 18px 40px rgba(15,23,42,0.18)",
+                },
+              }}
+            >
+              <MenuItem
+                component={Link}
+                href="/contact#contact-form"
+                onClick={handleCloseConnectMenu}
+                sx={{
+                  py: 1.5,
+                  px: 2.5,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1.5,
+                  transition: "transform 0.22s ease",
+                  "&:hover": {
+                    backgroundColor: "transparent",
+                    transform: "translateY(-2px)",
+                  },
+                }}
+              >
+                <Phone fontSize="small" />
+                <Box>
+                  <Typography fontWeight={600}>Liên hệ</Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    Gửi yêu cầu tư vấn và báo giá
+                  </Typography>
+                </Box>
+              </MenuItem>
+              <MenuItem
+                component={Link}
+                href="/auth"
+                onClick={handleCloseConnectMenu}
+                sx={{
+                  py: 1.5,
+                  px: 2.5,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1.5,
+                  transition: "transform 0.22s ease",
+                  "&:hover": {
+                    backgroundColor: "transparent",
+                    transform: "translateY(-2px)",
+                  },
+                }}
+              >
+                <Login fontSize="small" />
+                <Box>
+                  <Typography fontWeight={600}>Đăng nhập</Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    Truy cập khu quản trị
+                  </Typography>
+                </Box>
+              </MenuItem>
+            </Menu>
+
             <Menu
               anchorEl={anchorElNav}
               open={Boolean(anchorElNav)}
@@ -601,6 +652,66 @@ export default function Header() {
                   </MenuItem>
                 )
               ))}
+
+              <Divider sx={{ borderColor: "rgba(255,255,255,0.1)", mt: 1 }} />
+              <MenuItem
+                component={Link}
+                href="/contact#contact-form"
+                onClick={handleCloseNavMenu}
+                sx={{
+                  color: "white",
+                  py: 1.5,
+                  px: 3,
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    background: "rgba(255,255,255,0.1)",
+                    transform: "translateX(8px)",
+                  },
+                }}
+              >
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                  <Phone fontSize="small" />
+                  <Typography
+                    sx={{
+                      textDecoration: "none",
+                      color: "inherit",
+                      fontWeight: 500,
+                      fontSize: "18px",
+                    }}
+                  >
+                    Liên hệ
+                  </Typography>
+                </Box>
+              </MenuItem>
+              <MenuItem
+                onClick={handleCloseNavMenu}
+                component={Link}
+                href="/auth"
+                sx={{
+                  color: "white",
+                  py: 1.5,
+                  px: 3,
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    background: "rgba(255,255,255,0.1)",
+                    transform: "translateX(8px)",
+                  },
+                }}
+              >
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                  <Login fontSize="small" />
+                  <Typography
+                    sx={{
+                      textDecoration: "none",
+                      color: "inherit",
+                      fontWeight: 500,
+                      fontSize: "18px",
+                    }}
+                  >
+                    Đăng nhập
+                  </Typography>
+                </Box>
+              </MenuItem>
               
               {/* Language Toggle in Mobile Menu */}
               {/* <Divider sx={{ borderColor: "rgba(255,255,255,0.1)", mt: 1 }} />

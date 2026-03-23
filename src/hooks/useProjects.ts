@@ -13,6 +13,22 @@ export const projectKeys = {
   featured: () => [...projectKeys.all, 'featured'] as const
 }
 
+const upsertProjectInList = (projects: Project[] | undefined, updatedProject: Project) => {
+  if (!projects) {
+    return [updatedProject]
+  }
+
+  const hasProject = projects.some((project) => project._id === updatedProject._id)
+
+  if (!hasProject) {
+    return [updatedProject, ...projects]
+  }
+
+  return projects.map((project) =>
+    project._id === updatedProject._id ? updatedProject : project
+  )
+}
+
 // Fetch all projects or filter by status
 export function useProjects(status?: string) {
   return useQuery({
@@ -55,10 +71,8 @@ export function useCreateProject() {
   return useMutation({
     mutationFn: (projectData: CreateProjectDto) => ProjectService.createProject(projectData),
     onSuccess: (newProject) => {
-      // Invalidate project list cache and refetch
-      queryClient.invalidateQueries({ queryKey: projectKeys.lists() })
+      queryClient.invalidateQueries({ queryKey: projectKeys.all })
 
-      // Optimistically update cache with the new project
       queryClient.setQueryData<Project[]>(projectKeys.lists(), (old) => {
         return old ? [newProject, ...old] : [newProject]
       })
@@ -77,7 +91,7 @@ export function useCreateProjectWithMedia() {
     mutationFn: ({ projectData, files }: { projectData: CreateProjectDto; files: File[] }) =>
       ProjectService.createProjectWithMedia(projectData, files),
     onSuccess: (newProject) => {
-      queryClient.invalidateQueries({ queryKey: projectKeys.lists() })
+      queryClient.invalidateQueries({ queryKey: projectKeys.all })
       queryClient.setQueryData<Project[]>(projectKeys.lists(), (old) => {
         return old ? [newProject, ...old] : [newProject]
       })
@@ -96,11 +110,19 @@ export function useUpdateProject() {
     mutationFn: ({ id, data }: { id: string; data: UpdateProjectDto }) =>
       ProjectService.updateProject(id, data),
     onSuccess: (updatedProject, { id }) => {
-      // Update project detail in cache
       queryClient.setQueryData<Project>(projectKeys.detail(id), updatedProject)
-
-      // Invalidate project list to ensure fresh data
-      queryClient.invalidateQueries({ queryKey: projectKeys.lists() })
+      queryClient.setQueriesData<Project[]>(
+        { queryKey: projectKeys.lists() },
+        (old) => upsertProjectInList(old, updatedProject)
+      )
+      queryClient.setQueryData<Project[]>(
+        projectKeys.featured(),
+        (old) => {
+          const nextList = upsertProjectInList(old, updatedProject)
+          return nextList.filter((project) => project.isFeatured)
+        }
+      )
+      queryClient.invalidateQueries({ queryKey: projectKeys.all })
     },
     onError: (error) => {
       console.error('Error updating project:', error)
@@ -120,7 +142,18 @@ export function useUpdateProjectWithMedia() {
     }) => ProjectService.updateProjectWithMedia(id, data, files),
     onSuccess: (updatedProject, { id }) => {
       queryClient.setQueryData<Project>(projectKeys.detail(id), updatedProject)
-      queryClient.invalidateQueries({ queryKey: projectKeys.lists() })
+      queryClient.setQueriesData<Project[]>(
+        { queryKey: projectKeys.lists() },
+        (old) => upsertProjectInList(old, updatedProject)
+      )
+      queryClient.setQueryData<Project[]>(
+        projectKeys.featured(),
+        (old) => {
+          const nextList = upsertProjectInList(old, updatedProject)
+          return nextList.filter((project) => project.isFeatured)
+        }
+      )
+      queryClient.invalidateQueries({ queryKey: projectKeys.all })
     },
     onError: (error) => {
       console.error('Error updating project with media:', error)
@@ -135,10 +168,9 @@ export function useDeleteProject() {
   return useMutation({
     mutationFn: (id: string) => ProjectService.deleteProject(id),
     onSuccess: (_, deletedId) => {
-      // Remove deleted project detail from cache
       queryClient.removeQueries({ queryKey: projectKeys.detail(deletedId) })
+      queryClient.invalidateQueries({ queryKey: projectKeys.all })
 
-      // Update project list cache without the deleted project
       queryClient.setQueryData<Project[]>(projectKeys.lists(), (old) => {
         return old ? old.filter(project => project._id !== deletedId) : []
       })

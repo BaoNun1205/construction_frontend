@@ -45,9 +45,10 @@ export class ProjectService {
 
   // POST /projects
   static async createProject(projectData: CreateProjectDto): Promise<Project> {
-    return await apiClient.post<Project>('/projects', projectData, {
+    const res: ApiResponse<Project> = await apiClient.post('/projects', projectData, {
       requireAuth: true
     })
+    return res.data
   }
 
   // POST /projects/with-media
@@ -75,19 +76,21 @@ export class ProjectService {
       formData.append('media', file)
     })
 
-    return await apiClient.post<Project>('/projects/with-media', formData, {
+    const res: ApiResponse<Project> = await apiClient.post('/projects/with-media', formData, {
       requireAuth: true,
       headers: {
         'Content-Type': 'multipart/form-data'
       }
     })
+    return res.data
   }
 
   // PUT /projects/:id
   static async updateProject(id: string, projectData: UpdateProjectDto): Promise<Project> {
-    return await apiClient.put<Project>(`/projects/${id}`, projectData, {
+    const res: ApiResponse<Project> = await apiClient.put(`/projects/${id}`, projectData, {
       requireAuth: true
     })
+    return res.data
   }
 
   // PUT /projects/:id/media
@@ -116,12 +119,13 @@ export class ProjectService {
       formData.append('media', file)
     })
 
-    return await apiClient.put<Project>(`/projects/${id}/media`, formData, {
+    const res: ApiResponse<Project> = await apiClient.put(`/projects/${id}/media`, formData, {
       requireAuth: true,
       headers: {
         'Content-Type': 'multipart/form-data'
       }
     })
+    return res.data
   }
 
   // DELETE /projects/:id
