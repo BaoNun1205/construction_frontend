@@ -27,7 +27,7 @@ import {
 } from '@mui/icons-material'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState, type UIEvent } from 'react'
 import { useTranslations } from '@/hooks/useTranslations'
 import ProjectHelpers from '@/utils/projectHelpers'
 import useScrollAnimations from '@/hooks/useScrollAnimations'
@@ -45,6 +45,14 @@ export default function Home() {
   const projects = (data || []).map(project => ProjectHelpers.transformForHomePage(project))
 
   useScrollAnimations(undefined, undefined, undefined, [projects])
+
+  const getProjectStatusLabel = (statusRaw: string) => (
+    statusRaw === 'completed' ? t('home.projects.completed') : t('home.projects.inProgress')
+  )
+
+  const getProjectDateLabel = (statusRaw: string) => (
+    statusRaw === 'completed' ? t('home.projects.completedOn') : t('home.projects.startedOn')
+  )
 
   // Component for project title with fixed height and tooltip
   const ProjectTitle = ({ title }: { title: string }) => {
@@ -150,6 +158,167 @@ export default function Home() {
       color: theme.palette.secondary.light
     }
   ]
+
+  const whyChooseItems = [
+    {
+      title: t('home.whyChooseUs.experience.title'),
+      description: t('home.whyChooseUs.experience.description'),
+      icon: <HandshakeOutlined sx={{ fontSize: 60, color: theme.palette.action.active }} />
+    },
+    {
+      title: t('home.whyChooseUs.solution.title'),
+      description: t('home.whyChooseUs.solution.description'),
+      icon: <ConstructionOutlined sx={{ fontSize: 60, color: theme.palette.action.active }} />
+    },
+    {
+      title: t('home.whyChooseUs.quality.title'),
+      description: t('home.whyChooseUs.quality.description'),
+      icon: <VerifiedUserOutlined sx={{ fontSize: 60, color: theme.palette.action.active }} />
+    },
+    {
+      title: t('home.whyChooseUs.team.title'),
+      description: t('home.whyChooseUs.team.description'),
+      icon: <GroupOutlined sx={{ fontSize: 60, color: theme.palette.action.active }} />
+    }
+  ]
+
+  const mobileServicePages = services.reduce<(typeof services)[]>((pages, service, index) => {
+    const pageIndex = Math.floor(index / 2)
+
+    if (!pages[pageIndex]) {
+      pages[pageIndex] = []
+    }
+
+    pages[pageIndex].push(service)
+    return pages
+  }, [])
+
+  const mobileServicesRef = useRef<HTMLDivElement | null>(null)
+  const [activeServicePage, setActiveServicePage] = useState(0)
+  const mobileProjectsRef = useRef<HTMLDivElement | null>(null)
+  const [activeProjectPage, setActiveProjectPage] = useState(0)
+  const mobileWhyChooseRef = useRef<HTMLDivElement | null>(null)
+  const [activeWhyChooseIndex, setActiveWhyChooseIndex] = useState(0)
+
+  const mobileProjectPages = projects.reduce<(typeof projects)[]>((pages, project, index) => {
+    const pageIndex = Math.floor(index / 2)
+
+    if (!pages[pageIndex]) {
+      pages[pageIndex] = []
+    }
+
+    pages[pageIndex].push(project)
+    return pages
+  }, [])
+
+  useEffect(() => {
+    setActiveServicePage(0)
+  }, [mobileServicePages.length])
+
+  useEffect(() => {
+    setActiveProjectPage(0)
+  }, [mobileProjectPages.length])
+
+  useEffect(() => {
+    setActiveWhyChooseIndex(0)
+  }, [whyChooseItems.length])
+
+  const scrollToServicePage = (pageIndex: number) => {
+    const container = mobileServicesRef.current
+
+    if (!container) {
+      return
+    }
+
+    container.scrollTo({
+      left: pageIndex * container.clientWidth,
+      behavior: 'smooth'
+    })
+  }
+
+  const handleMobileServicesScroll = (event: UIEvent<HTMLDivElement>) => {
+    const container = event.currentTarget
+
+    if (!container.clientWidth) {
+      return
+    }
+
+    setActiveServicePage(Math.round(container.scrollLeft / container.clientWidth))
+  }
+
+  const scrollToProjectPage = (pageIndex: number) => {
+    const container = mobileProjectsRef.current
+    const page = container?.children[pageIndex] as HTMLElement | undefined
+
+    if (!container || !page) {
+      return
+    }
+
+    container.scrollTo({
+      left: page.offsetLeft - container.offsetLeft,
+      behavior: 'smooth'
+    })
+  }
+
+  const handleMobileProjectsScroll = (event: UIEvent<HTMLDivElement>) => {
+    const container = event.currentTarget
+    const pages = Array.from(container.children) as HTMLElement[]
+
+    if (pages.length === 0) {
+      return
+    }
+
+    let closestIndex = 0
+    let smallestDistance = Number.POSITIVE_INFINITY
+
+    pages.forEach((page, index) => {
+      const distance = Math.abs(page.offsetLeft - container.scrollLeft)
+
+      if (distance < smallestDistance) {
+        smallestDistance = distance
+        closestIndex = index
+      }
+    })
+
+    setActiveProjectPage(closestIndex)
+  }
+
+  const scrollToWhyChooseItem = (itemIndex: number) => {
+    const container = mobileWhyChooseRef.current
+    const item = container?.children[itemIndex] as HTMLElement | undefined
+
+    if (!container || !item) {
+      return
+    }
+
+    container.scrollTo({
+      left: item.offsetLeft - container.offsetLeft,
+      behavior: 'smooth'
+    })
+  }
+
+  const handleMobileWhyChooseScroll = (event: UIEvent<HTMLDivElement>) => {
+    const container = event.currentTarget
+    const items = Array.from(container.children) as HTMLElement[]
+
+    if (items.length === 0) {
+      return
+    }
+
+    let closestIndex = 0
+    let smallestDistance = Number.POSITIVE_INFINITY
+
+    items.forEach((item, index) => {
+      const distance = Math.abs(item.offsetLeft - container.scrollLeft)
+
+      if (distance < smallestDistance) {
+        smallestDistance = distance
+        closestIndex = index
+      }
+    })
+
+    setActiveWhyChooseIndex(closestIndex)
+  }
 
   return (
     <Box className="min-h-screen">
@@ -358,29 +527,255 @@ export default function Home() {
 
         {/* Services Section */}
         <section>
+          <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
+            <Box
+              sx={{
+                mb: 2,
+                px: 1,
+                textAlign: 'center',
+                maxWidth: 340,
+                mx: 'auto'
+              }}
+            >
+              <Typography
+                variant="h2"
+                className="font-bold text-center"
+                sx={{
+                  mb: 0.85,
+                  fontSize: '2rem',
+                  fontWeight: 700,
+                  lineHeight: 1.15,
+                  textTransform: 'capitalize',
+                  color: '#0f172a'
+                }}
+              >
+                {t('home.services.title')}
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: '0.95rem',
+                  lineHeight: 1.7,
+                  color: 'rgba(15, 23, 42, 0.72)'
+                }}
+              >
+                {t('home.services.description')}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                position: 'relative',
+                overflow: 'hidden',
+                borderRadius: 5,
+                px: 2,
+                py: 2.5,
+                background: `linear-gradient(155deg, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.main} 58%, ${theme.palette.secondary.main} 100%)`,
+                boxShadow: '0 24px 40px rgba(15, 23, 42, 0.16)',
+                '&::before': {
+                  content: '""',
+                  position: 'absolute',
+                  top: -56,
+                  right: -36,
+                  width: 160,
+                  height: 160,
+                  borderRadius: '50%',
+                  background: 'rgba(255, 255, 255, 0.08)'
+                },
+                '&::after': {
+                  content: '""',
+                  position: 'absolute',
+                  left: -28,
+                  bottom: -42,
+                  width: 118,
+                  height: 118,
+                  borderRadius: '32px',
+                  transform: 'rotate(24deg)',
+                  background: 'rgba(255, 255, 255, 0.07)'
+                }
+              }}
+            >
+              <Box sx={{ position: 'relative', zIndex: 1 }}>
+                <Box
+                  ref={mobileServicesRef}
+                  onScroll={handleMobileServicesScroll}
+                  sx={{
+                    display: 'flex',
+                    gap: 1.5,
+                    overflowX: 'auto',
+                    px: 0.25,
+                    scrollSnapType: 'x mandatory',
+                    scrollPaddingLeft: '2px',
+                    WebkitOverflowScrolling: 'touch',
+                    scrollbarWidth: 'none',
+                    '&::-webkit-scrollbar': {
+                      display: 'none'
+                    }
+                  }}
+                >
+                  {mobileServicePages.map((page, pageIndex) => (
+                    <Box
+                      key={`mobile-service-page-${pageIndex}`}
+                      sx={{
+                        flex: '0 0 calc(100% - 6px)',
+                        scrollSnapAlign: 'start'
+                      }}
+                    >
+                      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.25 }}>
+                        {page.map((service, serviceIndex) => (
+                          <Box
+                            key={`mobile-service-${pageIndex}-${serviceIndex}`}
+                            component={Link}
+                            href={service.href}
+                            sx={{
+                              display: 'grid',
+                              gridTemplateColumns: '52px minmax(0, 1fr) 36px',
+                              alignItems: 'center',
+                              gap: 1.25,
+                              p: 1.25,
+                              borderRadius: 3,
+                              textDecoration: 'none',
+                              color: 'inherit',
+                              backgroundColor: 'rgba(255, 255, 255, 0.14)',
+                              border: '1px solid rgba(255, 255, 255, 0.18)',
+                              backdropFilter: 'blur(12px)'
+                            }}
+                          >
+                            <Box
+                              sx={{
+                                width: 52,
+                                height: 52,
+                                borderRadius: 2.5,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                backgroundColor: 'white',
+                                boxShadow: '0 10px 22px rgba(15, 23, 42, 0.14)'
+                              }}
+                            >
+                              {service.icon}
+                            </Box>
+
+                            <Box sx={{ minWidth: 0 }}>
+                              <Typography
+                                sx={{
+                                  mb: 0.4,
+                                  fontSize: '0.95rem',
+                                  fontWeight: 800,
+                                  lineHeight: 1.35,
+                                  color: 'white'
+                                }}
+                              >
+                                {service.title}
+                              </Typography>
+                              <Typography
+                                sx={{
+                                  fontSize: '0.8rem',
+                                  lineHeight: 1.55,
+                                  color: 'rgba(255, 255, 255, 0.8)',
+                                  display: '-webkit-box',
+                                  overflow: 'hidden',
+                                  WebkitLineClamp: 2,
+                                  WebkitBoxOrient: 'vertical'
+                                }}
+                              >
+                                {service.description}
+                              </Typography>
+                            </Box>
+
+                            <Box
+                              sx={{
+                                width: 36,
+                                height: 36,
+                                borderRadius: '50%',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                backgroundColor: 'rgba(255, 255, 255, 0.18)',
+                                color: 'white'
+                              }}
+                            >
+                              <ArrowForward sx={{ fontSize: 18 }} />
+                            </Box>
+                          </Box>
+                        ))}
+                      </Box>
+                    </Box>
+                  ))}
+                </Box>
+
+                {mobileServicePages.length > 1 && (
+                  <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1, mt: 2 }}>
+                    {mobileServicePages.map((_, pageIndex) => (
+                      <Box
+                        key={`mobile-service-dot-${pageIndex}`}
+                        component="button"
+                        type="button"
+                        aria-label={`Trang dich vu ${pageIndex + 1}`}
+                        onClick={() => scrollToServicePage(pageIndex)}
+                        sx={{
+                          width: pageIndex === activeServicePage ? 24 : 8,
+                          height: 8,
+                          border: 'none',
+                          borderRadius: '999px',
+                          backgroundColor: pageIndex === activeServicePage
+                            ? 'white'
+                            : 'rgba(255, 255, 255, 0.35)',
+                          transition: 'all 0.25s ease'
+                        }}
+                      />
+                    ))}
+                  </Box>
+                )}
+              </Box>
+            </Box>
+          </Box>
           {/* Main Container with Border */}
           <Box
             sx={{
-              border: `2px solid ${theme.palette.primary.main}`,
-              borderRadius: 4,
-              py: 4,
-              pl: 4,
-              pr: 6,
-              position: 'relative'
+              display: { xs: 'none', sm: 'block' },
+              position: 'relative',
+              overflow: 'hidden',
+              borderRadius: { sm: 5, lg: 6 },
+              px: { sm: 3, md: 4, lg: 5 },
+              py: { sm: 3.5, md: 4, lg: 4.5 },
+              background: `linear-gradient(155deg, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.main} 58%, ${theme.palette.secondary.main} 100%)`,
+              boxShadow: '0 28px 48px rgba(15, 23, 42, 0.16)',
+              '&::before': {
+                content: '""',
+                position: 'absolute',
+                top: -70,
+                right: -50,
+                width: 220,
+                height: 220,
+                borderRadius: '50%',
+                background: 'rgba(255, 255, 255, 0.08)'
+              },
+              '&::after': {
+                content: '""',
+                position: 'absolute',
+                left: -40,
+                bottom: -54,
+                width: 150,
+                height: 150,
+                borderRadius: '38px',
+                transform: 'rotate(24deg)',
+                background: 'rgba(255, 255, 255, 0.07)'
+              }
             }}
           >
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <Box sx={{ display: 'none' }} />
+            <div className="relative z-[1] grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               {/* Left Content */}
               <div className="slide-in-left">
                 <Typography
                   variant="h2"
                   gutterBottom
                   sx={{
-                    fontWeight: 700,
-                    fontSize: { xs: '2.5rem', md: '3rem' },
-                    lineHeight: 1.2,
-                    mb: 4,
-                    color: 'black'
+                    fontWeight: 800,
+                    fontSize: { xs: '2.5rem', md: '3.15rem' },
+                    lineHeight: 1.08,
+                    mb: 2,
+                    color: 'white',
+                    maxWidth: 560
                   }}
                 >
                   {t('home.services.title')}
@@ -388,11 +783,10 @@ export default function Home() {
                 <Typography
                   variant="body1"
                   sx={{
-                    fontSize: '1.1rem',
-                    lineHeight: 1.8,
-                    color: 'text.secondary',
-                    // mb: 6,
-                    maxWidth: 500
+                    fontSize: { sm: '1rem', lg: '1.08rem' },
+                    lineHeight: 1.85,
+                    color: 'rgba(255, 255, 255, 0.82)',
+                    maxWidth: 520
                   }}
                 >
                   {t('home.services.description')}
@@ -447,18 +841,20 @@ export default function Home() {
                           href={service.href}
                           sx={{
                             p: 3,
-                            backgroundColor: theme.palette.primary.main,
-                            // border: '1px solid #e0e0e0',
+                            backgroundColor: 'rgba(255, 255, 255, 0.14)',
+                            border: '1px solid rgba(255, 255, 255, 0.18)',
+                            backdropFilter: 'blur(14px)',
                             borderRadius: 3,
                             textDecoration: 'none',
-                            color: 'black',
+                            color: 'inherit',
                             transition: 'all 0.3s ease-in-out',
                             display: 'block',
-                            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                            boxShadow: '0 12px 24px rgba(15, 23, 42, 0.14)',
                             position: 'relative',
                             '&:hover': {
-                              transform: 'translateX(8px)'
-                              // borderColor: theme.palette.primary.main
+                              transform: 'translateX(8px)',
+                              backgroundColor: 'rgba(255, 255, 255, 0.18)',
+                              borderColor: 'rgba(255, 255, 255, 0.28)'
                             }
                           }}
                         >
@@ -528,7 +924,7 @@ export default function Home() {
                       width: 22,
                       height: 35,
                       border: '2px solid',
-                      borderColor: theme.palette.primary.main,
+                      borderColor: 'rgba(255, 255, 255, 0.92)',
                       borderRadius: '12px',
                       display: 'flex',
                       justifyContent: 'center',
@@ -539,7 +935,7 @@ export default function Home() {
                     <Box sx={{
                       width: 3,
                       height: 6,
-                      backgroundColor: theme.palette.primary.main,
+                      backgroundColor: 'rgba(255, 255, 255, 0.92)',
                       borderRadius: 2,
                       animation: 'scroll 1.5s infinite'
                     }} />
@@ -552,7 +948,12 @@ export default function Home() {
 
         {/* Projects Section */}
         <section>
-          <Box textAlign="center" mb={6} className="fade-in-up">
+          <Box
+            textAlign="center"
+            mb={6}
+            className="fade-in-up"
+            sx={{ display: { xs: 'none', sm: 'block' } }}
+          >
             <Typography
               variant="h2"
               gutterBottom
@@ -571,6 +972,261 @@ export default function Home() {
 
           {/* Projects Carousel */}
           <div className="relative">
+            <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
+              <Box
+                sx={{
+                  mb: 2,
+                  px: 1,
+                  textAlign: 'center',
+                  maxWidth: 340,
+                  mx: 'auto'
+                }}
+              >
+                <Typography
+                  variant="h2"
+                  className="font-bold text-center"
+                  sx={{
+                    mb: 0.85,
+                    fontSize: '2rem',
+                    fontWeight: 700,
+                    lineHeight: 1.15,
+                    textTransform: 'capitalize',
+                    color: '#0f172a'
+                  }}
+                >
+                  {t('home.projects.title')}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: '0.95rem',
+                    lineHeight: 1.7,
+                    color: 'rgba(15, 23, 42, 0.72)'
+                  }}
+                >
+                  {t('home.projects.subtitle')}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  position: 'relative',
+                  overflow: 'hidden',
+                  borderRadius: 5,
+                  px: 2,
+                  py: 2.5,
+                  background: `linear-gradient(160deg, #06143b 0%, ${theme.palette.primary.dark} 42%, ${theme.palette.primary.main} 76%, ${theme.palette.secondary.main} 100%)`,
+                  boxShadow: '0 24px 40px rgba(15, 23, 42, 0.18)',
+                  '&::before': {
+                    content: '""',
+                    position: 'absolute',
+                    top: -52,
+                    right: -28,
+                    width: 152,
+                    height: 152,
+                    borderRadius: '50%',
+                    background: 'rgba(255, 255, 255, 0.08)'
+                  },
+                  '&::after': {
+                    content: '""',
+                    position: 'absolute',
+                    left: -22,
+                    bottom: -46,
+                    width: 122,
+                    height: 122,
+                    borderRadius: '34px',
+                    transform: 'rotate(22deg)',
+                    background: 'rgba(255, 255, 255, 0.07)'
+                  }
+                }}
+              >
+                <Box sx={{ position: 'relative', zIndex: 1 }}>
+                  <Box
+                    sx={{
+                      color: 'white',
+                      '& > div': {
+                        px: 2,
+                        py: 2.5,
+                        borderRadius: 3.5,
+                        backgroundColor: 'rgba(255, 255, 255, 0.14)',
+                        border: '1px solid rgba(255, 255, 255, 0.18)'
+                      }
+                    }}
+                  >
+              {isLoading && <div>Đang tải dự án...</div>}
+              {error && <div>Lỗi khi tải dự án!</div>}
+              {!isLoading && !error && projects.length === 0 && (
+                <div>Không có dự án nào!</div>
+              )}
+                  </Box>
+              {!isLoading && !error && projects.length > 0 && (
+                <>
+                  <Box
+                    ref={mobileProjectsRef}
+                    onScroll={handleMobileProjectsScroll}
+                    sx={{
+                      display: 'flex',
+                      gap: 1.5,
+                      overflowX: 'auto',
+                      px: 0.25,
+                      scrollSnapType: 'x mandatory',
+                      scrollPaddingLeft: '2px',
+                      WebkitOverflowScrolling: 'touch',
+                      scrollbarWidth: 'none',
+                      '&::-webkit-scrollbar': {
+                        display: 'none'
+                      }
+                    }}
+                  >
+                    {mobileProjectPages.map((page, pageIndex) => (
+                      <Box
+                        key={`mobile-project-page-${pageIndex}`}
+                        sx={{
+                          flex: '0 0 calc(100% - 6px)',
+                          scrollSnapAlign: 'start'
+                        }}
+                      >
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                          {page.map((project, projectIndex) => (
+                            <Box
+                              component={Link}
+                              href={project.url}
+                              key={`mobile-project-${pageIndex}-${projectIndex}`}
+                              sx={{
+                                display: 'grid',
+                                gridTemplateColumns: '104px minmax(0, 1fr)',
+                                alignItems: 'stretch',
+                                gap: 1.5,
+                                p: 1.5,
+                                borderRadius: 3.5,
+                                textDecoration: 'none',
+                                color: 'inherit',
+                                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.11) 100%)',
+                                border: '1px solid rgba(255, 255, 255, 0.18)',
+                                boxShadow: '0 18px 32px rgba(3, 10, 26, 0.18)',
+                                backdropFilter: 'blur(12px)'
+                              }}
+                            >
+                              <Box
+                                sx={{
+                                  position: 'relative',
+                                  width: 104,
+                                  height: 104,
+                                  minWidth: 104,
+                                  borderRadius: 3,
+                                  overflow: 'hidden',
+                                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                  boxShadow: '0 14px 26px rgba(3, 10, 26, 0.14)',
+                                  '&::after': {
+                                    content: '""',
+                                    position: 'absolute',
+                                    inset: 0,
+                                    background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(15, 23, 42, 0.18) 100%)'
+                                  }
+                                }}
+                              >
+                                <Image
+                                  src={project.image}
+                                  alt={project.title}
+                                  fill
+                                  style={{ objectFit: 'cover' }}
+                                />
+                              </Box>
+
+                              <Box
+                                sx={{
+                                  minWidth: 0,
+                                  display: 'flex',
+                                  flexDirection: 'column',
+                                  justifyContent: 'center',
+                                  position: 'relative',
+                                  minHeight: 104
+                                }}
+                              >
+                                <Typography
+                                  sx={{
+                                    mb: 0.75,
+                                    fontSize: '0.98rem',
+                                    fontWeight: 800,
+                                    lineHeight: 1.35,
+                                    color: 'white',
+                                    display: '-webkit-box',
+                                    overflow: 'hidden',
+                                    WebkitLineClamp: 2,
+                                    WebkitBoxOrient: 'vertical'
+                                  }}
+                                >
+                                  {project.title}
+                                </Typography>
+                                <Typography
+                                  sx={{
+                                    fontSize: '0.83rem',
+                                    lineHeight: 1.58,
+                                    color: 'rgba(255, 255, 255, 0.8)',
+                                    pr: 6,
+                                    display: '-webkit-box',
+                                    overflow: 'hidden',
+                                    WebkitLineClamp: 3,
+                                    WebkitBoxOrient: 'vertical'
+                                  }}
+                                >
+                                  {project.description}
+                                </Typography>
+
+                                <Box
+                                  aria-label={`${t('home.projects.viewDetail')}: ${project.title}`}
+                                  sx={{
+                                    position: 'absolute',
+                                    right: 0,
+                                    bottom: 0,
+                                    width: 38,
+                                    height: 38,
+                                    borderRadius: '50%',
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    backgroundColor: 'rgba(255, 255, 255, 0.92)',
+                                    color: theme.palette.primary.dark,
+                                    boxShadow: '0 12px 22px rgba(2, 6, 23, 0.18)'
+                                  }}
+                                >
+                                  <ArrowForward sx={{ fontSize: 18 }} />
+                                </Box>
+                              </Box>
+                            </Box>
+                          ))}
+                        </Box>
+                      </Box>
+                    ))}
+                  </Box>
+
+                  {mobileProjectPages.length > 1 && (
+                    <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1, mt: 2 }}>
+                      {mobileProjectPages.map((_, pageIndex) => (
+                        <Box
+                          key={`mobile-project-dot-${pageIndex}`}
+                          component="button"
+                          type="button"
+                          aria-label={`Trang du an ${pageIndex + 1}`}
+                          onClick={() => scrollToProjectPage(pageIndex)}
+                          sx={{
+                            width: pageIndex === activeProjectPage ? 24 : 8,
+                            height: 8,
+                            border: 'none',
+                            borderRadius: '999px',
+                            backgroundColor: pageIndex === activeProjectPage
+                              ? 'rgba(255, 255, 255, 0.96)'
+                              : 'rgba(255, 255, 255, 0.34)',
+                            transition: 'all 0.25s ease'
+                          }}
+                        />
+                      ))}
+                    </Box>
+                  )}
+                </>
+              )}
+                </Box>
+              </Box>
+            </Box>
+            <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {/* Left Arrow Button - Hidden on mobile/tablet */}
             <button
               className="absolute -left-16 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center transition-colors duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed hidden lg:flex"
@@ -764,6 +1420,7 @@ export default function Home() {
                 ></button>
               ))}
             </div>
+            </Box>
           </div>
         </section>
 
@@ -783,8 +1440,77 @@ export default function Home() {
           </Typography>
 
           {/* Background box with 4 columns */}
+          <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
+            <Box
+              ref={mobileWhyChooseRef}
+              onScroll={handleMobileWhyChooseScroll}
+              sx={{
+                display: 'flex',
+                gap: 1.5,
+                overflowX: 'auto',
+                px: 0.25,
+                scrollSnapType: 'x mandatory',
+                scrollPaddingLeft: '2px',
+                WebkitOverflowScrolling: 'touch',
+                scrollbarWidth: 'none',
+                '&::-webkit-scrollbar': {
+                  display: 'none'
+                }
+              }}
+            >
+              {whyChooseItems.map((item, index) => (
+                <Box
+                  key={`mobile-why-choose-${index}`}
+                  sx={{
+                    flex: '0 0 calc(100% - 6px)',
+                    scrollSnapAlign: 'start',
+                    backgroundColor: theme.palette.primary.main,
+                    borderRadius: 3.5,
+                    p: 3,
+                    textAlign: 'center',
+                    boxShadow: '0 18px 32px rgba(15, 23, 42, 0.12)'
+                  }}
+                >
+                  <Box className="flex justify-center mb-4">
+                    {item.icon}
+                  </Box>
+                  <Typography variant="h5" className="font-bold mb-4 text-white">
+                    {item.title}
+                  </Typography>
+                  <Typography variant="body1" className="text-white/90 leading-relaxed">
+                    {item.description}
+                  </Typography>
+                </Box>
+              ))}
+            </Box>
+
+            {whyChooseItems.length > 1 && (
+              <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1, mt: 2 }}>
+                {whyChooseItems.map((_, index) => (
+                  <Box
+                    key={`mobile-why-choose-dot-${index}`}
+                    component="button"
+                    type="button"
+                    aria-label={`Ly do ${index + 1}`}
+                    onClick={() => scrollToWhyChooseItem(index)}
+                    sx={{
+                      width: index === activeWhyChooseIndex ? 24 : 8,
+                      height: 8,
+                      border: 'none',
+                      borderRadius: '999px',
+                      backgroundColor: index === activeWhyChooseIndex
+                        ? theme.palette.primary.main
+                        : 'rgba(148, 163, 184, 0.35)',
+                      transition: 'all 0.25s ease'
+                    }}
+                  />
+                ))}
+              </Box>
+            )}
+          </Box>
           <Box
             sx={{
+              display: { xs: 'none', sm: 'block' },
               backgroundColor: theme.palette.primary.main,
               borderRadius: 3
             }}

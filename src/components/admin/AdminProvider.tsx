@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { ConfigProvider } from 'antd'
+import { App, ConfigProvider } from 'antd'
 import viVN from 'antd/locale/vi_VN'
 import AntdRegistry from '@/components/AntdRegistry'
 
@@ -21,7 +21,9 @@ export default function AdminProvider({ children }: AdminProviderProps) {
           },
         }}
       >
-        {children}
+        <App>
+          {children}
+        </App>
       </ConfigProvider>
     </AntdRegistry>
   )

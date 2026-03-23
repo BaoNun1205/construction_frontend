@@ -13,6 +13,9 @@ const compat = new FlatCompat({
 })
 
 const eslintConfig = [
+  {
+    ignores: ['.next/**', 'node_modules/**']
+  },
   ...compat.extends('next/core-web-vitals', 'next/typescript'),
   { files: ['**/*.{js,mjs,cjs,jsx,ts,tsx}'] },
   { languageOptions: { globals: { ...globals.browser, ...globals.node } } },
@@ -28,7 +31,7 @@ const eslintConfig = [
       'no-multiple-empty-lines': 1,
       'space-before-blocks': ['error', 'always'],
       'object-curly-spacing': [1, 'always'],
-      'indent': ['warn', 2],
+      'indent': 'off',
       'semi': [1, 'never'],
       'quotes': ['error', 'single'],
       'array-bracket-spacing': 1,

@@ -13,7 +13,7 @@ export class ProjectHelpers {
   }
 
   // Tính duration giữa 2 ngày hoặc từ startDate đến hiện tại nếu không có endDate
-  static calculateDuration(startDate: string, endDate?: string): string {
+  static calculateDuration(startDate: string, endDate?: string | null): string {
     const start = new Date(startDate)
     const end = endDate ? new Date(endDate) : new Date() // Dùng ngày hiện tại nếu không có endDate
     const diffTime = Math.abs(end.getTime() - start.getTime())
@@ -65,7 +65,7 @@ export class ProjectHelpers {
   }
 
   // Format date range
-  static formatDateRange(startDate: string, endDate?: string): string {
+  static formatDateRange(startDate: string, endDate?: string | null): string {
     const start = this.formatDate(startDate)
     if (!endDate) {
       return `Từ ${start} (Đang triển khai)`

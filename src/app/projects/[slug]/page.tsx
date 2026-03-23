@@ -1,8 +1,9 @@
-'use client'
+﻿'use client'
 
 import React, { use, useState, useEffect } from 'react' 
 import { useProjectBySlug } from '@/hooks/useProjects'
 import { ProjectHelpers } from '@/utils/projectHelpers'
+import { ProjectDetailPageSkeleton } from '@/components/projects/ProjectPageSkeletons'
 import Image from 'next/image'
 import {
   CalendarToday,
@@ -16,7 +17,7 @@ import {
   PlayArrow,
   Schedule
 } from '@mui/icons-material'
-import { Typography, CircularProgress, Alert, Box, Container } from '@mui/material'
+import { Typography, Alert, Box, Container } from '@mui/material'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 // export default function ProjectDetailPage(props: any) {
@@ -48,14 +49,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
   }, [project])
 
   if (isLoading) {
-    return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
-        <CircularProgress size={60} />
-        <Typography variant="h6" sx={{ ml: 2 }}>
-          Đang tải chi tiết dự án...
-        </Typography>
-      </Box>
-    )
+    return <ProjectDetailPageSkeleton />
   }
 
   if (isError) {

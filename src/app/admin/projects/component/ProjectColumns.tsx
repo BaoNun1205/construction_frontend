@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Space, Tag, Tooltip, Button, Popconfirm, Image } from 'antd'
+import { Space, Tag, Tooltip, Button, Popconfirm, Image, Typography } from 'antd'
 import {
   EyeOutlined,
   EditOutlined,
@@ -11,23 +11,25 @@ import {
   ClockCircleOutlined
 } from '@ant-design/icons'
 import type { ColumnsType } from 'antd/es/table'
-import { Project } from '@/types/project'
 import dayjs from 'dayjs'
-
-import { Typography } from 'antd'
+import { Project } from '@/types/project'
 
 const { Text } = Typography
 
 interface Props {
-  // eslint-disable-next-line no-unused-vars
   onView: (project: Project) => void
-  // eslint-disable-next-line no-unused-vars
   onEdit: (project: Project) => void
-  // eslint-disable-next-line no-unused-vars
   onDelete: (id: string) => void
 }
 
-export const useProjectColumns = ({ onView, onEdit, onDelete }: Props): ColumnsType<Project> => [
+const getManagementSortTime = (project: Project) =>
+  dayjs(project.updatedAt || project.createdAt || project.startDate).valueOf()
+
+export const useProjectColumns = ({
+  onView,
+  onEdit,
+  onDelete
+}: Props): ColumnsType<Project> => [
   {
     title: 'Hình ảnh',
     dataIndex: 'mainImage',
@@ -49,6 +51,7 @@ export const useProjectColumns = ({ onView, onEdit, onDelete }: Props): ColumnsT
     dataIndex: 'title',
     key: 'title',
     width: 250,
+    sorter: (a, b) => a.title.localeCompare(b.title, 'vi'),
     render: (text: string) => (
       <Tooltip title={text}>
         <Text strong style={{ cursor: 'pointer' }}>
@@ -61,7 +64,8 @@ export const useProjectColumns = ({ onView, onEdit, onDelete }: Props): ColumnsT
     title: 'Danh mục',
     dataIndex: 'category',
     key: 'category',
-    width: 120,
+    width: 160,
+    sorter: (a, b) => (a.category?.name || '').localeCompare(b.category?.name || '', 'vi'),
     render: (category: { name?: string }) => (
       <Tag color="blue">{category?.name || 'N/A'}</Tag>
     )
@@ -70,7 +74,12 @@ export const useProjectColumns = ({ onView, onEdit, onDelete }: Props): ColumnsT
     title: 'Trạng thái',
     dataIndex: 'status',
     key: 'status',
-    width: 120,
+    width: 140,
+    filters: [
+      { text: 'Hoàn thành', value: 'completed' },
+      { text: 'Đang thực hiện', value: 'in-progress' }
+    ],
+    onFilter: (value, record) => record.status === value,
     render: (status: string) => (
       <Tag
         icon={status === 'completed' ? <CheckCircleOutlined /> : <ClockCircleOutlined />}
@@ -81,9 +90,10 @@ export const useProjectColumns = ({ onView, onEdit, onDelete }: Props): ColumnsT
     )
   },
   {
-    title: 'Thời gian',
+    title: 'Thời gian dự án',
     key: 'timeline',
-    width: 180,
+    width: 190,
+    sorter: (a, b) => dayjs(a.startDate).valueOf() - dayjs(b.startDate).valueOf(),
     render: (_, record) => (
       <div>
         <div style={{ fontSize: '12px', color: '#666' }}>
@@ -98,10 +108,22 @@ export const useProjectColumns = ({ onView, onEdit, onDelete }: Props): ColumnsT
     )
   },
   {
+    title: 'Cập nhật',
+    key: 'updatedAt',
+    width: 170,
+    defaultSortOrder: 'descend' as const,
+    sorter: (a, b) => getManagementSortTime(a) - getManagementSortTime(b),
+    render: (_, record) => (
+      <div style={{ fontSize: '12px', color: '#666' }}>
+        {dayjs(record.updatedAt || record.createdAt || record.startDate).format('DD/MM/YYYY HH:mm')}
+      </div>
+    )
+  },
+  {
     title: 'Nổi bật',
     dataIndex: 'isFeatured',
     key: 'isFeatured',
-    width: 80,
+    width: 90,
     render: (isFeatured: boolean) => (
       <Tag color={isFeatured ? 'gold' : 'default'}>
         {isFeatured ? 'Có' : 'Không'}
