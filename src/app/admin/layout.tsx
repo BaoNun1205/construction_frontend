@@ -1,7 +1,20 @@
 'use client'
 
-import React from 'react'
-import { Layout, Menu, theme, Breadcrumb, Avatar, Dropdown, Space, Spin } from 'antd'
+import React, { useEffect, useState } from 'react'
+import {
+  Layout,
+  Menu,
+  theme,
+  Breadcrumb,
+  Avatar,
+  Dropdown,
+  Space,
+  Spin,
+  Drawer,
+  Grid,
+  Typography,
+  Button
+} from 'antd'
 import {
   DashboardOutlined,
   ProjectOutlined,
@@ -11,9 +24,9 @@ import {
   LogoutOutlined,
   SettingOutlined,
   MenuFoldOutlined,
+  MenuOutlined,
   MenuUnfoldOutlined
 } from '@ant-design/icons'
-import { useState } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import AdminProvider from '@/components/admin/AdminProvider'
@@ -21,6 +34,8 @@ import BrandLogo from '@/components/ui/BrandLogo'
 import { useAdminAuth, useAuthActions } from '@/hooks/useAuth'
 
 const { Header, Sider, Content } = Layout
+const { useBreakpoint } = Grid
+const { Text } = Typography
 
 const menuItems = [
   {
@@ -72,15 +87,21 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode
 }) {
+  const screens = useBreakpoint()
+  const isDesktop = screens.lg ?? false
   const [collapsed, setCollapsed] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const pathname = usePathname()
   const { isLoading, isAdmin, user } = useAdminAuth()
   const { logout } = useAuthActions()
   const {
-    token: { colorBgContainer, borderRadiusLG }
+    token: { colorBgContainer, borderRadiusLG, colorBgLayout, colorBorderSecondary }
   } = theme.useToken()
 
-  // Show loading spinner while checking auth
+  useEffect(() => {
+    setMobileMenuOpen(false)
+  }, [pathname, isDesktop])
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -89,12 +110,10 @@ export default function AdminLayout({
     )
   }
 
-  // If not admin, the useAdminAuth hook will redirect
   if (!isAdmin) {
     return null
   }
 
-  // Get breadcrumb items based on current path
   const getBreadcrumbItems = () => {
     const pathSegments = pathname?.split('/').filter(Boolean) || []
     const breadcrumbItems = [
@@ -105,7 +124,7 @@ export default function AdminLayout({
 
     if (pathSegments.length > 1) {
       const currentPage = pathSegments[pathSegments.length - 1]
-      const pageLabels: { [key: string]: string } = {
+      const pageLabels: Record<string, string> = {
         dashboard: 'Trang chủ',
         projects: 'Quản lý dự án',
         'design-templates': 'Mẫu thiết kế',
@@ -126,64 +145,110 @@ export default function AdminLayout({
       logout()
       break
     case 'profile':
-      // Handle profile navigation
       break
     case 'settings':
-      // Handle settings navigation
       break
     }
   }
 
+  const navigationMenu = (
+    <>
+      <BrandLogo
+        sx={{ padding: isDesktop ? '12px 16px' : '18px 20px 14px' }}
+        collapsed={isDesktop ? collapsed : false}
+      />
+      <Menu
+        theme="dark"
+        mode="inline"
+        selectedKeys={pathname ? [pathname] : []}
+        items={menuItems}
+        onClick={() => {
+          if (!isDesktop) {
+            setMobileMenuOpen(false)
+          }
+        }}
+      />
+    </>
+  )
+
   return (
     <AdminProvider>
-      <Layout style={{ minHeight: '100vh' }}>
-        <Sider
-          trigger={null}
-          collapsible
-          collapsed={collapsed}
-          width={240}
+      <Layout style={{ minHeight: '100vh', background: colorBgLayout }}>
+        {isDesktop && (
+          <Sider
+            trigger={null}
+            collapsible
+            collapsed={collapsed}
+            width={240}
+            collapsedWidth={88}
+            style={{
+              overflow: 'auto',
+              height: '100vh',
+              position: 'fixed',
+              left: 0,
+              top: 0,
+              bottom: 0,
+              boxShadow: '8px 0 28px rgba(15, 23, 42, 0.08)'
+            }}
+          >
+            {navigationMenu}
+          </Sider>
+        )}
+
+        {!isDesktop && (
+          <Drawer
+            placement="left"
+            open={mobileMenuOpen}
+            onClose={() => setMobileMenuOpen(false)}
+            closable={false}
+            width={288}
+            styles={{
+              body: {
+                padding: 0,
+                background: '#001529'
+              }
+            }}
+          >
+            {navigationMenu}
+          </Drawer>
+        )}
+
+        <Layout
           style={{
-            overflow: 'auto',
-            height: '100vh',
-            position: 'fixed',
-            left: 0,
-            top: 0,
-            bottom: 0
+            marginLeft: isDesktop ? (collapsed ? 88 : 240) : 0,
+            transition: 'all 0.2s ease'
           }}
         >
-          <BrandLogo sx={{ padding: '12px 16px' }} collapsed={collapsed} />
-          <Menu
-            theme="dark"
-            mode="inline"
-            selectedKeys={pathname ? [pathname] : []}
-            items={menuItems}
-          />
-        </Sider>
-        <Layout style={{ marginLeft: collapsed ? 80 : 240, transition: 'all 0.2s' }}>
           <Header
             style={{
-              padding: '0 24px',
+              position: 'sticky',
+              top: 0,
+              zIndex: 20,
+              padding: isDesktop ? '0 24px' : '0 12px',
+              height: isDesktop ? 64 : 56,
               background: colorBgContainer,
+              borderBottom: `1px solid ${colorBorderSecondary}`,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between'
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              {collapsed ? (
-                <MenuUnfoldOutlined
-                  className="trigger"
-                  onClick={() => setCollapsed(!collapsed)}
-                  style={{ fontSize: '18px', cursor: 'pointer' }}
-                />
-              ) : (
-                <MenuFoldOutlined
-                  className="trigger"
-                  onClick={() => setCollapsed(!collapsed)}
-                  style={{ fontSize: '18px', cursor: 'pointer' }}
-                />
-              )}
-            </div>
+            <Button
+              type="text"
+              icon={
+                isDesktop
+                  ? (collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />)
+                  : <MenuOutlined />
+              }
+              onClick={() => {
+                if (isDesktop) {
+                  setCollapsed((prev) => !prev)
+                } else {
+                  setMobileMenuOpen(true)
+                }
+              }}
+              style={{ fontSize: 18 }}
+            />
 
             <Dropdown
               menu={{
@@ -192,24 +257,32 @@ export default function AdminLayout({
               }}
               placement="bottomRight"
             >
-              <Space style={{ cursor: 'pointer' }}>
+              <Space size={8} style={{ cursor: 'pointer' }}>
                 <Avatar size="small" icon={<UserOutlined />} />
-                <span>{user?.name || 'Admin'}</span>
+                {isDesktop && <Text>{user?.name || 'Admin'}</Text>}
               </Space>
             </Dropdown>
           </Header>
 
-          <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
-            <Breadcrumb
-              style={{ margin: '16px 0' }}
-              items={getBreadcrumbItems()}
-            />
+          <Content
+            style={{
+              margin: isDesktop ? '24px 16px 0' : '12px 10px 0',
+              overflow: 'initial'
+            }}
+          >
+            {isDesktop && (
+              <Breadcrumb
+                style={{ margin: '0 0 16px' }}
+                items={getBreadcrumbItems()}
+              />
+            )}
+
             <div
               style={{
-                padding: 24,
-                minHeight: 360,
+                padding: isDesktop ? 24 : 14,
+                minHeight: isDesktop ? 360 : 'calc(100vh - 88px)',
                 background: colorBgContainer,
-                borderRadius: borderRadiusLG
+                borderRadius: isDesktop ? borderRadiusLG : 18
               }}
             >
               {children}

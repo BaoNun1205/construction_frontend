@@ -1,37 +1,42 @@
 'use client'
 
-import { useState } from 'react'
-import { 
-  Card, 
-  Table, 
-  Button, 
-  Space, 
-  Modal, 
-  Form, 
-  Input, 
-  Select, 
-  Upload, 
-  message,
-  Popconfirm,
-  Tag,
+import { useMemo, useState } from 'react'
+import {
+  App,
+  Button,
+  Card,
+  Col,
+  Form,
+  Grid,
   Image,
-  Typography,
+  Input,
+  List,
+  Modal,
+  Pagination,
+  Popconfirm,
   Row,
-  Col
+  Select,
+  Space,
+  Switch,
+  Table,
+  Tag,
+  Typography,
+  Upload
 } from 'antd'
-import { 
-  PlusOutlined, 
-  EditOutlined, 
-  DeleteOutlined, 
+import {
+  DeleteOutlined,
+  EditOutlined,
   EyeOutlined,
+  PlusOutlined,
   UploadOutlined
 } from '@ant-design/icons'
 import { ColumnsType } from 'antd/es/table'
 import type { UploadProps } from 'antd'
 
-const { Title } = Typography
+const { Title, Text, Paragraph } = Typography
 const { TextArea } = Input
 const { Option } = Select
+const { useBreakpoint } = Grid
 
 interface DesignTemplate {
   key: string
@@ -50,7 +55,6 @@ interface DesignTemplate {
   status: string
 }
 
-// Mock data
 const initialTemplates: DesignTemplate[] = [
   {
     key: '1',
@@ -66,7 +70,7 @@ const initialTemplates: DesignTemplate[] = [
     description: 'Thiết kế nhà phố hiện đại với không gian thoáng đãng',
     images: ['/design-consulting/ai.jpg'],
     featured: true,
-    status: 'active',
+    status: 'active'
   },
   {
     key: '2',
@@ -82,35 +86,45 @@ const initialTemplates: DesignTemplate[] = [
     description: 'Thiết kế biệt thự phong cách cổ điển sang trọng',
     images: ['/design-consulting/application.jpg'],
     featured: false,
-    status: 'active',
-  },
+    status: 'active'
+  }
 ]
 
 const categoryOptions = [
   { value: 'townhouse', label: 'Nhà phố' },
   { value: 'villa', label: 'Biệt thự' },
   { value: 'apartment', label: 'Chung cư' },
-  { value: 'house', label: 'Nhà cấp 4' },
+  { value: 'house', label: 'Nhà cấp 4' }
 ]
 
 const styleOptions = [
   { value: 'modern', label: 'Hiện đại' },
   { value: 'classic', label: 'Cổ điển' },
   { value: 'minimalist', label: 'Tối giản' },
-  { value: 'industrial', label: 'Công nghiệp' },
+  { value: 'industrial', label: 'Công nghiệp' }
 ]
 
 const statusOptions = [
   { value: 'active', label: 'Hoạt động' },
   { value: 'inactive', label: 'Không hoạt động' },
-  { value: 'draft', label: 'Bản nháp' },
+  { value: 'draft', label: 'Bản nháp' }
 ]
 
 export default function DesignTemplatesPage() {
+  const screens = useBreakpoint()
+  const isMobile = !screens.md
+  const { message: messageApi } = App.useApp()
   const [templates, setTemplates] = useState<DesignTemplate[]>(initialTemplates)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [editingTemplate, setEditingTemplate] = useState<DesignTemplate | null>(null)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
   const [form] = Form.useForm()
+
+  const paginatedTemplates = useMemo(() => {
+    const startIndex = (currentPage - 1) * pageSize
+    return templates.slice(startIndex, startIndex + pageSize)
+  }, [currentPage, pageSize, templates])
 
   const handleAddTemplate = () => {
     setEditingTemplate(null)
@@ -125,40 +139,46 @@ export default function DesignTemplatesPage() {
   }
 
   const handleDeleteTemplate = (templateId: string) => {
-    setTemplates(templates.filter(template => template.id !== templateId))
-    message.success('Xóa mẫu thiết kế thành công!')
+    setTemplates((prev) => prev.filter((template) => template.id !== templateId))
+    messageApi.success('Xóa mẫu thiết kế thành công!')
   }
 
-  const handleSaveTemplate = async (values: any) => {
+  const handleSaveTemplate = async (values: Record<string, unknown>) => {
     try {
       const templateData = {
         ...values,
-        images: values.images?.fileList?.map((file: any) => file.url || file.response?.url) || [],
-      }
+        images: Array.isArray((values.images as { fileList?: Array<{ url?: string; response?: { url?: string } }> })?.fileList)
+          ? (values.images as { fileList: Array<{ url?: string; response?: { url?: string } }> }).fileList.map(
+            (file) => file.url || file.response?.url || ''
+          ).filter(Boolean)
+          : editingTemplate?.images || []
+      } as Omit<DesignTemplate, 'key' | 'id'>
 
       if (editingTemplate) {
-        // Update existing template
-        setTemplates(templates.map(template => 
-          template.id === editingTemplate.id 
-            ? { ...template, ...templateData }
-            : template
-        ))
-        message.success('Cập nhật mẫu thiết kế thành công!')
+        setTemplates((prev) =>
+          prev.map((template) =>
+            template.id === editingTemplate.id
+              ? { ...template, ...templateData }
+              : template
+          )
+        )
+        messageApi.success('Cập nhật mẫu thiết kế thành công!')
       } else {
-        // Add new template
         const newTemplate: DesignTemplate = {
           key: Date.now().toString(),
           id: `TPL${String(templates.length + 1).padStart(3, '0')}`,
-          ...templateData,
+          ...templateData
         }
-        setTemplates([...templates, newTemplate])
-        message.success('Thêm mẫu thiết kế thành công!')
+        setTemplates((prev) => [...prev, newTemplate])
+        messageApi.success('Thêm mẫu thiết kế thành công!')
       }
 
       setIsModalVisible(false)
       form.resetFields()
-    } catch (error) {
-      message.error('Có lỗi xảy ra!')
+    } catch (saveError) {
+      messageApi.error('Có lỗi xảy ra khi lưu mẫu thiết kế!')
+      // eslint-disable-next-line no-console
+      console.error('Save design template error:', saveError)
     }
   }
 
@@ -166,7 +186,7 @@ export default function DesignTemplatesPage() {
     name: 'file',
     multiple: true,
     listType: 'picture',
-    beforeUpload: () => false, // Prevent auto upload
+    beforeUpload: () => false
   }
 
   const columns: ColumnsType<DesignTemplate> = [
@@ -174,13 +194,13 @@ export default function DesignTemplatesPage() {
       title: 'Mã mẫu',
       dataIndex: 'id',
       key: 'id',
-      width: 100,
+      width: 100
     },
     {
       title: 'Tên mẫu',
       dataIndex: 'name',
       key: 'name',
-      width: 200,
+      width: 200
     },
     {
       title: 'Danh mục',
@@ -188,9 +208,9 @@ export default function DesignTemplatesPage() {
       key: 'category',
       width: 120,
       render: (category: string) => {
-        const categoryLabel = categoryOptions.find(opt => opt.value === category)?.label
+        const categoryLabel = categoryOptions.find((option) => option.value === category)?.label
         return <Tag color="blue">{categoryLabel}</Tag>
-      },
+      }
     },
     {
       title: 'Phong cách',
@@ -198,34 +218,34 @@ export default function DesignTemplatesPage() {
       key: 'style',
       width: 120,
       render: (style: string) => {
-        const styleLabel = styleOptions.find(opt => opt.value === style)?.label
+        const styleLabel = styleOptions.find((option) => option.value === style)?.label
         return <Tag color="green">{styleLabel}</Tag>
-      },
+      }
     },
     {
       title: 'Diện tích (m²)',
       dataIndex: 'area',
       key: 'area',
-      width: 120,
+      width: 120
     },
     {
       title: 'Số tầng',
       dataIndex: 'floors',
       key: 'floors',
-      width: 80,
+      width: 80
     },
     {
       title: 'PN/WC',
       key: 'rooms',
       width: 100,
-      render: (_, record) => `${record.bedrooms}/${record.bathrooms}`,
+      render: (_: unknown, record) => `${record.bedrooms}/${record.bathrooms}`
     },
     {
       title: 'Giá (VNĐ)',
       dataIndex: 'price',
       key: 'price',
       width: 150,
-      render: (price: number) => `${price.toLocaleString('vi-VN')}`,
+      render: (price: number) => `${price.toLocaleString('vi-VN')}`
     },
     {
       title: 'Trạng thái',
@@ -236,91 +256,179 @@ export default function DesignTemplatesPage() {
         const colors = {
           active: 'green',
           inactive: 'red',
-          draft: 'orange',
+          draft: 'orange'
         }
-        const statusLabel = statusOptions.find(opt => opt.value === status)?.label
+        const statusLabel = statusOptions.find((option) => option.value === status)?.label
         return <Tag color={colors[status as keyof typeof colors]}>{statusLabel}</Tag>
-      },
+      }
     },
     {
       title: 'Nổi bật',
       dataIndex: 'featured',
       key: 'featured',
-      width: 80,
+      width: 90,
       render: (featured: boolean) => (
         <Tag color={featured ? 'gold' : 'default'}>
           {featured ? 'Có' : 'Không'}
         </Tag>
-      ),
+      )
     },
     {
-      title: 'Hình ảnh',
-      dataIndex: 'images',
-      key: 'images',
-      width: 100,
-      render: (images: string[]) => {
-        if (images && images.length > 0) {
-          return <Image width={50} height={50} src={images[0]} style={{ objectFit: 'cover' }} />
-        }
-        return <div style={{ width: 50, height: 50, background: '#f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>N/A</div>
-      },
-    },
-    {
-      title: 'Thao tác',
+      title: 'Hành động',
       key: 'actions',
       width: 150,
-      render: (_, record) => (
+      render: (_: unknown, record) => (
         <Space size="small">
-          <Button
-            type="primary"
-            size="small"
-            icon={<EyeOutlined />}
-            onClick={() => {/* Handle view */}}
-          />
-          <Button
-            type="default"
-            size="small"
-            icon={<EditOutlined />}
-            onClick={() => handleEditTemplate(record)}
-          />
+          <Button type="text" icon={<EyeOutlined />} />
+          <Button type="text" icon={<EditOutlined />} onClick={() => handleEditTemplate(record)} />
           <Popconfirm
             title="Bạn có chắc chắn muốn xóa mẫu thiết kế này?"
             onConfirm={() => handleDeleteTemplate(record.id)}
             okText="Có"
             cancelText="Không"
           >
-            <Button
-              type="primary"
-              danger
-              size="small"
-              icon={<DeleteOutlined />}
-            />
+            <Button type="text" danger icon={<DeleteOutlined />} />
           </Popconfirm>
         </Space>
-      ),
-    },
+      )
+    }
   ]
 
   return (
-    <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-        <Title level={2}>Quản lý mẫu thiết kế</Title>
-        <Button
-          type="primary"
-          icon={<PlusOutlined />}
-          onClick={handleAddTemplate}
+    <Space direction="vertical" size={16} style={{ width: '100%' }}>
+      <Card
+        bordered={false}
+        style={{ borderRadius: isMobile ? 18 : 24 }}
+        styles={{ body: { padding: isMobile ? 16 : 24 } }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: isMobile ? 'stretch' : 'center',
+            flexDirection: isMobile ? 'column' : 'row',
+            gap: 16,
+            marginBottom: 16
+          }}
         >
-          Thêm mẫu thiết kế
-        </Button>
-      </div>
+          <Space direction="vertical" size={4}>
+            <Title level={2} style={{ margin: 0, fontSize: isMobile ? 24 : undefined }}>
+              Quản lý mẫu thiết kế
+            </Title>
+            <Text type="secondary">
+              Theo dõi danh sách mẫu thiết kế, trạng thái và thông tin cơ bản trên cả desktop lẫn điện thoại.
+            </Text>
+          </Space>
 
-      <Card>
-        <Table
-          columns={columns}
-          dataSource={templates}
-          pagination={{ pageSize: 10 }}
-          scroll={{ x: 1400 }}
-        />
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={handleAddTemplate}
+            block={isMobile}
+          >
+            Thêm mẫu thiết kế
+          </Button>
+        </div>
+
+        {isMobile ? (
+          <List<DesignTemplate>
+            dataSource={paginatedTemplates}
+            locale={{ emptyText: 'Chưa có mẫu thiết kế nào' }}
+            renderItem={(template) => (
+              <List.Item style={{ paddingInline: 0 }}>
+                <Card bordered style={{ width: '100%', borderRadius: 18 }} styles={{ body: { padding: 14 } }}>
+                  <Space direction="vertical" size={12} style={{ width: '100%' }}>
+                    <div
+                      style={{
+                        display: 'grid',
+                        gridTemplateColumns: '92px minmax(0, 1fr)',
+                        gap: 12
+                      }}
+                    >
+                      <Image
+                        src={template.images[0]}
+                        alt={template.name}
+                        width={92}
+                        height={92}
+                        preview={false}
+                        style={{ borderRadius: 14, objectFit: 'cover' }}
+                      />
+                      <Space direction="vertical" size={6}>
+                        <Text strong>{template.name}</Text>
+                        <Space size={[8, 8]} wrap>
+                          <Tag color="blue">
+                            {categoryOptions.find((option) => option.value === template.category)?.label}
+                          </Tag>
+                          <Tag color="green">
+                            {styleOptions.find((option) => option.value === template.style)?.label}
+                          </Tag>
+                          <Tag color={template.featured ? 'gold' : 'default'}>
+                            {template.featured ? 'Nổi bật' : 'Thường'}
+                          </Tag>
+                        </Space>
+                        <Text type="secondary">
+                          {template.area} m² • {template.floors} tầng • {template.bedrooms}/{template.bathrooms} PN/WC
+                        </Text>
+                        <Text strong>{template.price.toLocaleString('vi-VN')} VNĐ</Text>
+                      </Space>
+                    </div>
+
+                    <Paragraph ellipsis={{ rows: 2, expandable: false }} style={{ marginBottom: 0 }}>
+                      {template.description}
+                    </Paragraph>
+
+                    <Space style={{ width: '100%', justifyContent: 'space-between' }}>
+                      <Tag color={template.status === 'active' ? 'green' : template.status === 'inactive' ? 'red' : 'orange'}>
+                        {statusOptions.find((option) => option.value === template.status)?.label}
+                      </Tag>
+                      <Space size={4}>
+                        <Button type="text" icon={<EyeOutlined />} />
+                        <Button type="text" icon={<EditOutlined />} onClick={() => handleEditTemplate(template)} />
+                        <Popconfirm
+                          title="Bạn có chắc chắn muốn xóa mẫu thiết kế này?"
+                          onConfirm={() => handleDeleteTemplate(template.id)}
+                          okText="Có"
+                          cancelText="Không"
+                        >
+                          <Button type="text" danger icon={<DeleteOutlined />} />
+                        </Popconfirm>
+                      </Space>
+                    </Space>
+                  </Space>
+                </Card>
+              </List.Item>
+            )}
+          />
+        ) : (
+          <Table
+            columns={columns}
+            dataSource={paginatedTemplates}
+            pagination={false}
+            scroll={{ x: 1400 }}
+          />
+        )}
+
+        {templates.length > 0 && (
+          <Pagination
+            style={{ marginTop: 16 }}
+            align={isMobile ? 'center' : 'end'}
+            current={currentPage}
+            pageSize={pageSize}
+            total={templates.length}
+            showSizeChanger
+            pageSizeOptions={['10', '20', '50']}
+            responsive
+            showTotal={(total, range) => `${range[0]}-${range[1]} của ${total} mẫu thiết kế`}
+            onChange={(page, size) => {
+              setCurrentPage(page)
+              setPageSize(size)
+            }}
+            onShowSizeChange={(_, size) => {
+              setCurrentPage(1)
+              setPageSize(size)
+            }}
+          />
+        )}
       </Card>
 
       <Modal
@@ -331,9 +439,16 @@ export default function DesignTemplatesPage() {
           form.resetFields()
         }}
         onOk={() => form.submit()}
-        width={900}
+        width={isMobile ? 'calc(100vw - 16px)' : 900}
         okText={editingTemplate ? 'Cập nhật' : 'Thêm'}
         cancelText="Hủy"
+        centered
+        styles={{
+          body: {
+            maxHeight: isMobile ? 'calc(100vh - 180px)' : undefined,
+            overflowY: isMobile ? 'auto' : undefined
+          }
+        }}
       >
         <Form
           form={form}
@@ -341,7 +456,7 @@ export default function DesignTemplatesPage() {
           onFinish={handleSaveTemplate}
         >
           <Row gutter={16}>
-            <Col span={12}>
+            <Col xs={24} md={12}>
               <Form.Item
                 name="name"
                 label="Tên mẫu thiết kế"
@@ -350,14 +465,14 @@ export default function DesignTemplatesPage() {
                 <Input placeholder="Nhập tên mẫu thiết kế" />
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col xs={24} md={12}>
               <Form.Item
                 name="category"
                 label="Danh mục"
                 rules={[{ required: true, message: 'Vui lòng chọn danh mục!' }]}
               >
                 <Select placeholder="Chọn danh mục">
-                  {categoryOptions.map(option => (
+                  {categoryOptions.map((option) => (
                     <Option key={option.value} value={option.value}>
                       {option.label}
                     </Option>
@@ -368,14 +483,14 @@ export default function DesignTemplatesPage() {
           </Row>
 
           <Row gutter={16}>
-            <Col span={12}>
+            <Col xs={24} md={12}>
               <Form.Item
                 name="style"
                 label="Phong cách"
                 rules={[{ required: true, message: 'Vui lòng chọn phong cách!' }]}
               >
                 <Select placeholder="Chọn phong cách">
-                  {styleOptions.map(option => (
+                  {styleOptions.map((option) => (
                     <Option key={option.value} value={option.value}>
                       {option.label}
                     </Option>
@@ -383,14 +498,14 @@ export default function DesignTemplatesPage() {
                 </Select>
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col xs={24} md={12}>
               <Form.Item
                 name="status"
                 label="Trạng thái"
                 rules={[{ required: true, message: 'Vui lòng chọn trạng thái!' }]}
               >
                 <Select placeholder="Chọn trạng thái">
-                  {statusOptions.map(option => (
+                  {statusOptions.map((option) => (
                     <Option key={option.value} value={option.value}>
                       {option.label}
                     </Option>
@@ -401,7 +516,7 @@ export default function DesignTemplatesPage() {
           </Row>
 
           <Row gutter={16}>
-            <Col span={8}>
+            <Col xs={24} sm={8}>
               <Form.Item
                 name="area"
                 label="Diện tích (m²)"
@@ -410,7 +525,7 @@ export default function DesignTemplatesPage() {
                 <Input type="number" placeholder="Diện tích" />
               </Form.Item>
             </Col>
-            <Col span={8}>
+            <Col xs={24} sm={8}>
               <Form.Item
                 name="floors"
                 label="Số tầng"
@@ -419,7 +534,7 @@ export default function DesignTemplatesPage() {
                 <Input type="number" placeholder="Số tầng" />
               </Form.Item>
             </Col>
-            <Col span={8}>
+            <Col xs={24} sm={8}>
               <Form.Item
                 name="price"
                 label="Giá (VNĐ)"
@@ -431,7 +546,7 @@ export default function DesignTemplatesPage() {
           </Row>
 
           <Row gutter={16}>
-            <Col span={12}>
+            <Col xs={24} md={12}>
               <Form.Item
                 name="bedrooms"
                 label="Số phòng ngủ"
@@ -440,7 +555,7 @@ export default function DesignTemplatesPage() {
                 <Input type="number" placeholder="Số phòng ngủ" />
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col xs={24} md={12}>
               <Form.Item
                 name="bathrooms"
                 label="Số phòng tắm"
@@ -456,10 +571,7 @@ export default function DesignTemplatesPage() {
             label="Mẫu nổi bật"
             valuePropName="checked"
           >
-            <Select placeholder="Chọn mẫu nổi bật">
-              <Option value={true}>Có</Option>
-              <Option value={false}>Không</Option>
-            </Select>
+            <Switch />
           </Form.Item>
 
           <Form.Item
@@ -479,6 +591,6 @@ export default function DesignTemplatesPage() {
           </Form.Item>
         </Form>
       </Modal>
-    </div>
+    </Space>
   )
 }

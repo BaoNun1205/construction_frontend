@@ -13,7 +13,8 @@ import {
   Switch,
   FormInstance,
   Upload,
-  Image
+  Image,
+  Grid
 } from 'antd'
 import {
   useCreateProject,
@@ -31,6 +32,7 @@ import dayjs from 'dayjs'
 
 const { TextArea } = Input
 const { Option } = Select
+const { useBreakpoint } = Grid
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -65,6 +67,8 @@ const FormModal = ({
   setIsModalVisible,
   editingProject
 } : Props) => {
+  const screens = useBreakpoint()
+  const isMobile = !screens.md
   const { message: messageApi } = App.useApp()
   const queryClient = useQueryClient()
   const createProjectMutation = useCreateProject()
@@ -424,9 +428,15 @@ const FormModal = ({
         setPreviewOpen(false)
         setPreviewContent(null)
       }}
-      width={1000}
+      width={isMobile ? 'calc(100vw - 16px)' : 1000}
       centered
       wrapClassName='detail-modal'
+      styles={{
+        body: {
+          maxHeight: isMobile ? 'calc(100vh - 180px)' : undefined,
+          overflowY: isMobile ? 'auto' : undefined
+        }
+      }}
       confirmLoading={
         createProjectMutation.isPending ||
         updateProjectMutation.isPending ||
@@ -439,7 +449,7 @@ const FormModal = ({
         onFinish={onFinish}
       >
         <Row gutter={16}>
-          <Col span={24}>
+          <Col xs={24}>
             <Form.Item
               name="title"
               label="Tên dự án"
@@ -451,7 +461,7 @@ const FormModal = ({
         </Row>
 
         <Row gutter={16}>
-          <Col span={12}>
+          <Col xs={24} md={12}>
             <Form.Item
               name="status"
               label="Trạng thái"
@@ -463,7 +473,7 @@ const FormModal = ({
               </Select>
             </Form.Item>
           </Col>
-          <Col span={12}>
+          <Col xs={24} md={12}>
             <Form.Item
               name="category"
               label="Danh mục"
@@ -487,7 +497,7 @@ const FormModal = ({
         </Row>
 
         <Row gutter={16}>
-          <Col span={12}>
+          <Col xs={24} md={12}>
             <Form.Item
               name="startDate"
               label="Ngày bắt đầu"
@@ -496,7 +506,7 @@ const FormModal = ({
               <DatePicker style={{ width: '100%' }} />
             </Form.Item>
           </Col>
-          <Col span={12}>
+          <Col xs={24} md={12}>
             <Form.Item
               name="endDate"
               label="Ngày kết thúc"
@@ -507,7 +517,7 @@ const FormModal = ({
         </Row>
 
         <Row gutter={16}>
-          <Col span={24}>
+          <Col xs={24}>
             <Form.Item
               name="mainImage"
               label="Ảnh chính"
@@ -574,7 +584,7 @@ const FormModal = ({
         </Row>
 
         <Row gutter={16}>
-          <Col span={24}>
+          <Col xs={24}>
             <Form.Item label="Hình ảnh / Video (thêm / xoá / xem trước)">
               <Upload
                 accept="image/*,video/*"
@@ -616,7 +626,7 @@ const FormModal = ({
                   setPreviewContent(null)
                 }}
                 centered
-                width={800}
+                width={isMobile ? 'calc(100vw - 16px)' : 800}
                 wrapClassName='detail-modal'
               >
                 {previewContent?.type === 'image' && (
