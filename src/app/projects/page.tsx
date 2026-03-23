@@ -1,10 +1,11 @@
-"use client"
+﻿'use client'
 
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef } from 'react'
 import { useProjects } from '@/hooks/useProjects'
 import { ProjectHelpers } from '@/utils/projectHelpers'
-import Image from "next/image"
-import Link from "next/link"
+import { ProjectsListPageSkeleton } from '@/components/projects/ProjectPageSkeletons'
+import Image from 'next/image'
+import Link from 'next/link'
 import {
   Build,
   Search,
@@ -13,10 +14,10 @@ import {
   CheckCircleOutline,
   ArrowForward,
   Category,
-  Assignment,
-} from "@mui/icons-material"
-import { Typography, CircularProgress, Alert, Box, Pagination, useTheme, Container } from "@mui/material"
-import useScrollAnimations from "@/hooks/useScrollAnimations"
+  Assignment
+} from '@mui/icons-material'
+import { Typography, Alert, Box, Pagination, useTheme, Container } from '@mui/material'
+import useScrollAnimations from '@/hooks/useScrollAnimations'
 
 interface MultiSelectProps {
   label: string
@@ -37,8 +38,8 @@ function MultiSelect({ label, options, selectedValues, onChange, placeholder, ic
         setIsOpen(false)
       }
     }
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => document.removeEventListener("mousedown", handleClickOutside)
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
   const handleToggleOption = (value: string) => {
@@ -96,7 +97,7 @@ function MultiSelect({ label, options, selectedValues, onChange, placeholder, ic
           </div>
           <div className="flex-shrink-0 px-3 border-l border-gray-200">
             <KeyboardArrowDown
-              className={`text-gray-400 transition-transform ${isOpen ? "rotate-180" : ""}`}
+              className={`text-gray-400 transition-transform ${isOpen ? 'rotate-180' : ''}`}
               style={{ fontSize: 20 }}
             />
           </div>
@@ -116,12 +117,12 @@ function MultiSelect({ label, options, selectedValues, onChange, placeholder, ic
               >
                 <div
                   className={`w-4 h-4 border-2 rounded flex items-center justify-center transition-colors ${
-                    isSelected ? "bg-cyan-600 border-cyan-600" : "border-gray-300 hover:border-cyan-400"
+                    isSelected ? 'bg-cyan-600 border-cyan-600' : 'border-gray-300 hover:border-cyan-400'
                   }`}
                 >
                   {isSelected && <CheckCircleOutline sx={{ fontSize: 12 }} className="text-white" />}
                 </div>
-                <span className={`flex-1 ${isSelected ? "text-cyan-900 font-medium" : "text-gray-700"}`}>
+                <span className={`flex-1 ${isSelected ? 'text-cyan-900 font-medium' : 'text-gray-700'}`}>
                   {option.label}
                   {option.count && ` (${option.count})`}
                 </span>
@@ -144,7 +145,7 @@ const ProjectTitle = ({ title }: { title: string }) => {
         WebkitLineClamp: 2,
         WebkitBoxOrient: 'vertical',
         overflow: 'hidden',
-        minHeight: '60px',
+        minHeight: '60px'
       }}
       title={title.length > 50 ? title : undefined}
     >
@@ -156,7 +157,7 @@ const ProjectTitle = ({ title }: { title: string }) => {
 export default function ProjectsPage() {
   const theme = useTheme()
   const { data, isLoading, error } = useProjects()
-  const [searchTerm, setSearchTerm] = useState("")
+  const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   const [selectedStatuses, setSelectedStatuses] = useState<string[]>([])
   const [currentPage, setCurrentPage] = useState(1)
@@ -181,13 +182,13 @@ export default function ProjectsPage() {
       project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
       project.category.toLowerCase().includes(searchTerm.toLowerCase())
-    
-    const matchesCategory = selectedCategories.length === 0 || 
+
+    const matchesCategory = selectedCategories.length === 0 ||
       selectedCategories.includes(project.categorySlug)
-    
-    const matchesStatus = selectedStatuses.length === 0 || 
+
+    const matchesStatus = selectedStatuses.length === 0 ||
       selectedStatuses.includes(project.statusRaw)
-    
+
     return matchesSearch && matchesCategory && matchesStatus
   })
 
@@ -197,16 +198,16 @@ export default function ProjectsPage() {
 
   // Tính số lượng dự án cho mỗi category
   const categoriesWithCount = [
-    { value: "nha-dan-dung", label: "Nhà dân dụng", count: allProjects.filter(p => p.categorySlug === "nha-dan-dung").length },
-    { value: "cong-trinh-thuong-mai", label: "Công trình thương mại", count: allProjects.filter(p => p.categorySlug === "cong-trinh-thuong-mai").length },
-    { value: "cong-trinh-cong-nghiep", label: "Công trình công nghiệp", count: allProjects.filter(p => p.categorySlug === "cong-trinh-cong-nghiep").length },
-    { value: "ha-tang-ky-thuat", label: "Hạ tầng kỹ thuật", count: allProjects.filter(p => p.categorySlug === "ha-tang-ky-thuat").length },
+    { value: 'nha-dan-dung', label: 'Nhà dân dụng', count: allProjects.filter(p => p.categorySlug === 'nha-dan-dung').length },
+    { value: 'cong-trinh-thuong-mai', label: 'Công trình thương mại', count: allProjects.filter(p => p.categorySlug === 'cong-trinh-thuong-mai').length },
+    { value: 'cong-trinh-cong-nghiep', label: 'Công trình công nghiệp', count: allProjects.filter(p => p.categorySlug === 'cong-trinh-cong-nghiep').length },
+    { value: 'ha-tang-ky-thuat', label: 'Hạ tầng kỹ thuật', count: allProjects.filter(p => p.categorySlug === 'ha-tang-ky-thuat').length }
   ]
 
   // Tính số lượng dự án cho mỗi status
   const statusesWithCount = [
-    { value: "completed", label: "Hoàn thành", count: allProjects.filter(p => p.statusRaw === "completed").length },
-    { value: "in-progress", label: "Đang thực hiện", count: allProjects.filter(p => p.statusRaw === "in-progress").length },
+    { value: 'completed', label: 'Hoàn thành', count: allProjects.filter(p => p.statusRaw === 'completed').length },
+    { value: 'in-progress', label: 'Đang thực hiện', count: allProjects.filter(p => p.statusRaw === 'in-progress').length }
   ]
 
   useEffect(() => {
@@ -218,12 +219,12 @@ export default function ProjectsPage() {
     const handlePaginationClick = (event: Event) => {
       const target = event.target as HTMLElement
       // Kiểm tra nếu click vào các nút navigation (Previous, Next, First, Last)
-      if (target.closest('.MuiPaginationItem-root') && 
-          (target.closest('.MuiPaginationItem-previousNext') || 
+      if (target.closest('.MuiPaginationItem-root') &&
+          (target.closest('.MuiPaginationItem-previousNext') ||
            target.closest('.MuiPaginationItem-firstLast'))) {
         setTimeout(() => {
           const projectsSection = document.getElementById('projects-grid-section')
-          projectsSection?.scrollIntoView({ behavior: "smooth", block: "start" })
+          projectsSection?.scrollIntoView({ behavior: 'smooth', block: 'start' })
         }, 100)
       }
     }
@@ -235,18 +236,11 @@ export default function ProjectsPage() {
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value)
     const projectsSection = document.getElementById('projects-grid-section')
-    projectsSection?.scrollIntoView({ behavior: "smooth", block: "start" })
+    projectsSection?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
   if (isLoading) {
-    return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
-        <CircularProgress size={60} />
-        <Typography variant="h6" sx={{ ml: 2 }}>
-          Đang tải danh sách dự án...
-        </Typography>
-      </Box>
-    )
+    return <ProjectsListPageSkeleton />
   }
 
   if (error) {
@@ -352,7 +346,7 @@ export default function ProjectsPage() {
                 {(searchTerm || selectedCategories.length > 0 || selectedStatuses.length > 0) && (
                   <button
                     onClick={() => {
-                      setSearchTerm("")
+                      setSearchTerm('')
                       setSelectedCategories([])
                       setSelectedStatuses([])
                     }}
@@ -397,7 +391,7 @@ export default function ProjectsPage() {
                       id={`project-${index}`}
                       data-animate
                       className={`transition-all duration-1000 delay-${(index % 6) * 100} ${
-                        filteredProjects.includes(project) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                        filteredProjects.includes(project) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                       }`}
                     >
                       <div className="md:hidden">
@@ -515,17 +509,17 @@ export default function ProjectsPage() {
                       showFirstButton
                       showLastButton
                       sx={{
-                        "& .MuiPaginationItem-root": {
-                          fontSize: "1rem",
-                          fontWeight: 500,
+                        '& .MuiPaginationItem-root': {
+                          fontSize: '1rem',
+                          fontWeight: 500
                         },
-                        "& .Mui-selected": {
-                          backgroundColor: "primary.main",
-                          color: "white",
-                          "&:hover": {
-                            backgroundColor: "primary.dark",
-                          },
-                        },
+                        '& .Mui-selected': {
+                          backgroundColor: 'primary.main',
+                          color: 'white',
+                          '&:hover': {
+                            backgroundColor: 'primary.dark'
+                          }
+                        }
                       }}
                     />
                   </Box>
@@ -538,3 +532,4 @@ export default function ProjectsPage() {
     </Box>
   )
 }
+

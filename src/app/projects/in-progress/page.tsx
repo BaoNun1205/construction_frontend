@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useEffect, useState } from 'react';
 import {
@@ -22,6 +22,7 @@ import {
   AutoAwesome,
 } from '@mui/icons-material';
 import Link from 'next/link';
+import { ProjectComingSoonPageSkeleton } from '@/components/projects/ProjectPageSkeletons';
 
 export default function InProgressPage() {
   const [progress, setProgress] = useState(0);
@@ -49,6 +50,10 @@ export default function InProgressPage() {
       clearInterval(progressTimer);
     };
   }, []);
+
+  if (!showContent) {
+    return <ProjectComingSoonPageSkeleton />;
+  }
 
   return (
     <Box
@@ -228,7 +233,7 @@ export default function InProgressPage() {
             >
               <Button
                 component={Link}
-                href="/project"
+                href="/projects"
                 startIcon={<ArrowBack />}
                 variant="outlined"
                 size="large"
@@ -298,3 +303,4 @@ export default function InProgressPage() {
     </Box>
   );
 }
+

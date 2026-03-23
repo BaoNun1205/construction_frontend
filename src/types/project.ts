@@ -6,8 +6,9 @@ export interface Project {
   title: string
   workingScope: string[]
   startDate: string
-  endDate: string
+  endDate?: string | null
   mainImage: string
+  mediaFolder?: string
   media: string[]
   details: string[]
   status: 'completed' | 'in-progress'
@@ -22,9 +23,10 @@ export interface CreateProjectDto {
   title: string
   workingScope: string[]
   startDate: string
-  endDate: string
+  endDate?: string | null
   mainImage?: string
   media?: string[]
+  mediaFolder?: string
   details: string[]
   status: 'completed' | 'in-progress'
   description: string

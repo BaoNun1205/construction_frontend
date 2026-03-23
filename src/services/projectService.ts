@@ -59,7 +59,7 @@ export class ProjectService {
 
     // Add data project
     Object.entries(projectData).forEach(([key, value]) => {
-      if (value !== undefined) {
+      if (value !== undefined && value !== null) {
         if (Array.isArray(value)) {
           value.forEach((item, index) => {
             formData.append(`${key}[${index}]`, item)
@@ -100,7 +100,7 @@ export class ProjectService {
 
     // Add data project
     Object.entries(projectData).forEach(([key, value]) => {
-      if (value !== undefined) {
+      if (value !== undefined && value !== null) {
         if (Array.isArray(value)) {
           value.forEach((item, index) => {
             formData.append(`${key}[${index}]`, item)

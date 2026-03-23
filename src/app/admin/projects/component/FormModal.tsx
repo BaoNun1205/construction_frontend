@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import {
+  App,
   Modal,
   Form,
   Input,
@@ -12,8 +13,7 @@ import {
   Switch,
   FormInstance,
   Upload,
-  Image,
-  message
+  Image
 } from 'antd'
 import {
   useCreateProject,
@@ -21,7 +21,7 @@ import {
   projectKeys
 } from '@/hooks/useProjects'
 import { useQueryClient } from '@tanstack/react-query'
-import { CreateProjectDto, Project } from '@/types/project'
+import { CreateProjectDto, Project, UpdateProjectDto } from '@/types/project'
 import { UploadFile } from 'antd/lib'
 import { RcFile } from 'antd/es/upload'
 import { PlusOutlined } from '@ant-design/icons'
@@ -39,9 +39,6 @@ interface Props {
   // eslint-disable-next-line no-unused-vars
   setIsModalVisible: (visible: boolean) => void
   editingProject: Project | null
-  // optional external submit handler
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  handleSubmit?: (values: Record<string, any>) => Promise<any>
 }
 
 const getBase64 = (file: Blob | File) =>
@@ -66,9 +63,9 @@ const FormModal = ({
   form,
   isModalVisible,
   setIsModalVisible,
-  editingProject,
-  handleSubmit
+  editingProject
 } : Props) => {
+  const { message: messageApi } = App.useApp()
   const queryClient = useQueryClient()
   const createProjectMutation = useCreateProject()
   const updateProjectMutation = useUpdateProject()
@@ -83,7 +80,6 @@ const FormModal = ({
 
   useEffect(() => {
     if (editingProject && isModalVisible) {
-      // Set form values
       form.setFieldsValue({
         title: editingProject.title,
         description: editingProject.description,
@@ -93,15 +89,15 @@ const FormModal = ({
         endDate: editingProject.endDate ? dayjs(editingProject.endDate) : null,
         status: editingProject.status,
         category: editingProject.category._id,
-        mainImage: editingProject.mainImage // Set the mainImage URL
+        mainImage: editingProject.mainImage
       })
 
-      // Normalize and dedupe uploaded URLs for mainImage selector
       const existingUrls = Array.isArray(editingProject.media) ? editingProject.media.filter(Boolean) : []
-      // set uploadedUrls to unique remote urls only
       setUploadedUrls(Array.from(new Set(existingUrls)))
+      setDeletedUrls([])
+      setPreviewOpen(false)
+      setPreviewContent(null)
 
-      // Map remote media (url strings) to UploadFile for display (avoid duplicates)
       if (existingUrls.length > 0) {
         const list = existingUrls.map((url: string, idx: number) => {
           const isVideo = /\.(mp4|webm|ogg)(\?.*)?$/i.test(url)
@@ -119,10 +115,12 @@ const FormModal = ({
         setFileList([])
       }
     } else if (!editingProject && isModalVisible) {
-      // Reset form when creating new project
       form.resetFields()
       setFileList([])
       setUploadedUrls([])
+      setDeletedUrls([])
+      setPreviewOpen(false)
+      setPreviewContent(null)
     }
   }, [editingProject, isModalVisible, form])
 
@@ -207,38 +205,35 @@ const FormModal = ({
   }
 
   const handleRemove = (file: UploadFile) => {
-    // revoke object URL if we created one
     const extFile = file as ExtendedUploadFile
     if (extFile.previewUrl) {
       URL.revokeObjectURL(extFile.previewUrl)
     }
 
-    // if removed item is a remote URL, also remove from uploadedUrls
     const url = String((file as any).url || (file as any).originUrl || '')
     const isRemote = url.startsWith('http://') || url.startsWith('https://')
+    const removedValue = isRemote ? url : `local:${String(file.uid)}`
+
     if (isRemote) {
       setDeletedUrls(prev => {
         if (prev.includes(url)) return prev
         return [...prev, url]
       })
-      // also remove from uploadedUrls
       setUploadedUrls((prev) => prev.filter((u) => u !== url))
     }
+
+    if (form.getFieldValue('mainImage') === removedValue || form.getFieldValue('mainImage') === url) {
+      form.setFieldValue('mainImage', undefined)
+    }
+
     setFileList((prev) => prev.filter((f) => f.uid !== file.uid))
   }
 
-  // helper to check remote URL (http/https) and exclude data/blob
   const isRemoteUrl = (u?: string | null) => {
     if (!u) return false
     const s = String(u)
     if (s.startsWith('data:') || s.startsWith('blob:')) return false
     return s.startsWith('http://') || s.startsWith('https://')
-  }
-
-  // when adding a file or restoring an existing remote url, remove it from deletedUrls
-  const handleFileAddOrRestore = (url: string | undefined) => {
-    if (!url) return
-    setDeletedUrls(prev => prev.filter(u => u !== url))
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -262,15 +257,15 @@ const FormModal = ({
       const newFiles = newFileEntries.map((e) => e.file)
 
       let mainImage: string | undefined
-      let mediaFolder = values.mediaFolder
+      let mediaFolder = editingProject?.mediaFolder
       let allUrls: string[] = [...existingUrls]
 
       // Upload new files to Cloudinary if any
       if (newFiles.length > 0) {
-        const folderName = CloudinaryService.createFolderName(values.title)
+        const folderName = mediaFolder || CloudinaryService.createFolderName(values.title)
 
         // Show detailed upload progress
-        const uploadMessage = message.loading('Đang upload ảnh...', 0)
+        const uploadMessage = messageApi.loading('Đang upload ảnh...', 0)
 
         try {
           const uploadResults = await CloudinaryService.uploadMultipleFiles(
@@ -279,7 +274,7 @@ const FormModal = ({
           )
 
           uploadMessage() // Clear loading message
-          message.success(`Upload thành công ${uploadResults.length} ảnh!`)
+          messageApi.success(`Upload thành công ${uploadResults.length} ảnh!`)
 
           // Collect all uploaded URLs and map back to file uids
           const newUrls = uploadResults.map((r) => r.secure_url)
@@ -320,9 +315,15 @@ const FormModal = ({
           }
 
           if (mainImage) form.setFieldValue('mainImage', mainImage)
-        } catch {
+        } catch (error) {
           uploadMessage()
-          message.error('Upload ảnh thất bại!')
+          const errorMessage =
+            error instanceof Error
+              ? error.message
+              : 'Upload ảnh thất bại! Vui lòng kiểm tra đăng nhập hoặc cấu hình Cloudinary.'
+          messageApi.error(errorMessage)
+          // eslint-disable-next-line no-console
+          console.error('Upload error:', error)
           setIsUploading(false)
           return
         }
@@ -341,7 +342,7 @@ const FormModal = ({
 
       // Validate mainImage is set and is a valid URL (not base64)
       if (!mainImage || mainImage.startsWith('data:')) {
-        message.error('Vui lòng chọn ảnh đại diện hợp lệ!')
+        messageApi.error('Vui lòng chọn ảnh đại diện hợp lệ!')
         setIsUploading(false)
         return
       }
@@ -353,7 +354,7 @@ const FormModal = ({
         details: Array.isArray(values.details) ? values.details : [],
         workingScope: Array.isArray(values.workingScope) ? values.workingScope : [],
         startDate: values.startDate ? values.startDate.toISOString() : '',
-        endDate: values.endDate ? values.endDate.toISOString() : '',
+        endDate: values.endDate ? values.endDate.toISOString() : null,
         mainImage,
         media: Array.isArray(allUrls) ? allUrls : [],
         mediaFolder,
@@ -361,10 +362,10 @@ const FormModal = ({
         category: values.category,
         isFeatured: !!values.isFeatured,
         deletedMedia: deletedUrls.length ? deletedUrls : undefined
-      } as unknown as CreateProjectDto
+      } as CreateProjectDto | UpdateProjectDto
 
       // Submit project data
-      const saveMessage = message.loading('Đang lưu dự án...', 0)
+      const saveMessage = messageApi.loading('Đang lưu dự án...', 0)
 
       if (editingProject) {
         // Update project
@@ -373,24 +374,33 @@ const FormModal = ({
           data: projectData
         })
       } else {
-        // Create new project
-        await createProjectMutation.mutateAsync(projectData)
+        await createProjectMutation.mutateAsync(projectData as CreateProjectDto)
       }
 
       saveMessage() // Clear loading message
-      message.success(editingProject ? 'Cập nhật dự án thành công!' : 'Tạo dự án thành công!')
+      messageApi.success(editingProject ? 'Cập nhật dự án thành công!' : 'Tạo dự án thành công!')
 
-      // Invalidate queries to refresh the project list
-      queryClient.invalidateQueries({ queryKey: projectKeys.lists() })
+      queryClient.invalidateQueries({ queryKey: projectKeys.all })
 
-      // Close modal and reset form
       setIsModalVisible(false)
       form.resetFields()
       setFileList([])
       setUploadedUrls([])
+      setDeletedUrls([])
+      setPreviewOpen(false)
+      setPreviewContent(null)
 
-    } catch {
-      message.error('Có lỗi xảy ra khi lưu dự án!')
+    } catch (error) {
+      const errorMessage =
+        typeof error === 'object' &&
+        error !== null &&
+        'message' in error &&
+        typeof error.message === 'string'
+          ? error.message
+          : 'Có lỗi xảy ra khi lưu dự án!'
+      messageApi.error(errorMessage)
+      // eslint-disable-next-line no-console
+      console.error('Save project error:', error)
     } finally {
       setIsUploading(false)
     }
@@ -404,12 +414,15 @@ const FormModal = ({
       onCancel={() => {
         setIsModalVisible(false)
         form.resetFields()
-        // revoke any created object URLs
         fileList.forEach((f) => {
           const extF = f as ExtendedUploadFile
           if (extF.previewUrl) URL.revokeObjectURL(extF.previewUrl)
         })
         setFileList([])
+        setUploadedUrls([])
+        setDeletedUrls([])
+        setPreviewOpen(false)
+        setPreviewContent(null)
       }}
       width={1000}
       centered
@@ -423,7 +436,7 @@ const FormModal = ({
       <Form
         form={form}
         layout="vertical"
-        onFinish={(values) => (handleSubmit ? handleSubmit(values) : onFinish(values))}
+        onFinish={onFinish}
       >
         <Row gutter={16}>
           <Col span={24}>

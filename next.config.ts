@@ -1,5 +1,6 @@
-// Next.js configuration
-const nextConfig = {
+import type { NextConfig } from 'next'
+
+const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
@@ -8,9 +9,6 @@ const nextConfig = {
         pathname: '/**'
       }
     ]
-  },
-  eslint: {
-    ignoreDuringBuilds: true
   }
 }
 

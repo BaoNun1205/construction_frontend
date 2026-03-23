@@ -15,16 +15,56 @@ export interface CloudinaryUploadResult {
   height?: number
 }
 
+interface ApiEnvelope<T> {
+  data?: T
+}
+
 export class CloudinaryService {
+  private static isCloudinarySignature(value: unknown): value is CloudinarySignature {
+    if (!value || typeof value !== 'object') {
+      return false
+    }
+
+    const signature = value as Partial<CloudinarySignature>
+
+    return (
+      typeof signature.signature === 'string' &&
+      typeof signature.apiKey === 'string' &&
+      typeof signature.cloudName === 'string' &&
+      (typeof signature.timestamp === 'number' || typeof signature.timestamp === 'string')
+    )
+  }
+
+  private static normalizeSignature(
+    response: CloudinarySignature | ApiEnvelope<CloudinarySignature>
+  ): CloudinarySignature {
+    const payload: unknown =
+      response &&
+      typeof response === 'object' &&
+      'data' in response &&
+      response.data
+        ? response.data
+        : response
+
+    if (!this.isCloudinarySignature(payload)) {
+      throw new Error('Khong the lay chu ky upload tu server.')
+    }
+
+    return {
+      ...payload,
+      timestamp: Number(payload.timestamp)
+    }
+  }
+
   /**
    * Get signature from backend for secure upload
    */
   static async getSignature(folder?: string): Promise<CloudinarySignature> {
-    const signature = await apiClient.post<CloudinarySignature>('/uploads/sign', { folder }, {
+    const response = await apiClient.post<CloudinarySignature | ApiEnvelope<CloudinarySignature>>('/uploads/sign', { folder }, {
       requireAuth: true
     })
 
-    return signature
+    return this.normalizeSignature(response)
   }
 
   /**
@@ -41,7 +81,7 @@ export class CloudinaryService {
     // Add required fields
     formData.append('file', file)
     formData.append('api_key', signature.apiKey)
-    formData.append('timestamp', signature.timestamp.toString())
+    formData.append('timestamp', String(signature.timestamp))
     formData.append('signature', signature.signature)
     
     // Add folder if specified

@@ -2,9 +2,10 @@ import { withAuth } from 'next-auth/middleware'
 import { NextResponse } from 'next/server'
 
 export default withAuth(
-  function middleware(req) {
-    // Kiểm tra nếu user truy cập /admin mà không có role admin (case-insensitive)
+  function proxy(req) {
+    // Redirect non-admin users away from admin routes.
     const userRole = (req.nextauth.token?.role as string)?.toLowerCase()
+
     if (req.nextUrl.pathname.startsWith('/admin') && userRole !== 'admin') {
       return NextResponse.redirect(new URL('/auth', req.url))
     }
@@ -12,10 +13,11 @@ export default withAuth(
   {
     callbacks: {
       authorized: ({ token, req }) => {
-        // Nếu truy cập /admin thì phải đăng nhập
+        // Admin routes require authentication before role checks run.
         if (req.nextUrl.pathname.startsWith('/admin')) {
           return !!token
         }
+
         return true
       }
     }
