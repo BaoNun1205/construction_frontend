@@ -98,7 +98,7 @@ export default function AuthPage() {
           </Card>
 
           <p className="text-center text-sm text-gray-500 mt-6">
-            © 2025 Lai Phát Construction. Giải pháp xây dựng chuyên nghiệp.
+            © 2026 Lai Phát Construction. Giải pháp xây dựng chuyên nghiệp.
           </p>
         </div>
       </div>
