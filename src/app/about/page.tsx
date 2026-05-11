@@ -74,7 +74,7 @@ export default function AboutPage() {
       color: theme.palette.action.hover
     },
     {
-      year: '2025',
+      year: '2026',
       position: 'top',
       title: 'Tiếp tục phát triển mạnh mẽ và khẳng định vị thế trên thị trường xây dựng Việt Nam',
       color: theme.palette.action.active
