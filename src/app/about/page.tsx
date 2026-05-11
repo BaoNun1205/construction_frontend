@@ -917,7 +917,7 @@ export default function AboutPage() {
         </section>
 
         {/* Partners & Clients */}
-        <section className="fade-in-up">
+        {/* <section className="fade-in-up">
           <Typography
             variant="h2"
             className="text-3xl font-bold text-center mb-12 text-gray-800"
@@ -1033,7 +1033,7 @@ export default function AboutPage() {
               </Card>
             </div>
           </div>
-        </section>
+        </section> */}
       </Container>
 
       {/* Image Hover Modal */}
