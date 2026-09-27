@@ -3,35 +3,36 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ReactNode } from 'react';
+import { BRAND_COLORS } from '@/constants/colors';
 
 const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#001137',
-      light: '#002266',
-      dark: '#000825',
-      contrastText: '#fff',
+      main: BRAND_COLORS.primary.main,
+      light: BRAND_COLORS.primary.light,
+      dark: BRAND_COLORS.primary.dark,
+      contrastText: BRAND_COLORS.primary.contrastText,
     },
     secondary: {
-      main: '#085488',
-      light: '#3cb8e0',
-      dark: '#002040',
-      contrastText: '#fff',
+      main: BRAND_COLORS.secondary.main,
+      light: BRAND_COLORS.secondary.light,
+      dark: BRAND_COLORS.secondary.dark,
+      contrastText: BRAND_COLORS.secondary.contrastText,
     },
     action: {
-      active: '#00c0b7',
-      hover: '#27aae1',
+      active: BRAND_COLORS.secondary.main,
+      hover: BRAND_COLORS.secondary.dark,
       selected: '#eee',
       disabled: '#ccc',
     },
     background: {
-      default: '#fafafa',
-      paper: '#FFF',
+      default: BRAND_COLORS.neutral.background,
+      paper: BRAND_COLORS.neutral.surface,
     },
     text: {
-      primary: '#2c2c2c',
-      secondary: '#666',
+      primary: BRAND_COLORS.neutral.textPrimary,
+      secondary: BRAND_COLORS.neutral.textSecondary,
     },
   },
   typography: {

@@ -3,19 +3,40 @@
 import React, { useEffect, useState } from 'react'
 import {
   App,
-  Modal,
-  Form,
-  Input,
-  Select,
-  DatePicker,
-  Row,
+  Button,
+  Card,
   Col,
-  Switch,
+  DatePicker,
+  Divider,
+  Empty,
+  Form,
   FormInstance,
-  Upload,
+  Grid,
   Image,
-  Grid
+  Input,
+  Modal,
+  Popconfirm,
+  Row,
+  Select,
+  Space,
+  Switch,
+  Tag,
+  Typography,
+  Upload
 } from 'antd'
+import {
+  DeleteOutlined,
+  EyeOutlined,
+  LinkOutlined,
+  PictureOutlined,
+  PlusOutlined,
+  StarFilled,
+  StarOutlined,
+  UploadOutlined
+} from '@ant-design/icons'
+import type { RcFile } from 'antd/es/upload'
+import dayjs from 'dayjs'
+import { apiClient } from '@/lib/axios'
 import {
   useCreateProject,
   useUpdateProject,
@@ -23,15 +44,11 @@ import {
 } from '@/hooks/useProjects'
 import { useQueryClient } from '@tanstack/react-query'
 import { CreateProjectDto, Project, UpdateProjectDto } from '@/types/project'
-import { UploadFile } from 'antd/lib'
-import { RcFile } from 'antd/es/upload'
-import { PlusOutlined } from '@ant-design/icons'
 import { useProjectCategories } from '@/hooks/useProjectCategories'
-import { CloudinaryService } from '@/services/cloudinaryService'
-import dayjs from 'dayjs'
 
 const { TextArea } = Input
 const { Option } = Select
+const { Text } = Typography
 const { useBreakpoint } = Grid
 
 interface Props {
@@ -43,30 +60,26 @@ interface Props {
   editingProject: Project | null
 }
 
-const getBase64 = (file: Blob | File) =>
-  new Promise<string>((resolve, reject) => {
+interface ProjectImageItem {
+  uid: string
+  url: string
+  name?: string
+}
+
+const getBase64 = (file: Blob | File): Promise<string> =>
+  new Promise((resolve, reject) => {
     const reader = new FileReader()
     reader.readAsDataURL(file)
     reader.onload = () => resolve(String(reader.result))
     reader.onerror = (error) => reject(error)
   })
 
-interface PreviewContent {
-  type: 'image' | 'video'
-  src: string
-  title: string
-}
-
-interface ExtendedUploadFile extends UploadFile {
-  previewUrl?: string
-}
-
 const FormModal = ({
   form,
   isModalVisible,
   setIsModalVisible,
   editingProject
-} : Props) => {
+}: Props) => {
   const screens = useBreakpoint()
   const isMobile = !screens.md
   const { message: messageApi } = App.useApp()
@@ -75,14 +88,29 @@ const FormModal = ({
   const updateProjectMutation = useUpdateProject()
   const { data: categories, isLoading: categoriesLoading } = useProjectCategories()
 
-  const [fileList, setFileList] = useState<ExtendedUploadFile[]>([])
-  const [previewOpen, setPreviewOpen] = useState(false)
-  const [previewContent, setPreviewContent] = useState<PreviewContent | null>(null)
-  const [isUploading, setIsUploading] = useState(false)
-  const [uploadedUrls, setUploadedUrls] = useState<string[]>([])
+  // Quản lý danh sách hình ảnh & ảnh chính
+  const [imageList, setImageList] = useState<ProjectImageItem[]>([])
+  const [selectedMainImage, setSelectedMainImage] = useState<string>('')
+  const [newImageUrl, setNewImageUrl] = useState<string>('')
 
   useEffect(() => {
     if (editingProject && isModalVisible) {
+      const rawMedia = Array.isArray(editingProject.media) ? editingProject.media.filter(Boolean) : []
+      const allImgs = Array.from(
+        new Set([editingProject.mainImage, ...rawMedia].filter(Boolean))
+      ) as string[]
+
+      const initialItems: ProjectImageItem[] = allImgs.map((url, idx) => ({
+        uid: `img-${idx}-${Date.now()}`,
+        url,
+        name: `Ảnh ${idx + 1}`
+      }))
+
+      const mainImg = editingProject.mainImage || allImgs[0] || ''
+      setImageList(initialItems)
+      setSelectedMainImage(mainImg)
+      setNewImageUrl('')
+
       form.setFieldsValue({
         title: editingProject.title,
         description: editingProject.description,
@@ -91,281 +119,163 @@ const FormModal = ({
         startDate: editingProject.startDate ? dayjs(editingProject.startDate) : null,
         endDate: editingProject.endDate ? dayjs(editingProject.endDate) : null,
         status: editingProject.status,
-        category: editingProject.category._id,
-        mainImage: editingProject.mainImage,
+        category:
+          typeof editingProject.category === 'object' && editingProject.category
+            ? editingProject.category._id
+            : editingProject.category,
+        mainImage: mainImg,
         isFeatured: Boolean(editingProject.isFeatured)
       })
-
-      const existingUrls = Array.isArray(editingProject.media) ? editingProject.media.filter(Boolean) : []
-      setUploadedUrls(Array.from(new Set(existingUrls)))
-      setPreviewOpen(false)
-      setPreviewContent(null)
-
-      if (existingUrls.length > 0) {
-        const list = existingUrls.map((url: string, idx: number) => {
-          const isVideo = /\.(mp4|webm|ogg)(\?.*)?$/i.test(url)
-          return {
-            uid: `remote-${idx}-${Math.random().toString(36).slice(2, 8)}`,
-            name: url.split('/').pop() || `media-${idx}`,
-            status: 'done' as const,
-            url,
-            type: isVideo ? 'video/*' : 'image/*',
-            originUrl: url
-          } as UploadFile
-        })
-        setFileList(list)
-      } else {
-        setFileList([])
-      }
     } else if (!editingProject && isModalVisible) {
       form.resetFields()
-      setFileList([])
-      setUploadedUrls([])
-      setPreviewOpen(false)
-      setPreviewContent(null)
+      setImageList([])
+      setSelectedMainImage('')
+      setNewImageUrl('')
     }
   }, [editingProject, isModalVisible, form])
 
-  // cleanup created object URLs on unmount
-  useEffect(() => {
-    return () => {
-      fileList.forEach((f) => {
-        if (f.previewUrl) {
-          URL.revokeObjectURL(f.previewUrl)
-        }
-      })
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const handleChange = ({ fileList: newList }: { fileList: UploadFile[] }) => {
-    setFileList(newList)
+  const handleSetMainImage = (url: string) => {
+    setSelectedMainImage(url)
+    form.setFieldValue('mainImage', url)
+    messageApi.info('Đã chọn làm ảnh chính!')
   }
 
-  const beforeUpload = async (file: RcFile) => {
-    const isImage = file.type.startsWith('image/')
-    const isVideo = file.type.startsWith('video/')
-    if (!isImage && !isVideo) return Upload.LIST_IGNORE
+  const handleRemoveImage = (url: string) => {
+    setImageList((prev) => {
+      const next = prev.filter((item) => item.url !== url)
+      if (selectedMainImage === url) {
+        const nextMain = next[0]?.url || ''
+        setSelectedMainImage(nextMain)
+        form.setFieldValue('mainImage', nextMain)
+      }
+      return next
+    })
+    messageApi.success('Đã xóa ảnh khỏi danh sách')
+  }
 
-    // for images use base64 preview, for videos use object URL for efficient preview
-    if (isImage) {
-      const base64 = await getBase64(file)
-      const newFile: UploadFile = {
-        uid: `${Date.now()}`,
-        name: file.name,
-        status: 'done',
-        originFileObj: file,
-        url: base64,
-        type: file.type
-      }
-      setFileList((prev) => [...prev, newFile])
-    } else {
-      // video
-      const previewUrl = URL.createObjectURL(file)
-      const newFile: UploadFile & { previewUrl?: string } = {
-        uid: `${Date.now()}`,
-        name: file.name,
-        status: 'done',
-        originFileObj: file,
-        url: previewUrl,
-        type: file.type,
-        // keep reference to revoke later
-        previewUrl
-      }
-      setFileList((prev) => [...prev, newFile])
+  const handleUploadFiles = async (file: RcFile) => {
+    const isImage = file.type.startsWith('image/')
+    if (!isImage) {
+      messageApi.error('Chỉ được tải lên tệp định dạng hình ảnh!')
+      return Upload.LIST_IGNORE
     }
 
-    // prevent automatic upload
+    try {
+      let imageUrl = ''
+      try {
+        const formData = new FormData()
+        formData.append('file', file)
+        const res: unknown = await apiClient.post('/uploads/image', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+          requireAuth: true
+        })
+        const resData = res as { data?: { url?: string } }
+        if (resData?.data?.url) {
+          imageUrl = resData.data.url
+        }
+      } catch {
+        // Fallback to base64
+      }
+
+      if (!imageUrl) {
+        imageUrl = await getBase64(file)
+      }
+
+      const newItem: ProjectImageItem = {
+        uid: `upload-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+        url: imageUrl,
+        name: file.name
+      }
+
+      setImageList((prev) => {
+        const updated = [...prev, newItem]
+        if (!selectedMainImage) {
+          setSelectedMainImage(newItem.url)
+          form.setFieldValue('mainImage', newItem.url)
+        }
+        return updated
+      })
+
+      messageApi.success(`Đã thêm ảnh "${file.name}"!`)
+    } catch {
+      messageApi.error('Không thể xử lý hình ảnh tải lên!')
+    }
     return Upload.LIST_IGNORE
   }
 
-  const handlePreview = async (file: UploadFile) => {
-    // detect video vs image
-    const fileType = (file.type as string) || ''
-
-    const isVideo = fileType.startsWith('video/') || /\.(mp4|webm|ogg)$/i.test(String(file.url || file.name || ''))
-
-    if (isVideo) {
-      let src = String(file.url || '')
-      // if originFileObj exist and we didn't create previewUrl earlier, create one
-      if (!src && file.originFileObj) {
-        src = URL.createObjectURL(file.originFileObj as File)
-        ;(file as ExtendedUploadFile).previewUrl = src
-      }
-      setPreviewContent({ type: 'video', src, title: file.name })
-      setPreviewOpen(true)
+  const handleAddImageByUrl = () => {
+    const trimmed = newImageUrl.trim()
+    if (!trimmed) {
+      messageApi.warning('Vui lòng nhập đường dẫn hình ảnh!')
       return
     }
 
-    // image preview
-    let imageSrc = String(file.url || '')
-    if (!imageSrc && file.originFileObj) {
-      imageSrc = await getBase64(file.originFileObj as File)
+    const newItem: ProjectImageItem = {
+      uid: `url-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+      url: trimmed,
+      name: trimmed.split('/').pop() || 'Ảnh mới'
     }
-    setPreviewContent({ type: 'image', src: imageSrc, title: file.name })
-    setPreviewOpen(true)
+
+    setImageList((prev) => {
+      const updated = [...prev, newItem]
+      if (!selectedMainImage) {
+        setSelectedMainImage(trimmed)
+        form.setFieldValue('mainImage', trimmed)
+      }
+      return updated
+    })
+
+    setNewImageUrl('')
+    messageApi.success('Đã thêm hình ảnh từ liên kết!')
   }
 
-  const handleRemove = (file: UploadFile) => {
-    const extFile = file as ExtendedUploadFile
-    if (extFile.previewUrl) {
-      URL.revokeObjectURL(extFile.previewUrl)
+  const onFinish = async (values: Record<string, unknown>) => {
+    const mainImage =
+      (values.mainImage as string) || selectedMainImage || imageList[0]?.url || ''
+
+    if (!mainImage) {
+      messageApi.error('Vui lòng chọn hoặc tải lên ít nhất một ảnh chính!')
+      return
     }
 
-    const url = String((file as any).url || (file as any).originUrl || '')
-    const isRemote = url.startsWith('http://') || url.startsWith('https://')
-    const removedValue = isRemote ? url : `local:${String(file.uid)}`
+    const imageListUrls = imageList.map((img) => img.url).filter(Boolean)
+    const media =
+      imageListUrls.length > 0
+        ? imageListUrls.includes(mainImage)
+          ? imageListUrls
+          : [mainImage, ...imageListUrls]
+        : [mainImage]
 
-    if (isRemote) {
-      setUploadedUrls((prev) => prev.filter((u) => u !== url))
-    }
+    const startDateVal = values.startDate
+      ? dayjs.isDayjs(values.startDate)
+        ? values.startDate.toISOString()
+        : String(values.startDate)
+      : ''
 
-    if (form.getFieldValue('mainImage') === removedValue || form.getFieldValue('mainImage') === url) {
-      form.setFieldValue('mainImage', undefined)
-    }
+    const endDateVal = values.endDate
+      ? dayjs.isDayjs(values.endDate)
+        ? values.endDate.toISOString()
+        : String(values.endDate)
+      : null
 
-    setFileList((prev) => prev.filter((f) => f.uid !== file.uid))
-  }
+    const projectData = {
+      title: values.title as string,
+      description: (values.description as string) ?? '',
+      details: Array.isArray(values.details) ? (values.details as string[]) : [],
+      workingScope: Array.isArray(values.workingScope) ? (values.workingScope as string[]) : [],
+      startDate: startDateVal,
+      endDate: endDateVal,
+      mainImage,
+      media,
+      status: (values.status as 'completed' | 'in-progress') || 'in-progress',
+      category: values.category as string,
+      isFeatured: Boolean(values.isFeatured)
+    } as CreateProjectDto | UpdateProjectDto
 
-  const isRemoteUrl = (u?: string | null) => {
-    if (!u) return false
-    const s = String(u)
-    if (s.startsWith('data:') || s.startsWith('blob:')) return false
-    return s.startsWith('http://') || s.startsWith('https://')
-  }
+    const saveMessage = messageApi.loading('Đang lưu dự án...', 0)
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onFinish = async (values: Record<string, any>) => {
     try {
-      setIsUploading(true)
-
-      // Build ordered newFiles with uid so we can map uploaded results back to file uid
-      const newFileEntries: { file: File; uid: string }[] = []
-      const existingUrls: string[] = []
-
-      fileList.forEach((f) => {
-        const uid = String(f.uid)
-        if ((f as any).originFileObj) {
-          newFileEntries.push({ file: (f as any).originFileObj as File, uid })
-        } else {
-          const url = String((f as any).url || (f as any).originUrl || '')
-          if (isRemoteUrl(url)) existingUrls.push(url)
-        }
-      })
-      const newFiles = newFileEntries.map((e) => e.file)
-
-      let mainImage: string | undefined
-      let mediaFolder = editingProject?.mediaFolder
-      let allUrls: string[] = [...existingUrls]
-
-      // Upload new files to Cloudinary if any
-      if (newFiles.length > 0) {
-        const folderName = mediaFolder || CloudinaryService.createFolderName(values.title)
-
-        // Show detailed upload progress
-        const uploadMessage = messageApi.loading('Đang upload ảnh...', 0)
-
-        try {
-          const uploadResults = await CloudinaryService.uploadMultipleFiles(
-            newFiles,
-            folderName
-          )
-
-          uploadMessage() // Clear loading message
-          messageApi.success(`Upload thành công ${uploadResults.length} ảnh!`)
-
-          // Collect all uploaded URLs and map back to file uids
-          const newUrls = uploadResults.map((r) => r.secure_url)
-          // map uid -> url
-          const uidToUrl = new Map<string, string>()
-          newFileEntries.forEach((entry, idx) => {
-            uidToUrl.set(entry.uid, newUrls[idx])
-          })
-
-          allUrls = [...existingUrls, ...newUrls]
-          setUploadedUrls(allUrls)
-
-          // update fileList entries to replace local data URLs with uploaded remote URLs
-          setFileList((prev) =>
-            prev.map((f) => {
-              const uid = String(f.uid)
-              if (uidToUrl.has(uid)) {
-                const url = uidToUrl.get(uid) as string
-                return { ...f, url, originUrl: url, status: 'done' } as ExtendedUploadFile
-              }
-              return f
-            })
-          )
-
-          // Set mediaFolder
-          mediaFolder = folderName
-
-          // Determine selected mainImage:
-          const sel = values.mainImage as string | undefined
-          if (sel && sel.startsWith('local:')) {
-            const uid = sel.split(':')[1]
-            mainImage = uidToUrl.get(uid) as string | undefined
-          } else if (sel && isRemoteUrl(sel)) {
-            mainImage = sel
-          } else {
-            // fallback to first uploaded
-            mainImage = newUrls[0]
-          }
-
-          if (mainImage) form.setFieldValue('mainImage', mainImage)
-        } catch (error) {
-          uploadMessage()
-          const errorMessage =
-            error instanceof Error
-              ? error.message
-              : 'Upload ảnh thất bại! Vui lòng kiểm tra đăng nhập hoặc cấu hình Cloudinary.'
-          messageApi.error(errorMessage)
-          // eslint-disable-next-line no-console
-          console.error('Upload error:', error)
-          setIsUploading(false)
-          return
-        }
-      } else {
-        // No new uploads - check if user selected from existing or form field
-        const selectedMainImage = values.mainImage
-        if (selectedMainImage && existingUrls.includes(selectedMainImage)) {
-          // Valid selection from existing URLs
-          mainImage = selectedMainImage
-        } else if (existingUrls.length > 0) {
-          // Default to first existing URL
-          mainImage = existingUrls[0]
-          form.setFieldValue('mainImage', mainImage)
-        }
-      }
-
-      // Validate mainImage is set and is a valid URL (not base64)
-      if (!mainImage || mainImage.startsWith('data:')) {
-        messageApi.error('Vui lòng chọn ảnh đại diện hợp lệ!')
-        setIsUploading(false)
-        return
-      }
-
-      // Format data for backend validation
-      const projectData = {
-        title: values.title,
-        description: values.description ?? '',
-        details: Array.isArray(values.details) ? values.details : [],
-        workingScope: Array.isArray(values.workingScope) ? values.workingScope : [],
-        startDate: values.startDate ? values.startDate.toISOString() : '',
-        endDate: values.endDate ? values.endDate.toISOString() : null,
-        mainImage,
-        media: Array.isArray(allUrls) ? allUrls : [],
-        mediaFolder,
-        status: values.status,
-        category: values.category,
-        isFeatured: !!values.isFeatured
-      } as CreateProjectDto | UpdateProjectDto
-
-      // Submit project data
-      const saveMessage = messageApi.loading('Đang lưu dự án...', 0)
-
       if (editingProject) {
-        // Update project
         await updateProjectMutation.mutateAsync({
           id: editingProject._id,
           data: projectData
@@ -374,19 +284,19 @@ const FormModal = ({
         await createProjectMutation.mutateAsync(projectData as CreateProjectDto)
       }
 
-      saveMessage() // Clear loading message
-      messageApi.success(editingProject ? 'Cập nhật dự án thành công!' : 'Tạo dự án thành công!')
-
+      saveMessage()
+      messageApi.success(
+        editingProject ? 'Cập nhật dự án thành công!' : 'Tạo dự án mới thành công!'
+      )
       queryClient.invalidateQueries({ queryKey: projectKeys.all })
 
       setIsModalVisible(false)
       form.resetFields()
-      setFileList([])
-      setUploadedUrls([])
-      setPreviewOpen(false)
-      setPreviewContent(null)
-
+      setImageList([])
+      setSelectedMainImage('')
+      setNewImageUrl('')
     } catch (error) {
+      saveMessage()
       const errorMessage =
         typeof error === 'object' &&
         error !== null &&
@@ -397,8 +307,6 @@ const FormModal = ({
       messageApi.error(errorMessage)
       // eslint-disable-next-line no-console
       console.error('Save project error:', error)
-    } finally {
-      setIsUploading(false)
     }
   }
 
@@ -410,58 +318,32 @@ const FormModal = ({
       onCancel={() => {
         setIsModalVisible(false)
         form.resetFields()
-        fileList.forEach((f) => {
-          const extF = f as ExtendedUploadFile
-          if (extF.previewUrl) URL.revokeObjectURL(extF.previewUrl)
-        })
-        setFileList([])
-        setUploadedUrls([])
-        setPreviewOpen(false)
-        setPreviewContent(null)
+        setImageList([])
+        setSelectedMainImage('')
+        setNewImageUrl('')
       }}
-      width={isMobile ? 'calc(100vw - 16px)' : 1000}
+      width={isMobile ? 'calc(100vw - 16px)' : 900}
+      okText={editingProject ? 'Cập nhật' : 'Thêm mới'}
+      cancelText="Hủy"
       centered
-      wrapClassName='detail-modal'
       styles={{
         body: {
           maxHeight: isMobile ? 'calc(100vh - 180px)' : undefined,
           overflowY: isMobile ? 'auto' : undefined
         }
       }}
-      confirmLoading={
-        createProjectMutation.isPending ||
-        updateProjectMutation.isPending ||
-        isUploading
-      }
+      confirmLoading={createProjectMutation.isPending || updateProjectMutation.isPending}
     >
-      <Form
-        form={form}
-        layout="vertical"
-        onFinish={onFinish}
-      >
+      <Form form={form} layout="vertical" onFinish={onFinish}>
+        {/* HÀNG 1: TÊN DỰ ÁN & DANH MỤC */}
         <Row gutter={16}>
-          <Col xs={24}>
+          <Col xs={24} md={12}>
             <Form.Item
               name="title"
               label="Tên dự án"
               rules={[{ required: true, message: 'Vui lòng nhập tên dự án!' }]}
             >
               <Input placeholder="Nhập tên dự án" />
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Row gutter={16}>
-          <Col xs={24} md={12}>
-            <Form.Item
-              name="status"
-              label="Trạng thái"
-              rules={[{ required: true, message: 'Vui lòng chọn trạng thái!' }]}
-            >
-              <Select placeholder="Chọn trạng thái">
-                <Option value="in-progress">Đang thực hiện</Option>
-                <Option value="completed">Hoàn thành</Option>
-              </Select>
             </Form.Item>
           </Col>
           <Col xs={24} md={12}>
@@ -487,6 +369,32 @@ const FormModal = ({
           </Col>
         </Row>
 
+        {/* HÀNG 2: TRẠNG THÁI & DỰ ÁN NỔI BẬT */}
+        <Row gutter={16}>
+          <Col xs={24} md={12}>
+            <Form.Item
+              name="status"
+              label="Trạng thái"
+              rules={[{ required: true, message: 'Vui lòng chọn trạng thái!' }]}
+            >
+              <Select placeholder="Chọn trạng thái">
+                <Option value="in-progress">Đang thực hiện</Option>
+                <Option value="completed">Hoàn thành</Option>
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col xs={24} md={12}>
+            <Form.Item
+              name="isFeatured"
+              label="Dự án nổi bật"
+              valuePropName="checked"
+            >
+              <Switch />
+            </Form.Item>
+          </Col>
+        </Row>
+
+        {/* HÀNG 3: NGÀY BẮT ĐẦU & NGÀY KẾT THÚC */}
         <Row gutter={16}>
           <Col xs={24} md={12}>
             <Form.Item
@@ -494,187 +402,328 @@ const FormModal = ({
               label="Ngày bắt đầu"
               rules={[{ required: true, message: 'Vui lòng chọn ngày bắt đầu!' }]}
             >
-              <DatePicker style={{ width: '100%' }} />
+              <DatePicker style={{ width: '100%' }} placeholder="Chọn ngày bắt đầu" />
             </Form.Item>
           </Col>
           <Col xs={24} md={12}>
-            <Form.Item
-              name="endDate"
-              label="Ngày kết thúc"
-            >
-              <DatePicker style={{ width: '100%' }} />
+            <Form.Item name="endDate" label="Ngày kết thúc">
+              <DatePicker style={{ width: '100%' }} placeholder="Chọn ngày kết thúc (nếu có)" />
             </Form.Item>
           </Col>
         </Row>
 
-        <Row gutter={16}>
-          <Col xs={24}>
-            <Form.Item
-              name="mainImage"
-              label="Ảnh chính"
-              tooltip="Chọn ảnh chính từ danh sách ảnh đã upload. Nếu không chọn, ảnh đầu tiên sẽ được làm ảnh chính."
-            >
-              {(() => {
-                // Build options strictly from fileList order so numbering matches displayed files.
-                // Each option value is either remote URL or `local:<uid>` for new files.
-                const seen = new Set<string>()
-                const options: { value: string; preview: string; name?: string }[] = []
-
-                fileList.forEach((f) => {
-                  const uid = String(f.uid)
-                  const rawUrl = String((f as any).url || (f as any).originUrl || '')
-                  const remote = isRemoteUrl(rawUrl)
-                  const value = remote ? rawUrl : `local:${uid}`
-                  // avoid duplicates
-                  if (!seen.has(value)) {
-                    seen.add(value)
-                    options.push({
-                      value,
-                      preview: remote ? rawUrl : String((f as any).url || ''), // base64/blob preview for local
-                      name: f.name
-                    })
-                  }
-                })
-
-                // If no fileList entries but uploadedUrls exist (edge case), include them
-                if (options.length === 0 && uploadedUrls.length > 0) {
-                  uploadedUrls.filter(isRemoteUrl).forEach((url) => {
-                    if (!seen.has(url)) {
-                      seen.add(url)
-                      options.push({ value: url, preview: url, name: undefined })
-                    }
-                  })
-                }
-
-                return (
-                  <Select
-                    placeholder="Chọn ảnh chính"
-                    allowClear
-                    disabled={options.length === 0}
-                    optionLabelProp="label"
-                  >
-                    {options.map((opt, index) => (
-                      <Option key={`${opt.value}-${index}`} value={opt.value} label={`Ảnh ${index + 1}`}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <Image
-                            src={opt.preview}
-                            alt={opt.name ?? `Ảnh ${index + 1}`}
-                            width={40}
-                            height={40}
-                            style={{ objectFit: 'cover', borderRadius: '4px' }}
-                          />
-                          <span>{`Ảnh ${index + 1}`}</span>
-                        </div>
-                      </Option>
-                    ))}
-                  </Select>
-                )
-              })()}
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Row gutter={16}>
-          <Col xs={24}>
-            <Form.Item label="Hình ảnh / Video (thêm / xoá / xem trước)">
-              <Upload
-                accept="image/*,video/*"
-                listType="picture-card"
-                fileList={fileList}
-                onPreview={handlePreview}
-                onChange={handleChange}
-                beforeUpload={beforeUpload}
-                onRemove={handleRemove}
-                showUploadList={{ showPreviewIcon: true, showRemoveIcon: true, showDownloadIcon: false }}
-              >
-                {fileList.length >= 8 ? null : (
-                  <div>
-                    <PlusOutlined />
-                    <div style={{ marginTop: 8 }}>Thêm</div>
-                  </div>
-                )}
-              </Upload>
-
-              <Modal
-                open={previewOpen}
-                title={previewContent?.title}
-                footer={null}
-                onCancel={() => {
-                  setPreviewOpen(false)
-                  // revoke temp object URL if any
-                  if (previewContent?.type === 'video') {
-                    // try to find corresponding file and revoke previewUrl
-                    const file = fileList.find((f) => (f.url === previewContent.src) || (f as ExtendedUploadFile).previewUrl === previewContent.src)
-                    if (file) {
-                      const extFile = file as ExtendedUploadFile
-                      if (extFile.previewUrl) {
-                        // do not revoke if it's remote url
-                        URL.revokeObjectURL(extFile.previewUrl)
-                        extFile.previewUrl = undefined
-                      }
-                    }
-                  }
-                  setPreviewContent(null)
-                }}
-                centered
-                width={isMobile ? 'calc(100vw - 16px)' : 800}
-                wrapClassName='detail-modal'
-              >
-                {previewContent?.type === 'image' && (
-                  <Image preview={false} src={previewContent.src} alt={previewContent.title} width="100%" />
-                )}
-                {previewContent?.type === 'video' && (
-                  <video
-                    key={previewContent?.src}
-                    controls
-                    style={{ width: '100%', maxHeight: '70vh', height: 'auto', display: 'block', margin: '0 auto' }}
-                    src={previewContent?.src}
-                  >
-                    Trình duyệt không hỗ trợ thẻ video.
-                  </video>
-                )}
-              </Modal>
-            </Form.Item>
-          </Col>
-        </Row>
-
+        {/* HÀNG 4: MÔ TẢ */}
         <Form.Item
           name="description"
           label="Mô tả"
-          rules={[{ required: true, message: 'Vui lòng nhập mô tả!' }]}
+          rules={[{ required: true, message: 'Vui lòng nhập mô tả dự án!' }]}
         >
-          <TextArea rows={4} placeholder="Nhập mô tả dự án" />
+          <TextArea rows={3} placeholder="Nhập mô tả tổng quan về dự án" />
         </Form.Item>
 
+        {/* HÀNG 5: PHẠM VI CÔNG VIỆC & CHI TIẾT */}
+        <Row gutter={16}>
+          <Col xs={24} md={12}>
+            <Form.Item name="workingScope" label="Phạm vi công việc">
+              <Select
+                mode="tags"
+                placeholder="Nhập phạm vi công việc (nhấn Enter để thêm)"
+                tokenSeparators={[',']}
+              />
+            </Form.Item>
+          </Col>
+          <Col xs={24} md={12}>
+            <Form.Item name="details" label="Chi tiết">
+              <Select
+                mode="tags"
+                placeholder="Nhập các chi tiết (nhấn Enter để thêm)"
+                tokenSeparators={[',']}
+              />
+            </Form.Item>
+          </Col>
+        </Row>
+
+        {/* PHẦN QUẢN LÝ HÌNH ẢNH & CHỌN ẢNH CHÍNH */}
+        <Divider orientation="left" style={{ margin: '22px 0 16px 0', borderColor: '#e2e8f0' }}>
+          <Space size={8}>
+            <PictureOutlined style={{ color: '#1677ff', fontSize: 16 }} />
+            <span style={{ fontWeight: 600, fontSize: 15 }}>Quản lý hình ảnh & Chọn ảnh chính</span>
+          </Space>
+        </Divider>
+
+        {/* Chọn ảnh chính đại diện */}
         <Form.Item
-          name="workingScope"
-          label="Phạm vi công việc"
+          name="mainImage"
+          label={
+            <Space size={6}>
+              <StarFilled style={{ color: '#faad14' }} />
+              <span style={{ fontWeight: 600 }}>Ảnh chính đại diện (Avatar hiển thị ngoài danh sách)</span>
+            </Space>
+          }
+          rules={[{ required: true, message: 'Vui lòng chọn ảnh chính cho dự án!' }]}
+          style={{ marginBottom: 16 }}
         >
           <Select
-            mode="tags"
-            placeholder="Nhập các phạm vi công việc"
-            tokenSeparators={[',']}
-          />
+            size="large"
+            placeholder="Chọn một ảnh trong danh sách làm ảnh chính"
+            value={selectedMainImage}
+            onChange={(val) => handleSetMainImage(val)}
+            disabled={imageList.length === 0}
+            style={{ width: '100%' }}
+            optionLabelProp="label"
+          >
+            {imageList.map((img, idx) => {
+              const isCurrentMain = img.url === selectedMainImage
+              return (
+                <Option
+                  key={img.url}
+                  value={img.url}
+                  label={
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, height: '100%' }}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={img.url}
+                        alt=""
+                        style={{
+                          width: 24,
+                          height: 24,
+                          minWidth: 24,
+                          borderRadius: 4,
+                          objectFit: 'cover',
+                          border: '1px solid #d9d9d9',
+                          display: 'block'
+                        }}
+                      />
+                      <span style={{ fontSize: 14 }}>
+                        Ảnh {idx + 1} {isCurrentMain ? '(Đang là ảnh chính ⭐)' : ''}
+                      </span>
+                    </div>
+                  }
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '3px 0' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={img.url}
+                        alt=""
+                        style={{
+                          width: 32,
+                          height: 32,
+                          minWidth: 32,
+                          borderRadius: 4,
+                          objectFit: 'cover',
+                          border: '1px solid #e2e8f0',
+                          display: 'block'
+                        }}
+                      />
+                      <span style={{ fontWeight: isCurrentMain ? 600 : 400 }}>
+                        Ảnh {idx + 1}
+                      </span>
+                    </div>
+                    {isCurrentMain && (
+                      <Tag color="gold" icon={<StarFilled />} style={{ margin: 0 }}>
+                        Ảnh chính
+                      </Tag>
+                    )}
+                  </div>
+                </Option>
+              )
+            })}
+          </Select>
         </Form.Item>
 
-        <Form.Item
-          name="details"
-          label="Chi tiết"
+        {/* Thanh công cụ: Tải ảnh từ máy tính & Thêm qua URL */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: 12,
+            flexWrap: 'wrap',
+            background: '#f8fafc',
+            padding: '10px 14px',
+            borderRadius: 8,
+            border: '1px solid #e2e8f0',
+            marginBottom: 14
+          }}
         >
-          <Select
-            mode="tags"
-            placeholder="Nhập các chi tiết"
-            tokenSeparators={[',']}
-          />
-        </Form.Item>
+          <div style={{ flex: '1 1 320px' }}>
+            <Space.Compact style={{ width: '100%' }}>
+              <Input
+                placeholder="Hoặc dán URL hình ảnh..."
+                value={newImageUrl}
+                onChange={(e) => setNewImageUrl(e.target.value)}
+                onPressEnter={handleAddImageByUrl}
+                prefix={<LinkOutlined style={{ color: '#94a3b8' }} />}
+                allowClear
+              />
+              <Button type="primary" onClick={handleAddImageByUrl} icon={<PlusOutlined />}>
+                Thêm URL
+              </Button>
+            </Space.Compact>
+          </div>
 
-        <Form.Item
-          name="isFeatured"
-          label="Dự án nổi bật"
-          valuePropName="checked"
-        >
-          <Switch />
-        </Form.Item>
+          <Upload
+            accept="image/*"
+            multiple
+            showUploadList={false}
+            beforeUpload={handleUploadFiles}
+          >
+            <Button icon={<UploadOutlined />} style={{ fontWeight: 500 }}>
+              Tải ảnh từ máy tính
+            </Button>
+          </Upload>
+        </div>
+
+        {/* Tiêu đề danh sách ảnh */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10, padding: '0 2px' }}>
+          <Text strong style={{ fontSize: 13, color: '#334155' }}>
+            Tất cả hình ảnh đã tải lên ({imageList.length})
+          </Text>
+          <Text type="secondary" style={{ fontSize: 12 }}>
+            Bấm <b>⭐ Đặt làm ảnh chính</b> trên từng ảnh để chọn làm ảnh đại diện
+          </Text>
+        </div>
+
+        {/* Danh sách ảnh đã tải lên (Visual Gallery Grid) */}
+        {imageList.length === 0 ? (
+          <div
+            style={{
+              padding: '28px 16px',
+              background: '#ffffff',
+              border: '1px dashed #cbd5e1',
+              borderRadius: 8,
+              textAlign: 'center',
+              marginBottom: 10
+            }}
+          >
+            <Empty
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description="Chưa có hình ảnh nào cho dự án này. Hãy tải lên từ máy tính hoặc dán link URL ảnh phía trên."
+            />
+          </div>
+        ) : (
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(135px, 1fr))',
+              gap: 12,
+              marginBottom: 16,
+              maxHeight: 280,
+              overflowY: 'auto',
+              padding: '8px 4px'
+            }}
+          >
+            {imageList.map((img, index) => {
+              const isMain = img.url === selectedMainImage
+              return (
+                <Card
+                  key={img.uid || index}
+                  hoverable
+                  size="small"
+                  style={{
+                    position: 'relative',
+                    borderRadius: 8,
+                    overflow: 'hidden',
+                    border: isMain ? '2px solid #faad14' : '1px solid #cbd5e1',
+                    boxShadow: isMain ? '0 0 0 2px rgba(250, 173, 20, 0.2)' : '0 1px 2px rgba(0,0,0,0.04)',
+                    background: isMain ? '#fffdf0' : '#ffffff'
+                  }}
+                  styles={{ body: { padding: 6 } }}
+                >
+                  {/* Badge Ảnh chính */}
+                  {isMain && (
+                    <div
+                      style={{
+                        position: 'absolute',
+                        top: 8,
+                        left: 8,
+                        zIndex: 2,
+                        boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                      }}
+                    >
+                      <Tag
+                        color="gold"
+                        icon={<StarFilled />}
+                        style={{ margin: 0, fontWeight: 600, fontSize: 11, padding: '1px 6px' }}
+                      >
+                        Ảnh chính
+                      </Tag>
+                    </div>
+                  )}
+
+                  {/* Thumbnail */}
+                  <div
+                    style={{
+                      position: 'relative',
+                      width: '100%',
+                      height: 96,
+                      borderRadius: 6,
+                      overflow: 'hidden',
+                      background: '#f1f5f9'
+                    }}
+                  >
+                    <Image
+                      src={img.url}
+                      alt={`Ảnh ${index + 1}`}
+                      width="100%"
+                      height="100%"
+                      style={{ objectFit: 'cover' }}
+                      preview={{
+                        mask: (
+                          <Space size={4} style={{ fontSize: 12 }}>
+                            <EyeOutlined /> Xem
+                          </Space>
+                        )
+                      }}
+                    />
+                  </div>
+
+                  {/* Action bar dưới thumbnail */}
+                  <div
+                    style={{
+                      marginTop: 6,
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center'
+                    }}
+                  >
+                    {isMain ? (
+                      <Text strong style={{ fontSize: 11, color: '#d48806' }}>
+                        ⭐ Đại diện
+                      </Text>
+                    ) : (
+                      <Button
+                        type="text"
+                        size="small"
+                        icon={<StarOutlined />}
+                        style={{ fontSize: 11, padding: '0 4px', color: '#1677ff', height: 22 }}
+                        onClick={() => handleSetMainImage(img.url)}
+                      >
+                        Đặt ảnh chính
+                      </Button>
+                    )}
+
+                    <Popconfirm
+                      title="Xóa ảnh này?"
+                      okText="Xóa"
+                      cancelText="Hủy"
+                      onConfirm={() => handleRemoveImage(img.url)}
+                    >
+                      <Button
+                        type="text"
+                        danger
+                        size="small"
+                        icon={<DeleteOutlined />}
+                        style={{ height: 22, width: 22, minWidth: 22, padding: 0 }}
+                      />
+                    </Popconfirm>
+                  </div>
+                </Card>
+              )
+            })}
+          </div>
+        )}
       </Form>
     </Modal>
   )

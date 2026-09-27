@@ -20,6 +20,7 @@ import {
 } from '@mui/icons-material'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { BRAND_COLORS } from '@/constants/colors'
 
 export default function NotFound() {
   const router = useRouter()
@@ -36,13 +37,13 @@ export default function NotFound() {
     <Box
       sx={{
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        background: `linear-gradient(135deg, ${BRAND_COLORS.primary.dark} 0%, ${BRAND_COLORS.primary.main} 60%, ${BRAND_COLORS.primary.light} 100%)`,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         position: 'relative',
         overflow: 'hidden',
-        py: '80px' // Account for fixed header
+        py: '80px'
       }}
     >
       {/* Animated Background Elements */}
@@ -54,100 +55,104 @@ export default function NotFound() {
           right: 0,
           bottom: 0,
           background: `
-            radial-gradient(circle at 20% 50%, rgba(255, 107, 107, 0.2) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, rgba(78, 205, 196, 0.2) 0%, transparent 50%),
-            radial-gradient(circle at 40% 80%, rgba(255, 193, 7, 0.2) 0%, transparent 50%)
+            radial-gradient(circle at 20% 50%, ${BRAND_COLORS.secondary.main}20 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, ${BRAND_COLORS.secondary.dark}15 0%, transparent 50%)
           `,
-          animation: 'float 8s ease-in-out infinite'
+          animation: 'float 6s ease-in-out infinite'
         }}
       />
 
-      {/* Floating Icons */}
+      {/* Floating Construction Icons */}
       <Box
         sx={{
           position: 'absolute',
-          top: '10%',
+          top: '15%',
           left: '10%',
-          animation: 'bounce 3s infinite'
+          color: `${BRAND_COLORS.secondary.main}40`,
+          animation: 'float 4s ease-in-out infinite',
+          display: { xs: 'none', md: 'block' }
         }}
       >
-        <Construction sx={{ fontSize: 40, color: 'rgba(255,255,255,0.1)' }} />
-      </Box>
-      <Box
-        sx={{
-          position: 'absolute',
-          top: '20%',
-          right: '15%',
-          animation: 'bounce 3s infinite 1s'
-        }}
-      >
-        <Warning sx={{ fontSize: 35, color: 'rgba(255,255,255,0.1)' }} />
-      </Box>
-      <Box
-        sx={{
-          position: 'absolute',
-          bottom: '15%',
-          left: '20%',
-          animation: 'bounce 3s infinite 2s'
-        }}
-      >
-        <Search sx={{ fontSize: 45, color: 'rgba(255,255,255,0.1)' }} />
+        <Construction sx={{ fontSize: 60 }} />
       </Box>
 
-      <Container maxWidth="md">
+      <Box
+        sx={{
+          position: 'absolute',
+          top: '25%',
+          right: '15%',
+          color: `${BRAND_COLORS.secondary.main}30`,
+          animation: 'float 5s ease-in-out infinite 1s',
+          display: { xs: 'none', md: 'block' }
+        }}
+      >
+        <Warning sx={{ fontSize: 50 }} />
+      </Box>
+
+      <Box
+        sx={{
+          position: 'absolute',
+          bottom: '20%',
+          left: '15%',
+          color: `${BRAND_COLORS.secondary.main}30`,
+          animation: 'float 4.5s ease-in-out infinite 2s',
+          display: { xs: 'none', md: 'block' }
+        }}
+      >
+        <Search sx={{ fontSize: 45 }} />
+      </Box>
+
+      <Container maxWidth="md" sx={{ position: 'relative', zIndex: 1 }}>
         <Fade in={showContent} timeout={1000}>
           <Paper
             elevation={24}
             sx={{
               p: { xs: 4, md: 8 },
               textAlign: 'center',
-              borderRadius: 6,
-              background: 'rgba(255, 255, 255, 0.95)',
+              borderRadius: 4,
+              background: 'rgba(255, 255, 255, 0.98)',
               backdropFilter: 'blur(20px)',
-              border: '1px solid rgba(255, 255, 255, 0.2)',
+              border: '1px solid rgba(255, 255, 255, 0.3)',
               position: 'relative',
               overflow: 'hidden'
             }}
           >
-            {/* Decorative Elements */}
+            {/* Decorative Corner Accents */}
             <Box
               sx={{
                 position: 'absolute',
-                top: -80,
-                right: -80,
-                width: 160,
-                height: 160,
+                top: -40,
+                right: -40,
+                width: 100,
+                height: 100,
                 borderRadius: '50%',
-                background: 'linear-gradient(45deg, #FF6B6B, #4ECDC4)',
+                background: BRAND_COLORS.secondary.main,
                 opacity: 0.1
               }}
             />
             <Box
               sx={{
                 position: 'absolute',
-                bottom: -60,
-                left: -60,
-                width: 120,
-                height: 120,
+                bottom: -40,
+                left: -40,
+                width: 100,
+                height: 100,
                 borderRadius: '50%',
-                background: 'linear-gradient(45deg, #A8E6CF, #FFD93D)',
-                opacity: 0.1
+                background: BRAND_COLORS.secondary.light,
+                opacity: 0.5
               }}
             />
 
             {/* 404 Number */}
-            <Box sx={{ mb: 4 }}>
+            <Box sx={{ mb: 3 }}>
               <Typography
                 variant="h1"
                 sx={{
-                  fontSize: { xs: '6rem', md: '10rem' },
-                  fontWeight: 'bold',
-                  background: 'linear-gradient(45deg, #667eea, #764ba2)',
-                  backgroundClip: 'text',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
+                  fontSize: { xs: '5.5rem', md: '8rem' },
+                  fontWeight: 900,
+                  color: BRAND_COLORS.primary.main,
                   lineHeight: 1,
-                  textShadow: '0 4px 20px rgba(102, 126, 234, 0.3)',
+                  letterSpacing: '-2px',
                   animation: 'pulse 2s infinite'
                 }}
               >
@@ -161,8 +166,8 @@ export default function NotFound() {
               sx={{
                 mb: 2,
                 fontWeight: 'bold',
-                color: '#333',
-                fontSize: { xs: '1.8rem', md: '2.5rem' }
+                color: BRAND_COLORS.neutral.textPrimary,
+                fontSize: { xs: '1.6rem', md: '2.2rem' }
               }}
             >
               Không tìm thấy trang
@@ -175,7 +180,8 @@ export default function NotFound() {
                 mb: 4,
                 lineHeight: 1.6,
                 maxWidth: '600px',
-                mx: 'auto'
+                mx: 'auto',
+                fontSize: { xs: '0.95rem', md: '1.05rem' }
               }}
             >
               Rất tiếc, trang bạn đang tìm kiếm không tồn tại hoặc đã được di chuyển.
@@ -185,7 +191,7 @@ export default function NotFound() {
 
             {/* Suggestions */}
             <Box sx={{ mb: 5 }}>
-              <Typography variant="h6" sx={{ mb: 2, color: '#667eea' }}>
+              <Typography variant="subtitle1" sx={{ mb: 2, color: BRAND_COLORS.primary.main, fontWeight: 600 }}>
                 Gợi ý cho bạn:
               </Typography>
               <Box sx={{
@@ -229,14 +235,13 @@ export default function NotFound() {
                   textTransform: 'none',
                   px: 4,
                   py: 1.5,
-                  background: 'linear-gradient(45deg, #667eea, #764ba2)',
-                  boxShadow: '0 4px 20px rgba(102, 126, 234, 0.4)',
+                  backgroundColor: BRAND_COLORS.primary.main,
+                  color: BRAND_COLORS.primary.contrastText,
                   '&:hover': {
-                    background: 'linear-gradient(45deg, #5a6fd8, #6a4190)',
-                    transform: 'translateY(-2px)',
-                    boxShadow: '0 6px 25px rgba(102, 126, 234, 0.5)'
+                    backgroundColor: BRAND_COLORS.primary.light,
+                    transform: 'translateY(-2px)'
                   },
-                  transition: 'all 0.3s ease'
+                  transition: 'all 0.2s ease'
                 }}
               >
                 Về trang chủ
@@ -251,14 +256,14 @@ export default function NotFound() {
                   textTransform: 'none',
                   px: 4,
                   py: 1.5,
-                  borderColor: '#667eea',
-                  color: '#667eea',
+                  borderColor: BRAND_COLORS.primary.main,
+                  color: BRAND_COLORS.primary.main,
                   '&:hover': {
-                    backgroundColor: 'rgba(102, 126, 234, 0.05)',
-                    borderColor: '#5a6fd8',
+                    backgroundColor: BRAND_COLORS.primary.surface,
+                    borderColor: BRAND_COLORS.primary.light,
                     transform: 'translateY(-2px)'
                   },
-                  transition: 'all 0.3s ease'
+                  transition: 'all 0.2s ease'
                 }}
               >
                 Quay lại
@@ -266,7 +271,7 @@ export default function NotFound() {
             </Stack>
 
             {/* Quick Links */}
-            <Box sx={{ mt: 4, pt: 4, borderTop: '1px solid rgba(102, 126, 234, 0.1)' }}>
+            <Box sx={{ mt: 4, pt: 3, borderTop: `1px solid ${BRAND_COLORS.neutral.border}` }}>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
                 Hoặc truy cập nhanh:
               </Typography>
@@ -282,7 +287,7 @@ export default function NotFound() {
                   href="/about"
                   variant="text"
                   size="small"
-                  sx={{ textTransform: 'none', color: '#667eea' }}
+                  sx={{ textTransform: 'none', color: BRAND_COLORS.primary.main, '&:hover': { color: BRAND_COLORS.secondary.dark } }}
                 >
                   Giới thiệu
                 </Button>
@@ -291,16 +296,16 @@ export default function NotFound() {
                   href="/services"
                   variant="text"
                   size="small"
-                  sx={{ textTransform: 'none', color: '#667eea' }}
+                  sx={{ textTransform: 'none', color: BRAND_COLORS.primary.main, '&:hover': { color: BRAND_COLORS.secondary.dark } }}
                 >
                   Dịch vụ
                 </Button>
                 <Button
                   component={Link}
-                  href="/project"
+                  href="/projects"
                   variant="text"
                   size="small"
-                  sx={{ textTransform: 'none', color: '#667eea' }}
+                  sx={{ textTransform: 'none', color: BRAND_COLORS.primary.main, '&:hover': { color: BRAND_COLORS.secondary.dark } }}
                 >
                   Dự án
                 </Button>
@@ -309,7 +314,7 @@ export default function NotFound() {
                   href="/contact"
                   variant="text"
                   size="small"
-                  sx={{ textTransform: 'none', color: '#667eea' }}
+                  sx={{ textTransform: 'none', color: BRAND_COLORS.primary.main, '&:hover': { color: BRAND_COLORS.secondary.dark } }}
                 >
                   Liên hệ
                 </Button>
@@ -318,42 +323,6 @@ export default function NotFound() {
           </Paper>
         </Fade>
       </Container>
-
-      {/* CSS Animations */}
-      <style jsx global>{`
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-20px);
-          }
-        }
-        
-        @keyframes bounce {
-          0%, 20%, 50%, 80%, 100% {
-            transform: translateY(0);
-          }
-          40% {
-            transform: translateY(-10px);
-          }
-          60% {
-            transform: translateY(-5px);
-          }
-        }
-
-        @keyframes pulse {
-          0% {
-            opacity: 1;
-          }
-          50% {
-            opacity: 0.8;
-          }
-          100% {
-            opacity: 1;
-          }
-        }
-      `}</style>
     </Box>
   )
 }

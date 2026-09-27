@@ -775,14 +775,27 @@ export default function AboutPage() {
                     width: 100,
                     height: 100,
                     margin: '0 auto 16px',
-                    transition: 'all 0.3s ease-in-out'
+                    transition: 'all 0.3s ease-in-out',
+                    bgcolor: '#CBD5E1',
+                    boxShadow: '0 4px 14px rgba(0, 0, 0, 0.08)',
+                    overflow: 'hidden',
                   }}
-                  className="bg-amber-500 group-hover:scale-110 group-hover:shadow-lg"
+                  className="group-hover:scale-105"
                 >
-                  <Architecture
-                    sx={{ fontSize: 50 }}
-                    className="transition-transform duration-300 group-hover:rotate-6"
-                  />
+                  {/* Facebook style default avatar */}
+                  <svg
+                    viewBox="0 0 100 100"
+                    width="100%"
+                    height="100%"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle cx="50" cy="36" r="16" fill="#FFFFFF" />
+                    <path
+                      d="M14 100 C14 72 30 60 50 60 C70 60 86 72 86 100 Z"
+                      fill="#FFFFFF"
+                    />
+                  </svg>
                 </Avatar>
                 <Typography
                   variant="h5"

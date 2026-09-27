@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import {
@@ -23,6 +23,7 @@ import {
 } from '@mui/icons-material';
 import Link from 'next/link';
 import { ProjectComingSoonPageSkeleton } from '@/components/projects/ProjectPageSkeletons';
+import { BRAND_COLORS } from '@/constants/colors';
 
 export default function CompletedPage() {
   const [progress, setProgress] = useState(0);
@@ -37,9 +38,9 @@ export default function CompletedPage() {
     // Animate progress bar
     const progressTimer = setInterval(() => {
       setProgress((prev) => {
-        if (prev >= 75) {
+        if (prev >= 85) {
           clearInterval(progressTimer);
-          return 75;
+          return 85;
         }
         return prev + 1;
       });
@@ -59,7 +60,7 @@ export default function CompletedPage() {
     <Box
       sx={{
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        background: `linear-gradient(135deg, ${BRAND_COLORS.primary.dark} 0%, ${BRAND_COLORS.primary.main} 60%, ${BRAND_COLORS.primary.light} 100%)`,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -76,9 +77,8 @@ export default function CompletedPage() {
           right: 0,
           bottom: 0,
           background: `
-            radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
-            radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.3) 0%, transparent 50%)
+            radial-gradient(circle at 20% 50%, ${BRAND_COLORS.secondary.main}20 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, ${BRAND_COLORS.secondary.dark}15 0%, transparent 50%)
           `,
           animation: 'float 6s ease-in-out infinite',
         }}
@@ -92,9 +92,9 @@ export default function CompletedPage() {
               p: { xs: 4, md: 6 },
               textAlign: 'center',
               borderRadius: 4,
-              background: 'rgba(255, 255, 255, 0.95)',
+              background: 'rgba(255, 255, 255, 0.98)',
               backdropFilter: 'blur(20px)',
-              border: '1px solid rgba(255, 255, 255, 0.2)',
+              border: '1px solid rgba(255, 255, 255, 0.3)',
               position: 'relative',
               overflow: 'hidden',
             }}
@@ -108,7 +108,7 @@ export default function CompletedPage() {
                 width: 100,
                 height: 100,
                 borderRadius: '50%',
-                background: 'linear-gradient(45deg, #FF6B6B, #4ECDC4)',
+                background: BRAND_COLORS.secondary.main,
                 opacity: 0.1,
               }}
             />
@@ -120,8 +120,8 @@ export default function CompletedPage() {
                 width: 60,
                 height: 60,
                 borderRadius: '50%',
-                background: 'linear-gradient(45deg, #A8E6CF, #FFD93D)',
-                opacity: 0.1,
+                background: BRAND_COLORS.secondary.light,
+                opacity: 0.5,
               }}
             />
 
@@ -129,8 +129,8 @@ export default function CompletedPage() {
             <Box sx={{ mb: 3 }}>
               <Construction
                 sx={{
-                  fontSize: 80,
-                  color: '#667eea',
+                  fontSize: 72,
+                  color: BRAND_COLORS.secondary.main,
                   animation: 'bounce 2s infinite',
                 }}
               />
@@ -142,14 +142,11 @@ export default function CompletedPage() {
               sx={{
                 mb: 2,
                 fontWeight: 'bold',
-                background: 'linear-gradient(45deg, #667eea, #764ba2)',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                fontSize: { xs: '2rem', md: '3rem' },
+                color: BRAND_COLORS.primary.main,
+                fontSize: { xs: '2rem', md: '2.5rem' },
               }}
             >
-              Đang Phát Triển
+              Dự Án Đã Hoàn Thành
             </Typography>
 
             {/* Subtitle */}
@@ -158,16 +155,16 @@ export default function CompletedPage() {
               color="text.secondary"
               sx={{ mb: 4, lineHeight: 1.6 }}
             >
-              Chúng tôi đang nỗ lực xây dựng trang này để mang đến trải nghiệm tuyệt vời nhất cho bạn
+              Trang tổng hợp các dự án hoàn thành đang được đồng bộ và cập nhật tư liệu nghiệm thu
             </Typography>
 
             {/* Progress Bar */}
             <Box sx={{ mb: 4 }}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
                 <Typography variant="body2" color="text.secondary">
-                  Tiến độ phát triển
+                  Tiến độ cập nhật
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" fontWeight={700} sx={{ color: BRAND_COLORS.primary.main }}>
                   {progress}%
                 </Typography>
               </Box>
@@ -177,10 +174,10 @@ export default function CompletedPage() {
                 sx={{
                   height: 8,
                   borderRadius: 4,
-                  backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                  backgroundColor: BRAND_COLORS.secondary.light,
                   '& .MuiLinearProgress-bar': {
                     borderRadius: 4,
-                    background: 'linear-gradient(45deg, #667eea, #764ba2)',
+                    background: `linear-gradient(90deg, ${BRAND_COLORS.primary.main}, ${BRAND_COLORS.secondary.main})`,
                   },
                 }}
               />
@@ -188,8 +185,8 @@ export default function CompletedPage() {
 
             {/* Features Coming Soon */}
             <Box sx={{ mb: 4 }}>
-              <Typography variant="h6" sx={{ mb: 2, color: '#667eea' }}>
-                Tính năng sắp ra mắt
+              <Typography variant="h6" sx={{ mb: 2, color: BRAND_COLORS.primary.main, fontWeight: 600 }}>
+                Nội dung sắp ra mắt
               </Typography>
               <Stack
                 direction={{ xs: 'column', sm: 'row' }}
@@ -200,26 +197,26 @@ export default function CompletedPage() {
               >
                 <Chip
                   icon={<Rocket />}
-                  label="Showcase dự án"
-                  color="primary"
+                  label="Hồ sơ bàn giao"
+                  sx={{ borderColor: BRAND_COLORS.secondary.border, color: BRAND_COLORS.primary.main }}
                   variant="outlined"
                 />
                 <Chip
                   icon={<AutoAwesome />}
-                  label="Gallery ảnh"
-                  color="secondary"
+                  label="Bộ ảnh thực tế"
+                  sx={{ borderColor: BRAND_COLORS.secondary.border, color: BRAND_COLORS.primary.main }}
                   variant="outlined"
                 />
                 <Chip
                   icon={<Schedule />}
-                  label="Timeline chi tiết"
-                  color="success"
+                  label="Nhật ký thi công"
+                  sx={{ borderColor: BRAND_COLORS.secondary.border, color: BRAND_COLORS.primary.main }}
                   variant="outlined"
                 />
                 <Chip
                   icon={<Build />}
-                  label="Thông tin kỹ thuật"
-                  color="warning"
+                  label="Chứng nhận chất lượng"
+                  sx={{ borderColor: BRAND_COLORS.secondary.border, color: BRAND_COLORS.primary.main }}
                   variant="outlined"
                 />
               </Stack>
@@ -241,6 +238,12 @@ export default function CompletedPage() {
                   borderRadius: 3,
                   textTransform: 'none',
                   px: 3,
+                  borderColor: BRAND_COLORS.primary.main,
+                  color: BRAND_COLORS.primary.main,
+                  '&:hover': {
+                    borderColor: BRAND_COLORS.primary.light,
+                    backgroundColor: BRAND_COLORS.primary.surface,
+                  }
                 }}
               >
                 Quay lại Dự án
@@ -255,9 +258,10 @@ export default function CompletedPage() {
                   borderRadius: 3,
                   textTransform: 'none',
                   px: 3,
-                  background: 'linear-gradient(45deg, #667eea, #764ba2)',
+                  backgroundColor: BRAND_COLORS.primary.main,
+                  color: BRAND_COLORS.primary.contrastText,
                   '&:hover': {
-                    background: 'linear-gradient(45deg, #5a6fd8, #6a4190)',
+                    backgroundColor: BRAND_COLORS.primary.light,
                   },
                 }}
               >
@@ -271,36 +275,11 @@ export default function CompletedPage() {
               color="text.secondary"
               sx={{ mt: 4, fontStyle: 'italic' }}
             >
-              Cảm ơn bạn đã kiên nhẫn chờ đợi. Chúng tôi sẽ sớm hoàn thiện!
+              Cảm ơn bạn đã quan tâm. Hệ thống sẽ sớm cập nhật đầy đủ dữ liệu!
             </Typography>
           </Paper>
         </Fade>
       </Container>
-
-      {/* CSS Animations */}
-      <style jsx>{`
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-20px);
-          }
-        }
-        
-        @keyframes bounce {
-          0%, 20%, 50%, 80%, 100% {
-            transform: translateY(0);
-          }
-          40% {
-            transform: translateY(-10px);
-          }
-          60% {
-            transform: translateY(-5px);
-          }
-        }
-      `}</style>
     </Box>
   );
 }
-

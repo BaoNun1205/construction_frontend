@@ -30,12 +30,13 @@ import { useLocale } from "@/contexts/LocaleContext"
 import { useTranslations } from "@/hooks/useTranslations"
 import ReactCountryFlag from "react-country-flag"
 import { CONTACT } from "@/constants/contact"
+import { BRAND_COLORS } from "@/constants/colors"
 import BrandLogo from "./ui/BrandLogo"
 
 export default function Header() {
   const theme = useTheme()
   const pathname = usePathname()
-  const homePagePaths = ['/', '/services/design-consulting', '/about', '/projects', '/services/project-management']
+  const homePagePaths = ['/', '/services/design-consulting', '/about', '/services/project-management']
   const isHomePage = homePagePaths.includes(pathname)
   const { locale, setLocale } = useLocale()
   const { t } = useTranslations()
@@ -150,7 +151,7 @@ export default function Header() {
           ? theme.palette.primary.main
           : "rgba(0,0,0,0)",
         borderBottom: scrolled
-          ? `6px solid ${theme.palette.secondary.light}`
+          ? `6px solid ${BRAND_COLORS.secondary.main}`
           : "none",
         boxShadow: (scrolled || !isHomePage) ? `0 8px 32px ${theme.palette.primary.main}30` : "none",
         borderRadius: 0,
@@ -284,13 +285,28 @@ export default function Header() {
                         textTransform: "none",
                         borderRadius: 2,
                         position: "relative",
-                        transition: "color 0.3s ease",
+                        transition: "all 0.3s ease",
                         background: "transparent",
+                        "&::after": {
+                          content: '""',
+                          position: "absolute",
+                          bottom: 2,
+                          left: "50%",
+                          transform: "translateX(-50%)",
+                          width: "0%",
+                          height: "3px",
+                          backgroundColor: BRAND_COLORS.secondary.hover,
+                          borderRadius: "2px",
+                          transition: "width 0.3s ease",
+                        },
                         "&:hover": {
-                          color: "#58d0f5",
+                          color: BRAND_COLORS.secondary.hover,
                           background: "transparent",
                           boxShadow: "none",
                           transform: "none",
+                          "&::after": {
+                            width: "70%",
+                          },
                         },
                       }}
                       endIcon={<ExpandMore />}
@@ -377,13 +393,28 @@ export default function Header() {
                       textTransform: "none",
                       borderRadius: 2,
                       position: "relative",
-                      transition: "color 0.3s ease",
+                      transition: "all 0.3s ease",
                       background: "transparent",
+                      "&::after": {
+                        content: '""',
+                        position: "absolute",
+                        bottom: 2,
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        width: "0%",
+                        height: "3px",
+                        backgroundColor: BRAND_COLORS.secondary.hover,
+                        borderRadius: "2px",
+                        transition: "width 0.3s ease",
+                      },
                       "&:hover": {
-                        color: theme.palette.secondary.light,
+                        color: BRAND_COLORS.secondary.hover,
                         background: "transparent",
                         boxShadow: "none",
                         transform: "none",
+                        "&::after": {
+                          width: "70%",
+                        },
                       },
                     }}
                   >
@@ -550,7 +581,7 @@ export default function Header() {
               sx={{
                 display: isMobile ? "block" : "none",
                 "& .MuiPaper-root": {
-                  background: "linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)",
+                  background: theme.palette.primary.main,
                   backdropFilter: "blur(20px)",
                   border: "1px solid rgba(255,255,255,0.2)",
                   borderRadius: 2,
@@ -601,7 +632,7 @@ export default function Header() {
                           background: "transparent",
                           "&:hover": {
                             background: "transparent",
-                            color: "#58d0f5",
+                            color: BRAND_COLORS.secondary.hover,
                             transform: "none",
                           },
                         }}
@@ -632,7 +663,7 @@ export default function Header() {
                       background: "transparent",
                       "&:hover": {
                         background: "transparent",
-                        color: "#58d0f5",
+                        color: BRAND_COLORS.secondary.hover,
                         transform: "none",
                       },
                     }}

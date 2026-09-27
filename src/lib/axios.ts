@@ -11,7 +11,7 @@ interface CustomInternalAxiosRequestConfig extends InternalAxiosRequestConfig {
 }
 
 // Extend AxiosInstance to support generic typing with custom config
-interface CustomAxiosInstance extends AxiosInstance {
+interface CustomAxiosInstance extends Omit<AxiosInstance, 'get' | 'post' | 'put' | 'patch' | 'delete'> {
   get<T = unknown>(url: string, config?: CustomAxiosRequestConfig): Promise<T>
   post<T = unknown>(url: string, data?: unknown, config?: CustomAxiosRequestConfig): Promise<T>
   put<T = unknown>(url: string, data?: unknown, config?: CustomAxiosRequestConfig): Promise<T>

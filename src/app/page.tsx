@@ -1596,7 +1596,8 @@ export default function Home() {
 
       {/* Image Marquee Section */}
       <ImageMarquee
-        title='Phát Triển Bền Vững'
+        title="Phát Triển Bền Vững"
+        subtitle="Hình ảnh thi công thực tế và kiểm soát chất lượng công trình"
       />
     </Box>
   )

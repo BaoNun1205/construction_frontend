@@ -14,6 +14,7 @@ import {
 } from '@mui/icons-material'
 import { useTranslations } from '@/hooks/useTranslations'
 import useScrollAnimations from '@/hooks/useScrollAnimations'
+import { BRAND_COLORS } from '@/constants/colors'
 
 export default function BiddingConsultingPage() {
   useScrollAnimations()
@@ -151,8 +152,8 @@ export default function BiddingConsultingPage() {
                       <div
                         className="px-3 py-1 rounded-full text-xs font-medium"
                         style={{
-                          background: '#10b98115',
-                          color: '#10b981'
+                          background: BRAND_COLORS.secondary.surface,
+                          color: BRAND_COLORS.secondary.dark
                         }}
                       >
                         {service.success}
@@ -224,9 +225,9 @@ export default function BiddingConsultingPage() {
                   <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50 hover:shadow-lg transition-all duration-300 text-center">
                     {/* Icon */}
                     <div
-                      className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl relative z-10"
+                      className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl relative z-10 shadow-md"
                       style={{
-                        background: `linear-gradient(135deg, ${theme.palette.primary.main}, #06b6d4)`
+                        background: `linear-gradient(135deg, ${BRAND_COLORS.primary.main}, ${BRAND_COLORS.secondary.main})`
                       }}
                     >
                       <span className="text-white text-lg">{process.icon}</span>

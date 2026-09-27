@@ -284,7 +284,7 @@ export default function ProjectManagementPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 bg-[#EEF9FF] p-4 rounded-2xl">
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 bg-brand-accent-light border border-brand-accent-border/50 p-4 rounded-2xl">
                 {projectData['Nhiệm vụ hỗ trợ'].map((item, index) => {
                   const IconComponent = item.icon
                   const colors = [

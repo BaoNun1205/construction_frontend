@@ -15,6 +15,7 @@ import {
 import ServiceKeywordLinks from '@/components/seo/ServiceKeywordLinks'
 import { useTranslations } from '@/hooks/useTranslations'
 import useScrollAnimations from '@/hooks/useScrollAnimations'
+import { BRAND_COLORS } from '@/constants/colors'
 
 export default function SupervisionPage() {
   useScrollAnimations()
@@ -235,9 +236,9 @@ export default function SupervisionPage() {
               <div key={index} className="relative">
                 <div className="rounded-2xl border border-gray-200/50 bg-white/80 p-6 text-center backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
                   <div
-                    className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full text-2xl font-bold text-white"
+                    className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full text-2xl font-bold text-white shadow-md"
                     style={{
-                      background: `linear-gradient(135deg, ${theme.palette.primary.main}, #10b981)`
+                      background: `linear-gradient(135deg, ${BRAND_COLORS.primary.main}, ${BRAND_COLORS.secondary.main})`
                     }}
                   >
                     {process.step}
@@ -250,7 +251,7 @@ export default function SupervisionPage() {
                   </Typography>
                 </div>
                 {index < supervisionProcess.length - 1 && (
-                  <div className="absolute top-1/2 -right-6 hidden h-0.5 w-6 bg-gradient-to-r from-blue-400 to-blue-600 lg:block" />
+                  <div className="absolute top-1/2 -right-6 hidden h-0.5 w-6 bg-brand-accent lg:block" />
                 )}
               </div>
             ))}

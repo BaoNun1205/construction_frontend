@@ -1,52 +1,94 @@
-﻿'use client'
+'use client'
 
-import React, { use, useState, useEffect } from 'react' 
-import { useProjectBySlug } from '@/hooks/useProjects'
+import React, { use, useState, useEffect, useCallback } from 'react'
+import { createPortal } from 'react-dom'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useProjectBySlug, useProjects } from '@/hooks/useProjects'
 import { ProjectHelpers } from '@/utils/projectHelpers'
 import { ProjectDetailPageSkeleton } from '@/components/projects/ProjectPageSkeletons'
-import Image from 'next/image'
+import { CONTACT } from '@/constants/contact'
 import {
   CalendarToday,
-  LocationOn,
   CheckCircle,
   Close,
   CameraAlt,
   AccessTime,
-  People,
-  EmojiEvents,
   PlayArrow,
-  Schedule
+  Schedule,
+  Phone,
+  ZoomIn,
+  NavigateBefore,
+  NavigateNext,
+  AssignmentTurnedInOutlined,
+  Engineering,
+  HomeWork,
+  ArrowForward,
+  AutoAwesome
 } from '@mui/icons-material'
-import { Typography, Alert, Box, Container } from '@mui/material'
+import { Alert, Box, Container } from '@mui/material'
+import { BRAND_COLORS } from '@/constants/colors'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-// export default function ProjectDetailPage(props: any) {
 export default function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = use(params)
   const slug = resolvedParams.slug
   const { data: rawProject, isLoading, isError, error } = useProjectBySlug(slug)
-  const [selectedImage, setSelectedImage] = useState<string | null>(null)
-  const [visibleElements, setVisibleElements] = useState<Set<string>>(new Set())
+  const { data: allProjectsData } = useProjects()
+
+  // Gallery state
+  const [activeMediaIndex, setActiveMediaIndex] = useState(0)
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const project = rawProject ? ProjectHelpers.transformForDetailPage(rawProject) : null
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setVisibleElements((prev) => new Set([...prev, entry.target.id]))
-          }
-        })
-      },
-      { threshold: 0.1 }
-    )
-
-    const elements = document.querySelectorAll('[data-animate]')
-    elements.forEach((el) => observer.observe(el))
-
-    return () => observer.disconnect()
+  // Collect all media items (mainImage + media array)
+  const allMedia: string[] = React.useMemo(() => {
+    if (!project) return []
+    const combined = [project.mainImage, ...(project.media || [])].filter(Boolean) as string[]
+    return Array.from(new Set(combined))
   }, [project])
+
+  // Filter other projects for the "Related Projects" section
+  const relatedProjects = React.useMemo(() => {
+    if (!allProjectsData) return []
+    return allProjectsData
+      .filter((p) => p.slug !== slug)
+      .slice(0, 3)
+      .map((p) => ProjectHelpers.transformForHomePage(p))
+  }, [allProjectsData, slug])
+
+  // Lightbox keyboard navigation
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (lightboxIndex === null || allMedia.length === 0) return
+      if (e.key === 'Escape') {
+        setLightboxIndex(null)
+      } else if (e.key === 'ArrowLeft') {
+        setLightboxIndex((prev) => (prev !== null ? (prev - 1 + allMedia.length) % allMedia.length : null))
+      } else if (e.key === 'ArrowRight') {
+        setLightboxIndex((prev) => (prev !== null ? (prev + 1) % allMedia.length : null))
+      }
+    },
+    [lightboxIndex, allMedia.length]
+  )
+
+  useEffect(() => {
+    if (lightboxIndex !== null) {
+      document.body.style.overflow = 'hidden'
+      window.addEventListener('keydown', handleKeyDown)
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [lightboxIndex, handleKeyDown])
 
   if (isLoading) {
     return <ProjectDetailPageSkeleton />
@@ -54,343 +96,632 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
 
   if (isError) {
     return (
-      <Box sx={{ p: 4 }}>
-        <Alert severity="error">
-          Lỗi khi tải chi tiết dự án: {error?.message}
-        </Alert>
+      <Box className="min-h-[60vh] flex items-center justify-center p-6 bg-slate-50">
+        <Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3 } }}>
+          <Alert severity="error" className="rounded-2xl shadow-sm">
+            Lỗi khi tải chi tiết dự án: {error?.message}
+          </Alert>
+          <div className="mt-4 text-center">
+            <Link
+              href="/projects"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium transition-colors hover:opacity-90"
+              style={{ backgroundColor: BRAND_COLORS.primary.main, color: BRAND_COLORS.primary.contrastText }}
+            >
+              <span>Quay lại danh sách dự án</span>
+            </Link>
+          </div>
+        </Container>
       </Box>
     )
   }
 
   if (!project) {
     return (
-      <Box sx={{ p: 4 }}>
-        <Alert severity="info">
-          Không tìm thấy dự án.
-        </Alert>
+      <Box className="min-h-[60vh] flex items-center justify-center p-6 bg-slate-50">
+        <Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3 } }} className="text-center">
+          <Alert severity="info" className="rounded-2xl shadow-sm mb-6">
+            Không tìm thấy thông tin dự án này hoặc dự án đã được chuyển đổi.
+          </Alert>
+          <Link
+            href="/projects"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition-colors shadow-sm hover:opacity-90"
+            style={{ backgroundColor: BRAND_COLORS.primary.main, color: BRAND_COLORS.primary.contrastText }}
+          >
+            <span>Khám phá các dự án khác</span>
+          </Link>
+        </Container>
       </Box>
     )
   }
 
   const isCompleted = project.statusRaw === 'completed'
-  const statusColor = isCompleted ? 'green' : 'orange'
-  const duration = project.duration
+  const currentActiveMedia = allMedia[activeMediaIndex] || project.mainImage || '/placeholder.svg'
+  const isCurrentVideo = ProjectHelpers.isVideo(currentActiveMedia)
 
   return (
-    <Box className="min-h-screen">
-      <Container className="py-16 space-y-20" sx={{ px: 4 }}>
-        {/* Hero Section */}
-        <div className={'relative overflow-hidden'}>
-          <div className="relative max-w-7xl mx-auto">
-            <div
-              id="hero"
-              data-animate
-              className={`transition-all duration-1000 ${visibleElements.has('hero') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-            >
-              <div className="text-center mb-12">
-                <div className={`inline-flex items-center px-4 py-2 bg-${statusColor}-100 rounded-full mb-4`}>
-                  {isCompleted ? (
-                    <CheckCircle className={`w-5 h-5 text-${statusColor}-600 mr-2`} />
-                  ) : (
-                    <Schedule className={`w-5 h-5 text-${statusColor}-600 mr-2`} />
+    <Box sx={{ minHeight: '100vh', bgcolor: BRAND_COLORS.neutral.background, overflowX: 'hidden', width: '100%', pb: 10 }}>
+      {/* Container chuẩn maxWidth="lg" khớp chính xác 100% với Header */}
+      <Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3 }, pt: { xs: 2.5, md: 3.5 } }}>
+        {/* Top Hero Section: Side-by-side Showcase + Thông tin công trình */}
+        <div className="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200/90 shadow-2xs mb-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-7 items-start">
+            {/* Cột trái: Khung xem ảnh vừa vặn (~380px) */}
+            <div className="lg:col-span-7 flex flex-col gap-2.5">
+              <div className="relative w-full aspect-[16/10] max-h-[380px] rounded-xl overflow-hidden bg-slate-900 border border-slate-200 shadow-xs relative group">
+                {isCurrentVideo ? (
+                  <video
+                    src={currentActiveMedia}
+                    controls
+                    autoPlay={false}
+                    className="w-full h-full object-contain"
+                    poster={project.mainImage}
+                  />
+                ) : (
+                  <Image
+                    src={currentActiveMedia}
+                    alt={project.title}
+                    fill
+                    priority
+                    className="object-cover group-hover:scale-[1.01] transition-transform duration-500 cursor-pointer"
+                    sizes="(max-width: 1024px) 100vw, 680px"
+                    onClick={() => setLightboxIndex(activeMediaIndex)}
+                  />
+                )}
+
+                {/* Huy hiệu đếm ảnh & nút xem lớn */}
+                <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between pointer-events-none z-10">
+                  <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-md text-white text-[11px] font-semibold pointer-events-auto">
+                    <CameraAlt sx={{ fontSize: 13 }} className="text-sky-400" />
+                    <span>
+                      {activeMediaIndex + 1} / {allMedia.length || 1}
+                    </span>
+                  </div>
+
+                  {!isCurrentVideo && (
+                    <button
+                      type="button"
+                      onClick={() => setLightboxIndex(activeMediaIndex)}
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-900/80 hover:bg-slate-900 backdrop-blur-md text-white text-[11px] font-medium pointer-events-auto transition-colors cursor-pointer"
+                      title="Phóng to ảnh"
+                    >
+                      <ZoomIn sx={{ fontSize: 14 }} />
+                      <span>Xem lớn</span>
+                    </button>
                   )}
-                  <Typography variant="body2" className={`text-${statusColor}-700 font-semibold`}>
-                    {project.status}
-                  </Typography>
                 </div>
 
-                <div className="flex flex-col items-center justify-center text-center">
-                  <Typography
-                    variant="h1"
-                    className="text-6xl font-bold text-center text-gray-800"
-                    sx={{ mb: 2 }}
-                  >
-                    {project.title}
-                  </Typography>
-                  <Typography
-                    variant="h6"
-                    className="text-center text-gray-600 max-w-4xl mx-auto leading-relaxed"
-                    sx={{ mb: 2 }}
-                  >
-                    {project.description}
-                  </Typography>
+                {/* Mũi tên chuyển ảnh */}
+                {allMedia.length > 1 && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => setActiveMediaIndex((prev) => (prev - 1 + allMedia.length) % allMedia.length)}
+                      aria-label="Hình trước"
+                      className="absolute left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-slate-900/75 hover:bg-slate-900 text-white backdrop-blur-md flex items-center justify-center transition-all opacity-80 group-hover:opacity-100 hover:scale-110 shadow-md cursor-pointer z-10"
+                    >
+                      <NavigateBefore sx={{ fontSize: 22 }} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setActiveMediaIndex((prev) => (prev + 1) % allMedia.length)}
+                      aria-label="Hình kế tiếp"
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-slate-900/75 hover:bg-slate-900 text-white backdrop-blur-md flex items-center justify-center transition-all opacity-80 group-hover:opacity-100 hover:scale-110 shadow-md cursor-pointer z-10"
+                    >
+                      <NavigateNext sx={{ fontSize: 22 }} />
+                    </button>
+                  </>
+                )}
+              </div>
+
+              {/* Dải Thumbnail nhỏ phía dưới */}
+              {allMedia.length > 1 && (
+                <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin scrollbar-thumb-slate-300">
+                  {allMedia.map((mediaUrl, idx) => {
+                    const isVid = ProjectHelpers.isVideo(mediaUrl)
+                    const isActive = idx === activeMediaIndex
+                    return (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => setActiveMediaIndex(idx)}
+                        className={`relative w-15 sm:w-17 aspect-video rounded-lg overflow-hidden shrink-0 border-2 transition-all cursor-pointer ${
+                          isActive
+                            ? 'border-sky-500 ring-2 ring-sky-400/30 scale-105 shadow-xs'
+                            : 'border-slate-200 opacity-60 hover:opacity-100'
+                        }`}
+                      >
+                        {isVid ? (
+                          <div className="w-full h-full bg-slate-800 flex items-center justify-center text-white">
+                            <PlayArrow sx={{ fontSize: 16 }} />
+                          </div>
+                        ) : (
+                          <Image
+                            src={mediaUrl}
+                            alt={`Thumbnail ${idx + 1}`}
+                            fill
+                            className="object-cover"
+                            sizes="68px"
+                          />
+                        )}
+                      </button>
+                    )
+                  })}
+                </div>
+              )}
+            </div>
+
+            {/* Cột phải: Tiêu đề dự án, Phân loại, Trạng thái, 4 Chỉ số đồng bộ & Nút hành động */}
+            <div className="lg:col-span-5 flex flex-col justify-between h-full space-y-3.5">
+              <div>
+                {/* Thẻ Phân loại & Trạng thái */}
+                <div className="flex flex-wrap items-center gap-2 mb-2">
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-sky-50 text-sky-800 border border-sky-200/90">
+                    <HomeWork sx={{ fontSize: 13 }} className="text-sky-600" />
+                    <span>{project.category}</span>
+                  </span>
+
+                  {isCompleted ? (
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200/90">
+                      <CheckCircle sx={{ fontSize: 13 }} className="text-emerald-600" />
+                      <span>Hoàn thành</span>
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200/90">
+                      <Schedule sx={{ fontSize: 13 }} className="text-amber-600" />
+                      <span>Đang triển khai</span>
+                    </span>
+                  )}
+                </div>
+
+                <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight leading-snug mb-3">
+                  {project.title}
+                </h1>
+
+                {/* 4 Chỉ số nhanh: Đồng bộ 100% về màu Brand Sky/Navy - Loại bỏ màu lộn xộn */}
+                <div className="grid grid-cols-2 gap-2 p-3 rounded-xl bg-slate-50 border border-slate-150 mb-3.5">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
+                      <CalendarToday sx={{ fontSize: 14 }} />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-[10px] text-slate-400 font-semibold uppercase">Khởi công</p>
+                      <p className="text-xs font-bold text-slate-800 truncate">{project.startDate}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
+                      <CheckCircle sx={{ fontSize: 14 }} />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-[10px] text-slate-400 font-semibold uppercase">Bàn giao</p>
+                      <p className="text-xs font-bold text-slate-800 truncate">
+                        {project.endDate || 'Đang triển khai'}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
+                      <AccessTime sx={{ fontSize: 14 }} />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-[10px] text-slate-400 font-semibold uppercase">Thời gian</p>
+                      <p className="text-xs font-bold text-slate-800 truncate">{project.duration}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
+                      <Engineering sx={{ fontSize: 14 }} />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-[10px] text-slate-400 font-semibold uppercase">Quy mô</p>
+                      <p className="text-xs font-bold text-slate-800 truncate">
+                        {project.workingScope.length} Hạng mục
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Thông tin đơn vị thi công */}
+                <div className="space-y-1.5 text-xs text-slate-600 mb-3 pb-2.5 border-b border-slate-100">
+                  <div className="flex justify-between py-0.5">
+                    <span className="text-slate-400">Đơn vị thi công:</span>
+                    <span className="font-bold text-slate-800">Xây Dựng Lai Phát</span>
+                  </div>
+                  <div className="flex justify-between py-0.5">
+                    <span className="text-slate-400">Phân loại công trình:</span>
+                    <span className="font-semibold text-slate-800">{project.category}</span>
+                  </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Working Areas Card */}
-                <div
-                  className={`bg-white/80 backdrop-blur-sm border border-gray-200 rounded-3xl p-8 transition-all duration-700 delay-200 hover:shadow-xl hover:scale-[1.02] ${visibleElements.has('hero') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+              {/* Nút Tư vấn đặt sát góc bên phải */}
+              <div className="pt-0.5 flex justify-end">
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-colors shadow-2xs hover:opacity-90"
+                  style={{ backgroundColor: BRAND_COLORS.primary.main, color: BRAND_COLORS.primary.contrastText }}
                 >
-                  <div className="flex items-center mb-6">
-                    <div className={`p-4 bg-${statusColor}-100 rounded-2xl mr-4`}>
-                      <LocationOn className={`w-7 h-7 text-${statusColor}-600`} />
-                    </div>
-                    <Typography variant="h3" className="font-serif text-xl font-bold text-gray-900">
-                      Phạm vi thi công
-                    </Typography>
-                  </div>
-                  <div className="grid grid-cols-1 gap-3">
-                    {project.workingScope.map((area, index) => (
+                  <span>Tư vấn báo giá</span>
+                  <ArrowForward sx={{ fontSize: 14 }} />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bố cục nội dung chính bên dưới */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          {/* Cột trái (8 cột) */}
+          <div className="lg:col-span-8 space-y-6">
+            {/* Khối: Hạng mục & Chi tiết công việc thực hiện */}
+            <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 shadow-2xs">
+              <div className="flex items-center gap-2.5 mb-4">
+                <div className="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
+                  <AssignmentTurnedInOutlined sx={{ fontSize: 18 }} />
+                </div>
+                <div>
+                  <h2 className="text-base font-bold text-slate-900">Hạng mục & Chi tiết công việc thực hiện</h2>
+                </div>
+              </div>
+
+              {/* Phạm vi thi công */}
+              {project.workingScope.length > 0 && (
+                <div className="mb-4">
+                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+                    Phạm vi thi công
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {project.workingScope.map((scope, idx) => (
                       <div
-                        key={index}
-                        className={`flex items-center p-4 bg-gray-50 rounded-xl border border-gray-100 hover:bg-${statusColor}-50 hover:border-${statusColor}-200 transition-all duration-300 group`}
+                        key={idx}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-800 text-xs sm:text-sm font-semibold"
                       >
-                        <div className={`w-3 h-3 bg-${statusColor}-500 rounded-full mr-3 group-hover:bg-${statusColor}-600 transition-colors`}></div>
-                        <Typography variant="body2" className="text-gray-700 font-medium text-sm leading-tight">
-                          {area}
-                        </Typography>
+                        <div className="w-2 h-2 rounded-full bg-sky-500"></div>
+                        <span>{scope}</span>
                       </div>
                     ))}
                   </div>
                 </div>
+              )}
 
-                {/* Time & Contractor Card */}
-                <div
-                  className={`bg-white/80 backdrop-blur-sm border border-gray-200 rounded-3xl p-8 transition-all duration-700 delay-300 hover:shadow-xl hover:scale-[1.02] ${visibleElements.has('hero') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-                >
-                  {/* Time Section */}
-                  <div className="mb-8">
-                    <div className="flex items-center mb-4">
-                      <div className={`p-4 bg-${statusColor === 'green' ? 'teal' : 'amber'}-100 rounded-2xl mr-4`}>
-                        <CalendarToday className={`w-7 h-7 text-${statusColor === 'green' ? 'teal' : 'amber'}-600`} />
-                      </div>
-                      <Typography variant="h3" className="font-serif text-xl font-bold text-gray-900">
-                        Thời gian thực hiện
-                      </Typography>
-                    </div>
-                    <div className={`bg-gradient-to-r from-${statusColor === 'green' ? 'teal' : 'amber'}-50 to-${statusColor}-50 rounded-2xl p-6 border border-${statusColor === 'green' ? 'teal' : 'amber'}-100`}>
-                      <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center">
-                          <div className={`w-3 h-3 bg-${statusColor === 'green' ? 'teal' : 'amber'}-500 rounded-full mr-3`}></div>
-                          <Typography variant="body2" className="text-gray-600 font-medium">
-                            Bắt đầu
-                          </Typography>
+              {/* Chi tiết công việc */}
+              {project.details.length > 0 && (
+                <div>
+                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+                    Chi tiết công việc triển khai
+                  </h3>
+                  <div className="space-y-2">
+                    {project.details.map((detail, idx) => (
+                      <div
+                        key={idx}
+                        className="flex items-start gap-2.5 p-3 rounded-lg bg-slate-50/80 border border-slate-100"
+                      >
+                        <div className="w-5 h-5 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center shrink-0 mt-0.5 text-[11px] font-bold">
+                          {idx + 1}
                         </div>
-                        <Typography variant="body1" className="text-gray-900 font-bold text-lg">
-                          {project.startDate}
-                        </Typography>
+                        <p className="text-xs sm:text-sm font-medium text-slate-700 leading-relaxed flex-1">
+                          {detail}
+                        </p>
                       </div>
-                      {project.endDate ? (
-                        <div className="flex items-center justify-between mb-3">
-                          <div className="flex items-center">
-                            <div className={`w-3 h-3 bg-${statusColor}-500 rounded-full mr-3`}></div>
-                            <Typography variant="body2" className="text-gray-600 font-medium">
-                              Kết thúc
-                            </Typography>
-                          </div>
-                          <Typography variant="body1" className="text-gray-900 font-bold text-lg">
-                            {project.endDate}
-                          </Typography>
-                        </div>
-                      ) : (
-                        <div className="flex items-center justify-between mb-3">
-                          <div className="flex items-center">
-                            <div className={'w-3 h-3 bg-orange-500 rounded-full mr-3'}></div>
-                            <Typography variant="body2" className="text-gray-600 font-medium">
-                              Trạng thái
-                            </Typography>
-                          </div>
-                          <Typography variant="body1" className="text-orange-600 font-bold text-lg">
-                            Đang triển khai
-                          </Typography>
-                        </div>
-                      )}
-                      <div className="border-t border-gray-200 pt-3 mt-3">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center">
-                            <AccessTime className="w-4 h-4 text-gray-500 mr-2" />
-                            <Typography variant="body2" className="text-gray-600 font-medium">
-                              {project.endDate ? 'Thời gian thực hiện' : 'Thời gian đã triển khai'}
-                            </Typography>
-                          </div>
-                          <Typography variant="body1" className={`text-${statusColor}-600 font-bold text-lg`}>
-                            {duration}
-                          </Typography>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Contractor Section */}
-                  <div>
-                    <div className="flex items-center mb-4">
-                      <div className="p-4 bg-purple-100 rounded-2xl mr-4">
-                        <People className="w-7 h-7 text-purple-600" />
-                      </div>
-                      <Typography variant="h3" className="font-serif text-xl font-bold text-gray-900">
-                        Nhà thầu
-                      </Typography>
-                    </div>
-                    <div className="bg-purple-50 rounded-2xl p-6 border border-purple-100">
-                      <Typography variant="body1" className="text-gray-800 font-semibold text-lg">
-                        Công ty Cổ Phần Tư Vấn và Xây Dựng Lai Phát
-                      </Typography>
-                      <div className="flex items-center mt-3 text-gray-600">
-                        <EmojiEvents className="w-4 h-4 mr-2" />
-                        <Typography variant="body2" className="text-sm">
-                          Chuyên gia về xây dựng và thi công công trình
-                        </Typography>
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </div>
+              )}
+            </div>
+
+            {/* Khối: Thư viện hình ảnh tư liệu thực tế */}
+            {allMedia.length > 0 && (
+              <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 shadow-2xs">
+                <div className="flex items-center gap-2.5 mb-4">
+                  <div className="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
+                    <CameraAlt sx={{ fontSize: 18 }} />
+                  </div>
+                  <div>
+                    <h2 className="text-base font-bold text-slate-900">Hình ảnh tư liệu thực tế ({allMedia.length})</h2>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {allMedia.map((mediaUrl, idx) => {
+                    const isVid = ProjectHelpers.isVideo(mediaUrl)
+                    return (
+                      <div
+                        key={idx}
+                        onClick={() => {
+                          setActiveMediaIndex(idx)
+                          setLightboxIndex(idx)
+                        }}
+                        className="group relative aspect-[4/3] rounded-xl overflow-hidden bg-slate-100 border border-slate-200 cursor-pointer hover:shadow-md transition-all duration-300"
+                      >
+                        {isVid ? (
+                          <div className="w-full h-full bg-slate-800 flex items-center justify-center text-white">
+                            <PlayArrow sx={{ fontSize: 26 }} className="group-hover:scale-125 transition-transform" />
+                          </div>
+                        ) : (
+                          <Image
+                            src={mediaUrl}
+                            alt={`${project.title} - Ảnh ${idx + 1}`}
+                            fill
+                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                            sizes="(max-width: 640px) 50vw, 33vw"
+                          />
+                        )}
+
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-between p-2 text-white">
+                          <span className="text-[11px] font-semibold">
+                            {isVid ? `Video ${idx + 1}` : `Ảnh ${idx + 1}`}
+                          </span>
+                          <span className="w-6 h-6 rounded-full bg-white/30 backdrop-blur-md flex items-center justify-center">
+                            <ZoomIn sx={{ fontSize: 13 }} />
+                          </span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
               </div>
+            )}
+          </div>
+
+          {/* Cột phải (4 cột) */}
+          <div className="lg:col-span-4 space-y-5 lg:sticky lg:top-6">
+            {/* Khối: Hỗ trợ tư vấn trực tiếp (Dùng tone Main #001137 và Accent #3cb8e0) */}
+            <div className="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-2xs">
+              <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
+                <Phone sx={{ fontSize: 15 }} className="text-sky-600" />
+                <span>Tư vấn & Khảo sát công trình</span>
+              </h3>
+              <p className="text-slate-500 text-xs leading-relaxed mb-3.5">
+                Bạn có nhu cầu thi công hoặc cần dự toán chi tiết cho công trình tương tự? Liên hệ trực tiếp với kỹ sư Lai Phát.
+              </p>
+              <a
+                href={`tel:${CONTACT.PHONE.replace(/\s+/g, '')}`}
+                className="w-full py-2.5 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-colors shadow-2xs hover:opacity-90"
+                style={{ backgroundColor: BRAND_COLORS.primary.main, color: BRAND_COLORS.primary.contrastText }}
+              >
+                <Phone sx={{ fontSize: 14 }} style={{ color: BRAND_COLORS.secondary.main }} />
+                <span>Gọi ngay: {CONTACT.PHONE}</span>
+              </a>
+            </div>
+
+            {/* Khối: Khám phá thêm mẫu thiết kế */}
+            <div
+              className="rounded-2xl p-5 shadow-xs relative overflow-hidden border"
+              style={{
+                backgroundColor: BRAND_COLORS.primary.main,
+                color: BRAND_COLORS.primary.contrastText,
+                borderColor: `${BRAND_COLORS.secondary.main}33`
+              }}
+            >
+              <div
+                className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider mb-1.5"
+                style={{ color: BRAND_COLORS.secondary.main }}
+              >
+                <AutoAwesome sx={{ fontSize: 13 }} />
+                <span>Ý tưởng thiết kế</span>
+              </div>
+              <h4 className="text-sm font-bold mb-1.5 text-white">Xem thêm các mẫu thiết kế nhà đẹp</h4>
+              <p className="text-slate-300 text-xs leading-relaxed mb-3.5">
+                Khám phá kho mẫu thiết kế nhà phố, biệt thự, nhà vườn hiện đại do Lai Phát thiết kế.
+              </p>
+              <Link
+                href="/projects/design-templates"
+                className="w-full py-2 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-1 transition-opacity hover:opacity-90 shadow-sm"
+                style={{ backgroundColor: BRAND_COLORS.secondary.main, color: BRAND_COLORS.primary.main }}
+              >
+                <span>Xem mẫu thiết kế</span>
+                <ArrowForward sx={{ fontSize: 13 }} />
+              </Link>
             </div>
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto">
-          {/* Image Gallery */}
-          <section
-            id="gallery"
-            data-animate
-            className={`mb-16 transition-all duration-1000 delay-500 ${visibleElements.has('gallery') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-          >
-            <div className="text-center mb-12">
-              <div className={`inline-flex items-center px-4 py-2 bg-${statusColor}-100 rounded-full mb-4`}>
-                <CameraAlt className={`w-5 h-5 text-${statusColor}-600 mr-2`} />
-                <Typography variant="body2" className={`text-${statusColor}-700 font-semibold`}>
-                  Bộ sưu tập
-                </Typography>
+        {/* Dự án tiêu biểu khác */}
+        {relatedProjects.length > 0 && (
+          <div className="mt-12 pt-8 border-t border-slate-200">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-5">
+              <div>
+                <span className="text-xs font-bold text-brand-accent-dark uppercase tracking-wider">
+                  Dự án khác
+                </span>
+                <h2 className="text-base sm:text-lg font-bold text-slate-900 mt-0.5">
+                  Công trình tiêu biểu khác của Lai Phát
+                </h2>
               </div>
-              <Typography
-                variant="h2"
-                className="font-serif text-3xl lg:text-4xl font-bold text-foreground"
-                sx={{ mb: 1 }}
+              <Link
+                href="/projects"
+                className="inline-flex items-center gap-1 text-xs font-semibold text-brand-accent-dark hover:underline transition-colors"
               >
-                Hình ảnh và Video dự án
-              </Typography>
-              <Typography
-                variant="body1"
-                className="text-muted-foreground text-lg"
-              >
-                Theo dõi quá trình thực hiện dự án ({project.mediaCounts.images} ảnh, {project.mediaCounts.videos} video)
-              </Typography>
+                <span>Xem tất cả</span>
+                <ArrowForward sx={{ fontSize: 13 }} />
+              </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {project.media.map((image, index) => {
-                const isVideo = image.match(/\.(mp4|webm|mov)$/i)
-                return (
-                  <div
-                    key={index}
-                    className="group relative overflow-hidden rounded-2xl bg-muted cursor-pointer transform transition-all duration-500 hover:scale-105 hover:shadow-2xl"
-                    onClick={() => setSelectedImage(image)}
-                  >
-                    <div className="relative w-full h-64">
-                      {isVideo ? (
-                        <video
-                          src={image}
-                          className="w-full h-full object-cover rounded-2xl transition-transform duration-700 group-hover:scale-110"
-                          muted
-                          loop
-                          playsInline
-                          preload="metadata"
-                          onLoadedData={(e) => {
-                            const video = e.target as HTMLVideoElement
-                            video.currentTime = 1
-                          }}
-                        />
-                      ) : (
-                        <Image
-                          src={image || '/placeholder.svg'}
-                          alt={`Hình ảnh dự án ${index + 1}`}
-                          fill
-                          className="object-cover rounded-2xl transition-transform duration-700 group-hover:scale-110"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        />
-                      )}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {relatedProjects.map((rel) => (
+                <Link key={rel.id} href={rel.url} className="group block">
+                  <div className="bg-white rounded-xl overflow-hidden border border-slate-200/90 shadow-2xs hover:shadow-md transition-all duration-300">
+                    <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
+                      <Image
+                        src={rel.image || '/placeholder.svg'}
+                        alt={rel.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                      <span
+                        className="absolute top-2 left-2 text-[10px] font-semibold px-2 py-0.5 rounded-md text-white backdrop-blur-2xs"
+                        style={{ backgroundColor: `${BRAND_COLORS.primary.main}cc` }}
+                      >
+                        {rel.category}
+                      </span>
                     </div>
-                    {isVideo && (
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className={'w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-lg group-hover:bg-white group-hover:scale-110 transition-all duration-300'}>
-                          <PlayArrow className={`w-8 h-8 text-${statusColor}-600 ml-1`} />
-                        </div>
-                      </div>
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="absolute bottom-4 left-4 text-white">
-                        <Typography variant="body2" className="font-semibold">
-                          {isVideo ? `Video ${index + 1}` : `Hình ảnh ${index + 1}`}
-                        </Typography>
-                      </div>
+
+                    <div className="p-3">
+                      <h3 className="font-bold text-xs sm:text-sm text-slate-900 line-clamp-1 group-hover:text-sky-600 transition-colors mb-1">
+                        {rel.title}
+                      </h3>
+                      <p className="text-xs text-slate-500 line-clamp-1">{rel.description}</p>
                     </div>
                   </div>
-                )
-              })}
-            </div>
-          </section>
-
-          {/* Project Details */}
-          <section
-            id="details"
-            data-animate
-            className={`transition-all duration-1000 delay-600 ${visibleElements.has('details') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-          >
-            <div className="bg-card border border-border rounded-3xl overflow-hidden shadow-lg p-8">
-              <div className="space-y-6">
-                <Typography
-                  variant="h3"
-                  className="font-serif text-2xl font-bold text-foreground"
-                  sx={{ mb: 2 }}
-                >
-                  Chi tiết công việc thực hiện
-                </Typography>
-                <div className="grid gap-4">
-                  {project.details.map((detail, index) => (
-                    <div
-                      key={index}
-                      className="flex items-start p-6 bg-muted/30 rounded-2xl border border-border hover:shadow-md transition-all duration-300 group"
-                    >
-                      <div className={`p-2 bg-${statusColor}-100 rounded-xl mr-4 group-hover:bg-${statusColor}-200 transition-colors duration-300`}>
-                        <CheckCircle className={`w-5 h-5 text-${statusColor}-600`} />
-                      </div>
-                      <Typography variant="body1" className="text-muted-foreground leading-relaxed flex-1">
-                        {detail}
-                      </Typography>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
-
-        {/* Image/Video Modal */}
-        {selectedImage && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-            <div className="relative max-w-6xl max-h-[90vh] w-full">
-              <button
-                onClick={() => setSelectedImage(null)}
-                className="absolute top-4 right-4 z-10 p-2 bg-background/80 hover:bg-background text-foreground rounded-full transition-colors duration-200"
-              >
-                <Close className="w-6 h-6" />
-              </button>
-              <div className="relative w-full h-[70vh]">
-                {selectedImage.match(/\.(mp4|webm|mov)$/i) ? (
-                  <video
-                    src={selectedImage}
-                    className="w-full h-full object-contain rounded-2xl"
-                    controls
-                    autoPlay
-                    loop
-                    muted
-                  />
-                ) : (
-                  <Image
-                    src={selectedImage || '/placeholder.svg'}
-                    alt="Hình ảnh dự án phóng to"
-                    fill
-                    className="object-contain rounded-2xl"
-                    sizes="100vw"
-                  />
-                )}
-              </div>
+                </Link>
+              ))}
             </div>
           </div>
         )}
       </Container>
+
+      {/* Fullscreen Lightbox Modal via Portal directly to body */}
+      {mounted && lightboxIndex !== null && allMedia.length > 0 && typeof document !== 'undefined' && createPortal(
+        <div
+          className="fixed inset-0 bg-black/95 backdrop-blur-md flex flex-col justify-between p-3 sm:p-6 animate-fade-in select-none"
+          style={{ zIndex: 99999 }}
+          onClick={() => setLightboxIndex(null)}
+        >
+          {/* Prominent Floating Close Button (Top-Right) */}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation()
+              setLightboxIndex(null)
+            }}
+            className="absolute top-4 right-4 sm:top-6 sm:right-6 z-50 flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white/20 hover:bg-red-600/90 active:bg-red-700 text-white transition-all cursor-pointer shadow-2xl backdrop-blur-md hover:scale-105 border border-white/30"
+            title="Đóng (Esc hoặc click vùng tối)"
+            aria-label="Đóng xem lớn"
+          >
+            <Close sx={{ fontSize: { xs: 22, sm: 26 } }} />
+            <span className="text-xs sm:text-sm font-semibold pr-1">Đóng</span>
+          </button>
+
+          {/* Lightbox Header / Counter */}
+          <div
+            className="flex items-center gap-3 text-white z-20 pr-24 pt-1 sm:pt-0"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <span className="text-xs sm:text-sm font-semibold text-slate-200 bg-white/10 px-3 py-1 rounded-full border border-white/15">
+              {lightboxIndex + 1} / {allMedia.length}
+            </span>
+            <span className="hidden sm:inline-block text-xs text-slate-400">|</span>
+            <span className="hidden sm:inline-block text-xs text-slate-300 max-w-md truncate font-medium">
+              {project?.title}
+            </span>
+          </div>
+
+          {/* Lightbox Main Stage (Click background to close) */}
+          <div
+            className="relative flex-1 flex items-center justify-center my-2 sm:my-3 overflow-hidden cursor-pointer"
+            onClick={() => setLightboxIndex(null)}
+          >
+            {allMedia.length > 1 && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setLightboxIndex((prev) =>
+                    prev !== null ? (prev - 1 + allMedia.length) % allMedia.length : null
+                  )
+                }}
+                className="absolute left-2 sm:left-4 z-20 w-11 h-11 sm:w-14 sm:h-14 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center transition-all cursor-pointer border border-white/15 hover:scale-110 shadow-xl"
+                title="Ảnh trước (Mũi tên trái)"
+                aria-label="Ảnh trước"
+              >
+                <NavigateBefore sx={{ fontSize: 32 }} />
+              </button>
+            )}
+
+            <div
+              className="relative w-full h-full max-w-5xl flex items-center justify-center p-2 cursor-default"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {ProjectHelpers.isVideo(allMedia[lightboxIndex]) ? (
+                <video
+                  src={allMedia[lightboxIndex]}
+                  controls
+                  autoPlay
+                  className="max-w-full max-h-[75vh] object-contain rounded-xl shadow-2xl"
+                />
+              ) : (
+                <Image
+                  src={allMedia[lightboxIndex]}
+                  alt="Hình ảnh dự án phóng to"
+                  fill
+                  className="object-contain rounded-xl shadow-2xl"
+                  sizes="100vw"
+                  priority
+                />
+              )}
+            </div>
+
+            {allMedia.length > 1 && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setLightboxIndex((prev) => (prev !== null ? (prev + 1) % allMedia.length : null))
+                }}
+                className="absolute right-2 sm:right-4 z-20 w-11 h-11 sm:w-14 sm:h-14 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center transition-all cursor-pointer border border-white/15 hover:scale-110 shadow-xl"
+                title="Ảnh kế tiếp (Mũi tên phải)"
+                aria-label="Ảnh kế tiếp"
+              >
+                <NavigateNext sx={{ fontSize: 32 }} />
+              </button>
+            )}
+          </div>
+
+          {/* Lightbox Bottom Thumbnail Strip */}
+          {allMedia.length > 1 && (
+            <div
+              className="flex items-center justify-center gap-2 overflow-x-auto py-2 z-20"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {allMedia.map((thumbUrl, idx) => {
+                const isActive = idx === lightboxIndex
+                const isVid = ProjectHelpers.isVideo(thumbUrl)
+                return (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      setLightboxIndex(idx)
+                    }}
+                    className={`relative w-14 sm:w-16 aspect-video rounded-lg overflow-hidden border-2 transition-all cursor-pointer shrink-0 ${
+                      isActive
+                        ? 'border-sky-400 ring-2 ring-sky-300/40 scale-110'
+                        : 'border-transparent opacity-50 hover:opacity-100'
+                    }`}
+                  >
+                    {isVid ? (
+                      <div className="w-full h-full bg-slate-800 flex items-center justify-center text-white">
+                        <PlayArrow sx={{ fontSize: 16 }} />
+                      </div>
+                    ) : (
+                      <Image
+                        src={thumbUrl}
+                        alt={`Thumb ${idx + 1}`}
+                        fill
+                        className="object-cover"
+                        sizes="64px"
+                      />
+                    )}
+                  </button>
+                )
+              })}
+            </div>
+          )}
+
+          <div
+            className="text-center text-slate-400 text-[11px] pb-1 cursor-pointer"
+            onClick={() => setLightboxIndex(null)}
+          >
+            Nhấn phím Esc hoặc click vùng tối bên ngoài ảnh để đóng
+          </div>
+        </div>,
+        document.body
+      )}
     </Box>
   )
 }

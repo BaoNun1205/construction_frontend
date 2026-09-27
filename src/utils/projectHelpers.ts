@@ -112,7 +112,8 @@ export class ProjectHelpers {
       projectType: '',
       foundationType: '',
       totalArea: '',
-      category: project.category.name,
+      category: project.category?.name || (typeof project.category === 'string' ? project.category : 'Công trình xây dựng'),
+      categorySlug: project.category?.slug || '',
       mediaCounts: mediaCounts
     }
   }
