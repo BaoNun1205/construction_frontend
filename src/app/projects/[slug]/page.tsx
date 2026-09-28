@@ -162,6 +162,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
                     alt={project.title}
                     fill
                     priority
+                    unoptimized
                     className="object-cover group-hover:scale-[1.01] transition-transform duration-500 cursor-pointer"
                     sizes="(max-width: 1024px) 100vw, 680px"
                     onClick={() => setLightboxIndex(activeMediaIndex)}
@@ -239,6 +240,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
                             src={mediaUrl}
                             alt={`Thumbnail ${idx + 1}`}
                             fill
+                            unoptimized
                             className="object-cover"
                             sizes="68px"
                           />
@@ -648,6 +650,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
                   src={allMedia[lightboxIndex]}
                   alt="Hình ảnh dự án phóng to"
                   fill
+                  unoptimized
                   className="object-contain rounded-xl shadow-2xl"
                   sizes="100vw"
                   priority
@@ -703,6 +706,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
                         src={thumbUrl}
                         alt={`Thumb ${idx + 1}`}
                         fill
+                        unoptimized
                         className="object-cover"
                         sizes="64px"
                       />

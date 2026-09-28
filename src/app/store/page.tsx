@@ -752,13 +752,23 @@ export default function StorePage() {
                           fontSize: '0.875rem',
                           fontWeight: 600,
                           borderRadius: '8px',
-                          color: BRAND_COLORS.neutral.textPrimary
+                          color: BRAND_COLORS.neutral.textPrimary,
+                          transition: 'all 0.2s ease-in-out',
+                          '&:hover': {
+                            backgroundColor: `${BRAND_COLORS.secondary.dark} !important`,
+                            color: '#ffffff !important',
+                            '& .MuiPaginationItem-icon, & svg': {
+                              color: '#ffffff !important',
+                              fill: '#ffffff !important'
+                            }
+                          }
                         },
                         '& .Mui-selected': {
                           backgroundColor: `${BRAND_COLORS.primary.main} !important`,
                           color: `${BRAND_COLORS.primary.contrastText} !important`,
                           '&:hover': {
-                            backgroundColor: `${BRAND_COLORS.primary.light} !important`
+                            backgroundColor: `${BRAND_COLORS.primary.light} !important`,
+                            color: '#ffffff !important'
                           }
                         }
                       }}

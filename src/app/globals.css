@@ -589,3 +589,51 @@ body {
   overflow-y: auto;
   overflow-x: hidden;
 }
+
+/* ========================================================
+   Pagination Styling (MUI & Ant Design)
+   Hover chuyển sang xanh dương thì chữ / số và icon chuyển thành màu trắng
+======================================================== */
+.MuiPagination-root .MuiPaginationItem-root {
+  transition: all 0.2s ease-in-out !important;
+}
+
+.MuiPagination-root .MuiPaginationItem-root:hover {
+  background-color: #0284c7 !important;
+  color: #ffffff !important;
+}
+
+.MuiPagination-root .MuiPaginationItem-root:hover svg,
+.MuiPagination-root .MuiPaginationItem-root:hover .MuiPaginationItem-icon {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+
+.MuiPagination-root .MuiPaginationItem-root.Mui-selected {
+  background-color: #001137 !important;
+  color: #ffffff !important;
+}
+
+.MuiPagination-root .MuiPaginationItem-root.Mui-selected:hover {
+  background-color: #002266 !important;
+  color: #ffffff !important;
+}
+
+/* Ant Design Pagination Hover */
+.ant-pagination .ant-pagination-item:hover {
+  background-color: #0284c7 !important;
+  border-color: #0284c7 !important;
+}
+
+.ant-pagination .ant-pagination-item:hover a {
+  color: #ffffff !important;
+}
+
+.ant-pagination .ant-pagination-item-active {
+  background-color: #001137 !important;
+  border-color: #001137 !important;
+}
+
+.ant-pagination .ant-pagination-item-active a {
+  color: #ffffff !important;
+}

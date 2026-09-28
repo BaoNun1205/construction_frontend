@@ -21,26 +21,32 @@ import {
   Space,
   Switch,
   Table,
+  Tabs,
   Tag,
   Typography,
   Upload
 } from 'antd'
 import {
   DeleteOutlined,
+  DesktopOutlined,
   EditOutlined,
   EyeOutlined,
+  FolderOutlined,
   LinkOutlined,
   PictureOutlined,
   PlusOutlined,
   StarFilled,
   StarOutlined,
+  TagsOutlined,
   UploadOutlined
 } from '@ant-design/icons'
 import { ColumnsType } from 'antd/es/table'
 import type { RcFile } from 'antd/es/upload'
+import { generateSlug } from '@/utils/slug'
 import { apiClient } from '@/lib/axios'
 import { DesignTemplateService } from '@/services/designTemplateService'
 import { TemplateCategoriesService } from '@/services/templateCategoriesService'
+import TemplateCategoryManagement from './components/TemplateCategoryManagement'
 
 const { Title, Text, Paragraph } = Typography
 const { TextArea } = Input
@@ -111,16 +117,63 @@ export default function DesignTemplatesPage() {
   const [templates, setTemplates] = useState<DesignTemplate[]>([])
   const [loading, setLoading] = useState(false)
   const [categoryOptions, setCategoryOptions] = useState(defaultCategoryOptions)
+  const [activeTab, setActiveTab] = useState<'templates' | 'categories'>('templates')
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [editingTemplate, setEditingTemplate] = useState<DesignTemplate | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [form] = Form.useForm()
 
+  // Quản lý tạo nhanh danh mục trong modal
+  const [isQuickCategoryModalVisible, setIsQuickCategoryModalVisible] = useState(false)
+  const [quickCategoryForm] = Form.useForm()
+  const [quickCategorySubmitting, setQuickCategorySubmitting] = useState(false)
+
   // Quản lý danh sách hình ảnh & ảnh chính trong modal
   const [imageList, setImageList] = useState<TemplateImageItem[]>([])
   const [selectedMainImage, setSelectedMainImage] = useState<string>('')
   const [newImageUrl, setNewImageUrl] = useState<string>('')
+
+  const fetchCategories = async () => {
+    try {
+      const cats = await TemplateCategoriesService.getAllIncludingInactive()
+      if (cats && cats.length > 0) {
+        setCategoryOptions(cats.map((c) => ({ value: c.code || c.slug, label: c.name })))
+      }
+    } catch {
+      // Keep defaults
+    }
+  }
+
+  const handleQuickCreateCategory = async () => {
+    try {
+      const values = await quickCategoryForm.validateFields()
+      setQuickCategorySubmitting(true)
+      const name = values.name.trim()
+      const code = values.code
+        ? generateSlug(values.code.trim())
+        : generateSlug(name)
+
+      await TemplateCategoriesService.create({
+        name,
+        code,
+        description: values.description?.trim(),
+        order: categoryOptions.length + 1,
+        isActive: true
+      })
+
+      messageApi.success(`Đã tạo và thêm danh mục "${name}" thành công!`)
+      await fetchCategories()
+      form.setFieldValue('category', code)
+      setIsQuickCategoryModalVisible(false)
+      quickCategoryForm.resetFields()
+    } catch (err: unknown) {
+      const errorMsg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message
+      messageApi.error(errorMsg || 'Lỗi khi tạo danh mục mới!')
+    } finally {
+      setQuickCategorySubmitting(false)
+    }
+  }
 
   const fetchTemplates = async () => {
     setLoading(true)
@@ -160,11 +213,7 @@ export default function DesignTemplatesPage() {
 
   useEffect(() => {
     fetchTemplates()
-    TemplateCategoriesService.getTemplateCategories().then((cats) => {
-      if (cats && cats.length > 0) {
-        setCategoryOptions(cats.map((c) => ({ value: c.code || c.slug, label: c.name })))
-      }
-    })
+    fetchCategories()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -506,11 +555,26 @@ export default function DesignTemplatesPage() {
 
   return (
     <Space direction="vertical" size={16} style={{ width: '100%' }}>
-      <Card
-        bordered={false}
-        style={{ borderRadius: isMobile ? 18 : 24 }}
-        styles={{ body: { padding: isMobile ? 16 : 24 } }}
-      >
+      <Tabs
+        activeKey={activeTab}
+        onChange={(k) => setActiveTab(k as 'templates' | 'categories')}
+        type="card"
+        size="large"
+        items={[
+          {
+            key: 'templates',
+            label: (
+              <span style={{ fontWeight: 500, fontSize: 15 }}>
+                <DesktopOutlined style={{ marginRight: 6 }} />
+                Mẫu thiết kế ({templates.length})
+              </span>
+            ),
+            children: (
+              <Card
+                bordered={false}
+                style={{ borderRadius: isMobile ? 18 : 24 }}
+                styles={{ body: { padding: isMobile ? 16 : 24 } }}
+              >
         <div
           style={{
             display: 'flex',
@@ -642,6 +706,27 @@ export default function DesignTemplatesPage() {
           />
         )}
       </Card>
+            )
+          },
+          {
+            key: 'categories',
+            label: (
+              <span style={{ fontWeight: 500, fontSize: 15 }}>
+                <TagsOutlined style={{ marginRight: 6 }} />
+                Danh mục mẫu ({categoryOptions.length})
+              </span>
+            ),
+            children: (
+              <TemplateCategoryManagement
+                onCategoriesChanged={() => {
+                  fetchCategories()
+                  fetchTemplates()
+                }}
+              />
+            )
+          }
+        ]}
+      />
 
       <Modal
         title={editingTemplate ? 'Chỉnh sửa mẫu thiết kế' : 'Thêm mẫu thiết kế mới'}
@@ -680,10 +765,49 @@ export default function DesignTemplatesPage() {
             <Col xs={24} md={12}>
               <Form.Item
                 name="category"
-                label="Danh mục"
+                label={
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                    <span>Danh mục</span>
+                    <Button
+                      type="link"
+                      size="small"
+                      icon={<PlusOutlined />}
+                      onClick={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        quickCategoryForm.resetFields()
+                        setIsQuickCategoryModalVisible(true)
+                      }}
+                      style={{ padding: 0, height: 'auto', fontSize: 12, fontWeight: 500 }}
+                    >
+                      + Thêm danh mục mới
+                    </Button>
+                  </div>
+                }
                 rules={[{ required: true, message: 'Vui lòng chọn danh mục!' }]}
               >
-                <Select placeholder="Chọn danh mục">
+                <Select
+                  placeholder="Chọn danh mục"
+                  dropdownRender={(menu) => (
+                    <>
+                      {menu}
+                      <Divider style={{ margin: '8px 0' }} />
+                      <Space style={{ padding: '0 8px 4px', width: '100%' }}>
+                        <Button
+                          type="dashed"
+                          icon={<PlusOutlined />}
+                          block
+                          onClick={() => {
+                            quickCategoryForm.resetFields()
+                            setIsQuickCategoryModalVisible(true)
+                          }}
+                        >
+                          Tạo danh mục mới
+                        </Button>
+                      </Space>
+                    </>
+                  )}
+                >
                   {categoryOptions.map((option) => (
                     <Option key={option.value} value={option.value}>
                       {option.label}
@@ -1048,6 +1172,59 @@ export default function DesignTemplatesPage() {
               })}
             </div>
           )}
+        </Form>
+      </Modal>
+
+      {/* Modal Thêm nhanh danh mục */}
+      <Modal
+        title={
+          <Space>
+            <TagsOutlined style={{ color: '#0284c7' }} />
+            <span>Thêm nhanh danh mục mẫu thiết kế</span>
+          </Space>
+        }
+        open={isQuickCategoryModalVisible}
+        onCancel={() => {
+          setIsQuickCategoryModalVisible(false)
+          quickCategoryForm.resetFields()
+        }}
+        onOk={handleQuickCreateCategory}
+        confirmLoading={quickCategorySubmitting}
+        okText="Tạo và chọn danh mục"
+        cancelText="Hủy"
+        centered
+        width={480}
+      >
+        <Form form={quickCategoryForm} layout="vertical" style={{ marginTop: 16 }}>
+          <Form.Item
+            name="name"
+            label="Tên danh mục"
+            rules={[{ required: true, message: 'Vui lòng nhập tên danh mục!' }]}
+          >
+            <Input
+              placeholder="Ví dụ: Nhà cấp 4, Biệt thự vườn, Nhà phố..."
+              onChange={(e) => {
+                const name = e.target.value
+                quickCategoryForm.setFieldValue('code', generateSlug(name))
+              }}
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="code"
+            label="Mã code (Slug)"
+            rules={[{ required: true, message: 'Vui lòng nhập mã code!' }]}
+            tooltip="Mã định danh không dấu viết liền, ví dụ: nha-cap-4"
+          >
+            <Input placeholder="Ví dụ: nha-cap-4" />
+          </Form.Item>
+
+          <Form.Item name="description" label="Mô tả danh mục (tùy chọn)">
+            <TextArea
+              rows={3}
+              placeholder="Mô tả ngắn gọn về loại hình kiến trúc này..."
+            />
+          </Form.Item>
         </Form>
       </Modal>
     </Space>

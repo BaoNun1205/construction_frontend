@@ -44,7 +44,12 @@ import {
 } from '@/hooks/useProjects'
 import { useQueryClient } from '@tanstack/react-query'
 import { CreateProjectDto, Project, UpdateProjectDto } from '@/types/project'
-import { useProjectCategories } from '@/hooks/useProjectCategories'
+import {
+  useProjectCategories,
+  useCreateProjectCategory,
+  projectCategoryKeys
+} from '@/hooks/useProjectCategories'
+import { generateSlug } from '@/utils/slug'
 
 const { TextArea } = Input
 const { Option } = Select
@@ -87,6 +92,41 @@ const FormModal = ({
   const createProjectMutation = useCreateProject()
   const updateProjectMutation = useUpdateProject()
   const { data: categories, isLoading: categoriesLoading } = useProjectCategories()
+
+  const createCategoryMutation = useCreateProjectCategory()
+  const [isQuickCategoryModalVisible, setIsQuickCategoryModalVisible] = useState(false)
+  const [quickCategoryForm] = Form.useForm()
+  const [quickCategorySubmitting, setQuickCategorySubmitting] = useState(false)
+
+  const handleQuickCreateCategory = async () => {
+    try {
+      const values = await quickCategoryForm.validateFields()
+      setQuickCategorySubmitting(true)
+      const name = values.name.trim()
+      const slug = values.slug ? generateSlug(values.slug.trim()) : generateSlug(name)
+
+      const newCategory = await createCategoryMutation.mutateAsync({
+        name,
+        slug,
+        description: values.description?.trim(),
+        order: (categories?.length || 0) + 1,
+        isActive: true
+      })
+
+      messageApi.success(`Đã tạo và chọn danh mục "${name}" thành công!`)
+      await queryClient.invalidateQueries({ queryKey: projectCategoryKeys.all() })
+      if (newCategory?._id) {
+        form.setFieldValue('category', newCategory._id)
+      }
+      setIsQuickCategoryModalVisible(false)
+      quickCategoryForm.resetFields()
+    } catch (err: unknown) {
+      const errorMsg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message
+      messageApi.error(errorMsg || 'Lỗi khi tạo danh mục mới!')
+    } finally {
+      setQuickCategorySubmitting(false)
+    }
+  }
 
   // Quản lý danh sách hình ảnh & ảnh chính
   const [imageList, setImageList] = useState<ProjectImageItem[]>([])
@@ -311,7 +351,8 @@ const FormModal = ({
   }
 
   return (
-    <Modal
+    <>
+      <Modal
       title={editingProject ? 'Chỉnh sửa dự án' : 'Thêm dự án mới'}
       open={isModalVisible}
       onOk={() => form.submit()}
@@ -349,10 +390,43 @@ const FormModal = ({
           <Col xs={24} md={12}>
             <Form.Item
               name="category"
-              label="Danh mục"
+              label={
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                  <span>Danh mục</span>
+                  <Button
+                    type="link"
+                    size="small"
+                    icon={<PlusOutlined />}
+                    style={{ padding: 0, height: 'auto', fontSize: 12 }}
+                    onClick={() => setIsQuickCategoryModalVisible(true)}
+                  >
+                    Thêm danh mục mới
+                  </Button>
+                </div>
+              }
               rules={[{ required: true, message: 'Vui lòng chọn danh mục!' }]}
             >
-              <Select placeholder="Chọn danh mục" loading={categoriesLoading} allowClear>
+              <Select
+                placeholder="Chọn danh mục"
+                loading={categoriesLoading}
+                allowClear
+                dropdownRender={(menu) => (
+                  <>
+                    {menu}
+                    <Divider style={{ margin: '8px 0' }} />
+                    <Space style={{ padding: '0 8px 4px' }}>
+                      <Button
+                        type="text"
+                        icon={<PlusOutlined />}
+                        onClick={() => setIsQuickCategoryModalVisible(true)}
+                        style={{ color: '#1677ff', fontSize: 13 }}
+                      >
+                        + Thêm danh mục mới
+                      </Button>
+                    </Space>
+                  </>
+                )}
+              >
                 {categories && categories.length > 0 ? (
                   categories.map((c) => (
                     <Option key={c._id} value={c._id}>
@@ -726,6 +800,54 @@ const FormModal = ({
         )}
       </Form>
     </Modal>
+
+    {/* Modal tạo nhanh danh mục */}
+    <Modal
+      title="Thêm nhanh danh mục dự án"
+      open={isQuickCategoryModalVisible}
+      onOk={handleQuickCreateCategory}
+      onCancel={() => {
+        setIsQuickCategoryModalVisible(false)
+        quickCategoryForm.resetFields()
+      }}
+      confirmLoading={quickCategorySubmitting}
+      okText="Tạo danh mục"
+      cancelText="Hủy"
+      destroyOnClose
+    >
+      <Form form={quickCategoryForm} layout="vertical" style={{ marginTop: 12 }}>
+        <Form.Item
+          name="name"
+          label="Tên danh mục"
+          rules={[{ required: true, message: 'Vui lòng nhập tên danh mục!' }]}
+        >
+          <Input
+            placeholder="Ví dụ: Nhà phố hiện đại, Biệt thự nghỉ dưỡng..."
+            onChange={(e) => {
+              const name = e.target.value
+              quickCategoryForm.setFieldValue('slug', generateSlug(name))
+            }}
+          />
+        </Form.Item>
+
+        <Form.Item
+          name="slug"
+          label="Mã slug"
+          rules={[{ required: true, message: 'Vui lòng nhập slug!' }]}
+          tooltip="Mã định danh không dấu viết liền, ví dụ: nha-pho-hien-dai"
+        >
+          <Input placeholder="Ví dụ: nha-pho-hien-dai" />
+        </Form.Item>
+
+        <Form.Item name="description" label="Mô tả danh mục (tùy chọn)">
+          <TextArea
+            rows={3}
+            placeholder="Mô tả ngắn gọn về loại hình dự án này..."
+          />
+        </Form.Item>
+      </Form>
+    </Modal>
+  </>
   )
 }
 

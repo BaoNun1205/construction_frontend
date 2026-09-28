@@ -13,6 +13,7 @@ import {
   Select,
   Space,
   Table,
+  Tabs,
   Tag,
   Typography
 } from 'antd'
@@ -22,15 +23,19 @@ import {
   DeleteOutlined,
   EditOutlined,
   EyeOutlined,
-  PlusOutlined
+  FolderOutlined,
+  PlusOutlined,
+  ProjectOutlined
 } from '@ant-design/icons'
 import dayjs from 'dayjs'
+import { useQueryClient } from '@tanstack/react-query'
 import { useProjectColumns } from './component/ProjectColumns'
 import { useProjectManagement } from './hooks/useProjectManagement'
 import DetailModal from './component/DetailModal'
 import FormModal from './component/FormModal'
+import ProjectCategoryManagement from './component/ProjectCategoryManagement'
 import { Project } from '@/types/project'
-import { useProjectCategories } from '@/hooks/useProjectCategories'
+import { useProjectCategories, projectCategoryKeys } from '@/hooks/useProjectCategories'
 
 const { Title, Text, Paragraph } = Typography
 const { useBreakpoint } = Grid
@@ -54,6 +59,8 @@ const getStatusMeta = (status: Project['status']) => {
 const ProjectsManagement = () => {
   const screens = useBreakpoint()
   const isMobile = !screens.md
+  const queryClient = useQueryClient()
+  const [activeTab, setActiveTab] = useState<'projects' | 'categories'>('projects')
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(5)
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | undefined>()
@@ -118,11 +125,25 @@ const ProjectsManagement = () => {
 
   return (
     <Space direction="vertical" size={16} style={{ width: '100%' }}>
-      <Card
-        bordered={false}
-        style={{ borderRadius: isMobile ? 18 : 24 }}
-        styles={{ body: { padding: isMobile ? 16 : 24 } }}
-      >
+      <Tabs
+        activeKey={activeTab}
+        onChange={(k) => setActiveTab(k as 'projects' | 'categories')}
+        type="card"
+        size="middle"
+        items={[
+          {
+            key: 'projects',
+            label: (
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontWeight: 500 }}>
+                <ProjectOutlined /> Dự án thi công
+              </span>
+            ),
+            children: (
+              <Card
+                bordered={false}
+                style={{ borderRadius: isMobile ? 18 : 24 }}
+                styles={{ body: { padding: isMobile ? 16 : 24 } }}
+              >
         <div
           style={{
             marginBottom: 16,
@@ -310,7 +331,26 @@ const ProjectsManagement = () => {
             }}
           />
         )}
-      </Card>
+              </Card>
+            )
+          },
+          {
+            key: 'categories',
+            label: (
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontWeight: 500 }}>
+                <FolderOutlined /> Danh mục dự án
+              </span>
+            ),
+            children: (
+              <ProjectCategoryManagement
+                onCategoriesChanged={() => {
+                  queryClient.invalidateQueries({ queryKey: projectCategoryKeys.all() })
+                }}
+              />
+            )
+          }
+        ]}
+      />
 
       <FormModal
         form={form}

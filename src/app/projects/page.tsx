@@ -438,6 +438,7 @@ export default function ProjectsPage() {
                             src={project.image}
                             alt={project.title}
                             fill
+                            unoptimized
                             className="object-cover group-hover:scale-105 transition-transform duration-500"
                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                           />
@@ -512,13 +513,23 @@ export default function ProjectsPage() {
                     sx={{
                       '& .MuiPaginationItem-root': {
                         fontSize: '0.95rem',
-                        fontWeight: 600
+                        fontWeight: 600,
+                        transition: 'all 0.2s ease-in-out',
+                        '&:hover': {
+                          backgroundColor: `${BRAND_COLORS.secondary.dark} !important`,
+                          color: '#ffffff !important',
+                          '& .MuiPaginationItem-icon, & svg': {
+                            color: '#ffffff !important',
+                            fill: '#ffffff !important'
+                          }
+                        }
                       },
                       '& .Mui-selected': {
-                        backgroundColor: BRAND_COLORS.primary.main,
-                        color: BRAND_COLORS.primary.contrastText,
+                        backgroundColor: `${BRAND_COLORS.primary.main} !important`,
+                        color: `${BRAND_COLORS.primary.contrastText} !important`,
                         '&:hover': {
-                          backgroundColor: BRAND_COLORS.primary.light
+                          backgroundColor: `${BRAND_COLORS.primary.light} !important`,
+                          color: '#ffffff !important'
                         }
                       }
                     }}
