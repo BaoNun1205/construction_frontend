@@ -901,7 +901,7 @@ export default function StorePage() {
                   </a>
 
                   <Link
-                    href={`/contact?subject=Báo giá vật tư: ${selectedProduct.name}&message=Tôi muốn nhận báo giá khối lượng lớn cho sản phẩm ${selectedProduct.name} (${selectedProduct.specs}). Vui lòng liên hệ lại.`}
+                    href={`/contact?type=material&title=${encodeURIComponent(selectedProduct.name)}&code=${encodeURIComponent(selectedProduct.specs || '')}&category=${encodeURIComponent(selectedProduct.categoryName || '')}&image=${encodeURIComponent(selectedProduct.image || '')}&subject=${encodeURIComponent(`Báo giá vật tư: ${selectedProduct.name}`)}&message=${encodeURIComponent(`Tôi muốn nhận báo giá khối lượng lớn cho sản phẩm ${selectedProduct.name} (${selectedProduct.specs}). Vui lòng liên hệ lại.`)}`}
                     onClick={() => setSelectedProduct(null)}
                     className="py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 border transition-colors hover:bg-slate-100 text-slate-800"
                     style={{ borderColor: BRAND_COLORS.secondary.border }}

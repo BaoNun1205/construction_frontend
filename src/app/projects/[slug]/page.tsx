@@ -62,6 +62,21 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
       .map((p) => ProjectHelpers.transformForHomePage(p))
   }, [allProjectsData, slug])
 
+  // Construct Quote URL carrying project info
+  const quoteUrl = React.useMemo(() => {
+    if (!project) return '/contact'
+    const query = new URLSearchParams({
+      type: 'project',
+      id: project.id || slug,
+      title: project.title,
+      code: slug,
+      category: project.category || '',
+      image: project.mainImage || '',
+      url: `/projects/${slug}`
+    }).toString()
+    return `/contact?${query}`
+  }, [project, slug])
+
   // Lightbox keyboard navigation
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -326,28 +341,34 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
                   </div>
                 </div>
 
-                {/* Thông tin đơn vị thi công */}
-                <div className="space-y-1.5 text-xs text-slate-600 mb-3 pb-2.5 border-b border-slate-100">
-                  <div className="flex justify-between py-0.5">
+                {/* Thông tin đơn vị thi công & địa điểm */}
+                <div className="space-y-1.5 text-xs text-slate-600 pt-1">
+                  <div className="flex justify-between py-1 border-t border-slate-100">
                     <span className="text-slate-400">Đơn vị thi công:</span>
                     <span className="font-bold text-slate-800">Xây Dựng Lai Phát</span>
                   </div>
-                  <div className="flex justify-between py-0.5">
+                  <div className="flex justify-between py-1 border-t border-slate-100">
                     <span className="text-slate-400">Phân loại công trình:</span>
                     <span className="font-semibold text-slate-800">{project.category}</span>
                   </div>
+                  {project.location && (
+                    <div className="flex justify-between py-1 border-t border-slate-100">
+                      <span className="text-slate-400">Địa điểm thực hiện:</span>
+                      <span className="font-semibold text-slate-800">{project.location}</span>
+                    </div>
+                  )}
                 </div>
               </div>
 
-              {/* Nút Tư vấn đặt sát góc bên phải */}
-              <div className="pt-0.5 flex justify-end">
+              {/* Nút Yêu cầu báo giá bên góc phải */}
+              <div className="flex justify-end pt-2 mt-auto">
                 <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-colors shadow-2xs hover:opacity-90"
-                  style={{ backgroundColor: BRAND_COLORS.primary.main, color: BRAND_COLORS.primary.contrastText }}
+                  href={quoteUrl}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white transition-all shadow-2xs hover:opacity-90 hover:shadow-md cursor-pointer"
+                  style={{ backgroundColor: BRAND_COLORS.primary.main }}
                 >
-                  <span>Tư vấn báo giá</span>
-                  <ArrowForward sx={{ fontSize: 14 }} />
+                  <span>Yêu cầu báo giá dự án này</span>
+                  <ArrowForward sx={{ fontSize: 16 }} style={{ color: BRAND_COLORS.secondary.main }} />
                 </Link>
               </div>
             </div>
@@ -414,64 +435,12 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
               )}
             </div>
 
-            {/* Khối: Thư viện hình ảnh tư liệu thực tế */}
-            {allMedia.length > 0 && (
-              <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 shadow-2xs">
-                <div className="flex items-center gap-2.5 mb-4">
-                  <div className="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
-                    <CameraAlt sx={{ fontSize: 18 }} />
-                  </div>
-                  <div>
-                    <h2 className="text-base font-bold text-slate-900">Hình ảnh tư liệu thực tế ({allMedia.length})</h2>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  {allMedia.map((mediaUrl, idx) => {
-                    const isVid = ProjectHelpers.isVideo(mediaUrl)
-                    return (
-                      <div
-                        key={idx}
-                        onClick={() => {
-                          setActiveMediaIndex(idx)
-                          setLightboxIndex(idx)
-                        }}
-                        className="group relative aspect-[4/3] rounded-xl overflow-hidden bg-slate-100 border border-slate-200 cursor-pointer hover:shadow-md transition-all duration-300"
-                      >
-                        {isVid ? (
-                          <div className="w-full h-full bg-slate-800 flex items-center justify-center text-white">
-                            <PlayArrow sx={{ fontSize: 26 }} className="group-hover:scale-125 transition-transform" />
-                          </div>
-                        ) : (
-                          <Image
-                            src={mediaUrl}
-                            alt={`${project.title} - Ảnh ${idx + 1}`}
-                            fill
-                            className="object-cover group-hover:scale-105 transition-transform duration-500"
-                            sizes="(max-width: 640px) 50vw, 33vw"
-                          />
-                        )}
-
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-between p-2 text-white">
-                          <span className="text-[11px] font-semibold">
-                            {isVid ? `Video ${idx + 1}` : `Ảnh ${idx + 1}`}
-                          </span>
-                          <span className="w-6 h-6 rounded-full bg-white/30 backdrop-blur-md flex items-center justify-center">
-                            <ZoomIn sx={{ fontSize: 13 }} />
-                          </span>
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
-            )}
           </div>
 
           {/* Cột phải (4 cột) */}
           <div className="lg:col-span-4 space-y-5 lg:sticky lg:top-6">
-            {/* Khối: Hỗ trợ tư vấn trực tiếp (Dùng tone Main #001137 và Accent #3cb8e0) */}
-            <div className="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-2xs">
+            {/* Khối: Hỗ trợ tư vấn trực tiếp (Hiển thị trên mobile/tablet để khách cuộn xuống cuối dễ gọi & nhận báo giá, ẩn trên desktop) */}
+            <div className="block lg:hidden bg-white rounded-2xl p-5 border border-slate-200/90 shadow-2xs">
               <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
                 <Phone sx={{ fontSize: 15 }} className="text-sky-600" />
                 <span>Tư vấn & Khảo sát công trình</span>
@@ -479,14 +448,23 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
               <p className="text-slate-500 text-xs leading-relaxed mb-3.5">
                 Bạn có nhu cầu thi công hoặc cần dự toán chi tiết cho công trình tương tự? Liên hệ trực tiếp với kỹ sư Lai Phát.
               </p>
-              <a
-                href={`tel:${CONTACT.PHONE.replace(/\s+/g, '')}`}
-                className="w-full py-2.5 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-colors shadow-2xs hover:opacity-90"
-                style={{ backgroundColor: BRAND_COLORS.primary.main, color: BRAND_COLORS.primary.contrastText }}
-              >
-                <Phone sx={{ fontSize: 14 }} style={{ color: BRAND_COLORS.secondary.main }} />
-                <span>Gọi ngay: {CONTACT.PHONE}</span>
-              </a>
+              <div className="space-y-2">
+                <Link
+                  href={quoteUrl}
+                  className="w-full py-2.5 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-colors shadow-2xs hover:opacity-90"
+                  style={{ backgroundColor: BRAND_COLORS.primary.main, color: BRAND_COLORS.primary.contrastText }}
+                >
+                  <ArrowForward sx={{ fontSize: 14 }} style={{ color: BRAND_COLORS.secondary.main }} />
+                  <span>Yêu cầu báo giá dự án này</span>
+                </Link>
+                <a
+                  href={`tel:${CONTACT.PHONE.replace(/\s+/g, '')}`}
+                  className="w-full py-2 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors"
+                >
+                  <Phone sx={{ fontSize: 14 }} className="text-sky-600" />
+                  <span>Gọi hotline: {CONTACT.PHONE}</span>
+                </a>
+              </div>
             </div>
 
             {/* Khối: Khám phá thêm mẫu thiết kế */}

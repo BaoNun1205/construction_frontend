@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useState, useEffect, useRef, useMemo } from 'react'
+import React, { useState, useEffect, useRef, useMemo, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
@@ -46,7 +47,7 @@ function formatCurrency(amount: number): string {
   return new Intl.NumberFormat('vi-VN').format(amount) + ' đ'
 }
 
-export default function DesignTemplatesPage() {
+function DesignTemplatesContent() {
   const { data, isLoading, error } = useDesignTemplates()
   const allTemplates = useMemo(() => (Array.isArray(data) ? data : []), [data])
 
@@ -63,6 +64,37 @@ export default function DesignTemplatesPage() {
   // Quick view modal
   const [selectedTemplate, setSelectedTemplate] = useState<DesignTemplate | null>(null)
   const [activeModalImage, setActiveModalImage] = useState<string>('')
+
+  const searchParams = useSearchParams()
+
+  // Tự động mở modal chi tiết khi URL có param ?code=... hoặc ?template=... hoặc ?id=...
+  useEffect(() => {
+    if (allTemplates.length === 0) return
+
+    const codeParam = searchParams.get('code') || searchParams.get('template')
+    const idParam = searchParams.get('id')
+    const slugParam = searchParams.get('slug')
+    const searchParam = searchParams.get('search')
+
+    if (codeParam || idParam || slugParam) {
+      const found = allTemplates.find((item) => {
+        if (codeParam && item.code && item.code.toLowerCase() === codeParam.toLowerCase()) return true
+        if (idParam && (item._id === idParam || item.id === idParam)) return true
+        if (slugParam && item.slug && item.slug.toLowerCase() === slugParam.toLowerCase()) return true
+        return false
+      })
+
+      if (found) {
+        setSelectedTemplate(found)
+        setActiveModalImage(found.mainImage || found.images?.[0] || '')
+        return
+      }
+    }
+
+    if (searchParam) {
+      setSearchTerm(searchParam)
+    }
+  }, [allTemplates, searchParams])
 
   const filterDropdownRef = useRef<HTMLDivElement>(null)
 
@@ -882,7 +914,19 @@ export default function DesignTemplatesPage() {
                 </div>
 
                 <Link
-                  href={`/contact?subject=Tư vấn mẫu thiết kế ${selectedTemplate.code}&message=Tôi muốn được tư vấn chi tiết về mẫu thiết kế ${selectedTemplate.title} (Mã: ${selectedTemplate.code})`}
+                  href={
+                    selectedTemplate
+                      ? `/contact?${new URLSearchParams({
+                          type: 'template',
+                          id: selectedTemplate._id || selectedTemplate.id || '',
+                          title: selectedTemplate.title,
+                          code: selectedTemplate.code,
+                          category: selectedTemplate.categoryName || selectedTemplate.styleName || '',
+                          image: selectedTemplate.mainImage || selectedTemplate.images?.[0] || '',
+                          url: `/projects/design-templates?code=${encodeURIComponent(selectedTemplate.code)}`
+                        }).toString()}`
+                      : '/contact'
+                  }
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 text-white font-bold rounded-xl shadow-md transition-all text-xs sm:text-sm whitespace-nowrap hover:opacity-90"
                   style={{ backgroundColor: BRAND_COLORS.primary.main, color: BRAND_COLORS.primary.contrastText }}
                 >
@@ -928,5 +972,13 @@ export default function DesignTemplatesPage() {
         )}
       </Dialog>
     </Box>
+  )
+}
+
+export default function DesignTemplatesPage() {
+  return (
+    <Suspense fallback={<ProjectsListPageSkeleton />}>
+      <DesignTemplatesContent />
+    </Suspense>
   )
 }
