@@ -35,10 +35,12 @@ const { useBreakpoint } = Grid
 
 interface TemplateCategoryManagementProps {
   onCategoriesChanged?: () => void
+  onCategoryCountChange?: (count: number) => void
 }
 
 export default function TemplateCategoryManagement({
-  onCategoriesChanged
+  onCategoriesChanged,
+  onCategoryCountChange
 }: TemplateCategoryManagementProps) {
   const screens = useBreakpoint()
   const isMobile = !screens.md
@@ -55,7 +57,9 @@ export default function TemplateCategoryManagement({
     setLoading(true)
     try {
       const data = await TemplateCategoriesService.getAllIncludingInactive()
-      setCategories(data || [])
+      const list = data || []
+      setCategories(list)
+      onCategoryCountChange?.(list.length)
     } catch {
       messageApi.error('Không thể tải danh sách danh mục mẫu thiết kế!')
     } finally {

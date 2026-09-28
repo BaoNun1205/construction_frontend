@@ -35,7 +35,7 @@ import DetailModal from './component/DetailModal'
 import FormModal from './component/FormModal'
 import ProjectCategoryManagement from './component/ProjectCategoryManagement'
 import { Project } from '@/types/project'
-import { useProjectCategories, projectCategoryKeys } from '@/hooks/useProjectCategories'
+import { useProjectCategoriesIncludingInactive, projectCategoryKeys } from '@/hooks/useProjectCategories'
 
 const { Title, Text, Paragraph } = Typography
 const { useBreakpoint } = Grid
@@ -81,7 +81,7 @@ const ProjectsManagement = () => {
     handleDelete
   } = useProjectManagement()
 
-  const { data: categories = [], isLoading: categoriesLoading } = useProjectCategories()
+  const { data: categories = [], isLoading: categoriesLoading } = useProjectCategoriesIncludingInactive()
 
   const filteredProjects = useMemo(
     () =>
@@ -135,7 +135,7 @@ const ProjectsManagement = () => {
             key: 'projects',
             label: (
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontWeight: 500 }}>
-                <ProjectOutlined /> Dự án thi công
+                <ProjectOutlined /> Dự án thi công ({projects.length})
               </span>
             ),
             children: (
@@ -338,7 +338,7 @@ const ProjectsManagement = () => {
             key: 'categories',
             label: (
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontWeight: 500 }}>
-                <FolderOutlined /> Danh mục dự án
+                <FolderOutlined /> Danh mục dự án ({categories.length})
               </span>
             ),
             children: (

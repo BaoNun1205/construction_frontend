@@ -88,14 +88,7 @@ const getBase64 = (file: File | RcFile): Promise<string> =>
     reader.onerror = (error) => reject(error)
   })
 
-const defaultCategoryOptions = [
-  { value: 'villa', label: 'Biệt thự' },
-  { value: 'townhouse', label: 'Nhà phố' },
-  { value: 'garden-house', label: 'Nhà vườn' },
-  { value: 'apartment', label: 'Căn hộ / Chung cư' },
-  { value: 'commercial', label: 'Thương mại / Shophouse' },
-  { value: 'nha-cap-4', label: 'Nhà cấp 4' }
-]
+
 
 const styleOptions = [
   { value: 'modern', label: 'Hiện đại' },
@@ -116,7 +109,8 @@ export default function DesignTemplatesPage() {
   const { message: messageApi } = App.useApp()
   const [templates, setTemplates] = useState<DesignTemplate[]>([])
   const [loading, setLoading] = useState(false)
-  const [categoryOptions, setCategoryOptions] = useState(defaultCategoryOptions)
+  const [categoryOptions, setCategoryOptions] = useState<{ value: string; label: string }[]>([])
+  const [categoryCount, setCategoryCount] = useState<number>(0)
   const [activeTab, setActiveTab] = useState<'templates' | 'categories'>('templates')
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [editingTemplate, setEditingTemplate] = useState<DesignTemplate | null>(null)
@@ -137,11 +131,16 @@ export default function DesignTemplatesPage() {
   const fetchCategories = async () => {
     try {
       const cats = await TemplateCategoriesService.getAllIncludingInactive()
-      if (cats && cats.length > 0) {
-        setCategoryOptions(cats.map((c) => ({ value: c.code || c.slug, label: c.name })))
+      const list = Array.isArray(cats) ? cats : []
+      setCategoryCount(list.length)
+      if (list.length > 0) {
+        setCategoryOptions(list.map((c) => ({ value: c.code || c.slug, label: c.name })))
+      } else {
+        setCategoryOptions([])
       }
     } catch {
-      // Keep defaults
+      setCategoryCount(0)
+      setCategoryOptions([])
     }
   }
 
@@ -713,7 +712,7 @@ export default function DesignTemplatesPage() {
             label: (
               <span style={{ fontWeight: 500, fontSize: 15 }}>
                 <TagsOutlined style={{ marginRight: 6 }} />
-                Danh mục mẫu ({categoryOptions.length})
+                Danh mục mẫu ({categoryCount})
               </span>
             ),
             children: (
@@ -722,6 +721,7 @@ export default function DesignTemplatesPage() {
                   fetchCategories()
                   fetchTemplates()
                 }}
+                onCategoryCountChange={setCategoryCount}
               />
             )
           }
