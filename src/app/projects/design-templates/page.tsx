@@ -669,9 +669,9 @@ export default function DesignTemplatesPage() {
                           {/* Footer card */}
                           <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-cyan-700 group-hover:text-cyan-600">
                             <div>
-                              <span className="text-[10px] text-slate-400 block font-normal">Dự toán thi công</span>
+                              <span className="text-[10px] text-slate-400 block font-normal">Chi phí ước tính</span>
                               <span className="text-sm sm:text-base font-bold text-emerald-600">
-                                ~{formatCurrency(template.constructionCostEstimated)}
+                                ~{formatCurrency(template.constructionCostEstimated || template.designCost || 0)}
                               </span>
                             </div>
                             <span className="flex items-center gap-1 group-hover:translate-x-1 transition-transform">
@@ -876,12 +876,8 @@ export default function DesignTemplatesPage() {
                   </span>
                   <div className="flex items-baseline gap-2 mt-1">
                     <span className="text-xl sm:text-2xl font-black text-cyan-900">
-                      {formatCurrency(selectedTemplate.constructionCostEstimated)}
+                      {formatCurrency(selectedTemplate.constructionCostEstimated || selectedTemplate.designCost || 0)}
                     </span>
-                    <span className="text-xs text-slate-500">(Dự toán thi công)</span>
-                  </div>
-                  <div className="text-xs text-slate-600 mt-1">
-                    Hồ sơ thiết kế kỹ thuật kiến trúc: <strong>{formatCurrency(selectedTemplate.designCost)}</strong>
                   </div>
                 </div>
 

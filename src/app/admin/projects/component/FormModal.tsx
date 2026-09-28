@@ -391,17 +391,37 @@ const FormModal = ({
             <Form.Item
               name="category"
               label={
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                <div
+                  className="form-item-label-header"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    width: '100%',
+                    flex: 1
+                  }}
+                >
                   <span>Danh mục</span>
-                  <Button
-                    type="link"
-                    size="small"
-                    icon={<PlusOutlined />}
-                    style={{ padding: 0, height: 'auto', fontSize: 12 }}
-                    onClick={() => setIsQuickCategoryModalVisible(true)}
+                  <span
+                    role="button"
+                    tabIndex={0}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      quickCategoryForm.resetFields()
+                      setIsQuickCategoryModalVisible(true)
+                    }}
+                    className="text-blue-600 hover:text-blue-800 text-xs font-medium cursor-pointer transition-colors select-none"
+                    style={{
+                      marginLeft: 'auto',
+                      color: '#1677ff',
+                      fontSize: 13,
+                      fontWeight: 500,
+                      cursor: 'pointer'
+                    }}
                   >
                     Thêm danh mục mới
-                  </Button>
+                  </span>
                 </div>
               }
               rules={[{ required: true, message: 'Vui lòng chọn danh mục!' }]}

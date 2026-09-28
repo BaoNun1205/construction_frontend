@@ -12,6 +12,7 @@ import {
   Grid,
   Image,
   Input,
+  InputNumber,
   List,
   Modal,
   Pagination,
@@ -67,6 +68,7 @@ interface DesignTemplate {
   bedrooms: number
   bathrooms: number
   price: number
+  designCost?: number
   description: string
   mainImage: string
   images: string[]
@@ -195,6 +197,7 @@ export default function DesignTemplatesPage() {
           bedrooms: t.bedrooms,
           bathrooms: t.bathrooms,
           price: t.constructionCostEstimated || t.designCost,
+          designCost: t.designCost,
           description: t.description,
           mainImage: mainImg,
           images: rawImgs.length > 0 ? rawImgs : [mainImg],
@@ -255,6 +258,8 @@ export default function DesignTemplatesPage() {
 
     form.setFieldsValue({
       ...template,
+      price: template.price,
+      designCost: template.designCost,
       mainImage: mainImg
     })
     setIsModalVisible(true)
@@ -382,8 +387,8 @@ export default function DesignTemplatesPage() {
         floors: Number(values.floors) || 1,
         bedrooms: Number(values.bedrooms) || 1,
         bathrooms: Number(values.bathrooms) || 1,
-        designCost: Math.round((Number(values.price) || 1000000000) * 0.05),
-        constructionCostEstimated: Number(values.price) || 1000000000,
+        designCost: 0,
+        constructionCostEstimated: Number(values.price) || 0,
         description: (values.description as string) || 'Mẫu thiết kế cao cấp tối ưu công năng.',
         features: ['Kiến trúc hiện đại', 'Tối ưu ánh sáng và gió tự nhiên', 'Vật liệu cao cấp'],
         mainImage,
@@ -766,22 +771,37 @@ export default function DesignTemplatesPage() {
               <Form.Item
                 name="category"
                 label={
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                  <div
+                    className="form-item-label-header"
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      width: '100%',
+                      flex: 1
+                    }}
+                  >
                     <span>Danh mục</span>
-                    <Button
-                      type="link"
-                      size="small"
-                      icon={<PlusOutlined />}
+                    <span
+                      role="button"
+                      tabIndex={0}
                       onClick={(e) => {
                         e.preventDefault()
                         e.stopPropagation()
                         quickCategoryForm.resetFields()
                         setIsQuickCategoryModalVisible(true)
                       }}
-                      style={{ padding: 0, height: 'auto', fontSize: 12, fontWeight: 500 }}
+                      className="text-blue-600 hover:text-blue-800 text-xs font-medium cursor-pointer transition-colors select-none"
+                      style={{
+                        marginLeft: 'auto',
+                        color: '#1677ff',
+                        fontSize: 13,
+                        fontWeight: 500,
+                        cursor: 'pointer'
+                      }}
                     >
-                      + Thêm danh mục mới
-                    </Button>
+                      Thêm danh mục mới
+                    </span>
                   </div>
                 }
                 rules={[{ required: true, message: 'Vui lòng chọn danh mục!' }]}
@@ -852,7 +872,7 @@ export default function DesignTemplatesPage() {
           </Row>
 
           <Row gutter={16}>
-            <Col xs={24} sm={8}>
+            <Col xs={24} sm={6}>
               <Form.Item
                 name="area"
                 label="Diện tích (m²)"
@@ -861,7 +881,7 @@ export default function DesignTemplatesPage() {
                 <Input type="number" placeholder="Diện tích" />
               </Form.Item>
             </Col>
-            <Col xs={24} sm={8}>
+            <Col xs={24} sm={6}>
               <Form.Item
                 name="floors"
                 label="Số tầng"
@@ -870,19 +890,7 @@ export default function DesignTemplatesPage() {
                 <Input type="number" placeholder="Số tầng" />
               </Form.Item>
             </Col>
-            <Col xs={24} sm={8}>
-              <Form.Item
-                name="price"
-                label="Giá (VNĐ)"
-                rules={[{ required: true, message: 'Vui lòng nhập giá!' }]}
-              >
-                <Input type="number" placeholder="Giá thiết kế" />
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Row gutter={16}>
-            <Col xs={24} md={12}>
+            <Col xs={24} sm={6}>
               <Form.Item
                 name="bedrooms"
                 label="Số phòng ngủ"
@@ -891,13 +899,33 @@ export default function DesignTemplatesPage() {
                 <Input type="number" placeholder="Số phòng ngủ" />
               </Form.Item>
             </Col>
-            <Col xs={24} md={12}>
+            <Col xs={24} sm={6}>
               <Form.Item
                 name="bathrooms"
                 label="Số phòng tắm"
                 rules={[{ required: true, message: 'Vui lòng nhập số phòng tắm!' }]}
               >
                 <Input type="number" placeholder="Số phòng tắm" />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Row gutter={16}>
+            <Col xs={24} sm={12}>
+              <Form.Item
+                name="price"
+                label="Chi phí ước tính (VNĐ)"
+                rules={[{ required: true, message: 'Vui lòng nhập chi phí ước tính!' }]}
+                tooltip="Tự động định dạng dấu chấm ngăn cách hàng nghìn khi nhập"
+              >
+                <InputNumber<number>
+                  style={{ width: '100%' }}
+                  placeholder="Ví dụ: 1.500.000.000"
+                  min={0}
+                  formatter={(value) => (value !== undefined && value !== null ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, '.') : '')}
+                  parser={(value) => (value ? value.replace(/\D/g, '') : '') as unknown as number}
+                  addonAfter="VNĐ"
+                />
               </Form.Item>
             </Col>
           </Row>

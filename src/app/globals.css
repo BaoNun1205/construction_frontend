@@ -637,3 +637,21 @@ body {
 .ant-pagination .ant-pagination-item-active a {
   color: #ffffff !important;
 }
+
+/* ========================================================
+   Ant Design Form: Label Header Full-Width (Căn phải nút thêm mới)
+======================================================== */
+.ant-form-vertical .ant-form-item-label > label,
+.ant-form-item-label:has(.form-item-label-header) > label {
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.form-item-label-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  flex: 1 1 auto !important;
+}
