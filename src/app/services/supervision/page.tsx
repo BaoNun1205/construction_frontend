@@ -85,7 +85,7 @@ export default function SupervisionPage() {
 
   return (
     <Box className="min-h-screen">
-      <Container maxWidth="lg" className="space-y-20 py-16" sx={{ px: 4 }}>
+      <Container maxWidth="lg" className="space-y-20 pt-0 pb-16" sx={{ px: 4 }}>
         <section className="fade-in-up">
           <div className="mb-16 flex flex-col items-center justify-center text-center">
             <Typography

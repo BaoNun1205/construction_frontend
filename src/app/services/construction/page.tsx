@@ -104,7 +104,7 @@ export default function ConstructionPage() {
 
   return (
     <Box className="min-h-screen">
-      <Container className="space-y-20 py-16" sx={{ px: 4 }}>
+      <Container className="space-y-20 pt-0 pb-16" sx={{ px: 4 }}>
         <section className="fade-in-up">
           <div className="mb-16 flex flex-col items-center justify-center text-center">
             <Typography

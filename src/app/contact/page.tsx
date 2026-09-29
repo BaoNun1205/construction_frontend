@@ -712,7 +712,7 @@ export default function ContactPage() {
     <Box className="min-h-screen bg-slate-50/50">
       <JsonLd data={contactPageJsonLd} />
 
-      <Container className="py-12 sm:py-16 space-y-12" sx={{ px: { xs: 2, sm: 4 } }}>
+      <Container className="pt-0 pb-12 sm:pb-16 space-y-12" sx={{ px: { xs: 2, sm: 4 } }}>
         <div className="fade-in-on">
           <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
             {t('contact.title') as string}{' '}

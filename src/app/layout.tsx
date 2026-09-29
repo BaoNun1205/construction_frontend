@@ -5,6 +5,7 @@ import './globals.css'
 import MUIThemeProvider from '@/components/MUIThemeProvider'
 import ConditionalLayout from '@/components/ConditionalLayout'
 import { LocaleProvider } from '@/contexts/LocaleContext'
+import { BreadcrumbProvider } from '@/contexts/BreadcrumbContext'
 import QueryProvider from '@/providers/QueryProvider'
 import { AuthProvider } from '@/providers/AuthProvider'
 import JsonLd from '@/components/seo/JsonLd'
@@ -90,11 +91,13 @@ export default function RootLayout({
         <AuthProvider>
           <QueryProvider>
             <LocaleProvider>
-              <MUIThemeProvider>
-                <ConditionalLayout>
-                  {children}
-                </ConditionalLayout>
-              </MUIThemeProvider>
+              <BreadcrumbProvider>
+                <MUIThemeProvider>
+                  <ConditionalLayout>
+                    {children}
+                  </ConditionalLayout>
+                </MUIThemeProvider>
+              </BreadcrumbProvider>
             </LocaleProvider>
           </QueryProvider>
         </AuthProvider>

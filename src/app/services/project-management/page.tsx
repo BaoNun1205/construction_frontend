@@ -18,6 +18,7 @@ import {
   TrackChangesOutlined
 } from '@mui/icons-material'
 import { Box, Container, Typography, useMediaQuery, useTheme } from '@mui/material'
+import Breadcrumbs from '@/components/ui/Breadcrumbs'
 
 const projectData = {
   'Mục tiêu': [
@@ -101,7 +102,7 @@ export default function ProjectManagementPage() {
         <Box
           sx={{
             color: 'white',
-            pt: { xs: 12, md: 20 },
+            pt: { xs: '88px', md: '104px' },
             pb: { xs: 8, md: 12 },
             position: 'relative',
             overflow: 'hidden',
@@ -123,6 +124,9 @@ export default function ProjectManagementPage() {
         >
           <Container sx={{ px: 4, position: 'relative' }}>
             <div className="relative z-10 text-white fade-in-up">
+              <div className="mb-5">
+                <Breadcrumbs />
+              </div>
               <div className="flex flex-col lg:flex-row gap-16 items-center">
                 {/* Text Section */}
                 <div className="flex-1 space-y-8 w-full">

@@ -160,7 +160,7 @@ export default function ProjectsPage() {
 
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: BRAND_COLORS.neutral.background, overflowX: 'hidden', width: '100%', pb: 10 }}>
-      <Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3 }, pt: { xs: 2.5, md: 4 } }}>
+      <Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3 }, pt: 0 }}>
         {/* Thanh điều khiển: Bên trái đếm số lượng, bên phải thu gọn Ô tìm kiếm + Nút Bộ lọc */}
         <div className="mb-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 relative">
           {/* Thông tin số lượng */}

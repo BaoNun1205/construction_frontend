@@ -19,6 +19,7 @@ import { Box, Button, Container, Stack, Typography } from '@mui/material'
 import { useTranslations } from '@/hooks/useTranslations'
 import useScrollAnimations from '@/hooks/useScrollAnimations'
 import Link from 'next/link'
+import Breadcrumbs from '@/components/ui/Breadcrumbs'
 
 export default function DesignConsultingPage() {
   useScrollAnimations()
@@ -223,7 +224,7 @@ export default function DesignConsultingPage() {
       <Box
         sx={{
           color: 'white',
-          pt: { xs: 16, md: 20 },
+          pt: { xs: '88px', md: '104px' },
           pb: { xs: 6, md: 12 },
           position: 'relative',
           overflow: 'hidden',
@@ -252,9 +253,13 @@ export default function DesignConsultingPage() {
               alignItems: 'flex-start',
               justifyContent: 'center',
               height: '100%',
-              textAlign: { xs: 'center', md: 'left' }
+              textAlign: { xs: 'center', md: 'left' },
+              width: '100%'
             }}
           >
+            <div className="w-full mb-5">
+              <Breadcrumbs />
+            </div>
             <Typography
               variant="h2"
               gutterBottom

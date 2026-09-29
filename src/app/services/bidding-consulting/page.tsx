@@ -67,7 +67,7 @@ export default function BiddingConsultingPage() {
 
   return (
     <Box className="min-h-screen">
-      <Container className="py-16 space-y-20" sx={{ px: 4 }}>
+      <Container className="pt-0 pb-16 space-y-20" sx={{ px: 4 }}>
         {/* Header Section */}
         <section className="fade-in-up">
           <div className="flex flex-col items-center justify-center text-center mb-16">

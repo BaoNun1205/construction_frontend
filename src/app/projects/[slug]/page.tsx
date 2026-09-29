@@ -28,12 +28,14 @@ import {
 } from '@mui/icons-material'
 import { Alert, Box, Container } from '@mui/material'
 import { BRAND_COLORS } from '@/constants/colors'
+import { useBreadcrumb } from '@/contexts/BreadcrumbContext'
 
 export default function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = use(params)
   const slug = resolvedParams.slug
   const { data: rawProject, isLoading, isError, error } = useProjectBySlug(slug)
   const { data: allProjectsData } = useProjects()
+  const { setCustomTitle } = useBreadcrumb()
 
   // Gallery state
   const [activeMediaIndex, setActiveMediaIndex] = useState(0)
@@ -45,6 +47,15 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
   }, [])
 
   const project = rawProject ? ProjectHelpers.transformForDetailPage(rawProject) : null
+
+  useEffect(() => {
+    if (project?.title) {
+      setCustomTitle(project.title)
+    }
+    return () => {
+      setCustomTitle(null)
+    }
+  }, [project?.title, setCustomTitle])
 
   // Collect all media items (mainImage + media array)
   const allMedia: string[] = React.useMemo(() => {
@@ -156,7 +167,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ slug: 
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: BRAND_COLORS.neutral.background, overflowX: 'hidden', width: '100%', pb: 10 }}>
       {/* Container chuẩn maxWidth="lg" khớp chính xác 100% với Header */}
-      <Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3 }, pt: { xs: 2.5, md: 3.5 } }}>
+      <Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3 }, pt: 0 }}>
         {/* Top Hero Section: Side-by-side Showcase + Thông tin công trình */}
         <div className="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200/90 shadow-2xs mb-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-7 items-start">

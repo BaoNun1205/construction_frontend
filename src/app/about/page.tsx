@@ -31,6 +31,7 @@ import {
 import { useTranslations } from '@/hooks/useTranslations'
 import { CONTACT } from '@/constants/contact'
 import useScrollAnimations from '@/hooks/useScrollAnimations'
+import Breadcrumbs from '@/components/ui/Breadcrumbs'
 
 export default function AboutPage() {
   useScrollAnimations()
@@ -88,7 +89,7 @@ export default function AboutPage() {
         <Box
           sx={{
             color: 'white',
-            pt: { xs: 12, md: 20 },
+            pt: { xs: '88px', md: '104px' },
             pb: { xs: 8, md: 12 },
             position: 'relative',
             overflow: 'hidden',
@@ -110,6 +111,9 @@ export default function AboutPage() {
         >
           <Container sx={{ px: 4 }}>
             <div className="relative z-10 text-white fade-in-up">
+              <div className="mb-5">
+                <Breadcrumbs />
+              </div>
               <Typography
                 variant="h2"
                 className="text-3xl md:text-4xl font-bold text-center mb-12"
