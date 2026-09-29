@@ -330,9 +330,9 @@ function ContactFormInner() {
             <div className="mb-6">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-2"
                 style={{
-                  backgroundColor: isQuoteMode ? BRAND_COLORS.secondary.surface : '#eef2ff',
-                  color: isQuoteMode ? BRAND_COLORS.secondary.dark : '#4338ca',
-                  border: `1px solid ${isQuoteMode ? BRAND_COLORS.secondary.border : '#c7d2fe'}`
+                  backgroundColor: BRAND_COLORS.secondary.surface,
+                  color: BRAND_COLORS.secondary.dark,
+                  border: `1px solid ${BRAND_COLORS.secondary.border}`
                 }}
               >
                 {getTypeBadgeIcon()}

@@ -27,7 +27,7 @@ const ROUTE_LABELS: Record<'vi' | 'en', Record<string, string>> = {
     supervision: 'Tư vấn giám sát',
     'project-management': 'Quản lý dự án',
     'bidding-consulting': 'Tư vấn đấu thầu',
-    projects: 'Dự án',
+    projects: 'Dự án thi công',
     completed: 'Dự án hoàn thành',
     'in-progress': 'Đang triển khai',
     'design-templates': 'Mẫu thiết kế',
@@ -45,7 +45,7 @@ const ROUTE_LABELS: Record<'vi' | 'en', Record<string, string>> = {
     supervision: 'Supervision',
     'project-management': 'Project Management',
     'bidding-consulting': 'Bidding Consulting',
-    projects: 'Projects',
+    projects: 'Construction Projects',
     completed: 'Completed Projects',
     'in-progress': 'In Progress',
     'design-templates': 'Design Templates',
@@ -108,9 +108,23 @@ export default function Breadcrumbs({
       }
     ]
 
+    // Bỏ qua cấp cha trung gian khi dẫn đến các mục con trong phần Dịch vụ, Dự án (theo yêu cầu UX)
+    // Ví dụ: Trang chủ / Tư vấn thiết kế (thay vì Trang chủ / Dịch vụ / Tư vấn thiết kế)
+    //        Trang chủ / Mẫu thiết kế (thay vì Trang chủ / Dự án / Mẫu thiết kế)
+    //        Trang chủ / Mẫu thiết kế / [Tên mẫu]
+    //        Trang chủ / [Tên dự án]
+    const SKIP_INTERMEDIATE_ROOTS = ['services', 'projects']
+    const shouldSkipFirstSegment = segments.length > 1 && SKIP_INTERMEDIATE_ROOTS.includes(segments[0])
+
     let currentHref = ''
     segments.forEach((segment, index) => {
       currentHref += `/${segment}`
+
+      // Nếu đang xem mục con của Dịch vụ hoặc Dự án thì bỏ qua cấp cha trung gian
+      if (index === 0 && shouldSkipFirstSegment) {
+        return
+      }
+
       const isLast = index === segments.length - 1
 
       let label: string

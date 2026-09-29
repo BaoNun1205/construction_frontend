@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useRef, useMemo, Suspense } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
@@ -14,8 +14,6 @@ import {
   Palette,
   Stairs,
   Star,
-  CheckCircle,
-  Phone,
   Tune,
   RestartAlt,
   HomeWork
@@ -24,10 +22,7 @@ import {
   Alert,
   Box,
   Pagination,
-  Container,
-  IconButton,
-  Chip,
-  Dialog
+  Container
 } from '@mui/material'
 import { useDesignTemplates } from '@/hooks/useDesignTemplates'
 import { ProjectsListPageSkeleton } from '@/components/projects/ProjectPageSkeletons'
@@ -61,13 +56,10 @@ function DesignTemplatesContent() {
   const [currentPage, setCurrentPage] = useState(1)
   const templatesPerPage = 6
 
-  // Quick view modal
-  const [selectedTemplate, setSelectedTemplate] = useState<DesignTemplate | null>(null)
-  const [activeModalImage, setActiveModalImage] = useState<string>('')
-
+  const router = useRouter()
   const searchParams = useSearchParams()
 
-  // Tự động mở modal chi tiết khi URL có param ?code=... hoặc ?template=... hoặc ?id=...
+  // Tự động điều hướng đến trang chi tiết khi URL có param ?code=... hoặc ?template=... hoặc ?id=...
   useEffect(() => {
     if (allTemplates.length === 0) return
 
@@ -85,8 +77,7 @@ function DesignTemplatesContent() {
       })
 
       if (found) {
-        setSelectedTemplate(found)
-        setActiveModalImage(found.mainImage || found.images?.[0] || '')
+        router.push(`/projects/design-templates/${found.slug || found.code || found.id}`)
         return
       }
     }
@@ -94,7 +85,7 @@ function DesignTemplatesContent() {
     if (searchParam) {
       setSearchTerm(searchParam)
     }
-  }, [allTemplates, searchParams])
+  }, [allTemplates, searchParams, router])
 
   const filterDropdownRef = useRef<HTMLDivElement>(null)
 
@@ -245,14 +236,6 @@ function DesignTemplatesContent() {
     )
   }
 
-  const handleOpenDetailModal = (template: DesignTemplate) => {
-    setSelectedTemplate(template)
-    setActiveModalImage(template.mainImage)
-  }
-
-  const handleCloseDetailModal = () => {
-    setSelectedTemplate(null)
-  }
 
   if (isLoading) {
     return <ProjectsListPageSkeleton />
@@ -620,8 +603,8 @@ function DesignTemplatesContent() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
                 {currentTemplates.map((template) => (
                   <div key={template.id} className="h-full">
-                    <div
-                      onClick={() => handleOpenDetailModal(template)}
+                    <Link
+                      href={`/projects/design-templates/${template.slug || template.code || template.id}`}
                       className="group bg-white rounded-2xl overflow-hidden border border-slate-200/90 shadow-2xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full flex flex-col cursor-pointer"
                     >
                       {/* Ảnh mẫu thiết kế */}
@@ -658,11 +641,6 @@ function DesignTemplatesContent() {
                         <div>
                           <div className="text-xs font-semibold text-cyan-700 mb-1 flex items-center justify-between">
                             <span>Mã: {template.code}</span>
-                            {template.facade && (
-                              <span className="text-slate-400 font-normal">
-                                Mặt tiền: {template.facade}
-                              </span>
-                            )}
                           </div>
 
                           <h2
@@ -713,7 +691,7 @@ function DesignTemplatesContent() {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   </div>
                 ))}
               </div>
@@ -759,218 +737,6 @@ function DesignTemplatesContent() {
         </section>
       </Container>
 
-      {/* Quick View Detail Modal */}
-      <Dialog
-        open={Boolean(selectedTemplate)}
-        onClose={handleCloseDetailModal}
-        maxWidth="md"
-        fullWidth
-        scroll="body"
-        PaperProps={{
-          sx: {
-            borderRadius: { xs: 3, md: 4 },
-            overflow: 'hidden',
-            p: 0
-          }
-        }}
-      >
-        {selectedTemplate && (
-          <div>
-            {/* Modal Header Image */}
-            <div className="relative h-60 sm:h-80 md:h-96 w-full bg-slate-900">
-              <Image
-                src={activeModalImage || selectedTemplate.mainImage}
-                alt={selectedTemplate.title}
-                fill
-                unoptimized
-                className="object-cover"
-                sizes="(max-width: 900px) 100vw, 900px"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/40"></div>
-
-              {/* Close Button */}
-              <IconButton
-                onClick={handleCloseDetailModal}
-                sx={{
-                  position: 'absolute',
-                  top: 14,
-                  right: 14,
-                  bgcolor: 'rgba(0, 0, 0, 0.5)',
-                  color: 'white',
-                  '&:hover': { bgcolor: 'rgba(0, 0, 0, 0.8)' }
-                }}
-              >
-                <Close />
-              </IconButton>
-
-              {/* Badges on modal image */}
-              <div className="absolute top-4 left-4 flex gap-1.5 flex-wrap">
-                <Chip
-                  label={selectedTemplate.categoryName}
-                  color="primary"
-                  size="small"
-                  sx={{ fontWeight: 'bold' }}
-                />
-                <Chip
-                  label={selectedTemplate.styleName}
-                  sx={{ bgcolor: 'rgba(255, 255, 255, 0.85)', fontWeight: 'bold' }}
-                  size="small"
-                />
-                <Chip
-                  label={`Mã: ${selectedTemplate.code}`}
-                  sx={{ bgcolor: 'rgba(0, 0, 0, 0.6)', color: 'white' }}
-                  size="small"
-                />
-              </div>
-
-              {/* Title & subtitle inside image banner */}
-              <div className="absolute bottom-4 left-4 right-4 text-white">
-                <h2 className="text-lg sm:text-2xl md:text-3xl font-extrabold leading-tight">
-                  {selectedTemplate.title}
-                </h2>
-              </div>
-            </div>
-
-            {/* Thumbnail selection if multiple images */}
-            {selectedTemplate.images && selectedTemplate.images.length > 1 && (
-              <div className="flex gap-2 p-3 bg-slate-900 overflow-x-auto scrollbar-thin">
-                {selectedTemplate.images.map((img, idx) => (
-                  <button
-                    type="button"
-                    key={idx}
-                    onClick={() => setActiveModalImage(img)}
-                    className={`relative w-20 h-14 rounded-lg overflow-hidden shrink-0 border-2 transition-all ${
-                      (activeModalImage || selectedTemplate.mainImage) === img
-                        ? 'border-cyan-400 scale-105'
-                        : 'border-transparent opacity-70 hover:opacity-100'
-                    }`}
-                  >
-                    <Image src={img} alt="" fill unoptimized className="object-cover" />
-                  </button>
-                ))}
-              </div>
-            )}
-
-            {/* Modal Body */}
-            <div className="p-5 sm:p-6 md:p-8 space-y-6">
-              {/* Specs Grid */}
-              <div>
-                <h4 className="text-xs sm:text-sm font-bold text-slate-500 uppercase tracking-wider mb-3">
-                  Thông Số Kỹ Thuật Công Trình
-                </h4>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                    <span className="text-xs text-slate-500 block">Diện tích xây dựng</span>
-                    <span className="text-sm sm:text-base font-bold text-slate-900">{selectedTemplate.area} m²</span>
-                  </div>
-                  {selectedTemplate.landArea && (
-                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                      <span className="text-xs text-slate-500 block">Diện tích khuôn viên</span>
-                      <span className="text-sm sm:text-base font-bold text-slate-900">{selectedTemplate.landArea} m²</span>
-                    </div>
-                  )}
-                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                    <span className="text-xs text-slate-500 block">Quy mô</span>
-                    <span className="text-sm sm:text-base font-bold text-slate-900">{selectedTemplate.floors} tầng</span>
-                  </div>
-                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                    <span className="text-xs text-slate-500 block">Phòng ngủ</span>
-                    <span className="text-sm sm:text-base font-bold text-slate-900">{selectedTemplate.bedrooms} phòng</span>
-                  </div>
-                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                    <span className="text-xs text-slate-500 block">Phòng vệ sinh</span>
-                    <span className="text-sm sm:text-base font-bold text-slate-900">{selectedTemplate.bathrooms} WC</span>
-                  </div>
-                  {selectedTemplate.facade && (
-                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                      <span className="text-xs text-slate-500 block">Mặt tiền</span>
-                      <span className="text-sm sm:text-base font-bold text-slate-900">{selectedTemplate.facade}</span>
-                    </div>
-                  )}
-                  {selectedTemplate.depth && (
-                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                      <span className="text-xs text-slate-500 block">Chiều sâu</span>
-                      <span className="text-sm sm:text-base font-bold text-slate-900">{selectedTemplate.depth}</span>
-                    </div>
-                  )}
-                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                    <span className="text-xs text-slate-500 block">Phong cách</span>
-                    <span className="text-sm sm:text-base font-bold text-cyan-800">{selectedTemplate.styleName}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Cost card */}
-              <div className="p-4 bg-gradient-to-r from-cyan-50 to-blue-50 rounded-2xl border border-cyan-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                <div>
-                  <span className="text-xs text-cyan-800 font-semibold uppercase tracking-wider block">
-                    Chi phí ước tính
-                  </span>
-                  <div className="flex items-baseline gap-2 mt-1">
-                    <span className="text-xl sm:text-2xl font-black text-cyan-900">
-                      {formatCurrency(selectedTemplate.constructionCostEstimated || selectedTemplate.designCost || 0)}
-                    </span>
-                  </div>
-                </div>
-
-                <Link
-                  href={
-                    selectedTemplate
-                      ? `/contact?${new URLSearchParams({
-                          type: 'template',
-                          id: selectedTemplate._id || selectedTemplate.id || '',
-                          title: selectedTemplate.title,
-                          code: selectedTemplate.code,
-                          category: selectedTemplate.categoryName || selectedTemplate.styleName || '',
-                          image: selectedTemplate.mainImage || selectedTemplate.images?.[0] || '',
-                          url: `/projects/design-templates?code=${encodeURIComponent(selectedTemplate.code)}`
-                        }).toString()}`
-                      : '/contact'
-                  }
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 text-white font-bold rounded-xl shadow-md transition-all text-xs sm:text-sm whitespace-nowrap hover:opacity-90"
-                  style={{ backgroundColor: BRAND_COLORS.primary.main, color: BRAND_COLORS.primary.contrastText }}
-                >
-                  <Phone sx={{ fontSize: 16 }} style={{ color: BRAND_COLORS.secondary.main }} />
-                  <span>Nhận báo giá mẫu này</span>
-                </Link>
-              </div>
-
-              {/* Description */}
-              <div>
-                <h4 className="text-xs sm:text-sm font-bold text-slate-500 uppercase tracking-wider mb-2">
-                  Ý Tưởng & Giải Pháp Kiến Trúc
-                </h4>
-                <p className="text-slate-700 leading-relaxed text-sm md:text-base">
-                  {selectedTemplate.description}
-                </p>
-              </div>
-
-              {/* Features & Highlights */}
-              <div>
-                <h4 className="text-xs sm:text-sm font-bold text-slate-500 uppercase tracking-wider mb-3">
-                  Đặc Điểm & Tiện Ích Nổi Bật
-                </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {selectedTemplate.features.map((feature, idx) => (
-                    <div key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-slate-800">
-                      <CheckCircle sx={{ fontSize: 16, color: BRAND_COLORS.secondary.dark, mt: '2px' }} />
-                      <span>{feature}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Contact hotline banner */}
-              <div className="p-3.5 bg-slate-100 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs text-slate-600 gap-1">
-                <span>
-                  Hotline tư vấn kiến trúc sư 24/7: <strong>0937 668 889</strong>
-                </span>
-                <span className="text-cyan-700 font-semibold">Tư vấn & khảo sát miễn phí</span>
-              </div>
-            </div>
-          </div>
-        )}
-      </Dialog>
     </Box>
   )
 }

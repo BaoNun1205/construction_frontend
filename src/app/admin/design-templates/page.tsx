@@ -64,12 +64,14 @@ interface DesignTemplate {
   style: string
   styleName?: string
   area: number
+  landArea?: number
   floors: number
   bedrooms: number
   bathrooms: number
   price: number
   designCost?: number
   description: string
+  features?: string[]
   mainImage: string
   images: string[]
   featured: boolean
@@ -193,12 +195,14 @@ export default function DesignTemplatesPage() {
           style: t.style,
           styleName: t.styleName,
           area: t.area,
+          landArea: t.landArea,
           floors: t.floors,
           bedrooms: t.bedrooms,
           bathrooms: t.bathrooms,
           price: t.constructionCostEstimated || t.designCost,
           designCost: t.designCost,
           description: t.description,
+          features: Array.isArray(t.features) ? (t.features as string[]) : [],
           mainImage: mainImg,
           images: rawImgs.length > 0 ? rawImgs : [mainImg],
           featured: Boolean(t.featured),
@@ -230,6 +234,9 @@ export default function DesignTemplatesPage() {
     setSelectedMainImage('')
     setNewImageUrl('')
     form.resetFields()
+    form.setFieldsValue({
+      features: ['Kiến trúc hiện đại', 'Tối ưu ánh sáng và gió tự nhiên', 'Vật liệu cao cấp']
+    })
     setIsModalVisible(true)
   }
 
@@ -260,7 +267,8 @@ export default function DesignTemplatesPage() {
       ...template,
       price: template.price,
       designCost: template.designCost,
-      mainImage: mainImg
+      mainImage: mainImg,
+      features: Array.isArray(template.features) ? template.features : []
     })
     setIsModalVisible(true)
   }
@@ -384,13 +392,18 @@ export default function DesignTemplatesPage() {
         category: values.category as string,
         style: values.style as string,
         area: Number(values.area) || 100,
+        landArea: values.landArea ? Number(values.landArea) : undefined,
         floors: Number(values.floors) || 1,
         bedrooms: Number(values.bedrooms) || 1,
         bathrooms: Number(values.bathrooms) || 1,
         designCost: 0,
         constructionCostEstimated: Number(values.price) || 0,
         description: (values.description as string) || 'Mẫu thiết kế cao cấp tối ưu công năng.',
-        features: ['Kiến trúc hiện đại', 'Tối ưu ánh sáng và gió tự nhiên', 'Vật liệu cao cấp'],
+        features: Array.isArray(values.features)
+          ? (values.features as string[]).map((f) => String(f).trim()).filter(Boolean)
+          : (typeof values.features === 'string' && (values.features as string).trim()
+            ? (values.features as string).split(',').map((f: string) => f.trim()).filter(Boolean)
+            : []),
         mainImage,
         images,
         featured: Boolean(values.featured),
@@ -913,6 +926,15 @@ export default function DesignTemplatesPage() {
           <Row gutter={16}>
             <Col xs={24} sm={12}>
               <Form.Item
+                name="landArea"
+                label="Diện tích khuôn viên đất (m²)"
+                tooltip="Tổng diện tích khu đất nếu có (để trống nếu không áp dụng)"
+              >
+                <Input type="number" placeholder="Ví dụ: 160" />
+              </Form.Item>
+            </Col>
+            <Col xs={24} sm={12}>
+              <Form.Item
                 name="price"
                 label="Chi phí ước tính (VNĐ)"
                 rules={[{ required: true, message: 'Vui lòng nhập chi phí ước tính!' }]}
@@ -940,9 +962,22 @@ export default function DesignTemplatesPage() {
 
           <Form.Item
             name="description"
-            label="Mô tả"
+            label="Mô tả ý tưởng & kiến trúc"
           >
-            <TextArea rows={4} placeholder="Nhập mô tả mẫu thiết kế" />
+            <TextArea rows={4} placeholder="Nhập mô tả ý tưởng thiết kế & giải pháp kiến trúc" />
+          </Form.Item>
+
+          <Form.Item
+            name="features"
+            label="Đặc điểm & Tiện ích nổi bật"
+            tooltip="Nhập từng tiện ích rồi nhấn Enter (vd: Hồ bơi vô cực, Gara ô tô, Ban công xanh, Phòng làm việc Studio,...)"
+          >
+            <Select
+              mode="tags"
+              placeholder="Nhập đặc điểm / tiện ích rồi nhấn Enter (hoặc dán danh sách cách nhau bởi dấu phẩy)"
+              tokenSeparators={[',']}
+              style={{ width: '100%' }}
+            />
           </Form.Item>
 
           {/* PHẦN QUẢN LÝ HÌNH ẢNH & CHỌN ẢNH CHÍNH */}

@@ -37,3 +37,10 @@ export const fetchPublicProjectBySlug = (slug: string) =>
 
 export const fetchPublicProjectCategories = () =>
   fetchPublicData<ProjectCategory[]>('/project-categories', 1800)
+
+export const fetchPublicDesignTemplateBySlug = async (slug: string) => {
+  const bySlug = await fetchPublicData<Record<string, unknown>>(`/design-templates/slug/${slug}`, 1800)
+  if (bySlug) return bySlug
+  return fetchPublicData<Record<string, unknown>>(`/design-templates/${slug}`, 1800)
+}
+

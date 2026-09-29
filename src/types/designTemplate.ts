@@ -27,8 +27,6 @@ export interface DesignTemplate {
   floors: number // số tầng
   bedrooms: number // số phòng ngủ
   bathrooms: number // số phòng vệ sinh
-  facade?: string // Mặt tiền (e.g. 6m, 12m)
-  depth?: string // Chiều sâu (e.g. 18m, 25m)
   designCost: number // Chi phí thiết kế (VNĐ)
   constructionCostEstimated: number // Chi phí thi công ước tính (VNĐ)
   description: string

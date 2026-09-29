@@ -56,7 +56,7 @@ export class DesignTemplateService {
     }
   }
 
-  // Lấy chi tiết mẫu thiết kế theo slug từ Database
+  // Lấy chi tiết mẫu thiết kế theo slug hoặc mã từ Database
   static async getTemplateBySlug(slug: string): Promise<DesignTemplate | null> {
     try {
       const res: ApiResponse<Record<string, unknown>> = await apiClient.get(`/design-templates/slug/${slug}`, {
@@ -66,9 +66,19 @@ export class DesignTemplateService {
         return this.transformTemplate(res.data)
       }
       return null
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(`Lỗi khi tải chi tiết mẫu thiết kế slug: ${slug}`, e)
+    } catch {
+      // Dự phòng: Nếu slug không khớp trực tiếp, thử tìm theo mã/id qua endpoint findOne
+      try {
+        const fallbackRes: ApiResponse<Record<string, unknown>> = await apiClient.get(`/design-templates/${slug}`, {
+          requireAuth: false
+        })
+        if (fallbackRes && fallbackRes.data) {
+          return this.transformTemplate(fallbackRes.data)
+        }
+      } catch (fallbackErr) {
+        // eslint-disable-next-line no-console
+        console.error(`Lỗi khi tải chi tiết mẫu thiết kế slug/mã: ${slug}`, fallbackErr)
+      }
       return null
     }
   }
